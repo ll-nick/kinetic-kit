@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# [MISE] description="Install scholarly-kit as a local Typst package (copy)"
+set -euo pipefail
+
+NAME=$(grep '^name' typst.toml | sed 's/.*= *"\(.*\)"/\1/')
+VERSION=$(grep '^version' typst.toml | sed 's/.*= *"\(.*\)"/\1/')
+DEST="$HOME/.local/share/typst/packages/local/$NAME/$VERSION"
+
+if [ -e "$DEST" ]; then
+    echo "Already installed: $DEST"
+    exit 0
+fi
+
+mkdir -p "$DEST"
+cp -r . "$DEST"
+echo "Installed $NAME:$VERSION → $DEST"

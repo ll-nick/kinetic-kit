@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  compile:
+    name: Compile example PDFs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up mise (installs Typst version from mise.toml)
+        uses: jdx/mise-action@v2
+
+      - name: Compile examples and docs
+        run: mise run build
+
+      - name: Upload PDFs
+        uses: actions/upload-artifact@v4
+        with:
+          name: pdfs
+          path: |
+            example/*.pdf
+            docs/api-reference.pdf

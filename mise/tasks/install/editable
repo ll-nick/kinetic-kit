@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# [MISE] description="Install scholarly-kit as a local Typst package (symlink, editable)"
+set -euo pipefail
+
+NAME=$(grep '^name' typst.toml | sed 's/.*= *"\(.*\)"/\1/')
+VERSION=$(grep '^version' typst.toml | sed 's/.*= *"\(.*\)"/\1/')
+DEST="$HOME/.local/share/typst/packages/local/$NAME/$VERSION"
+
+if [ -L "$DEST" ]; then
+    echo "Already installed (editable): $DEST → $(readlink "$DEST")"
+    exit 0
+fi
+
+if [ -e "$DEST" ]; then
+    echo "Error: $DEST exists as a regular directory (not a symlink)."
+    echo "Remove it first if you want to switch to editable mode."
+    exit 1
+fi
+
+mkdir -p "$(dirname "$DEST")"
+ln -s "$PWD" "$DEST"
+echo "Installed $NAME:$VERSION (editable) → $DEST"

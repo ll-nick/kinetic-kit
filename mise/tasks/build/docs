@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# [MISE] description="Compile API reference documentation to docs/api-reference.pdf"
+set -euo pipefail
+
+typst compile --root . --font-path fonts docs/main.typ docs/api-reference.pdf
+echo "Built docs/api-reference.pdf"

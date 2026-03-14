@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# [MISE] description="Compile all example documents to PDF"
+set -euo pipefail
+
+for typ_file in example/*.typ; do
+    pdf_file="${typ_file%.typ}.pdf"
+    echo "  → $typ_file"
+    typst compile --root . --font-path fonts "$typ_file" "$pdf_file"
+done
+
+echo "Build complete."
