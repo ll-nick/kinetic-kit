@@ -12,7 +12,7 @@
 )
 #import "translations.typ": t
 #import "title-page.typ": print-dissertation-title, print-thesis-title
-#import "front-matter.typ": print-abstract, print-kurzfassung
+#import "front-matter.typ": print-abstract, print-acknowledgements, print-kurzfassung
 
 // ── Appendix show-rule ────────────────────────────────────────────────────
 
@@ -502,6 +502,11 @@
         pagebreak()
     }
 
+    if acknowledgements != none {
+        print-acknowledgements(acknowledgements, lang)
+        pagebreak(to: "odd")
+    }
+
     // TODO: CV, TOC, notation, abbreviations
 
     // ── Main content (Arabic numerals) ──────────────────────────────────────
@@ -619,6 +624,11 @@
     if abstract-de != none {
         print-kurzfassung(abstract-de)
         pagebreak()
+    }
+
+    if acknowledgements != none {
+        print-acknowledgements(acknowledgements, lang)
+        pagebreak(to: "odd")
     }
 
     // TODO: TOC
