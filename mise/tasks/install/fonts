@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# [MISE] description="Install bundled Libertinus fonts to the user font directory"
+set -euo pipefail
+
+if [[ "$(uname)" == "Darwin" ]]; then
+    FONT_DIR="$HOME/Library/Fonts"
+else
+    FONT_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/fonts"
+fi
+
+mkdir -p "$FONT_DIR"
+cp fonts/*.otf "$FONT_DIR/"
+
+if command -v fc-cache &> /dev/null; then
+    fc-cache -f "$FONT_DIR"
+fi
+
+echo "Installed Libertinus fonts to $FONT_DIR"
