@@ -3,7 +3,7 @@
 // and automatic abbreviation expansion via glossarium.
 // Compile: typst compile --root . --font-path fonts example/dissertation-en.typ example/dissertation-en.pdf
 
-#import "/lib.typ": appendix, dissertation, gls, glspl
+#import "/lib.typ": dissertation, gls, glspl
 
 #show: dissertation.with(
     // ── Author ──────────────────────────────────────────────────────────────
@@ -53,6 +53,9 @@
     show-lof: true,
     show-lot: true,
     show-lol: false,
+
+    // ── Bibliography ────────────────────────────────────────────────────────
+    bibliography: bibliography("bib/references.bib", title: none, style: "ieee"),
 )
 
 // ── Chapters ─────────────────────────────────────────────────────────────
@@ -66,12 +69,3 @@ The results improve upon the baseline #gls("rmse") by 50%.
 On second reference: #gls("kit") uses only the short form.
 
 #include "content/introduction.typ"
-
-// ── Bibliography ─────────────────────────────────────────────────────────
-
-#heading(level: 1, numbering: none, outlined: true, bookmarked: true)[Bibliography]
-#bibliography(
-    "bib/references.bib",
-    title: none,
-    style: "ieee",
-)

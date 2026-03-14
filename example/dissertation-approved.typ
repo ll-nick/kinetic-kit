@@ -1,7 +1,7 @@
 // KIT Dissertation Template — Approved state example (German)
 // Compile: typst compile --root . --font-path fonts example/dissertation-approved.typ example/dissertation-approved.pdf
 
-#import "/lib.typ": appendix, dissertation
+#import "/lib.typ": dissertation
 
 #show: dissertation.with(
     // ── Author ──────────────────────────────────────────────────────────────
@@ -56,17 +56,12 @@
         Mustermann, M. (2024). *Verfahren zur Optimierung von Musterverfahren*.
         Deutsches Patent- und Markenamt, DE 10 2024 000 001 A1.
     ],
+
+    // ── Bibliography ────────────────────────────────────────────────────────
+    // Heading is added automatically; pass title: none to suppress the built-in one.
+    bibliography: bibliography("bib/references.bib", title: none, style: "ieee"),
 )
 
 // ── Chapters ─────────────────────────────────────────────────────────────
 
 #include "content/introduction.typ"
-
-// ── Bibliography ─────────────────────────────────────────────────────────
-
-#heading(level: 1, numbering: none, outlined: true, bookmarked: true)[Literaturverzeichnis]
-#bibliography(
-    "bib/references.bib",
-    title: none,
-    style: "ieee",
-)

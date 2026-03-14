@@ -3,7 +3,7 @@
 //   typst compile main.typ
 // (Fonts are found automatically via typst.toml font-paths.)
 
-#import "/lib.typ": appendix, dissertation, flex-caption, alexandria, bibliographyx
+#import "/lib.typ": dissertation, flex-caption, alexandria, bibliographyx
 
 // Enable multi-bibliography support so own-publications / supervised-theses
 // can use bibliographyx() alongside the main bibliography().
@@ -68,9 +68,6 @@
     show-lot: true,
     show-lol: false,
 
-    // Heading is added automatically; pass bibliography(title: none, …) or
-    // plain content. Using bibliography() matches the citation formatting of
-    // the main reference list.
     // Heading added by template; use bibliographyx() (via alexandria) for
     // bibliography-style formatting alongside the main bibliography().
     // full: true shows all entries regardless of in-text citations.
@@ -79,30 +76,19 @@
 
     supervised-theses: bibliographyx("bib/supervised-theses.bib",
         title: none, style: "ieee", full: true),
+
+    // ── Bibliography ────────────────────────────────────────────────────────
+    // Heading is added automatically; pass title: none to suppress the built-in one.
+    bibliography: bibliography("bib/references.bib", title: none, style: "ieee"),
+
+    // ── Appendix — placed after all back-matter lists ───────────────────────
+    appendix-content: [
+        = Supplementary Material
+
+        #lorem(120)
+    ],
 )
 
 // ── Chapters ─────────────────────────────────────────────────────────────
 
 #include "content/introduction.typ"
-
-// ── Bibliography ─────────────────────────────────────────────────────────
-
-#heading(
-    level: 1,
-    numbering: none,
-    outlined: true,
-    bookmarked: true,
-)[Literaturverzeichnis]
-#bibliography(
-    "bib/references.bib",
-    title: none,
-    style: "ieee",
-)
-
-// ── Appendix ─────────────────────────────────────────────────────────────
-
-#show: appendix
-
-= Supplementary Material
-
-#lorem(120)

@@ -1,7 +1,7 @@
 // KIT Dissertation Template — Submitted state example (German)
 // Compile: typst compile --root . --font-path fonts example/dissertation-submitted.typ example/dissertation-submitted.pdf
 
-#import "/lib.typ": appendix, dissertation
+#import "/lib.typ": dissertation
 
 #show: dissertation.with(
     // ── Author ──────────────────────────────────────────────────────────────
@@ -50,25 +50,18 @@
     show-lof: true,
     show-lot: true,
     show-lol: true,
+
+    // ── Bibliography ────────────────────────────────────────────────────────
+    bibliography: bibliography("bib/references.bib", title: none, style: "ieee"),
+
+    // ── Appendix — placed after all back-matter lists ───────────────────────
+    appendix-content: [
+        = Supplementary Material
+
+        #lorem(120)
+    ],
 )
 
 // ── Chapters ─────────────────────────────────────────────────────────────
 
 #include "content/introduction.typ"
-
-// ── Bibliography ─────────────────────────────────────────────────────────
-
-#heading(level: 1, numbering: none, outlined: true, bookmarked: true)[Literaturverzeichnis]
-#bibliography(
-    "bib/references.bib",
-    title: none,
-    style: "ieee",
-)
-
-// ── Appendix ─────────────────────────────────────────────────────────────
-
-#show: appendix
-
-= Supplementary Material
-
-#lorem(120)

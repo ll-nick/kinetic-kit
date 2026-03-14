@@ -3,7 +3,6 @@
 // Public API (re-exported via lib.typ):
 //   dissertation(...)  — doctoral dissertation
 //   thesis(...)        — Master's / Bachelor's / Diploma thesis
-//   appendix           — show-rule to switch to appendix numbering
 
 #import "kit-colors.typ": kit-colors
 #import "kit-fonts.typ": font-sizes, fonts, line-spacing
@@ -22,18 +21,6 @@
     make-glossary, print-glossary, register-glossary,
 )
 
-// ── Appendix show-rule ────────────────────────────────────────────────────
-
-/// Show-rule that switches heading numbering to appendix style (`A`, `A.1`, …).
-/// Apply with `#show: appendix` immediately before the first appendix heading.
-///
-/// - doc (content): Content of the appendix.
-/// -> content
-#let appendix(doc) = {
-    set heading(numbering: "A.1")
-    counter(heading).update(0)
-    doc
-}
 
 // ── Shared content-page rules ─────────────────────────────────────────────
 
@@ -413,7 +400,11 @@
 /// - own-publications (content): Own publications content (heading added by template). `none` = omit.
 /// - own-patents (content): Own patents content (heading added by template). `none` = omit.
 /// - supervised-theses (content): Supervised theses content (heading added by template). `none` = omit.
-/// - doc (content): Main document body.
+/// - bibliography (content): Bibliography content. Pass `bibliography("refs.bib", title: none, style: "ieee")`.
+///   The template adds a translated heading. `none` = omit.
+/// - appendix-content (content): Appendix chapters. Template applies `A`, `A.1`, … numbering
+///   and places the appendix at the very end, after all back-matter lists. `none` = omit.
+/// - doc (content): Main document body (chapters only).
 /// -> content
 #let dissertation(
     author-title: "M.Sc.",
@@ -452,6 +443,8 @@
     own-publications: none,
     own-patents: none,
     supervised-theses: none,
+    bibliography: none,
+    appendix-content: none,
     doc,
 ) = {
     // Apply glossarium show-rule at the outer scope so it covers the entire
@@ -565,6 +558,14 @@
 
     doc
 
+    // Bibliography keeps content-page headers (part of the main text flow).
+    if bibliography != none {
+        heading(level: 1, numbering: none, outlined: true, bookmarked: true)[#(
+            t.at(lang).bibliography
+        )]
+        bibliography
+    }
+
     // ── Back matter ─────────────────────────────────────────────────────────
     set page(header: none)
 
@@ -597,6 +598,14 @@
         pagebreak()
         print-lol(lang: lang)
     }
+
+    // Appendix goes last so it follows all back-matter lists.
+    if appendix-content != none {
+        pagebreak(to: "odd")
+        set heading(numbering: "A.1")
+        counter(heading).update(0)
+        appendix-content
+    }
 }
 
 // ── Thesis Template ───────────────────────────────────────────────────────
@@ -624,7 +633,11 @@
 /// - show-lof (bool): Include List of Figures.
 /// - show-lot (bool): Include List of Tables.
 /// - show-lol (bool): Include List of Listings.
-/// - doc (content): Main document body.
+/// - bibliography (content): Bibliography content. Pass `bibliography("refs.bib", title: none, style: "ieee")`.
+///   The template adds a translated heading. `none` = omit.
+/// - appendix-content (content): Appendix chapters. Template applies `A`, `A.1`, … numbering
+///   and places the appendix at the very end, after all back-matter lists. `none` = omit.
+/// - doc (content): Main document body (chapters only).
 /// -> content
 #let thesis(
     author-firstname: "Max",
@@ -648,6 +661,8 @@
     show-lof: true,
     show-lot: true,
     show-lol: false,
+    bibliography: none,
+    appendix-content: none,
     doc,
 ) = {
     let author-name = author-firstname + " " + author-surname
@@ -720,6 +735,13 @@
 
     doc
 
+    if bibliography != none {
+        heading(level: 1, numbering: none, outlined: true, bookmarked: true)[#(
+            t.at(lang).bibliography
+        )]
+        bibliography
+    }
+
     set page(header: none)
 
     if show-lof {
@@ -735,5 +757,12 @@
     if show-lol {
         pagebreak()
         print-lol(lang: lang)
+    }
+
+    if appendix-content != none {
+        pagebreak(to: "odd")
+        set heading(numbering: "A.1")
+        counter(heading).update(0)
+        appendix-content
     }
 }

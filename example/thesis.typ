@@ -42,17 +42,11 @@
     show-lof: true,
     show-lot: true,
     show-lol: false,
+
+    // ── Bibliography ────────────────────────────────────────────────────────
+    bibliography: bibliography("bib/references.bib", title: none, style: "ieee"),
 )
 
 // ── Chapters ─────────────────────────────────────────────────────────────
 
 #include "content/introduction.typ"
-
-// ── Bibliography ─────────────────────────────────────────────────────────
-
-#heading(level: 1, numbering: none, outlined: true, bookmarked: true)[Literaturverzeichnis]
-#bibliography(
-    "bib/references.bib",
-    title: none,
-    style: "ieee",
-)
