@@ -16,6 +16,7 @@
     print-abstract, print-acknowledgements, print-abbreviations,
     print-cv, print-kurzfassung, print-notation,
 )
+#import "content-page.typ": print-toc
 
 // ── Appendix show-rule ────────────────────────────────────────────────────
 
@@ -525,7 +526,8 @@
         pagebreak()
     }
 
-    // TODO: TOC
+    print-toc(lang: lang)
+    pagebreak()
 
     // ── Main content (Arabic numerals) ──────────────────────────────────────
     counter(page).update(1)
@@ -649,7 +651,8 @@
         pagebreak(to: "odd")
     }
 
-    // TODO: TOC
+    print-toc(lang: lang)
+    pagebreak()
 
     // ── Main content (Arabic numerals) ──────────────────────────────────────
     counter(page).update(1)
