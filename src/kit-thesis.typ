@@ -16,7 +16,7 @@
     print-abstract, print-acknowledgements, print-abbreviations,
     print-cv, print-kurzfassung, print-notation,
 )
-#import "content-page.typ": print-toc
+#import "content-page.typ": print-lof, print-lol, print-lot, print-toc
 
 // ── Appendix show-rule ────────────────────────────────────────────────────
 
@@ -543,7 +543,37 @@
     doc
 
     // ── Back matter ─────────────────────────────────────────────────────────
-    // TODO: LoF, LoT, LoL, own-publications, patents, supervised-theses
+    set page(header: none)
+
+    if own-publications != none {
+        pagebreak()
+        own-publications
+    }
+
+    if own-patents != none {
+        pagebreak()
+        own-patents
+    }
+
+    if supervised-theses != none {
+        pagebreak()
+        supervised-theses
+    }
+
+    if show-lof {
+        pagebreak()
+        print-lof(lang: lang)
+    }
+
+    if show-lot {
+        pagebreak()
+        print-lot(lang: lang)
+    }
+
+    if show-lol {
+        pagebreak()
+        print-lol(lang: lang)
+    }
 }
 
 // ── Thesis Template ───────────────────────────────────────────────────────
@@ -667,5 +697,20 @@
 
     doc
 
-    // TODO: LoF, LoT, LoL
+    set page(header: none)
+
+    if show-lof {
+        pagebreak()
+        print-lof(lang: lang)
+    }
+
+    if show-lot {
+        pagebreak()
+        print-lot(lang: lang)
+    }
+
+    if show-lol {
+        pagebreak()
+        print-lol(lang: lang)
+    }
 }
