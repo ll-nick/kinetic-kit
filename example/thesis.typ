@@ -44,7 +44,7 @@
 
 // ── Chapters ─────────────────────────────────────────────────────────────
 
-#include "shared/chapter.typ"
+#include "content/introduction.typ"
 
 // ── Bibliography ─────────────────────────────────────────────────────────
 

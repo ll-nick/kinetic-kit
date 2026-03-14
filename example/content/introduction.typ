@@ -1,3 +1,5 @@
+#import "/lib.typ": flex-caption
+
 = Introduction
 
 #lorem(40) @example2024. #lorem(20)
@@ -26,9 +28,13 @@ The following questions are addressed in this dissertation:
 
 == A Figure Example
 
+// flex-caption: short text in the List of Figures, long text in the body
 #figure(
     rect(width: 6cm, height: 3cm, fill: luma(230), stroke: none),
-    caption: [An example figure showing a placeholder graphic.],
+    caption: flex-caption(
+        short: [A placeholder graphic.],
+        long: [An example figure showing a placeholder graphic with a longer caption in the body.],
+    ),
 ) <fig:example>
 
 As shown in @fig:example, #lorem(20)

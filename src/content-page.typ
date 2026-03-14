@@ -19,24 +19,30 @@
 // current Typst version's outline() API. Known limitation.
 
 #let print-lof(lang: "de") = {
+    state("in-outline", false).update(true)
     outline(
         title: t.at(lang).lof,
         target: figure.where(kind: image),
     )
+    state("in-outline", false).update(false)
 }
 
 #let print-lot(lang: "de") = {
+    state("in-outline", false).update(true)
     outline(
         title: t.at(lang).lot,
         target: figure.where(kind: table),
     )
+    state("in-outline", false).update(false)
 }
 
 #let print-lol(lang: "de") = {
+    state("in-outline", false).update(true)
     outline(
         title: t.at(lang).lol,
         target: figure.where(kind: raw),
     )
+    state("in-outline", false).update(false)
 }
 
 /// Two-part caption: short version for LoF/LoT, long version under the figure.

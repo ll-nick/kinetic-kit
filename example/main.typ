@@ -3,7 +3,7 @@
 //   typst compile main.typ
 // (Fonts are found automatically via typst.toml font-paths.)
 
-#import "/lib.typ": appendix, dissertation
+#import "/lib.typ": appendix, dissertation, flex-caption
 
 #show: dissertation.with(
     // ── Author ──────────────────────────────────────────────────────────────
