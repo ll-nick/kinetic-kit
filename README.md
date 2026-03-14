@@ -4,6 +4,9 @@ A KIT dissertation and thesis template for [Typst](https://typst.app), designed 
 
 > **Disclaimer:** This is an unofficial community template. It is not affiliated with, endorsed by, or approved by KIT (Karlsruhe Institute of Technology) or KIT Scientific Publishing. The template attempts to follow the [KSP Basic Layout Guidelines](https://www.bibliothek.kit.edu/downloads/KSP/KSP-Basic-Layout-Guidelines.pdf) but compliance is not guaranteed. Always verify your final manuscript with KSP before submission.
 
+> **Please note**: This template is in early development and may contain incomplete features, bugs, or formatting issues.
+> You should probably not use it yet for your actual dissertation or thesis until it has reached a more mature state.
+
 ## Prerequisites
 
 - Typst 0.14.2 (pinned in `mise.toml`)
