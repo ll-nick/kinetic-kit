@@ -1,0 +1,3 @@
+[compile]
+font-paths = ["../fonts"]
+entrypoint = "dissertation-submitted.typ"
