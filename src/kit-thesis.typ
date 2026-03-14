@@ -121,7 +121,6 @@
                     (chapter-display, chapter-name)
                 }
                 align(right)[#sec-display #sec-name]
-                linebreak()
                 line(length: 100%, stroke: 0.4pt + kit-colors.black30)
             }
         },
