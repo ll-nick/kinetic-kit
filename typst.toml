@@ -10,3 +10,5 @@ license = "MIT-0"
 categories = ["thesis"]
 keywords = ["thesis", "dissertation", "kit"]
 
+[dependencies]
+glossarium = ">=0.5.1"
