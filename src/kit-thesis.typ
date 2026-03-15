@@ -7,7 +7,7 @@
 #import "kit-colors.typ": kit-colors
 #import "kit-fonts.typ": font-sizes, fonts, line-spacing
 #import "page-conf.typ": (
-    kit-page, margins-by-length, par-spacing, title-page-margins,
+    kit-header, kit-page, margins-by-length, par-spacing, title-page-margins,
 )
 #import "translations.typ": t
 #import "title-page.typ": print-dissertation-title, print-thesis-title
@@ -21,64 +21,6 @@
     make-glossary, print-glossary, register-glossary,
 )
 
-
-// ── Shared running header ─────────────────────────────────────────────────
-//
-// Used by both _front-matter-page and _setup-content-page.
-// Even page: chapter title (number omitted when heading is unnumbered).
-// Odd page:  section title in same chapter, falls back to chapter title.
-// Suppressed on chapter-opening pages and before the first chapter.
-
-#let _running-header = context {
-    set text(font: fonts.sans, size: font-sizes.small)
-    let this-page = here().page()
-
-    // Suppress on chapter-opening pages
-    if query(heading.where(level: 1)).any(h => (
-        h.location().page() == this-page
-    )) {
-        return
-    }
-
-    // Suppress before the first chapter
-    let chapters-before = query(
-        selector(heading.where(level: 1)).before(here()),
-    )
-    if chapters-before.len() == 0 { return }
-
-    let current-chapter = chapters-before.last()
-    let chapter-count = counter(heading).at(current-chapter.location()).first()
-
-    let chapter-label = if current-chapter.numbering != none {
-        let lvl1-fmt = current-chapter.numbering.split(".").at(0)
-        [#numbering(lvl1-fmt, chapter-count) #current-chapter.body]
-    } else {
-        current-chapter.body
-    }
-
-    if calc.even(this-page) {
-        chapter-label
-        linebreak()
-    } else {
-        let sections-before = query(
-            selector(heading.where(level: 2)).before(here()),
-        )
-        let sec-label = if sections-before.len() > 0 {
-            let s = sections-before.last()
-            let sn = counter(heading).at(s.location())
-            if sn.first() == chapter-count {
-                if s.numbering != none {
-                    let sec-fmt = s.numbering.split(".").slice(0, 2).join(".")
-                    [#numbering(sec-fmt, ..sn.slice(0, 2)) #s.body]
-                } else {
-                    s.body
-                }
-            } else { chapter-label }
-        } else { chapter-label }
-        align(right, sec-label)
-    }
-    line(length: 100%, stroke: 0.4pt + kit-colors.black)
-}
 
 // ── Shared content-page rules ─────────────────────────────────────────────
 
@@ -105,7 +47,7 @@
         margin: margins,
         binding: left,
         numbering: "1",
-        header: _running-header,
+        header: kit-header,
         footer: context {
             set text(font: fonts.sans, size: font-sizes.small)
             if calc.odd(here().page()) {
@@ -283,7 +225,7 @@
         margin: margins,
         binding: left,
         numbering: "i",
-        header: _running-header,
+        header: kit-header,
         footer: context {
             let sections-before = query(
                 selector(heading.where(level: 1)).before(here()),
