@@ -22,6 +22,66 @@
 )
 
 
+// ── Shared running header ─────────────────────────────────────────────────
+//
+// Used by both _front-matter-page and _setup-content-page.
+// Even page: chapter title (number omitted when heading is unnumbered).
+// Odd page:  section title in same chapter, falls back to chapter title.
+// Suppressed on chapter-opening pages and before the first chapter.
+
+#let _running-header = context {
+    set text(font: fonts.sans, size: font-sizes.small)
+    let this-page = here().page()
+
+    // Suppress on chapter-opening pages
+    if query(heading.where(level: 1)).any(h => (
+        h.location().page() == this-page
+    )) {
+        return
+    }
+
+    // Suppress before the first chapter
+    let chapters-before = query(
+        selector(heading.where(level: 1)).before(here()),
+    )
+    if chapters-before.len() == 0 { return }
+
+    let current-chapter = chapters-before.last()
+    let chapter-count = counter(heading.where(level: 1))
+        .at(current-chapter.location())
+        .first()
+
+    let chapter-label = if current-chapter.numbering != none {
+        let lvl1-fmt = current-chapter.numbering.split(".").at(0)
+        [#numbering(lvl1-fmt, chapter-count) #current-chapter.body]
+    } else {
+        current-chapter.body
+    }
+
+    if calc.even(this-page) {
+        chapter-label
+        linebreak()
+    } else {
+        let sections-before = query(
+            selector(heading.where(level: 2)).before(here()),
+        )
+        let sec-label = if sections-before.len() > 0 {
+            let s = sections-before.last()
+            let sn = counter(heading).at(s.location())
+            if sn.first() == chapter-count {
+                if s.numbering != none {
+                    let sec-fmt = s.numbering.split(".").slice(0, 2).join(".")
+                    [#numbering(sec-fmt, ..sn.slice(0, 2)) #s.body]
+                } else {
+                    s.body
+                }
+            } else { chapter-label }
+        } else { chapter-label }
+        align(right, sec-label)
+    }
+    line(length: 100%, stroke: 0.4pt + kit-colors.black)
+}
+
 // ── Shared content-page rules ─────────────────────────────────────────────
 
 #let _setup-content-page(
@@ -47,69 +107,7 @@
         margin: margins,
         binding: left,
         numbering: "1",
-        header: context {
-            set text(font: fonts.sans, size: font-sizes.small)
-
-            let this-page = here().page()
-
-            // Suppress header on chapter-opening pages
-            let chapter-pages = query(heading.where(level: 1)).filter(h => (
-                h.location().page() == this-page
-            ))
-            if chapter-pages.len() > 0 { return }
-
-            // Suppress header on pages with no chapter yet
-            let chapters-before = query(
-                selector(heading.where(level: 1)).before(here()),
-            )
-            if chapters-before.len() == 0 { return }
-
-            let current-chapter = chapters-before.last()
-            let chapter-count = counter(heading.where(level: 1))
-                .at(current-chapter.location())
-                .first()
-            let chapter-name = current-chapter.body
-
-            // Derive the level-1 numbering specifier from the heading's pattern
-            // e.g. "1.1" → "1" (regular), "A.1" → "A" (appendix)
-            let lvl1-fmt = if current-chapter.numbering != none {
-                current-chapter.numbering.split(".").at(0)
-            } else {
-                "1"
-            }
-            let chapter-display = numbering(lvl1-fmt, chapter-count)
-
-            if calc.even(this-page) {
-                // Left page: chapter title
-                [#chapter-display #chapter-name]
-                linebreak()
-                line(length: 100%, stroke: 0.4pt + kit-colors.black30)
-            } else {
-                // Right page: section title, fall back to chapter title
-                let sections-before = query(
-                    selector(heading.where(level: 2)).before(here()),
-                )
-                let (sec-display, sec-name) = if sections-before.len() > 0 {
-                    let s = sections-before.last()
-                    let sn = counter(heading).at(s.location())
-                    // Only use section if it belongs to the current chapter
-                    if sn.first() == chapter-count {
-                        let sec-fmt = if s.numbering != none {
-                            s.numbering.split(".").slice(0, 2).join(".")
-                        } else {
-                            "1.1"
-                        }
-                        (numbering(sec-fmt, ..sn.slice(0, 2)), s.body)
-                    } else {
-                        (chapter-display, chapter-name)
-                    }
-                } else {
-                    (chapter-display, chapter-name)
-                }
-                align(right)[#sec-display #sec-name]
-                line(length: 100%, stroke: 0.4pt + kit-colors.black30)
-            }
-        },
+        header: _running-header,
         footer: context {
             set text(font: fonts.sans, size: font-sizes.small)
             if calc.odd(here().page()) {
@@ -287,31 +285,7 @@
         margin: margins,
         binding: left,
         numbering: "i",
-        header: context {
-            set text(font: fonts.sans, size: font-sizes.small)
-            let this-page = here().page()
-
-            // Suppress on pages where a section heading appears (section opener)
-            let headings-here = query(heading.where(level: 1)).filter(
-                h => h.location().page() == this-page,
-            )
-            if headings-here.len() > 0 { return }
-
-            // Show current section title (continuation pages)
-            let sections-before = query(
-                selector(heading.where(level: 1)).before(here()),
-            )
-            if sections-before.len() == 0 { return }
-            let current = sections-before.last()
-
-            if calc.even(this-page) {
-                [#current.body]
-                linebreak()
-            } else {
-                align(right)[#current.body]
-            }
-            line(length: 100%, stroke: 0.5pt + kit-colors.black)
-        },
+        header: _running-header,
         footer: context {
             let sections-before = query(
                 selector(heading.where(level: 1)).before(here()),
