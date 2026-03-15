@@ -13,8 +13,8 @@
 #import "title-page.typ": print-dissertation-title, print-thesis-title
 #import "front-matter.typ": (
     print-abbreviations, print-abstract, print-acknowledgements, print-cv,
-    print-kurzfassung, print-notation, print-own-patents, print-own-publications,
-    print-supervised-theses,
+    print-kurzfassung, print-notation, print-own-patents,
+    print-own-publications, print-supervised-theses,
 )
 #import "content-page.typ": print-lof, print-lol, print-lot, print-toc
 #import "@preview/glossarium:0.5.10": (
@@ -51,12 +51,6 @@
             set text(font: fonts.sans, size: font-sizes.small)
 
             let this-page = here().page()
-
-            // Suppress header on blank pages (no headings at all on this page)
-            let all-headings-here = query(heading).filter(h => (
-                h.location().page() == this-page
-            ))
-            if all-headings-here.len() == 0 and calc.even(this-page) { return }
 
             // Suppress header on chapter-opening pages
             let chapter-pages = query(heading.where(level: 1)).filter(h => (
@@ -117,12 +111,6 @@
             }
         },
         footer: context {
-            // Suppress page number on blank pages
-            let this-page = here().page()
-            let headings-here = query(heading).filter(h => (
-                h.location().page() == this-page
-            ))
-            if headings-here.len() == 0 and calc.even(this-page) { return }
             set text(font: fonts.sans, size: font-sizes.small)
             if calc.odd(here().page()) {
                 align(right, counter(page).display())
@@ -182,7 +170,10 @@
         counter(figure.where(kind: table)).update(0)
         counter(figure.where(kind: raw)).update(0)
 
-        pagebreak(weak: true, to: "odd")
+        {
+            set page(header: none, footer: none)
+            pagebreak(weak: true, to: "odd")
+        }
         v(4em)
         block[
             #set text(
@@ -507,7 +498,10 @@
 
     if cv-name != none {
         print-cv(cv-name, cv-entries, lang)
-        pagebreak(to: "odd")
+        {
+            set page(header: none, footer: none)
+            pagebreak(to: "odd")
+        }
     }
 
     if abstract-en != none {
@@ -522,7 +516,10 @@
 
     if acknowledgements != none {
         print-acknowledgements(acknowledgements, lang)
-        pagebreak(to: "odd")
+        {
+            set page(header: none, footer: none)
+            pagebreak(to: "odd")
+        }
     }
 
     if notation != none {
@@ -716,7 +713,10 @@
 
     if acknowledgements != none {
         print-acknowledgements(acknowledgements, lang)
-        pagebreak(to: "odd")
+        {
+            set page(header: none, footer: none)
+            pagebreak(to: "odd")
+        }
     }
 
     print-toc(lang: lang)
