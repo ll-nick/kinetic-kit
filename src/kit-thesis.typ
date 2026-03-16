@@ -90,11 +90,11 @@
     )
 
     // ── Colored links ─────────────────────────────────────────────────────
-    if colored-links {
-        show link: it => {
-            if type(it.dest) == str { text(fill: kit-colors.blue)[#it] } else {
-                it
-            }
+    show link: it => {
+        if colored-links and type(it.dest) == str {
+            text(fill: kit-colors.blue)[#it]
+        } else {
+            it
         }
     }
 

@@ -4,9 +4,11 @@
 
 #lorem(40) @example2024. #lorem(20)
 
+Additional information can be found at #link("https://www.kit.edu")[kit.edu].
+
 == Motivation
 
-#lorem(50) As shown by @example2023, #lorem(30)
+As shown by @example2023, #lorem(30)
 
 == Research Questions
 
@@ -33,7 +35,8 @@ The following questions are addressed in this dissertation:
     rect(width: 6cm, height: 3cm, fill: luma(230), stroke: none),
     caption: flex-caption(
         short: [A placeholder graphic.],
-        long: [An example figure showing a placeholder graphic with a longer caption in the body.],
+        long: [An example figure showing a placeholder graphic with a longer
+            caption in the body.],
     ),
 ) <fig:example>
 
