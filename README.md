@@ -7,6 +7,8 @@ An unofficial[^1] KIT dissertation and thesis[^2] template for [Typst](https://t
 > It doesn't have a stable API either.
 > You should probably not use it until it has reached a more mature state.
 
+See the build artifacts of the [latest CI run](https://github.com/ll-nick/kit-thesis/actions/workflows/ci.yml) for example PDFs.
+
 
 ## Getting Started
 

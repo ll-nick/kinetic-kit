@@ -21,10 +21,14 @@ jobs:
       - name: Build PDFs
         run: mise run build
 
+      - name: Rename template PDF
+        run: cp template/main.pdf template/template.pdf
+
       - name: Upload PDFs
         uses: actions/upload-artifact@v4
         with:
           name: pdfs
           path: |
-            examples/*.pdf
             docs/api-reference.pdf
+            examples/*.pdf
+            template/template.pdf
