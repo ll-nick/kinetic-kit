@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 # [MISE] description="Compile all examples and API docs"
-# [MISE] depends=["build:examples", "build:docs"]
+# [MISE] alias="b"
+# [MISE] depends=["build:docs", "build:examples", "build:template", "build:thumbnail"]
