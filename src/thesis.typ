@@ -3,11 +3,14 @@
 // Public API (re-exported via lib.typ):
 //   thesis(...) — Master's / Bachelor's / Diploma thesis
 
-#import "page-setup.typ": _page-base, _page-front-matter, _page-content, _page-appendix
+#import "page-setup.typ": (
+    _page-appendix, _page-base, _page-content, _page-front-matter,
+)
 #import "translations.typ": t
 #import "title-page.typ": print-thesis-title
 #import "front-matter.typ": (
-    print-abstract, print-acknowledgements, print-kurzfassung, print-abbreviations,
+    print-abbreviations, print-abstract, print-acknowledgements,
+    print-kurzfassung,
 )
 #import "back-matter.typ": print-bibliography
 #import "content-page.typ": print-lof, print-lol, print-lot, print-toc

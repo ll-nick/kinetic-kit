@@ -3,7 +3,7 @@
 // glossarium (abbreviation expansion), alexandria (multi-bibliography),
 // and drafting (margin annotations during the draft stage).
 //
-// Compile: typst compile --root . --font-path fonts example/dissertation-full.typ example/dissertation-full.pdf
+// Compile: typst compile --root . --font-path fonts examples/dissertation-full.typ examples/dissertation-full.pdf
 
 #import "/lib.typ": dissertation, flex-caption
 
@@ -34,7 +34,9 @@
 // ── Third-party: drafting (margin annotations) ────────────────────────────
 // Set is-draft here so the same value drives both the watermark and the
 // visibility of margin notes — set to false before final submission.
-#import "@preview/drafting:0.2.2": margin-note, note-outline, set-margin-note-defaults
+#import "@preview/drafting:0.2.2": (
+    margin-note, note-outline, set-margin-note-defaults,
+)
 #let is-draft = true
 #set-margin-note-defaults(hidden: not is-draft)
 

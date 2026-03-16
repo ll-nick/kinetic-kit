@@ -6,19 +6,19 @@ on:
   pull_request:
 
 jobs:
-  compile:
-    name: Compile example PDFs
+  build:
+    name: Build and Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up mise (installs Typst version from mise.toml)
+      - name: Set up mise
         uses: jdx/mise-action@v2
 
       - name: Run tests
         run: mise test
 
-      - name: Compile examples and docs
+      - name: Build PDFs
         run: mise run build
 
       - name: Upload PDFs
@@ -26,5 +26,5 @@ jobs:
         with:
           name: pdfs
           path: |
-            example/*.pdf
+            examples/*.pdf
             docs/api-reference.pdf

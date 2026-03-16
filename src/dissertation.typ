@@ -9,8 +9,8 @@
 #import "translations.typ": t
 #import "title-page.typ": print-dissertation-title
 #import "front-matter.typ": (
-    print-abbreviations, print-abstract, print-acknowledgements,
-    print-cv, print-kurzfassung, print-notation,
+    print-abbreviations, print-abstract, print-acknowledgements, print-cv,
+    print-kurzfassung, print-notation,
 )
 #import "back-matter.typ": (
     print-bibliography, print-own-patents, print-own-publications,

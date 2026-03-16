@@ -23,8 +23,8 @@
 #line(length: 100%)
 #v(0.5em)
 
-This document lists all public functions exported by `kit-thesis` with
-their parameters and types, as extracted from the source doc-comments.
+This document lists all public functions exported by `kit-thesis` with their
+parameters and types, as extracted from the source doc-comments.
 
 = Templates
 

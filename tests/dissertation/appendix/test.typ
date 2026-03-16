@@ -3,22 +3,26 @@
 #import "/lib.typ": dissertation
 
 #show: dissertation.with(
-  author-title:     "M.Sc.",
-  author-firstname: "Max",
-  author-surname:   "Mustermann",
-  author-male:      true,
-  title:            [Dissertation with Appendix],
-  lang:             "de",
-  bibliography:     bibliography("/example/bib/references.bib", title: none, style: "ieee"),
-  appendix: [
-    = Supplementary Material
+    author-title: "M.Sc.",
+    author-firstname: "Max",
+    author-surname: "Mustermann",
+    author-male: true,
+    title: [Dissertation with Appendix],
+    lang: "de",
+    bibliography: bibliography(
+        "/examples/bib/references.bib",
+        title: none,
+        style: "ieee",
+    ),
+    appendix: [
+        = Supplementary Material
 
-    #lorem(80)
+        #lorem(80)
 
-    == Detail A.1
+        == Detail A.1
 
-    #lorem(40)
-  ],
+        #lorem(40)
+    ],
 )
 
 = Chapter One

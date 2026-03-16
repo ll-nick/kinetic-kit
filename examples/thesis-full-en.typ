@@ -2,7 +2,7 @@
 // Mirrors thesis-full.typ with lang: "en" and colored-links: false
 // to verify English labels and black-link print output.
 //
-// Compile: typst compile --root . --font-path fonts example/thesis-full-en.typ example/thesis-full-en.pdf
+// Compile: typst compile --root . --font-path fonts examples/thesis-full-en.typ examples/thesis-full-en.pdf
 
 #import "/lib.typ": flex-caption, thesis
 
@@ -25,7 +25,9 @@
 #register-glossary(abbrevs)
 
 // ── Third-party: drafting (margin annotations) ────────────────────────────
-#import "@preview/drafting:0.2.2": margin-note, note-outline, set-margin-note-defaults
+#import "@preview/drafting:0.2.2": (
+    margin-note, note-outline, set-margin-note-defaults,
+)
 #let is-draft = true
 #set-margin-note-defaults(hidden: not is-draft)
 

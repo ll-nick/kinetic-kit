@@ -2,7 +2,7 @@
 // Mirrors dissertation-full.typ with lang: "en" and a female author
 // (author-male: false) to verify gendered German title page strings.
 //
-// Compile: typst compile --root . --font-path fonts example/dissertation-full-en.typ example/dissertation-full-en.pdf
+// Compile: typst compile --root . --font-path fonts examples/dissertation-full-en.typ examples/dissertation-full-en.pdf
 
 #import "/lib.typ": dissertation, flex-caption
 
@@ -29,7 +29,9 @@
 #show: alexandria(prefix: "p:", read: path => read(path))
 
 // ── Third-party: drafting (margin annotations) ────────────────────────────
-#import "@preview/drafting:0.2.2": margin-note, note-outline, set-margin-note-defaults
+#import "@preview/drafting:0.2.2": (
+    margin-note, note-outline, set-margin-note-defaults,
+)
 #let is-draft = true
 #set-margin-note-defaults(hidden: not is-draft)
 

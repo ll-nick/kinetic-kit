@@ -3,7 +3,7 @@
 // advisors, black links for print submission). See dissertation-full.typ
 // for a complete example with all features.
 //
-// Compile: typst compile --root . --font-path fonts example/dissertation-approved.typ example/dissertation-approved.pdf
+// Compile: typst compile --root . --font-path fonts examples/dissertation-approved.typ examples/dissertation-approved.pdf
 
 #import "/lib.typ": dissertation
 

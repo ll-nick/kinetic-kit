@@ -3,16 +3,20 @@
 #import "/lib.typ": dissertation
 
 #show: dissertation.with(
-  author-title:     "M.Sc.",
-  author-firstname: "Max",
-  author-surname:   "Mustermann",
-  author-male:      true,
-  title:            [Test Dissertation in English],
-  lang:             "en",
-  abstract-en:      [English abstract.],
-  show-lof:         true,
-  show-lot:         true,
-  bibliography:     bibliography("/example/bib/references.bib", title: none, style: "ieee"),
+    author-title: "M.Sc.",
+    author-firstname: "Max",
+    author-surname: "Mustermann",
+    author-male: true,
+    title: [Test Dissertation in English],
+    lang: "en",
+    abstract-en: [English abstract.],
+    show-lof: true,
+    show-lot: true,
+    bibliography: bibliography(
+        "/examples/bib/references.bib",
+        title: none,
+        style: "ieee",
+    ),
 )
 
 = Introduction

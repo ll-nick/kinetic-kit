@@ -133,10 +133,12 @@ abbreviations: [
 ```
 
 For automatic first-use expansion (e.g. "Karlsruher Institut für Technologie
-(KIT)" on first mention, "KIT" thereafter), the
-#link("https://typst.app/universe/package/glossarium")[glossarium] package
-integrates well with the template. See the full worked example in
-#link("https://github.com/ll-nick/kit-thesis/blob/main/example/dissertation-full.typ")[`example/dissertation-full.typ`]
+(KIT)" on first mention, "KIT" thereafter), the #link(
+    "https://typst.app/universe/package/glossarium",
+)[glossarium] package integrates well with the template. See the full example in
+#link(
+    "https://github.com/ll-nick/kit-thesis/blob/main/examples/dissertation-full.typ",
+)[`examples/dissertation-full.typ`]
 in the repository.
 
 == Citations and the Bibliography

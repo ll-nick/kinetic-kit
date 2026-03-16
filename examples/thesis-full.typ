@@ -2,7 +2,7 @@
 // Demonstrates every thesis() parameter and optional integrations:
 // glossarium (abbreviation expansion) and drafting (margin annotations).
 //
-// Compile: typst compile --root . --font-path fonts example/thesis-full.typ example/thesis-full.pdf
+// Compile: typst compile --root . --font-path fonts examples/thesis-full.typ examples/thesis-full.pdf
 
 #import "/lib.typ": flex-caption, thesis
 
@@ -25,7 +25,9 @@
 #register-glossary(abbrevs)
 
 // ── Third-party: drafting (margin annotations) ────────────────────────────
-#import "@preview/drafting:0.2.2": margin-note, note-outline, set-margin-note-defaults
+#import "@preview/drafting:0.2.2": (
+    margin-note, note-outline, set-margin-note-defaults,
+)
 #let is-draft = true
 #set-margin-note-defaults(hidden: not is-draft)
 
