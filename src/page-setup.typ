@@ -68,7 +68,7 @@
         } else { chapter-label }
         align(right, sec-label)
     }
-    line(length: 100%, stroke: 0.4pt + kit-colors.black)
+    line(length: 100%, stroke: 0.3pt + kit-colors.black)
 }
 
 
@@ -122,7 +122,7 @@
             ) {
                 return
             }
-            set text(font: fonts.sans, size: font-sizes.small)
+            set text(font: fonts.serif, size: font-sizes.base)
             if calc.odd(here().page()) {
                 align(right, counter(page).display())
             } else {
@@ -154,6 +154,7 @@
         counter(figure.where(kind: image)).update(0)
         counter(figure.where(kind: table)).update(0)
         counter(figure.where(kind: raw)).update(0)
+        counter(footnote).update(0)
         {
             set page(header: none, footer: none)
             pagebreak(weak: true, to: "odd")
@@ -164,6 +165,7 @@
                 font: fonts.sans,
                 size: font-sizes.chapter,
                 weight: "bold",
+                hyphenate: false,
             )
             #it
         ]
@@ -177,6 +179,7 @@
                 font: fonts.sans,
                 size: font-sizes.section,
                 weight: "bold",
+                hyphenate: false,
             )
             #it
         ]
@@ -190,6 +193,7 @@
                 font: fonts.sans,
                 size: font-sizes.subsection,
                 weight: "bold",
+                hyphenate: false,
             )
             #it
         ]
@@ -203,6 +207,7 @@
                 font: fonts.sans,
                 size: font-sizes.subsubsection,
                 weight: "bold",
+                hyphenate: false,
             )
             #it.body
         ]
@@ -216,6 +221,8 @@
         strong(it)
     }
     set outline.entry(fill: repeat(".", gap: 0.4em))
+    show outline: set par(justify: false)
+    show outline: set text(hyphenate: false)
 
     // ── Figures ──────────────────────────────────────────────────────────
     set figure(
@@ -227,13 +234,26 @@
         .at(text.lang)
         .listing)
 
-    show figure.caption: it => [
-        #set text(size: font-sizes.small)
-        #text(weight: "bold")[#it.supplement #context it.counter.display(
-                it.numbering,
-            ):]
-        #it.body
-    ]
+    show figure.caption: it => layout(container => context {
+        let body = [
+            #set text(size: font-sizes.small)
+            #text(weight: "bold")[#it.supplement #it.counter.display(
+                    it.numbering,
+                ):]
+            #it.body
+        ]
+        // left-align captions ≥ 3 lines, center shorter ones.
+        // Threshold sits between 2-line (~15.7 pt) and 3-line (~26.2 pt) heights
+        // measured at 8 pt Libertinus Serif with 0.75 em leading.
+        let h = measure(body, width: container.width).height
+        if h > font-sizes.small * 2.5 {
+            align(left, body)
+        } else {
+            align(center, body)
+        }
+    })
+
+    show footnote.entry: set text(size: font-sizes.footnote)
 
     set figure(numbering: it => {
         let ch = counter(heading.where(level: 1)).at(here()).first()

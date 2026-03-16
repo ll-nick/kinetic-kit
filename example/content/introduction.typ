@@ -58,6 +58,28 @@ As shown in @fig:example, #lorem(20)
 
 @tab:example summarises the results.
 
+== A Footnote Example
+
+#lorem(30).#footnote[This is a footnote. #lorem(80)] #lorem(20)
+
+== A Long Caption Example
+
+// Short caption: one line → should be centred
+#figure(
+    rect(width: 4cm, height: 2cm, fill: luma(220), stroke: none),
+    caption: [A short, centred caption.],
+)
+
+// Long caption: three or more lines → should be left-aligned
+#figure(
+    rect(width: 4cm, height: 2cm, fill: luma(220), stroke: none),
+    caption: [
+        A long caption that intentionally spans three or more lines to verify
+        that the conditional alignment logic switches to left-justified text as
+        recommended by KSP for very long captions of three lines or more.
+    ],
+)
+
 == An Equation Example
 
 The system dynamics are described by
