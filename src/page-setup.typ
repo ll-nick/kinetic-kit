@@ -209,6 +209,14 @@
         v(0.2em)
     }
 
+    // ── Outline entries ───────────────────────────────────────────────────
+
+    show outline.entry.where(level: 1): it => {
+        v(1.6em, weak: true)
+        strong(it)
+    }
+    set outline.entry(fill: repeat(".", gap: 0.4em))
+
     // ── Figures ──────────────────────────────────────────────────────────
     set figure(
         supplement: it => if it.func() == table { t.at(lang).table } else {
