@@ -66,7 +66,7 @@
     // ── Back matter ─────────────────────────────────────────────────────────
     show-lof: true,
     show-lot: true,
-    show-lol: false,
+    show-lol: true,
 
     // Heading added by template; use bibliographyx() (via alexandria) for
     // bibliography-style formatting alongside the main bibliography().

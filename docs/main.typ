@@ -28,9 +28,13 @@ their parameters and types, as extracted from the source doc-comments.
 
 = Templates
 
-#let kit-thesis-src = read("../src/kit-thesis.typ")
-#let module = tidy.parse-module(kit-thesis-src, name: "kit-thesis")
+#let dissertation-src = read("../src/dissertation.typ")
+#let module = tidy.parse-module(dissertation-src, name: "dissertation")
 #tidy.show-module(module, show-outline: true, sort-functions: false)
+
+#let thesis-src = read("../src/thesis.typ")
+#let thesis-module = tidy.parse-module(thesis-src, name: "thesis")
+#tidy.show-module(thesis-module, show-outline: true, sort-functions: false)
 
 = Utilities
 

@@ -1,9 +1,5 @@
 // Font configuration for KIT dissertation template
-// A5 paper, 10 pt base — as required by KIT Scientific Publishing (KSP)
-//
-// Fonts are bundled in the fonts/ directory (SIL OFL 1.1 license).
-// Pass --font-path ../scholarly-kit/fonts when compiling the dissertation,
-// or set font-paths in dissertation/typst.toml.
+// A5 paper, 10 pt base — as recommended by KIT Scientific Publishing (KSP)
 
 #let fonts = (
     serif: ("Libertinus Serif",),

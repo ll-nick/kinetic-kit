@@ -130,6 +130,8 @@ See `example/dissertation-approved.typ` for a complete example with all options 
 | `abstract-en` | `content \| none` | `none` | |
 | `abstract-de` | `content \| none` | `none` | |
 | `acknowledgements` | `content \| none` | `none` | |
+| `abbreviations` | `content \| none` | `none` | Manual acronym list; ignored when `glossary-entries` is set |
+| `glossary-entries` | `array \| none` | `none` | Glossarium entries for auto-expansion via `gls()` |
 | `show-lof` | `bool` | `true` | |
 | `show-lot` | `bool` | `true` | |
 | `show-lol` | `bool` | `false` | |
