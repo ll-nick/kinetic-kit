@@ -4,17 +4,14 @@ version = "0.1.0"
 compiler = "0.14.2"
 repository = "https://github.com/ll-nick/scholarly-kit"
 entrypoint = "lib.typ"
-description = "KIT dissertation / thesis template — KSP-compatible"
+description = "Unofficial KIT dissertation / thesis template — KSP-compatible"
 authors = ["Nick Le Large <https://github.com/ll-nick>"]
 license = "MIT-0"
 categories = ["thesis"]
-keywords = ["thesis", "dissertation", "kit"]
+disciplines = ["engineering", "computer-science"]
+keywords = ["dissertation", "doctoral", "karlsruhe", "kit", "ksp"]
 
 [template]
 path = "template"
 entrypoint = "main.typ"
-thumbnail = "thumbnail.png"
-
-[dependencies]
-glossarium = ">=0.5.10"
-alexandria = ">=0.2.2"
+thumbnail = "template/thumbnail.png"
