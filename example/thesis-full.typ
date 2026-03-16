@@ -25,7 +25,7 @@
 #register-glossary(abbrevs)
 
 // ── Third-party: drafting (margin annotations) ────────────────────────────
-#import "@preview/drafting:0.2.2": margin-note, set-margin-note-defaults
+#import "@preview/drafting:0.2.2": margin-note, note-outline, set-margin-note-defaults
 #let is-draft = true
 #set-margin-note-defaults(hidden: not is-draft)
 
@@ -107,3 +107,5 @@ Kurzform.
 #margin-note[Diesen Abschnitt noch ausbauen.]
 
 #include "content/introduction.typ"
+
+#if is-draft { note-outline() }
