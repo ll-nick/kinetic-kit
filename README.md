@@ -1,8 +1,9 @@
 # kit-thesis
 
-An unofficial[^1] KIT dissertation and thesis template for [Typst](https://typst.app), designed to comply with the formatting requirements of [KIT Scientific Publishing (KSP)](https://www.bibliothek.kit.edu/ksp-toolbox.php).
+An unofficial[^1] KIT dissertation and thesis[^2] template for [Typst](https://typst.app), designed to comply with the formatting requirements of [KIT Scientific Publishing (KSP)](https://www.bibliothek.kit.edu/ksp-toolbox.php).
 
-> **Please note:** This template is in early development and may contain incomplete features, bugs, or formatting issues.
+> [!NOTE]
+> This template is in early development and may contain incomplete features, bugs, or formatting issues.
 > It doesn't have a stable API either.
 > You should probably not use it until it has reached a more mature state.
 
@@ -108,7 +109,7 @@ which is auto-generated from the source code.
 </details>
 
 <details>
-<summary><strong>Parameters — <code>thesis(...)</code></strong>[^2]</summary>
+<summary><strong>Parameters — <code>thesis(...)</code></strong></summary>
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
@@ -291,16 +292,18 @@ tt run --font-path fonts tests/dissertation/appendix  # run a single test
 
 Template code: MIT-0 (no attribution required). Bundled fonts (`fonts/`): SIL OFL 1.1.
 
-[^1] This is an unofficial community template, not affiliated with, endorsed by,
-or approved by KIT (Karlsruhe Institute of Technology) or KSP (KIT Scientific Publishing).
-The template attempts to follow the [KSP Basic Layout Guidelines](https://www.bibliothek.kit.edu/downloads/KSP/KSP-Basic-Layout-Guidelines.pdf) but compliance is not guaranteed.
-Always verify your final manuscript with KSP before submission.
-
-[^2] This template was implemented to ~~procrastinate writing~~ write a dissertation. The thesis template is more of a byproduct and probably less polished.
-
 ## Acknowledgements
 
 This template has been implemented with AI assistance (Claude Code by Anthropic).
 The basis for the template are the [KSP guidelines](https://www.bibliothek.kit.edu/downloads/KSP/KSP-Basic-Layout-Guidelines.pdf),
 the [official KSP LaTeX template](https://gitlab.kit.edu/kit/ksp/ksp-vorlage-a5-de-diss),
 as well as [this great LaTeX template](https://gitlab.cc-asp.fraunhofer.de/kit-ksp/dissertation-template).
+
+
+[^1]: This is an unofficial community template, not affiliated with, endorsed by,
+or approved by KIT (Karlsruhe Institute of Technology) or KSP (KIT Scientific Publishing).
+The template attempts to follow the [KSP Basic Layout Guidelines](https://www.bibliothek.kit.edu/downloads/KSP/KSP-Basic-Layout-Guidelines.pdf) but compliance is not guaranteed.
+Always verify your final manuscript with KSP before submission.
+
+[^2]: This template was implemented to ~~procrastinate writing~~ write a dissertation. The thesis template is more of a byproduct and probably less polished.
+
