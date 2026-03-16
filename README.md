@@ -42,30 +42,29 @@ mise run build                # or: bash mise/tasks/build/examples && bash mise/
 
 Use `mise run install:editable` during development — changes to the template take effect immediately without reinstalling. Use `mise run install` for a stable copy that persists if the repository is deleted.
 
-In `dissertation/main.typ`:
+In `main.typ`:
 
 ```typst
-#import "@local/scholarly-kit:0.1.0": dissertation, appendix
+#import "@local/scholarly-kit:0.1.0": dissertation
 
 #show: dissertation.with(
-  author-firstname: "Max",
-  author-surname:   "Mustermann",
-  title:            [Title of the Dissertation],
-  lang:             "de",
-  abstract-de:      include "content/abstract-de.typ",
-  abstract-en:      include "content/abstract-en.typ",
+  author-firstname:  "Max",
+  author-surname:    "Mustermann",
+  title:             [Title of the Dissertation],
+  lang:              "de",
+  abstract-de:       include "content/abstract-de.typ",
+  abstract-en:       include "content/abstract-en.typ",
+  bibliography:      bibliography("bib/references.bib", title: none, style: "ieee"),
+  appendix-content: [
+    = Appendix Chapter
+    ...
+  ],
 )
 
 #include "content/01-introduction.typ"
-
-#pagebreak()
-#bibliography("bib/references.bib", title: "Literaturverzeichnis", style: "ieee")
-
-#show: appendix
-= Appendix Chapter
 ```
 
-See `example/dissertation-approved.typ` for a complete example with all options documented.
+See `example/main.typ` for a complete example with all options, or consult the [API Reference](docs/api-reference.pdf) for full parameter documentation.
 
 ## Parameters — `dissertation(...)`
 
@@ -96,7 +95,7 @@ See `example/dissertation-approved.typ` for a complete example with all options 
 | `cv-entries` | `array` | `()` | `(year, description)` tuples |
 | `binding-correction` | `length` | `0mm` | BCOR added to inside margin (8–10 mm for print) |
 | `colored-links` | `bool` | `true` | KIT Blue hyperlinks (screen); `false` = black (print) |
-| `draft` | `bool` | `false` | Show "ENTWURF" watermark on content pages |
+| `draft` | `bool` | `false` | Show "DRAFT" note |
 | `draft-info` | `str \| none` | `none` | Version string in watermark (e.g. git SHA) |
 | `notation` | `content \| none` | `none` | Symbol/notation list |
 | `abbreviations` | `content \| none` | `none` | Manual acronym list; ignored when `glossary-entries` is set |
@@ -125,7 +124,7 @@ See `example/dissertation-approved.typ` for a complete example with all options 
 | `margin-preset` | `"short" \| "medium" \| "long"` | `"short"` | |
 | `binding-correction` | `length` | `0mm` | BCOR added to inside margin |
 | `colored-links` | `bool` | `true` | KIT Blue links (screen); `false` = black (print) |
-| `draft` | `bool` | `false` | Show "ENTWURF" watermark on content pages |
+| `draft` | `bool` | `false` | Show "DRAFT" note |
 | `draft-info` | `str \| none` | `none` | Version string in watermark |
 | `abstract-en` | `content \| none` | `none` | |
 | `abstract-de` | `content \| none` | `none` | |
@@ -138,7 +137,8 @@ See `example/dissertation-approved.typ` for a complete example with all options 
 
 ## Draft Mode
 
-Set `draft: true` to stamp a light "ENTWURF" watermark on every content page. Optionally pass a version string (e.g. the current git SHA) via `draft-info`:
+Set `draft: true` to print a "DRAFT" note at the bottom of each page.
+You can also pass a `draft-info` string to include additional information, such as the current date or a git commit SHA for version tracking:
 
 ```typst
 #show: dissertation.with(
@@ -184,17 +184,6 @@ Choose based on the total page count of the finished dissertation (KSP requireme
 | `"short"` | < 200 | 20 mm | 15 mm |
 | `"medium"` | 200–399 | 23 mm | 15 mm |
 | `"long"` | ≥ 400 | 25 mm | 15 mm |
-
-## KSP Compliance Notes
-
-- Paper: DIN A5
-- Base font: 10 pt (Libertinus Serif)
-- Line spacing: 1.15×
-- No Computer Modern or LM fonts (forbidden by KSP)
-- Chapters start on odd (right-hand) pages
-- Blank pages carry no header, footer, or page number
-- Page numbers: outside (right on odd, left on even pages)
-- Headers: chapter title on left page, section title on right page
 
 ## License
 
