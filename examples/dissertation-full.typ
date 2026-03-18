@@ -34,9 +34,7 @@
 // ── Third-party: drafting (margin annotations) ────────────────────────────
 // Set is-draft here so the same value drives both the watermark and the
 // visibility of margin notes — set to false before final submission.
-#import "@preview/drafting:0.2.2": (
-    margin-note, note-outline, set-margin-note-defaults,
-)
+#import "@preview/drafting:0.2.2": margin-note, note-outline, set-margin-note-defaults
 #let is-draft = true
 #set-margin-note-defaults(hidden: not is-draft)
 
@@ -125,8 +123,8 @@
         full: true,
     ),
     own-patents: [
-        Mustermann, M. (2024). *Verfahren zur Optimierung von Musterverfahren*.
-        Deutsches Patent- und Markenamt, DE 10 2024 000 001 A1.
+        Mustermann, M. (2024). *Verfahren zur Optimierung von Musterverfahren*. Deutsches
+        Patent- und Markenamt, DE 10 2024 000 001 A1.
     ],
 
     // ── Bibliography ────────────────────────────────────────────────────────
@@ -150,9 +148,9 @@
 
 // gls() expands to "Karlsruher Institut für Technologie (KIT)" on first use,
 // then "KIT" on subsequent uses. glspl() uses the plural form.
-Diese Arbeit wurde am #gls("kit") durchgeführt und über #gls("ksp")
-veröffentlicht. Die Ergebnisse verbessern den #gls("rmse") um 50 %. Bei erneuter
-Erwähnung: #gls("kit") zeigt nur die Kurzform.
+Diese Arbeit wurde am #gls("kit") durchgeführt und über #gls("ksp") veröffentlicht. Die
+Ergebnisse verbessern den #gls("rmse") um 50 %. Bei erneuter Erwähnung: #gls("kit") zeigt
+nur die Kurzform.
 
 #margin-note[Diesen Abschnitt noch ausbauen.]
 

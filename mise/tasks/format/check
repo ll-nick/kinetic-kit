@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# [MISE] description="Check Typst formatting without modifying files"
+
+typstyle \
+    --indent-width 4 \
+    --line-width 90 \
+    --wrap-text \
+    --check \
+    .

@@ -56,14 +56,13 @@
 
     // ── Front matter ──────────────────────────────────────────────────────────
     abstract-en: [
-        Here should be your English abstract. It summarizes the research
-        question, methodology, key results, and conclusion.
+        Here should be your English abstract. It summarizes the research question,
+        methodology, key results, and conclusion.
     ],
 
     abstract-de: [
-        Hier steht die deutsche Kurzfassung (Abstract). Sie fasst die
-        Fragestellung, Methodik, wichtigsten Ergebnisse und Schlussfolgerung
-        zusammen.
+        Hier steht die deutsche Kurzfassung (Abstract). Sie fasst die Fragestellung,
+        Methodik, wichtigsten Ergebnisse und Schlussfolgerung zusammen.
     ],
 
     // acknowledgements: [

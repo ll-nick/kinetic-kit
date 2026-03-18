@@ -275,6 +275,9 @@ With it installed, you can run all tasks with `mise run <task>` (e.g. `mise run 
 | `mise run build:docs` | Compile API reference (`docs/api-reference.pdf`) |
 | `mise run build:template` | Compile the Typst Universe template (`template/`) |
 | `mise run build:thumbnail` | Compile the template thumbnail |
+| `mise run format` | Format all Typst files in-place |
+| `mise run format:check` | Check formatting without modifying files (used in CI) |
+| `mise run format:diff` | Show formatting diff for all Typst files |
 | `mise run install` | Install as local Typst package (copy) |
 | `mise run install:editable` | Install as local Typst package (symlink) |
 | `mise run install:fonts` | Install bundled Libertinus fonts to user font directory |

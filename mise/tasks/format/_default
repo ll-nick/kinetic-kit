@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# [MISE] description="Format all Typst files in-place"
+
+typstyle \
+    --indent-width 4 \
+    --line-width 90 \
+    --wrap-text \
+    --inplace \
+    .

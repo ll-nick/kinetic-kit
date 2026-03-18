@@ -3,9 +3,7 @@
 // Public API (re-exported via lib.typ):
 //   dissertation(...) — doctoral dissertation
 
-#import "page-setup.typ": (
-    _page-appendix, _page-base, _page-content, _page-front-matter,
-)
+#import "page-setup.typ": _page-appendix, _page-base, _page-content, _page-front-matter
 #import "translations.typ": t
 #import "title-page.typ": print-dissertation-title
 #import "front-matter.typ": (
