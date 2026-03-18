@@ -3,7 +3,7 @@
 // Public API (re-exported via lib.typ):
 //   dissertation(...) — doctoral dissertation
 
-#import "page-setup.typ": _page-appendix, _page-base, _page-content, _page-front-matter
+#import "page-setup.typ": setup-appendix, setup-content, setup-front-matter, setup-page
 #import "translations.typ": t
 #import "title-page.typ": print-dissertation-title
 #import "front-matter.typ": (
@@ -109,7 +109,7 @@
     )
 
     // ── Global page/text/heading setup -─────────────────────────────────────
-    show: _page-base.with(
+    show: setup-page.with(
         margin-preset: margin-preset,
         lang: lang,
         binding-correction: binding-correction,
@@ -139,7 +139,7 @@
     )
 
     // ── Front matter (Roman numerals) ───────────────────────────────────────
-    show: _page-front-matter
+    show: setup-front-matter
     counter(page).update(0)
 
     if cv-name != none {
@@ -168,7 +168,7 @@
     print-toc(lang: lang)
 
     // ── Main content (Arabic numerals) ──────────────────────────────────────
-    show: _page-content
+    show: setup-content
     counter(page).update(1)
 
     doc
@@ -199,7 +199,7 @@
     }
 
     if appendix != none {
-        show: _page-appendix
+        show: setup-appendix
         appendix
     }
 }

@@ -4,10 +4,10 @@
 // dissertation and thesis templates:
 //   _header               — context-aware running header
 //   _draft-indicator()   — "ENTWURF"/"DRAFT" watermark
-//   _page-base()         — full document style setup (page, headings, figures, equations, code)
-//   _page-front-matter() — Roman numeral pagination wrapper
-//   _page-content()      — Arabic numeral pagination wrapper
-//   _page-appendix()     — A.1 numbering wrapper
+//   setup-page()         — full document style setup (page, headings, figures, equations, code)
+//   setup-front-matter() — Roman numeral pagination wrapper
+//   setup-content()      — Arabic numeral pagination wrapper
+//   setup-appendix()     — A.1 numbering wrapper
 
 #import "kit-colors.typ": kit-colors
 #import "kit-fonts.typ": font-sizes, fonts, line-spacing
@@ -89,7 +89,7 @@
 
 /// Apply the full KIT document style: page geometry, running headers, KSP
 /// typography, heading styles, figure captions, equations, and code blocks.
-/// Use as a show rule: `#show: components.page-base.with(...)`.
+/// Use as a show rule: `#show: setup-page.with(...)`.
 ///
 /// - margin-preset (str): Margin profile keyed on expected page count —
 ///   `"short"` (under 200 pp), `"medium"` (200–399 pp), `"long"` (400+ pp).
@@ -100,7 +100,7 @@
 /// - draft-info (content): Optional extra text appended to the watermark (e.g. a git SHA).
 /// - doc (content): Document body (injected automatically by the show rule).
 /// -> content
-#let _page-base(
+#let setup-page(
     margin-preset: "short",
     lang: "de",
     binding-correction: 0mm,
@@ -292,33 +292,33 @@
 // ── Section-specific page setup (thin wrappers) ───────────────────────────
 
 /// Switch to Roman numeral page numbering and remove heading numbering.
-/// Apply before front-matter content: `#show: components.page-front-matter`.
+/// Apply before front-matter content: `#show: setup-front-matter`.
 ///
 /// - doc (content): Document body (injected automatically by the show rule).
 /// -> content
-#let _page-front-matter(doc) = {
+#let setup-front-matter(doc) = {
     set page(numbering: "i")
     set heading(numbering: none)
     doc
 }
 
 /// Switch to Arabic page numbering and enable `1.1` heading numbering.
-/// Apply before the main content: `#show: components.page-content`.
+/// Apply before the main content: `#show: setup-content`.
 ///
 /// - doc (content): Document body (injected automatically by the show rule).
 /// -> content
-#let _page-content(doc) = {
+#let setup-content(doc) = {
     set page(numbering: "1")
     set heading(numbering: "1.1")
     doc
 }
 
 /// Switch to `A.1` heading numbering and reset the heading counter.
-/// Apply before appendix chapters: `#show: components.page-appendix`.
+/// Apply before appendix chapters: `#show: setup-appendix`.
 ///
 /// - doc (content): Document body (injected automatically by the show rule).
 /// -> content
-#let _page-appendix(doc) = {
+#let setup-appendix(doc) = {
     set heading(numbering: "A.1")
     counter(heading).update(0)
     doc
