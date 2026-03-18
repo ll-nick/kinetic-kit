@@ -3,6 +3,10 @@
 #import "kit-fonts.typ": font-sizes, fonts
 #import "translations.typ": t
 
+/// Print the table of contents, including a separate appendix outline when present.
+///
+/// - lang (str): Document language — `"de"` or `"en"`.
+/// -> content
 #let print-toc(lang: "de") = {
     let tr = t.at(lang)
 
@@ -39,6 +43,10 @@
     }
 }
 
+/// Print the list of figures.
+///
+/// - lang (str): Document language — `"de"` or `"en"`.
+/// -> content
 #let print-lof(lang: "de") = {
     state("in-outline", false).update(true)
     outline(
@@ -48,6 +56,10 @@
     state("in-outline", false).update(false)
 }
 
+/// Print the list of tables.
+///
+/// - lang (str): Document language — `"de"` or `"en"`.
+/// -> content
 #let print-lot(lang: "de") = {
     state("in-outline", false).update(true)
     outline(
@@ -57,6 +69,10 @@
     state("in-outline", false).update(false)
 }
 
+/// Print the list of listings.
+///
+/// - lang (str): Document language — `"de"` or `"en"`.
+/// -> content
 #let print-lol(lang: "de") = {
     state("in-outline", false).update(true)
     outline(

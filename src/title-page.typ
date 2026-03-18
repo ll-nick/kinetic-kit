@@ -8,6 +8,26 @@
 // ── Dissertation Title Page ────────────────────────────────────────────────
 // All strings are always in German (legal document requirement).
 
+/// Render the KIT dissertation title page (German legal format).
+/// All text on this page is always in German regardless of document language.
+///
+/// - title (content): Dissertation title.
+/// - author-title (content): Academic title preceding the author's name (`none` = omit).
+/// - author-firstname (str): Author's first name.
+/// - author-surname (str): Author's surname.
+/// - author-male (bool): Selects grammatical gender for the degree article.
+/// - place-of-birth (str): Author's place of birth (`none` = omit).
+/// - doc-degree (str): Degree name in masculine form (e.g. `"Doktor-Ingenieur"`).
+/// - doc-degree-f (str): Degree name in feminine form (e.g. `"Doktor-Ingenieurin"`).
+/// - department (str): KIT department or faculty.
+/// - university-genitive (str): University name in genitive (e.g. `"des Karlsruher Instituts…"`).
+/// - status-approved (bool): `false` = submitted version, `true` = approved version.
+/// - exam-date (content): Date of oral examination — shown only when `status-approved` is `true`.
+/// - main-advisor (content): Main referee — shown only when `status-approved` is `true`.
+/// - main-advisor-male (bool): Selects gendered label for the main advisor.
+/// - co-advisor (content): Co-referee — shown only when `status-approved` is `true`.
+/// - co-advisor-male (bool): Selects gendered label for the co-advisor.
+/// -> content
 #let print-dissertation-title(
     title,
     author-title,
@@ -118,6 +138,20 @@
 
 // ── Master / Bachelor Thesis Title Page ───────────────────────────────────
 
+/// Render the KIT master's / bachelor's thesis title page (German legal format).
+/// All text on this page is always in German regardless of document language.
+///
+/// - title (content): Thesis title.
+/// - thesis-type (str): Thesis type (e.g. `"Masterarbeit"`, `"Bachelorarbeit"`).
+/// - author-firstname (str): Author's first name.
+/// - author-surname (str): Author's surname.
+/// - department (str): KIT department or faculty.
+/// - university-genitive (str): University name in genitive (e.g. `"des Karlsruher Instituts…"`).
+/// - examiner (content): First examiner (Erstprüfer).
+/// - supervisor (content): Supervisor (Betreuer).
+/// - date-submitted (content): Submission date string.
+/// - lang (str): Document language (currently unused — title page is always German).
+/// -> content
 #let print-thesis-title(
     title,
     thesis-type,
