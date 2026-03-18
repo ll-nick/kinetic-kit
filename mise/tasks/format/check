@@ -3,6 +3,7 @@
 
 typstyle \
     --indent-width 4 \
+    --line-width 90 \
     --wrap-text \
     --check \
     .

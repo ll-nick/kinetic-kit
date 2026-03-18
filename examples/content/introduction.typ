@@ -35,8 +35,8 @@ The following questions are addressed in this dissertation:
     rect(width: 6cm, height: 3cm, fill: luma(230), stroke: none),
     caption: flex-caption(
         short: [A placeholder graphic.],
-        long: [An example figure showing a placeholder graphic with a longer
-            caption in the body.],
+        long: [An example figure showing a placeholder graphic with a longer caption in
+            the body.],
     ),
 ) <fig:example>
 
@@ -74,9 +74,9 @@ As shown in @fig:example, #lorem(20)
 #figure(
     rect(width: 4cm, height: 2cm, fill: luma(220), stroke: none),
     caption: [
-        A long caption that intentionally spans three or more lines to verify
-        that the conditional alignment logic switches to left-justified text as
-        recommended by KSP for very long captions of three lines or more.
+        A long caption that intentionally spans three or more lines to verify that the
+        conditional alignment logic switches to left-justified text as recommended by KSP
+        for very long captions of three lines or more.
     ],
 )
 

@@ -29,9 +29,7 @@
 #show: alexandria(prefix: "p:", read: path => read(path))
 
 // ── Third-party: drafting (margin annotations) ────────────────────────────
-#import "@preview/drafting:0.2.2": (
-    margin-note, note-outline, set-margin-note-defaults,
-)
+#import "@preview/drafting:0.2.2": margin-note, note-outline, set-margin-note-defaults
 #let is-draft = true
 #set-margin-note-defaults(hidden: not is-draft)
 
@@ -109,8 +107,8 @@
         full: true,
     ),
     own-patents: [
-        Doe, J. (2024). *A Method for Optimising Sample Processes*. Deutsches
-        Patent- und Markenamt, DE 10 2024 000 002 A1.
+        Doe, J. (2024). *A Method for Optimising Sample Processes*. Deutsches Patent- und
+        Markenamt, DE 10 2024 000 002 A1.
     ],
 
     // ── Bibliography ────────────────────────────────────────────────────────
@@ -134,9 +132,8 @@
 
 // gls() expands to "Karlsruhe Institute of Technology (KIT)" on first use,
 // then "KIT" on subsequent uses. glspl() uses the plural form.
-This work was conducted at #gls("kit") and published via #gls("ksp"). The
-results improve the #gls("rmse") by 50 %. On second reference: #gls("kit") uses
-only the short form.
+This work was conducted at #gls("kit") and published via #gls("ksp"). The results improve
+the #gls("rmse") by 50 %. On second reference: #gls("kit") uses only the short form.
 
 #margin-note[Expand this section.]
 

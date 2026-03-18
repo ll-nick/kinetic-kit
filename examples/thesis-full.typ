@@ -25,9 +25,7 @@
 #register-glossary(abbrevs)
 
 // ── Third-party: drafting (margin annotations) ────────────────────────────
-#import "@preview/drafting:0.2.2": (
-    margin-note, note-outline, set-margin-note-defaults,
-)
+#import "@preview/drafting:0.2.2": margin-note, note-outline, set-margin-note-defaults
 #let is-draft = true
 #set-margin-note-defaults(hidden: not is-draft)
 
@@ -102,9 +100,8 @@
 
 = Einleitung
 
-Diese Arbeit wurde am #gls("kit") durchgeführt. Die Ergebnisse verbessern den
-#gls("rmse") um 50 %. Bei erneuter Erwähnung: #gls("kit") zeigt nur die
-Kurzform.
+Diese Arbeit wurde am #gls("kit") durchgeführt. Die Ergebnisse verbessern den #gls("rmse")
+um 50 %. Bei erneuter Erwähnung: #gls("kit") zeigt nur die Kurzform.
 
 #margin-note[Diesen Abschnitt noch ausbauen.]
 

@@ -176,8 +176,7 @@
         row-gutter: 3mm,
         [Erstprüfer:], if examiner != none { examiner } else { "–" },
         [Betreuer:], if supervisor != none { supervisor } else { "–" },
-        [Eingereicht am:],
-        if date-submitted != none { date-submitted } else { "–" },
+        [Eingereicht am:], if date-submitted != none { date-submitted } else { "–" },
     )
     v(4mm)
 }

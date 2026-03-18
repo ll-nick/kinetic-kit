@@ -13,9 +13,7 @@
 
     // Main content entries
     outline(
-        target: heading
-            .where(numbering: "1.1")
-            .or(heading.where(numbering: none)),
+        target: heading.where(numbering: "1.1").or(heading.where(numbering: none)),
         title: tr.toc,
         depth: 3,
         indent: 1.6em,

@@ -117,8 +117,7 @@
         footer: context {
             // Suppress before the very first chapter
             if (
-                query(selector(heading.where(level: 1)).before(here())).len()
-                    == 0
+                query(selector(heading.where(level: 1)).before(here())).len() == 0
             ) {
                 return
             }
@@ -226,16 +225,14 @@
             t.at(lang).figure
         },
     )
-    show figure.where(kind: raw): set figure(supplement: context t
-        .at(text.lang)
-        .listing)
+    show figure.where(kind: raw): set figure(supplement: context t.at(text.lang).listing)
 
     show figure.caption: it => layout(container => context {
         let body = [
             #set text(size: font-sizes.small)
-            #text(weight: "bold")[#it.supplement #it.counter.display(
-                    it.numbering,
-                ):]
+            #text(
+                weight: "bold",
+            )[#it.supplement #it.counter.display(it.numbering):]
             #it.body
         ]
         // left-align captions ≥ 3 lines, center shorter ones.
