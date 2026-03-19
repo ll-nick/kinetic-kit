@@ -47,7 +47,7 @@ The mise tasks are plain bash scripts in `mise/tasks/` and can be run directly w
 
 The single entry point re-exports:
 - `dissertation()`, `thesis()` — main template functions (from `src/dissertation.typ` and `src/thesis.typ`)
-- `flex-caption` — figure/table caption utility (from `src/content-page.typ`)
+- `flex-caption` — figure/table caption utility (from `src/outlines.typ`)
 
 ### Source Modules (`src/`)
 
@@ -63,7 +63,7 @@ The single entry point re-exports:
 | `title-page.typ` | Dissertation/thesis title page (German legal format) |
 | `front-matter.typ` | Abstract, Kurzfassung, acknowledgements, CV, notation, abbreviations |
 | `back-matter.typ` | Bibliography, own publications, own patents, supervised theses |
-| `content-page.typ` | TOC, List of Figures/Tables/Listings, `flex-caption` |
+| `outlines.typ` | TOC, List of Figures/Tables/Listings, `flex-caption` |
 
 ### Template Flow
 
@@ -76,7 +76,7 @@ Headers are suppressed on chapter-opening pages and blank pages. The draft water
 
 ### API Documentation (`docs/`)
 
-`docs/main.typ` uses the [tidy](https://typst.universe/package/tidy) package to auto-generate `docs/api-reference.pdf` from doc-comments in `dissertation.typ`, `thesis.typ`, and `content-page.typ`.
+`docs/main.typ` uses the [tidy](https://typst.universe/package/tidy) package to auto-generate `docs/api-reference.pdf` from doc-comments in `dissertation.typ`, `thesis.typ`, and `outlines.typ`.
 
 ### Examples (`examples/`)
 

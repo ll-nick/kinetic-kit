@@ -14,7 +14,7 @@
     print-bibliography, print-own-patents, print-own-publications,
     print-supervised-theses,
 )
-#import "content-page.typ": print-lof, print-lol, print-lot, print-toc
+#import "outlines.typ": print-lof, print-lol, print-lot, print-toc
 
 
 /// KIT doctoral dissertation template.

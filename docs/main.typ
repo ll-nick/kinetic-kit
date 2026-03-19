@@ -36,12 +36,6 @@ and types, as extracted from the source doc-comments.
 #let thesis-module = tidy.parse-module(thesis-src, name: "thesis")
 #tidy.show-module(thesis-module, show-outline: true, sort-functions: false)
 
-= Utilities
-
-#let content-page-src = read("../src/content-page.typ")
-#let utils-module = tidy.parse-module(content-page-src, name: "content-page")
-#tidy.show-module(utils-module, show-outline: true, sort-functions: false)
-
 = Components
 
 Individual building blocks for custom document composition. Import only what you need.
@@ -57,4 +51,10 @@ Individual building blocks for custom document composition. Import only what you
 #let title-page-src = read("../src/title-page.typ")
 #let title-page-module = tidy.parse-module(title-page-src, name: "title-page")
 #tidy.show-module(title-page-module, show-outline: true, sort-functions: false)
+
+== Outlines
+
+#let outlines-src = read("../src/outlines.typ")
+#let outlines-module = tidy.parse-module(outlines-src, name: "outlines")
+#tidy.show-module(outlines-module, show-outline: true, sort-functions: false)
 

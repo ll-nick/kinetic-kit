@@ -10,7 +10,7 @@
     print-abbreviations, print-abstract, print-acknowledgements, print-kurzfassung,
 )
 #import "back-matter.typ": print-bibliography
-#import "content-page.typ": print-lof, print-lol, print-lot, print-toc
+#import "outlines.typ": print-lof, print-lol, print-lot, print-toc
 
 
 /// KIT Master's / Bachelor's / Diploma thesis template.

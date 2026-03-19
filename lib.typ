@@ -1,6 +1,6 @@
 #import "src/dissertation.typ": dissertation
 #import "src/thesis.typ": thesis
-#import "src/content-page.typ": flex-caption
+#import "src/outlines.typ": flex-caption
 
 // ── Component exports ─────────────────────────────────────────────────────
 //
@@ -12,4 +12,4 @@
     setup-appendix, setup-content, setup-front-matter, setup-page,
 )
 #import "src/title-page.typ": print-dissertation-title, print-thesis-title
-#import "src/content-page.typ": print-lof, print-lol, print-lot, print-toc
+#import "src/outlines.typ": print-lof, print-lol, print-lot, print-toc
