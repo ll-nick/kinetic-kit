@@ -354,6 +354,7 @@ This template has been implemented with AI assistance (Claude Code by Anthropic)
 The basis for the template are the [KSP guidelines](https://www.bibliothek.kit.edu/downloads/KSP/KSP-Basic-Layout-Guidelines.pdf),
 the [official KSP LaTeX template](https://gitlab.kit.edu/kit/ksp/ksp-vorlage-a5-de-diss),
 as well as [this great LaTeX template](https://gitlab.cc-asp.fraunhofer.de/kit-ksp/dissertation-template).
+Some inpiration was also drawn from the [TUM-tastic thesis template](https://github.com/santiagonar1/tum-tastic-thesis).
 
 
 [^1]: This is an unofficial community template, not affiliated with, endorsed by,
