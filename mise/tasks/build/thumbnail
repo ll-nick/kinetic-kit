@@ -1,19 +1,12 @@
 #!/usr/bin/env bash
-# [MISE] description="Render template title page as thumbnail.png"
+# [MISE] description="Render thumbnail title page as thumbnail.png"
 set -euo pipefail
 
-PKG_DIR=$(mktemp -d)
-mkdir -p "$PKG_DIR/preview/kinetic-kit"
-ln -s "$PWD" "$PKG_DIR/preview/kinetic-kit/0.1.0"
-
 typst compile \
-    --package-path "$PKG_DIR" \
-    --root template \
+    --root . \
     --font-path fonts \
-    --pages 1 \
     --ppi 300 \
-    template/main.typ \
-    template/thumbnail.png
+    thumbnail/thumbnail.typ \
+    thumbnail/thumbnail.png
 
-rm -rf "$PKG_DIR"
-echo "  → template/thumbnail.png"
+echo "  → thumbnail/thumbnail.png"
