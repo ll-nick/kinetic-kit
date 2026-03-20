@@ -27,9 +27,10 @@
 
 // ── Third-party: alexandria (multi-bibliography) ──────────────────────────
 // Allows bibliographyx() alongside the main bibliography() for own-publications,
-// supervised-theses, and own-patents. Citations use @p:key syntax.
+// supervised-theses, and own-patents. Citations use @prefix:key syntax.
 #import "@preview/alexandria:0.2.2": alexandria, bibliographyx
 #show: alexandria(prefix: "p:", read: path => read(path))
+#show: alexandria(prefix: "t:", read: path => read(path))
 
 // ── Third-party: drafting (margin annotations) ────────────────────────────
 // Set is-draft here so the same value drives both the watermark and the
@@ -112,12 +113,14 @@
     // full: true lists all entries regardless of in-text citations.
     own-publications: bibliographyx(
         "bib/own-publications.bib",
+        prefix: "p:",
         title: none,
         style: "ieee",
         full: true,
     ),
     supervised-theses: bibliographyx(
         "bib/supervised-theses.bib",
+        prefix: "t:",
         title: none,
         style: "ieee",
         full: true,

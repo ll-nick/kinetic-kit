@@ -27,6 +27,7 @@
 // ── Third-party: alexandria (multi-bibliography) ──────────────────────────
 #import "@preview/alexandria:0.2.2": alexandria, bibliographyx
 #show: alexandria(prefix: "p:", read: path => read(path))
+#show: alexandria(prefix: "t:", read: path => read(path))
 
 // ── Third-party: drafting (margin annotations) ────────────────────────────
 #import "@preview/drafting:0.2.2": margin-note, note-outline, set-margin-note-defaults
@@ -96,12 +97,14 @@
 
     own-publications: bibliographyx(
         "bib/own-publications.bib",
+        prefix: "p:",
         title: none,
         style: "ieee",
         full: true,
     ),
     supervised-theses: bibliographyx(
         "bib/supervised-theses.bib",
+        prefix: "t:",
         title: none,
         style: "ieee",
         full: true,
