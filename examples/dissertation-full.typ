@@ -21,7 +21,6 @@
     (key: "rmse", short: "RMSE", long: "Root Mean Square Error"),
 )
 
-// Must precede #show: dissertation.with(...)
 #show: make-glossary
 #register-glossary(abbrevs)
 
@@ -144,8 +143,6 @@
         #lorem(800)
     ],
 )
-
-// ── Chapters ──────────────────────────────────────────────────────────────
 
 = Ein erstes Beispielkapitel
 
