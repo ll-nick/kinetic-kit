@@ -113,7 +113,7 @@ All measurements are from the paper edge, including above headers and below pagi
 
 | # | Level | Rule | Source | Status | Code ref |
 |---|-------|------|--------|--------|----------|
-| G1 | REQ | Always ragged (left-aligned), never justified | KSP p.2 | ✅ | `src/page-setup.typ:175,189,202,216` (all headings in `block[]` with default left alignment; `justify` not inherited) |
+| G1 | REQ | Always ragged (left-aligned), never justified | KSP p.2 | ✅ | `src/page-setup.typ:176,191,206,221` (`set par(justify: false)` inside every heading block) |
 | G2 | REQ | Multiple consecutive headings indented to the same vertical height | KSP p.2 | ✅ | Typst's built-in heading numbering indent handles this; `src/page-setup.typ:164-227` |
 | G3 | REQ | 4th-level indent must not exceed 5 mm | KSP p.2 | ✅ | `src/page-setup.typ:215-227` (level-4 headings have no extra indent; uses only default numbering width) |
 | G4 | REC | Set in bold | KSP p.2 | ✅ | `src/page-setup.typ:178,194,207,220` (`weight: "bold"` for all levels) |
