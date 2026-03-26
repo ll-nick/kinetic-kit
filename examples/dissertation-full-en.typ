@@ -20,7 +20,6 @@
     (key: "rmse", short: "RMSE", long: "Root Mean Square Error"),
 )
 
-// Must precede #show: dissertation.with(...)
 #show: make-glossary
 #register-glossary(abbrevs)
 
@@ -129,8 +128,6 @@
     ],
 )
 
-// ── Chapters ──────────────────────────────────────────────────────────────
-
 = A First Example Chapter
 
 // gls() expands to "Karlsruhe Institute of Technology (KIT)" on first use,
@@ -140,6 +137,7 @@ the #gls("rmse") by 50 %. On second reference: #gls("kit") uses only the short f
 
 #margin-note[Expand this section.]
 
-#include "content/introduction.typ"
+#include "content/features-en.typ"
+#include "content/chapters-en.typ"
 
 #if is-draft { note-outline() }

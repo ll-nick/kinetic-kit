@@ -102,6 +102,6 @@ second reference: #gls("kit") uses only the short form.
 
 #margin-note[Expand this section.]
 
-#include "content/introduction.typ"
+#include "content/features-en.typ"
 
 #if is-draft { note-outline() }

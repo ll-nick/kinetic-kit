@@ -21,7 +21,6 @@
     (key: "rmse", short: "RMSE", long: "Root Mean Square Error"),
 )
 
-// Must precede #show: dissertation.with(...)
 #show: make-glossary
 #register-glossary(abbrevs)
 
@@ -51,7 +50,7 @@
 
     // ── Title ───────────────────────────────────────────────────────────────
     title: [
-        Ein vollständiger Titel der Dissertation --- Über mehrere Zeilen
+        Ein vollständiger Titel der Dissertation -- Über mehrere Zeilen
     ],
 
     // ── Degree ──────────────────────────────────────────────────────────────
@@ -145,8 +144,6 @@
     ],
 )
 
-// ── Chapters ──────────────────────────────────────────────────────────────
-
 = Ein erstes Beispielkapitel
 
 // gls() expands to "Karlsruher Institut für Technologie (KIT)" on first use,
@@ -157,6 +154,7 @@ nur die Kurzform.
 
 #margin-note[Diesen Abschnitt noch ausbauen.]
 
-#include "content/introduction.typ"
+#include "content/features-de.typ"
+#include "content/chapters-de.typ"
 
 #if is-draft { note-outline() }

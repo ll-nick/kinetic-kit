@@ -173,6 +173,7 @@
         }
         v(4em)
         block[
+            #set par(justify: false)
             #set text(
                 font: fonts.sans,
                 size: font-sizes.chapter,
@@ -187,6 +188,7 @@
     show heading.where(level: 2): it => {
         v(0.8em)
         block[
+            #set par(justify: false)
             #set text(
                 font: fonts.sans,
                 size: font-sizes.section,
@@ -201,6 +203,7 @@
     show heading.where(level: 3): it => {
         v(0.5em)
         block[
+            #set par(justify: false)
             #set text(
                 font: fonts.sans,
                 size: font-sizes.subsection,
@@ -215,6 +218,7 @@
     show heading.where(level: 4): it => {
         v(0.3em)
         block[
+            #set par(justify: false)
             #set text(
                 font: fonts.sans,
                 size: font-sizes.subsubsection,
@@ -259,7 +263,18 @@
         }
     })
 
-    show footnote.entry: set text(size: font-sizes.footnote)
+    show footnote.entry: it => {
+        set text(size: font-sizes.footnote)
+        context {
+            let n = counter(footnote).at(it.note.location()).first()
+            grid(
+                columns: (auto, 1fr),
+                column-gutter: 0.3em,
+                align: top,
+                super[#n], it.note.body,
+            )
+        }
+    }
 
     set figure(numbering: it => {
         let ch = counter(heading.where(level: 1)).at(here()).first()

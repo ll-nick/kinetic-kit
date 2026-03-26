@@ -28,6 +28,10 @@ The following questions are addressed in this dissertation:
 
 #lorem(40)
 
+==== A Fourth-Level Heading Example
+
+#lorem(30)
+
 == A Figure Example
 
 // flex-caption: short text in the List of Figures, long text in the body
@@ -48,7 +52,7 @@ As shown in @fig:example, #lorem(20)
     table(
         columns: (auto, auto, auto),
         inset: 6pt,
-        align: horizon,
+        align: left + horizon,
         table.header([*Method*], [*RMSE*], [*Runtime (s)*]),
         [Baseline], [0.42], [1.2],
         [Proposed], [0.21], [1.5],
@@ -60,7 +64,24 @@ As shown in @fig:example, #lorem(20)
 
 == A Footnote Example
 
-#lorem(30).#footnote[This is a footnote. #lorem(80)] #lorem(20)
+#lorem(30).#footnote[This is a short footnote.] #lorem(20)
+
+// Long multi-line footnote: tests FN4 (second line aligned to first) and FN5 (no page-spanning)
+#lorem(20).#footnote[
+    #lorem(15) --- #lorem(15). #lorem(20). #lorem(20). #lorem(15).
+] #lorem(30)
+
+== A List Example
+
+// Short items (1–2 lines): left-aligned with early line breaks (REC E2)
+- #lorem(8)
+- #lorem(10)
+- #lorem(7)
+
+// Long items (≥ 3 lines): justified, second line aligned to first (REQ E1)
+- #lorem(40)
+- #lorem(45)
+- #lorem(38)
 
 == A Long Caption Example
 

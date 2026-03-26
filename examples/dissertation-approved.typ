@@ -61,4 +61,4 @@
 
 // ── Chapters ──────────────────────────────────────────────────────────────
 
-#include "content/introduction.typ"
+#include "content/features-de.typ"

@@ -45,19 +45,19 @@ Status column:
 | F2 | REQ | All fonts must be embedded in the final PDF | KSP p.1 | ✅ | Typst embeds all fonts by default at compile time |
 | F3 | REQ | Base font size: 10 pt for DIN A5 (no scaling) | KSP p.6 | ✅ | `src/kit-fonts.typ:11`, `src/page-setup.typ:146` |
 | F4 | REC | Approved serif fonts (body): Libertinus Serif, Nimbus Roman, URWPalladio, Utopia Roman | KSP p.6 | ✅ | `src/kit-fonts.typ:5` |
-| F5 | REC | Approved sans-serif font (headings): Nimbus Sans | KSP p.6 | ⚠️ | `src/kit-fonts.typ:7` — uses Libertinus Sans (Nimbus Sans unavailable in Typst ecosystem; visually comparable) |
+| F5 | REC | Approved sans-serif font (headings): Nimbus Sans | KSP p.6 | ⚠️ | `src/kit-fonts.typ:7` — uses Libertinus Sans (visually comparable) |
 | F6 | REC | Italics for emphasis only; not used structurally | KSP p.1 | N/A | User responsibility; template does not use italics structurally |
 
 ### Font Size Table (DIN A5, no scaling) — REQ
 
 | Element | Size | Status | Code ref |
 |---------|------|--------|----------|
-| H1 / chapter | 18 pt | ✅ | `src/kit-fonts.typ:13`, `src/page-setup.typ:178` |
+| H1 / chapter | 18 pt | ✅ | `src/kit-fonts.typ:13`, `src/page-setup.typ:179` |
 | H2 / section | 14 pt | ✅ | `src/kit-fonts.typ:14`, `src/page-setup.typ:194` |
-| H3 / subsection | 12 pt | ✅ | `src/kit-fonts.typ:15`, `src/page-setup.typ:207` |
-| H4 / subsubsection | 10 pt | ✅ | `src/kit-fonts.typ:16`, `src/page-setup.typ:220` |
+| H3 / subsection | 12 pt | ✅ | `src/kit-fonts.typ:15`, `src/page-setup.typ:209` |
+| H4 / subsubsection | 10 pt | ✅ | `src/kit-fonts.typ:16`, `src/page-setup.typ:224` |
 | Body text | 10 pt | ✅ | `src/kit-fonts.typ:11`, `src/page-setup.typ:146` |
-| Headers, footnotes, captions | 8 pt | ✅ | `src/kit-fonts.typ:22-23`, `src/page-setup.typ:24,245,262` |
+| Headers, footnotes, captions | 8 pt | ✅ | `src/kit-fonts.typ:22-23`, `src/page-setup.typ:24,249,267` |
 
 ---
 
@@ -113,11 +113,11 @@ All measurements are from the paper edge, including above headers and below pagi
 
 | # | Level | Rule | Source | Status | Code ref |
 |---|-------|------|--------|--------|----------|
-| G1 | REQ | Always ragged (left-aligned), never justified | KSP p.2 | ✅ | `src/page-setup.typ:175,189,202,216` (all headings in `block[]` with default left alignment; `justify` not inherited) |
-| G2 | REQ | Multiple consecutive headings indented to the same vertical height | KSP p.2 | ✅ | Typst's built-in heading numbering indent handles this; `src/page-setup.typ:164-227` |
-| G3 | REQ | 4th-level indent must not exceed 5 mm | KSP p.2 | ✅ | `src/page-setup.typ:215-227` (level-4 headings have no extra indent; uses only default numbering width) |
-| G4 | REC | Set in bold | KSP p.2 | ✅ | `src/page-setup.typ:178,194,207,220` (`weight: "bold"` for all levels) |
-| G5 | REC | No hyphenation in headings | KSP p.2 | ✅ | `src/page-setup.typ:181,196,209,221` (`hyphenate: false` for all levels) |
+| G1 | REQ | Always ragged (left-aligned), never justified | KSP p.2 | ✅ | `src/page-setup.typ:176,191,206,221` (`set par(justify: false)` inside every heading block) |
+| G2 | REQ | Multiple consecutive headings indented to the same vertical height | KSP p.2 | ✅ | Typst's built-in heading numbering indent handles this; `src/page-setup.typ:164-232` |
+| G3 | REQ | 4th-level indent must not exceed 5 mm | KSP p.2 | ✅ | `src/page-setup.typ:218-232` (level-4 headings have no extra indent; uses only default numbering width) |
+| G4 | REC | Set in bold | KSP p.2 | ✅ | `src/page-setup.typ:180,195,210,225` (`weight: "bold"` for all levels) |
+| G5 | REC | No hyphenation in headings | KSP p.2 | ✅ | `src/page-setup.typ:181,196,211,226` (`hyphenate: false` for all levels) |
 | G6 | REC | Second line indented to the height of the first | KSP p.2 | ✅ | Handled naturally by Typst's `block` text wrapping |
 | G7 | REC | Font sizes must differ by at least 2 pt between levels | KSP p.2 | ✅ | `src/kit-fonts.typ:13-16` (18 → 14 → 12 → 10 pt; minimum gap is 2 pt) |
 
@@ -129,7 +129,7 @@ All measurements are from the paper edge, including above headers and below pagi
 |---|-------|------|--------|--------|----------|
 | C1 | REQ | New chapters always begin on a right-hand (odd) page; insert blank page if necessary | KSP p.1 | ✅ | `src/page-setup.typ:172` (`pagebreak(weak: true, to: "odd")`) |
 | C2 | REQ | Blank pages contain no page numbers and no headers | KSP p.1 | ✅ | `src/page-setup.typ:171` (`set page(header: none, footer: none)` applied in the same scope as the pagebreak, covering inserted blank pages) |
-| C3 | REQ | Page breaks used for new chapters only, not for subsections | KSP p.1 | ✅ | Template only inserts pagebreaks in the level-1 heading show rule; `src/page-setup.typ:164-185` |
+| C3 | REQ | Page breaks used for new chapters only, not for subsections | KSP p.1 | ✅ | Template only inserts pagebreaks in the level-1 heading show rule; `src/page-setup.typ:164-187` |
 
 ---
 
@@ -152,10 +152,10 @@ All measurements are from the paper edge, including above headers and below pagi
 
 | # | Level | Rule | Source | Status | Code ref |
 |---|-------|------|--------|--------|----------|
-| FN1 | REQ | Footnotes 2 pt smaller than body text (8 pt for 10 pt base) | KSP p.2 | ✅ | `src/kit-fonts.typ:23` (`footnote: 8pt`), `src/page-setup.typ:262` |
-| FN2 | REQ | Numbers superscript in running text and front-aligned in footnote list | KSP p.2 | ✅ | Typst default footnote rendering |
+| FN1 | REQ | Footnotes 2 pt smaller than body text (8 pt for 10 pt base) | KSP p.2 | ✅ | `src/kit-fonts.typ:23` (`footnote: 8pt`), `src/page-setup.typ:267` |
+| FN2 | REQ | Numbers superscript in running text and front-aligned in footnote list | KSP p.2 | ✅ | Superscript in text: Typst default; front-aligned in list: `src/page-setup.typ:266-276` (custom grid layout) |
 | FN3 | REQ | Spacing between body text and footnote separator: approx. 2 lines (LaTeX: 20 pt) | KSP p.2 | ✅ | Typst default footnote separator spacing |
-| FN4 | REC | Align footnote text from second line with height of first line | KSP p.2 | ✅ | Typst default footnote entry layout |
+| FN4 | REC | Align footnote text from second line with height of first line | KSP p.2 | ✅ | `src/page-setup.typ:266-276` (grid layout: superscript number in `auto`-width column + 0.3em gutter, body text fills remainder) |
 | FN5 | REC | Do not allow footnotes to span across pages | KSP p.2 | ✅ | Typst does not split footnotes across pages by default |
 | FN6 | NTH | Restart footnote numbering for each chapter | KSP p.2 | ✅ | `src/page-setup.typ:169` (`counter(footnote).update(0)` in level-1 heading show rule) |
 
@@ -165,11 +165,11 @@ All measurements are from the paper edge, including above headers and below pagi
 
 | # | Level | Rule | Source | Status | Code ref |
 |---|-------|------|--------|--------|----------|
-| FT1 | REQ | Long captions (≥ 3 lines): left-justified | KSP p.3 | ✅ | `src/page-setup.typ:243-260` (height threshold: `font-sizes.small * 2.5`) |
+| FT1 | REQ | Long captions (≥ 3 lines): left-justified | KSP p.3 | ✅ | `src/page-setup.typ:247-264` (height threshold: `font-sizes.small * 2.5`) |
 | FT2 | REQ | Use full type-area width for layout | KSP p.3 | ✅ | Typst figures default to full container width |
 | FT3 | REQ | Position table headings consistently: always above or always below | KSP p.3 | N/A | User responsibility; template does not constrain caption position |
-| FT4 | REQ | Caption numbering includes chapter number (e.g. Figure 2.3) | KSP p.3 | ✅ | `src/page-setup.typ:264-267` (`numbering("1.1", ch, it)`) |
-| FT5 | REC | 1-line captions: centred (exception: if line spans nearly full width, left-align) | KSP p.3 | ✅ | `src/page-setup.typ:253-259` (center for short captions, left for ≥ 3 lines) |
+| FT4 | REQ | Caption numbering includes chapter number (e.g. Figure 2.3) | KSP p.3 | ✅ | `src/page-setup.typ:280-283` (`numbering("1.1", ch, it)`) |
+| FT5 | REC | 1-line captions: centred (exception: if line spans nearly full width, left-align) | KSP p.3 | ✅ | `src/page-setup.typ:259-263` (center for short captions, left for ≥ 3 lines) |
 | FT6 | REC | Sources for captions in parentheses | KSP p.3 | N/A | User responsibility |
 | FT7 | REC | Minimum image resolution: 200 dpi | KSP p.3 | N/A | Cannot be enforced at template level; user responsibility |
 | FT8 | REC | Small illustrations remain centred | KSP p.3 | ✅ | Typst centers figures by default |
@@ -183,7 +183,7 @@ All measurements are from the paper edge, including above headers and below pagi
 | # | Level | Rule | Source | Status | Code ref |
 |---|-------|------|--------|--------|----------|
 | FM1 | REQ | All formulas consistently centred, or all at left margin — not mixed | KSP p.2 | ✅ | Typst centers all block equations by default; template does not override alignment |
-| FM2 | REC | Formula numbers right-justified at the type-area margin | KSP p.2 | ✅ | `src/page-setup.typ:272-275` (equation numbering set; Typst places numbers right-aligned) |
+| FM2 | REC | Formula numbers right-justified at the type-area margin | KSP p.2 | ✅ | `src/page-setup.typ:288-291` (equation numbering set; Typst places numbers right-aligned) |
 
 ---
 

@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mise run format 2>/dev/null || true",
+            "statusMessage": "Formatting Typst files..."
+          }
+        ]
+      }
+    ]
+  }
+}
