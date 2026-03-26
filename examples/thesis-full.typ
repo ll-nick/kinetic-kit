@@ -105,6 +105,6 @@ um 50 %. Bei erneuter Erwähnung: #gls("kit") zeigt nur die Kurzform.
 
 #margin-note[Diesen Abschnitt noch ausbauen.]
 
-#include "content/introduction.typ"
+#include "content/features-de.typ"
 
 #if is-draft { note-outline() }
