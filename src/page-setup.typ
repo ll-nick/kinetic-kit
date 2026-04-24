@@ -243,6 +243,7 @@
         },
     )
     show figure.where(kind: raw): set figure(supplement: context t.at(text.lang).listing)
+    show figure.where(kind: table): set figure.caption(position: top)
 
     show figure.caption: it => layout(container => context {
         let body = [
