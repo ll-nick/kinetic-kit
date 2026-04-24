@@ -20,7 +20,7 @@
         target: heading.where(numbering: "1.1").or(heading.where(numbering: none)),
         title: tr.toc,
         depth: 3,
-        indent: 1.6em,
+        indent: auto,
     )
 
     // Appendix entries
@@ -37,7 +37,7 @@
                 target: heading.where(numbering: "A.1"),
                 title: tr.appendix,
                 depth: 3,
-                indent: 1.6em,
+                indent: auto,
             )
         }
     }
