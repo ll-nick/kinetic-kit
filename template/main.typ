@@ -20,7 +20,6 @@
     author-firstname: "Vorname",
     author-surname: "Nachname",
     author-male: true, // true → male grammatical forms on the title page
-    // place-of-birth: "Musterstadt", // Uncomment if required by your faculty
 
     // ── Title ─────────────────────────────────────────────────────────────────
     title: [Titel der Dissertation],

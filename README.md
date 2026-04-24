@@ -77,7 +77,6 @@ which is auto-generated from the source code.
 | `author-firstname` | `str` | `"Max"` | |
 | `author-surname` | `str` | `"Mustermann"` | |
 | `author-male` | `bool` | `true` | Controls gendered German text on the title page |
-| `place-of-birth` | `str \| none` | `none` | Place of birth ("aus …"); `none` = omit |
 | `title` | `content` | | Dissertation title |
 | `doc-degree` | `str` | `"Doktors der Ingenieurwissenschaften (Dr.-Ing.)"` | Degree in masculine form |
 | `doc-degree-f` | `str` | `"Doktorin der Ingenieurwissenschaften (Dr.-Ing.)"` | Degree in feminine form |

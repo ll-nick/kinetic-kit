@@ -23,7 +23,6 @@
 /// - author-firstname (str): Author's first name.
 /// - author-surname (str): Author's surname.
 /// - author-male (bool): `true` for male, `false` for female grammatical forms.
-/// - place-of-birth (str): Author's place of birth. `none` = omit.
 /// - title (content): Dissertation title.
 /// - doc-degree (str): Degree name in masculine form.
 /// - doc-degree-f (str): Degree name in feminine form.
@@ -63,7 +62,6 @@
     author-firstname: "Max",
     author-surname: "Mustermann",
     author-male: true,
-    place-of-birth: none,
     title: [Your Thesis Title],
     doc-degree: "Doktors der Ingenieurwissenschaften (Dr.-Ing.)",
     doc-degree-f: "Doktorin der Ingenieurwissenschaften (Dr.-Ing.)",
@@ -121,7 +119,6 @@
         author-firstname,
         author-surname,
         author-male,
-        place-of-birth,
         doc-degree,
         doc-degree-f,
         department,

@@ -42,7 +42,6 @@
     author-surname: "Doe",
     // false = feminine grammatical forms on the German title page
     author-male: false,
-    place-of-birth: "Musterstadt",
 
     // ── Title ───────────────────────────────────────────────────────────────
     title: [
