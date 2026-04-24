@@ -234,7 +234,7 @@ Use the [glossarium](https://typst.app/universe/package/glossarium) package for 
 
 ```typst
 #import "@local/kinetic-kit:0.1.0": dissertation
-#import "@preview/glossarium:0.5.10": make-glossary, register-glossary, print-glossary, gls, glspl
+#import "@preview/glossarium:0.5.10": make-glossary, register-glossary, print-glossary
 
 #let abbrevs = (
   (key: "ml",  short: "ML",  long: "Machine Learning"),
@@ -251,7 +251,7 @@ Use the [glossarium](https://typst.app/universe/package/glossarium) package for 
   abbreviations: print-glossary(abbrevs),
 )
 
-// #gls("ml") expands to "Machine Learning (ML)" on first use, "ML" thereafter.
+// @ml expands to "Machine Learning (ML)" on first use, "ML" thereafter.
 ```
 
 </details>

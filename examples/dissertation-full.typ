@@ -6,13 +6,12 @@
 // Compile: typst compile --root . --font-path fonts examples/dissertation-full.typ examples/dissertation-full.pdf
 
 #import "/lib.typ": dissertation, flex-caption
+#import "content/abbreviations.typ": abbrevs-glossary
 
 // ── Third-party: glossarium ───────────────────────────────────────────────
 // IMPORTANT: #show: make-glossary must come before #show: dissertation.with(...)
 // so the show rule wraps the entire rendered document.
-#import "@preview/glossarium:0.5.10": (
-    gls, glspl, make-glossary, print-glossary, register-glossary,
-)
+#import "@preview/glossarium:0.5.10": make-glossary, register-glossary
 
 #let abbrevs = (
     (key: "kit", short: "KIT", long: "Karlsruher Institut für Technologie"),
@@ -34,7 +33,7 @@
 // ── Third-party: drafting (margin annotations) ────────────────────────────
 // Set is-draft here so the same value drives both the watermark and the
 // visibility of margin notes — set to false before final submission.
-#import "@preview/drafting:0.2.2": margin-note, note-outline, set-margin-note-defaults
+#import "@preview/drafting:0.2.2": inline-note, note-outline, set-margin-note-defaults
 #let is-draft = true
 #set-margin-note-defaults(hidden: not is-draft)
 
@@ -88,9 +87,7 @@
     acknowledgements: include "content/acknowledgements.typ",
     notation: include "content/notation.typ",
 
-    // Glossarium: pass print-glossary() as the abbreviations content.
-    // The template adds the translated section heading automatically.
-    abbreviations: print-glossary(abbrevs),
+    abbreviations: abbrevs-glossary(abbrevs),
 
     // ── Back matter ─────────────────────────────────────────────────────────
     show-lof: true,
@@ -135,13 +132,13 @@
 
 = Ein erstes Beispielkapitel
 
-// gls() expands to "Karlsruher Institut für Technologie (KIT)" on first use,
-// then "KIT" on subsequent uses. glspl() uses the plural form.
-Diese Arbeit wurde am #gls("kit") durchgeführt und über #gls("ksp") veröffentlicht. Die
-Ergebnisse verbessern den #gls("rmse") um 50 %. Bei erneuter Erwähnung: #gls("kit") zeigt
-nur die Kurzform.
+// Abbreviations expand on first use. Both @key and #gls("key") syntax are supported.
+// First use: "Karlsruher Institut für Technologie (KIT)", subsequent: "KIT".
+Diese Arbeit wurde am @kit durchgeführt und über @ksp veröffentlicht. Die Ergebnisse
+verbessern den @rmse um 50 %. Das Systemmodell ist eine @ode. Bei erneuter Erwähnung zeigt
+@kit nur die Kurzform.
 
-#margin-note[Diesen Abschnitt noch ausbauen.]
+#inline-note[Diesen Abschnitt noch ausbauen.]
 
 #include "content/features-de.typ"
 #include "content/chapters-de.typ"

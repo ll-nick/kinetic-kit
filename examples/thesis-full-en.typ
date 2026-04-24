@@ -5,13 +5,12 @@
 // Compile: typst compile --root . --font-path fonts examples/thesis-full-en.typ examples/thesis-full-en.pdf
 
 #import "/lib.typ": flex-caption, thesis
+#import "content/abbreviations.typ": abbrevs-glossary
 
 // ── Third-party: glossarium ───────────────────────────────────────────────
 // IMPORTANT: #show: make-glossary must come before #show: thesis.with(...)
 // so the show rule wraps the entire rendered document.
-#import "@preview/glossarium:0.5.10": (
-    gls, glspl, make-glossary, print-glossary, register-glossary,
-)
+#import "@preview/glossarium:0.5.10": make-glossary, register-glossary
 
 #let abbrevs = (
     (key: "kit", short: "KIT", long: "Karlsruhe Institute of Technology"),
@@ -25,7 +24,7 @@
 #register-glossary(abbrevs)
 
 // ── Third-party: drafting (margin annotations) ────────────────────────────
-#import "@preview/drafting:0.2.2": margin-note, note-outline, set-margin-note-defaults
+#import "@preview/drafting:0.2.2": inline-note, note-outline, set-margin-note-defaults
 #let is-draft = true
 #set-margin-note-defaults(hidden: not is-draft)
 
@@ -70,7 +69,7 @@
     abstract-en: include "content/abstract-en.typ",
     abstract-de: include "content/abstract-de.typ",
     acknowledgements: include "content/acknowledgements.typ",
-    abbreviations: print-glossary(abbrevs),
+    abbreviations: abbrevs-glossary(abbrevs),
 
     // ── Back matter ─────────────────────────────────────────────────────────
     show-lof: true,
@@ -96,10 +95,11 @@
 
 = Introduction
 
-This work was conducted at #gls("kit"). The results improve the #gls("rmse") by 50 %. On
-second reference: #gls("kit") uses only the short form.
+// Abbreviations expand on first use. Both @key and #gls("key") syntax are supported.
+This work was conducted at @kit and published via @ksp. The results improve the @rmse by
+50 %. The system model is an @ode. On second reference, @kit uses only the short form.
 
-#margin-note[Expand this section.]
+#inline-note[Expand this section.]
 
 #include "content/features-en.typ"
 

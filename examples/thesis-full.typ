@@ -5,13 +5,12 @@
 // Compile: typst compile --root . --font-path fonts examples/thesis-full.typ examples/thesis-full.pdf
 
 #import "/lib.typ": flex-caption, thesis
+#import "content/abbreviations.typ": abbrevs-glossary
 
 // ── Third-party: glossarium ───────────────────────────────────────────────
 // IMPORTANT: #show: make-glossary must come before #show: thesis.with(...)
 // so the show rule wraps the entire rendered document.
-#import "@preview/glossarium:0.5.10": (
-    gls, glspl, make-glossary, print-glossary, register-glossary,
-)
+#import "@preview/glossarium:0.5.10": make-glossary, register-glossary
 
 #let abbrevs = (
     (key: "kit", short: "KIT", long: "Karlsruher Institut für Technologie"),
@@ -25,7 +24,7 @@
 #register-glossary(abbrevs)
 
 // ── Third-party: drafting (margin annotations) ────────────────────────────
-#import "@preview/drafting:0.2.2": margin-note, note-outline, set-margin-note-defaults
+#import "@preview/drafting:0.2.2": inline-note, note-outline, set-margin-note-defaults
 #let is-draft = true
 #set-margin-note-defaults(hidden: not is-draft)
 
@@ -71,9 +70,7 @@
     abstract-de: include "content/abstract-de.typ",
     acknowledgements: include "content/acknowledgements.typ",
 
-    // Glossarium: pass print-glossary() as the abbreviations content.
-    // The template adds the translated section heading automatically.
-    abbreviations: print-glossary(abbrevs),
+    abbreviations: abbrevs-glossary(abbrevs),
 
     // ── Back matter ─────────────────────────────────────────────────────────
     show-lof: true,
@@ -99,10 +96,12 @@
 
 = Einleitung
 
-Diese Arbeit wurde am #gls("kit") durchgeführt. Die Ergebnisse verbessern den #gls("rmse")
-um 50 %. Bei erneuter Erwähnung: #gls("kit") zeigt nur die Kurzform.
+// Abbreviations expand on first use. Both @key and #gls("key") syntax are supported.
+Diese Arbeit wurde am @kit durchgeführt und über @ksp veröffentlicht. Die Ergebnisse
+verbessern den @rmse um 50 %. Das Systemmodell ist eine @ode. Bei erneuter Erwähnung zeigt
+@kit nur die Kurzform.
 
-#margin-note[Diesen Abschnitt noch ausbauen.]
+#inline-note[Diesen Abschnitt noch ausbauen.]
 
 #include "content/features-de.typ"
 
