@@ -1,7 +1,7 @@
 #table(
     columns: (2cm, 1fr),
     stroke: none,
-    inset: (y: 4pt),
+    inset: (x: 0pt, y: 4pt),
     [$bold(x)$], [State vector],
     [$bold(u)$], [Input vector],
     [$bold(y)$], [Output vector],
