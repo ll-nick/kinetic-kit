@@ -64,7 +64,7 @@
 
     // ── Layout ──────────────────────────────────────────────────────────────
     margin-preset: "medium",
-    binding-correction: 8mm,
+    binding-correction: 5mm, // Add BCOR for physically bound print copies
     colored-links: true,
 
     // ── Status: submitted ───────────────────────────────────────────────────

@@ -60,7 +60,6 @@
 
     // ── Layout ──────────────────────────────────────────────────────────────
     margin-preset: "short",
-    binding-correction: 8mm,
     colored-links: true,
 
     // ── Draft watermark ─────────────────────────────────────────────────────

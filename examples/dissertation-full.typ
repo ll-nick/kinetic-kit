@@ -67,8 +67,6 @@
     // ── Layout ──────────────────────────────────────────────────────────────
     // "short" < 200 pages | "medium" 200–399 | "long" ≥ 400
     margin-preset: "medium",
-    // Add 8–10 mm BCOR for physically bound print copies
-    binding-correction: 8mm,
     colored-links: true,
 
     // ── Status: submitted ───────────────────────────────────────────────────

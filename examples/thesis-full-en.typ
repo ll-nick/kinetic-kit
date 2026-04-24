@@ -59,7 +59,6 @@
 
     // ── Layout ──────────────────────────────────────────────────────────────
     margin-preset: "short",
-    binding-correction: 8mm,
     // Black links for print output
     colored-links: false,
 
