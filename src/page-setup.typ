@@ -143,7 +143,7 @@
         },
     )
 
-    set text(font: fonts.serif, size: font-sizes.base, lang: lang)
+    set text(font: fonts.serif, size: font-sizes.base, lang: lang, overhang: false)
     set par(
         justify: true,
         first-line-indent: 0pt,
