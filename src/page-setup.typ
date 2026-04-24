@@ -163,6 +163,61 @@
 
     // ── Headings ─────────────────────────────────────────────────────────
     show heading: set par(leading: leading * 0.75)
+
+    // Lay out a heading's number and body in a two-column grid so that text
+    // across all heading levels aligns at the same horizontal position.
+    // The indent width is determined by the longest numbering present in the
+    // document (i.e. the deepest heading level), measured at that level's font size.
+    let _heading-grid(it) = {
+        // Font size for each heading depth — used when measuring number widths.
+        // Index 0 is unused; depths start at 1.
+        let depth-sizes = (
+            font-sizes.chapter,
+            font-sizes.chapter, // depth 1
+            font-sizes.section, // depth 2
+            font-sizes.subsection, // depth 3
+            font-sizes.subsubsection, // depth 4
+        )
+
+        // Find the widest rendered heading number in the document.
+        // fold() walks every heading, measures its number at the correct font
+        // size, and keeps a running maximum — giving a pixel-precise indent.
+        let all-headings = query(heading)
+        let indent = all-headings.fold(0pt, (max-w, h) => {
+            if h.numbering == none { return max-w }
+            let depth = calc.min(h.depth, 4)
+            // Reconstruct the number string from the counter at this heading's location.
+            let num = numbering(
+                h.numbering,
+                ..counter(heading).at(h.location()).slice(0, h.depth),
+            )
+            let w = measure(text(
+                font: fonts.sans,
+                size: depth-sizes.at(depth),
+                weight: "bold",
+            )[#num]).width
+            calc.max(max-w, w)
+        })
+
+        if it.numbering != none {
+            let num = numbering(
+                it.numbering,
+                ..counter(heading).at(it.location()).slice(0, it.depth),
+            )
+            // Number is right-aligned so all numbers sit flush against the gap,
+            // and body text starts at the same position across all heading levels.
+            grid(
+                columns: (indent, 1fr),
+                column-gutter: 0.5em,
+                align: (top + right, top + left),
+                [#num], it.body,
+            )
+        } else {
+            // Unnumbered headings (e.g. front matter) need no grid.
+            it.body
+        }
+    }
+
     show heading.where(level: 1): it => {
         counter(math.equation).update(0)
         counter(figure.where(kind: image)).update(0)
@@ -182,7 +237,7 @@
                 weight: "bold",
                 hyphenate: false,
             )
-            #it
+            #context _heading-grid(it)
         ]
         v(1em)
     }
@@ -197,7 +252,7 @@
                 weight: "bold",
                 hyphenate: false,
             )
-            #it
+            #context _heading-grid(it)
         ]
         v(0.5em)
     }
@@ -212,7 +267,7 @@
                 weight: "bold",
                 hyphenate: false,
             )
-            #it
+            #context _heading-grid(it)
         ]
         v(0.4em)
     }
@@ -227,7 +282,7 @@
                 weight: "bold",
                 hyphenate: false,
             )
-            #it
+            #context _heading-grid(it)
         ]
         v(0.25em)
     }
