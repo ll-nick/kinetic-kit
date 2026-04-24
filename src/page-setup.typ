@@ -285,6 +285,7 @@
     })
 
     set figure(gap: 0.8em)
+    show figure: set block(above: 1.5em, below: 1.5em)
 
     // ── Equations ────────────────────────────────────────────────────────
     set math.equation(numbering: it => {
