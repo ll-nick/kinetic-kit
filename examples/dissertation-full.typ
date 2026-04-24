@@ -83,14 +83,6 @@
     draft: is-draft,
     draft-info: "v0.1 — " + datetime.today().display("[day].[month].[year]"),
 
-    // ── CV ───────────────────────────────────────────────────────────────────
-    cv-name: "Max Mustermann",
-    cv-entries: (
-        ("1990", "Geboren in Musterstadt"),
-        ("2010–2015", "Studium Maschinenbau, KIT"),
-        ("2015–2025", "Wissenschaftlicher Mitarbeiter, KIT"),
-    ),
-
     // ── Front matter ────────────────────────────────────────────────────────
     abstract-en: include "content/abstract-en.typ",
     abstract-de: include "content/abstract-de.typ",

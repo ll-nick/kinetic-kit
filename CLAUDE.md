@@ -61,7 +61,7 @@ The single entry point re-exports:
 | `page-conf.typ` | Static A5 page layout constants: page size, margin presets (`short`/`medium`/`long`), paragraph spacing |
 | `translations.typ` | German/English label strings |
 | `title-page.typ` | Dissertation/thesis title page (German legal format) |
-| `front-matter.typ` | Abstract, Kurzfassung, acknowledgements, CV, notation, abbreviations |
+| `front-matter.typ` | Abstract, Kurzfassung, acknowledgements, notation, abbreviations |
 | `back-matter.typ` | Bibliography, own publications, own patents, supervised theses |
 | `outlines.typ` | TOC, List of Figures/Tables/Listings, `flex-caption` |
 

@@ -94,8 +94,6 @@ which is auto-generated from the source code.
 | `abstract-en` | `content \| none` | `none` | |
 | `abstract-de` | `content \| none` | `none` | |
 | `acknowledgements` | `content \| none` | `none` | |
-| `cv-name` | `str \| none` | `none` | Show CV page with this name as heading; `none` = omit |
-| `cv-entries` | `array` | `()` | `(year, description)` tuples |
 | `notation` | `content \| none` | `none` | Symbol/notation list |
 | `abbreviations` | `content \| none` | `none` | Abbreviations / acronym list |
 | `binding-correction` | `length` | `0mm` | BCOR added to inside margin (8–10 mm for physically bound copies) |

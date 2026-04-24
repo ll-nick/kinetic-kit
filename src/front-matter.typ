@@ -1,5 +1,5 @@
 // front-matter.typ — front-matter pages
-// abstract, kurzfassung, acknowledgements, CV, notation, abbreviations
+// abstract, kurzfassung, acknowledgements, notation, abbreviations
 
 #import "kit-fonts.typ": font-sizes, fonts
 #import "translations.typ": t
@@ -38,35 +38,6 @@
     body
 }
 
-// ── Curriculum Vitae ──────────────────────────────────────────────────────
-
-/// Single entry row for use inside `print-cv`.
-///
-/// - year (str): Year or year range displayed in the left column.
-/// - description (content): Description text in the right column.
-/// -> content
-#let cv-entry(year: "", description: "") = grid(
-    columns: (3cm, 1fr),
-    column-gutter: 1em,
-    row-gutter: 0.5em,
-    text(weight: "bold")[#year], description,
-)
-
-/// Print the curriculum vitae section.
-///
-/// - name (str): Author's full name, shown in bold below the heading.
-/// - entries (array): Array of `(year, description)` pairs passed to `cv-entry`.
-/// - lang (str): Document language — `"de"` or `"en"`.
-/// -> content
-#let print-cv(name, entries, lang) = {
-    heading(level: 1, numbering: none, outlined: true)[#t.at(lang).cv]
-    v(0.5em)
-    text(weight: "bold")[#name]
-    v(1em)
-    for entry in entries {
-        cv-entry(year: entry.at(0), description: entry.at(1))
-    }
-}
 
 // ── Notation / Symbol list ────────────────────────────────────────────────
 

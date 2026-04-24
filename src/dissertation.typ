@@ -7,8 +7,8 @@
 #import "translations.typ": t
 #import "title-page.typ": print-dissertation-title
 #import "front-matter.typ": (
-    print-abbreviations, print-abstract, print-acknowledgements, print-cv,
-    print-kurzfassung, print-notation,
+    print-abbreviations, print-abstract, print-acknowledgements, print-kurzfassung,
+    print-notation,
 )
 #import "back-matter.typ": (
     print-bibliography, print-own-patents, print-own-publications,
@@ -41,8 +41,6 @@
 /// - colored-links (bool): KIT Blue links when `true`, black when `false`.
 /// - draft (bool): Show "ENTWURF" watermark when `true`.
 /// - draft-info (str): Optional version string below watermark. Default `none`.
-/// - cv-name (str): Name for CV section heading. `none` = omit CV.
-/// - cv-entries (array): List of `(year, description)` pairs for the CV.
 /// - abstract-en (content): English abstract. `none` = omit.
 /// - abstract-de (content): German abstract. `none` = omit.
 /// - acknowledgements (content): Acknowledgements. `none` = omit.
@@ -83,8 +81,6 @@
     colored-links: true,
     draft: false,
     draft-info: none,
-    cv-name: none,
-    cv-entries: (),
     abstract-en: none,
     abstract-de: none,
     acknowledgements: none,
@@ -141,10 +137,6 @@
     // ── Front matter (Roman numerals) ───────────────────────────────────────
     show: setup-front-matter
     counter(page).update(0)
-
-    if cv-name != none {
-        print-cv(cv-name, cv-entries, lang)
-    }
 
     if abstract-en != none {
         print-abstract(abstract-en)

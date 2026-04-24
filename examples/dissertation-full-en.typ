@@ -74,14 +74,6 @@
     draft: is-draft,
     draft-info: "v0.1 — " + datetime.today().display("[day].[month].[year]"),
 
-    // ── CV ───────────────────────────────────────────────────────────────────
-    cv-name: "Jane Doe",
-    cv-entries: (
-        ("1992", "Born in Musterstadt"),
-        ("2012–2017", "Studies in Mechanical Engineering, KIT"),
-        ("2017–2025", "Research Associate, KIT"),
-    ),
-
     // ── Front matter ────────────────────────────────────────────────────────
     abstract-en: include "content/abstract-en.typ",
     abstract-de: include "content/abstract-de.typ",
