@@ -227,7 +227,7 @@
                 weight: "bold",
                 hyphenate: false,
             )
-            #it.body
+            #it
         ]
         v(0.25em)
     }
