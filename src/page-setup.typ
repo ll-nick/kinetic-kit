@@ -22,6 +22,7 @@
 // Suppressed on chapter-opening pages and before the first chapter.
 #let _header = context {
     set text(font: fonts.sans, size: font-sizes.small)
+    set par(spacing: par-spacing / 2)
     let this-page = here().page()
 
     // Suppress on chapter-opening pages
