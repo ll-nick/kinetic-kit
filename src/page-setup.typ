@@ -187,7 +187,7 @@
     }
 
     show heading.where(level: 2): it => {
-        v(0.8em)
+        v(1.0em)
         block[
             #set par(justify: false)
             #set text(
@@ -198,11 +198,11 @@
             )
             #it
         ]
-        v(0.4em)
+        v(0.5em)
     }
 
     show heading.where(level: 3): it => {
-        v(0.5em)
+        v(0.7em)
         block[
             #set par(justify: false)
             #set text(
@@ -213,11 +213,11 @@
             )
             #it
         ]
-        v(0.3em)
+        v(0.4em)
     }
 
     show heading.where(level: 4): it => {
-        v(0.3em)
+        v(0.4em)
         block[
             #set par(justify: false)
             #set text(
@@ -228,7 +228,7 @@
             )
             #it.body
         ]
-        v(0.2em)
+        v(0.25em)
     }
 
     // ── Outline entries ───────────────────────────────────────────────────
