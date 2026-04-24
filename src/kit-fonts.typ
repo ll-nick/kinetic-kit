@@ -26,4 +26,4 @@
 // Line spacing: 1.15× at 10 pt = ~11.5 pt total line height.
 // Typst `leading` is the gap between baseline and next baseline minus cap-height,
 // so 0.75em ≈ 7.5 pt, giving ~11.5 pt total.
-#let line-spacing = 0.75em
+#let leading = 0.75em

@@ -10,7 +10,7 @@
 //   setup-appendix()     — A.1 numbering wrapper
 
 #import "kit-colors.typ": kit-colors
-#import "kit-fonts.typ": font-sizes, fonts, line-spacing
+#import "kit-fonts.typ": font-sizes, fonts, leading
 #import "page-conf.typ": kit-page, margins-by-length, par-spacing
 #import "translations.typ": t
 
@@ -148,7 +148,7 @@
     set par(
         justify: true,
         first-line-indent: 0pt,
-        leading: line-spacing,
+        leading: leading,
         spacing: par-spacing,
     )
 
@@ -162,7 +162,7 @@
     }
 
     // ── Headings ─────────────────────────────────────────────────────────
-    show heading: set par(leading: line-spacing * 0.75)
+    show heading: set par(leading: leading * 0.75)
     show heading.where(level: 1): it => {
         counter(math.equation).update(0)
         counter(figure.where(kind: image)).update(0)
