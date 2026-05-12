@@ -209,7 +209,7 @@
             grid(
                 columns: (indent, 1fr),
                 column-gutter: 0.5em,
-                align: (top + right, top + left),
+                align: (top + left, top + left),
                 [#num], it.body,
             )
         } else {
