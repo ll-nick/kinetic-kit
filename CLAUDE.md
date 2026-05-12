@@ -94,4 +94,6 @@ Shared content in `examples/content/` and bibliographies in `examples/bib/`.
 - **Base font size**: 10 pt Libertinus Serif — hard KSP requirement
 - **Line spacing**: 1.15× (0.75em leading in Typst)
 - **Margins**: Three presets keyed on final page count — short (<200 pages), medium (200–399), long (≥400)
+- **Heading font**: Libertinus Sans by default; `serif-headings: true` switches to Libertinus Serif
+- **Heading numbering**: Numbered up to level 3 by default; configurable via `heading-numbering-depth`
 - All formatting decisions should be validated against `guidelines.md`

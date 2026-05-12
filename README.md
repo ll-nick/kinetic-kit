@@ -99,6 +99,8 @@ which is auto-generated from the source code.
 | `colored-links` | `bool` | `true` | KIT Blue hyperlinks (screen); `false` = black (print) |
 | `draft` | `bool` | `false` | Show "ENTWURF"/"DRAFT" watermark |
 | `draft-info` | `str \| none` | `none` | Optional version string next to watermark (e.g. git SHA) |
+| `serif-headings` | `bool` | `false` | Use Libertinus Serif for headings when `true`, Libertinus Sans-Serif when `false` |
+| `heading-numbering-depth` | `int` | `3` | Deepest heading level that receives a number; deeper levels are styled but not numbered |
 | `own-publications` | `content \| none` | `none` | Back-matter publications list |
 | `own-patents` | `content \| none` | `none` | Back-matter patents list |
 | `supervised-theses` | `content \| none` | `none` | Back-matter supervised theses list |
@@ -130,6 +132,8 @@ which is auto-generated from the source code.
 | `colored-links` | `bool` | `true` | KIT Blue links (screen); `false` = black (print) |
 | `draft` | `bool` | `false` | Show "ENTWURF"/"DRAFT" watermark |
 | `draft-info` | `str \| none` | `none` | Optional version string next to watermark |
+| `serif-headings` | `bool` | `false` | Use Libertinus Serif for headings when `true`, Libertinus Sans-Serif when `false` |
+| `heading-numbering-depth` | `int` | `3` | Deepest heading level that receives a number; deeper levels are styled but not numbered |
 | `abstract-en` | `content \| none` | `none` | |
 | `abstract-de` | `content \| none` | `none` | |
 | `acknowledgements` | `content \| none` | `none` | |
