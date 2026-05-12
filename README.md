@@ -258,6 +258,8 @@ Use the [glossarium](https://typst.app/universe/package/glossarium) package for 
 // @ml expands to "Machine Learning (ML)" on first use, "ML" thereafter.
 ```
 
+For a nicer two-column grid layout (bold abbreviation on the left, long form on the right) instead of the default `print-glossary` output, see the custom `abbrevs-glossary()` helper in [`examples/content/abbreviations.typ`](examples/content/abbreviations.typ).
+
 </details>
 
 <details>
