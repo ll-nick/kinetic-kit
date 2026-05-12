@@ -100,6 +100,8 @@
 /// - draft (bool): Show the draft watermark on every page when `true`.
 /// - draft-info (content): Optional extra text appended to the watermark (e.g. a git SHA).
 /// - serif-headings (bool): Use Libertinus Serif for headings when `true`. Default `false`
+/// - heading-numbering-depth (int): Deepest heading level that receives a number. Default `3`.
+///   Headings deeper than this are styled normally but rendered without a number or indent grid.
 /// - doc (content): Document body (injected automatically by the show rule).
 /// -> content
 #let setup-page(
@@ -110,6 +112,7 @@
     draft: false,
     draft-info: none,
     serif-headings: false,
+    heading-numbering-depth: 3,
     doc,
 ) = {
     let base-margins = margins-by-length.at(margin-preset)
@@ -188,8 +191,8 @@
         // size, and keeps a running maximum — giving a pixel-precise indent.
         let all-headings = query(heading)
         let indent = all-headings.fold(0pt, (max-w, h) => {
-            if h.numbering == none { return max-w }
-            let depth = calc.min(h.depth, 4)
+            if h.numbering == none or h.depth > heading-numbering-depth { return max-w }
+            let depth = calc.min(h.depth, depth-sizes.len() - 1)
             // Reconstruct the number string from the counter at this heading's location.
             let num = numbering(
                 h.numbering,
@@ -203,13 +206,11 @@
             calc.max(max-w, w)
         })
 
-        if it.numbering != none {
+        if it.numbering != none and it.depth <= heading-numbering-depth {
             let num = numbering(
                 it.numbering,
                 ..counter(heading).at(it.location()).slice(0, it.depth),
             )
-            // Number is right-aligned so all numbers sit flush against the gap,
-            // and body text starts at the same position across all heading levels.
             grid(
                 columns: (indent, 1fr),
                 column-gutter: 0.5em,
@@ -222,73 +223,42 @@
         }
     }
 
-    show heading.where(level: 1): it => {
-        counter(math.equation).update(0)
-        counter(figure.where(kind: image)).update(0)
-        counter(figure.where(kind: table)).update(0)
-        counter(figure.where(kind: raw)).update(0)
-        counter(footnote).update(0)
-        {
-            set page(header: none, footer: none)
-            pagebreak(weak: true, to: "odd")
+    show heading: it => {
+        // Per-level sizes and spacing — index = level - 1, clamped so level 4+
+        // all inherit the last entry.
+        let sizes = (
+            font-sizes.chapter, // level 1
+            font-sizes.section, // level 2
+            font-sizes.subsection, // level 3
+            font-sizes.subsubsection, // level 4+
+        )
+        let above = (4em, 1.0em, 0.7em, 0.4em)
+        let below = (1em, 0.5em, 0.4em, 0.25em)
+        let idx = calc.min(it.level - 1, sizes.len() - 1)
+
+        if it.level == 1 {
+            counter(math.equation).update(0)
+            counter(figure.where(kind: image)).update(0)
+            counter(figure.where(kind: table)).update(0)
+            counter(figure.where(kind: raw)).update(0)
+            counter(footnote).update(0)
+            {
+                set page(header: none, footer: none)
+                pagebreak(weak: true, to: "odd")
+            }
         }
-        v(4em)
+        v(above.at(idx))
         block[
             #set par(justify: false)
             #set text(
                 font: hfont,
-                size: font-sizes.chapter,
+                size: sizes.at(idx),
                 weight: "bold",
                 hyphenate: false,
             )
             #context _heading-grid(it)
         ]
-        v(1em)
-    }
-
-    show heading.where(level: 2): it => {
-        v(1.0em)
-        block[
-            #set par(justify: false)
-            #set text(
-                font: hfont,
-                size: font-sizes.section,
-                weight: "bold",
-                hyphenate: false,
-            )
-            #context _heading-grid(it)
-        ]
-        v(0.5em)
-    }
-
-    show heading.where(level: 3): it => {
-        v(0.7em)
-        block[
-            #set par(justify: false)
-            #set text(
-                font: hfont,
-                size: font-sizes.subsection,
-                weight: "bold",
-                hyphenate: false,
-            )
-            #context _heading-grid(it)
-        ]
-        v(0.4em)
-    }
-
-    show heading.where(level: 4): it => {
-        v(0.4em)
-        block[
-            #set par(justify: false)
-            #set text(
-                font: hfont,
-                size: font-sizes.subsubsection,
-                weight: "bold",
-                hyphenate: false,
-            )
-            #context _heading-grid(it)
-        ]
-        v(0.25em)
+        v(below.at(idx))
     }
 
     // ── Outline entries ───────────────────────────────────────────────────
