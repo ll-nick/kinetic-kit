@@ -8,7 +8,6 @@
     "Max",
     "Mustermann",
     true,
-    "Karlsruhe",
     "Doktors der Ingenieurwissenschaften (Dr.-Ing.)",
     "Doktorin der Ingenieurwissenschaften (Dr.-Ing.)",
     "KIT-Fakultät für Maschinenbau",
