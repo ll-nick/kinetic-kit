@@ -8,7 +8,6 @@
     "Max",
     "Mustermann",
     true,
-    "Musterstadt",
     "Doktor-Ingenieur",
     "Doktor-Ingenieurin",
     "KIT-Fakultät für Maschinenbau",
