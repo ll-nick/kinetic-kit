@@ -165,11 +165,11 @@ All measurements are from the paper edge, including above headers and below pagi
 
 | # | Level | Rule | Source | Status | Code ref |
 |---|-------|------|--------|--------|----------|
-| FT1 | REQ | Long captions (≥ 3 lines): left-justified | KSP p.3 | ✅ | `src/page-setup.typ:247-264` (height threshold: `font-sizes.small * 2.5`) |
+| FT1 | REQ | Long captions (≥ 2 lines): left-justified | KSP p.3 | ✅ | `src/page-setup.typ:306-323` (height threshold: `font-sizes.small * 1.5`; printed spec says ≥ 3 lines, but ≥ 2 is correect) |
 | FT2 | REQ | Use full type-area width for layout | KSP p.3 | ✅ | Typst figures default to full container width |
 | FT3 | REQ | Position table headings consistently: always above or always below | KSP p.3 | N/A | User responsibility; template does not constrain caption position |
 | FT4 | REQ | Caption numbering includes chapter number (e.g. Figure 2.3) | KSP p.3 | ✅ | `src/page-setup.typ:280-283` (`numbering("1.1", ch, it)`) |
-| FT5 | REC | 1-line captions: centred (exception: if line spans nearly full width, left-align) | KSP p.3 | ✅ | `src/page-setup.typ:259-263` (center for short captions, left for ≥ 3 lines) |
+| FT5 | REC | 1-line captions: centred (exception: if line spans nearly full width, left-align) | KSP p.3 | ✅ | `src/page-setup.typ:318-322` (center for 1-line captions, left for ≥ 2 lines) |
 | FT6 | REC | Sources for captions in parentheses | KSP p.3 | N/A | User responsibility |
 | FT7 | REC | Minimum image resolution: 200 dpi | KSP p.3 | N/A | Cannot be enforced at template level; user responsibility |
 | FT8 | REC | Small illustrations remain centred | KSP p.3 | ✅ | Typst centers figures by default |

@@ -91,13 +91,12 @@ Wie in @fig:beispiel gezeigt, #lorem(20)
     caption: [Eine kurze, zentrierte Beschriftung.],
 )
 
-// Lange Beschriftung: drei oder mehr Zeilen → linksbündig
+// Lange Beschriftung: zwei oder mehr Zeilen → linksbündig
 #figure(
     rect(width: 4cm, height: 2cm, fill: luma(220), stroke: none),
     caption: [
-        Eine lange Beschriftung, die absichtlich drei oder mehr Zeilen umfasst, um zu
-        prüfen, ob die bedingte Ausrichtungslogik auf linksbündigen Text umschaltet, wie
-        von KSP für Beschriftungen ab drei Zeilen empfohlen.
+        Eine lange Beschriftung, die absichtlich zwei oder mehr Zeilen umfasst, um zu
+        prüfen, ob die bedingte Ausrichtungslogik auf linksbündigen Text umschaltet.
     ],
 )
 

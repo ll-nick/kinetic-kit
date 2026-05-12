@@ -91,13 +91,12 @@ As shown in @fig:example, #lorem(20)
     caption: [A short, centred caption.],
 )
 
-// Long caption: three or more lines → should be left-aligned
+// Long caption: two or more lines → should be left-aligned
 #figure(
     rect(width: 4cm, height: 2cm, fill: luma(220), stroke: none),
     caption: [
-        A long caption that intentionally spans three or more lines to verify that the
-        conditional alignment logic switches to left-justified text as recommended by KSP
-        for very long captions of three lines or more.
+        A long caption that intentionally spans two or more lines to verify that the
+        conditional alignment logic switches to left-justified text.
     ],
 )
 

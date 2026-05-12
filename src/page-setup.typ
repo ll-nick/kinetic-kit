@@ -311,11 +311,9 @@
             )[#it.supplement #it.counter.display(it.numbering):]
             #it.body
         ]
-        // left-align captions ≥ 3 lines, center shorter ones.
-        // Threshold sits between 2-line (~15.7 pt) and 3-line (~26.2 pt) heights
-        // measured at 8 pt Libertinus Serif with 0.75 em leading.
+        // Left-align captions ≥ 2 lines
         let h = measure(body, width: container.width).height
-        if h > font-sizes.small * 2.5 {
+        if h > font-sizes.small * 1.5 {
             align(left, body)
         } else {
             align(center, body)
