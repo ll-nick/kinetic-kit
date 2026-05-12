@@ -66,6 +66,8 @@
     // "short" < 200 pages | "medium" 200–399 | "long" ≥ 400
     margin-preset: "medium",
     colored-links: true,
+    heading-numbering-depth: 4,
+    serif-headings: true,
 
     // ── Status: submitted ───────────────────────────────────────────────────
     // Switch to status-approved: true and fill in the fields below once approved.
