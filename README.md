@@ -77,7 +77,6 @@ which is auto-generated from the source code.
 | `author-firstname` | `str` | `"Max"` | |
 | `author-surname` | `str` | `"Mustermann"` | |
 | `author-male` | `bool` | `true` | Controls gendered German text on the title page |
-| `place-of-birth` | `str \| none` | `none` | Place of birth ("aus …"); `none` = omit |
 | `title` | `content` | | Dissertation title |
 | `doc-degree` | `str` | `"Doktors der Ingenieurwissenschaften (Dr.-Ing.)"` | Degree in masculine form |
 | `doc-degree-f` | `str` | `"Doktorin der Ingenieurwissenschaften (Dr.-Ing.)"` | Degree in feminine form |
@@ -94,14 +93,14 @@ which is auto-generated from the source code.
 | `abstract-en` | `content \| none` | `none` | |
 | `abstract-de` | `content \| none` | `none` | |
 | `acknowledgements` | `content \| none` | `none` | |
-| `cv-name` | `str \| none` | `none` | Show CV page with this name as heading; `none` = omit |
-| `cv-entries` | `array` | `()` | `(year, description)` tuples |
 | `notation` | `content \| none` | `none` | Symbol/notation list |
 | `abbreviations` | `content \| none` | `none` | Abbreviations / acronym list |
 | `binding-correction` | `length` | `0mm` | BCOR added to inside margin (8–10 mm for physically bound copies) |
 | `colored-links` | `bool` | `true` | KIT Blue hyperlinks (screen); `false` = black (print) |
 | `draft` | `bool` | `false` | Show "ENTWURF"/"DRAFT" watermark |
 | `draft-info` | `str \| none` | `none` | Optional version string next to watermark (e.g. git SHA) |
+| `serif-headings` | `bool` | `false` | Use Libertinus Serif for headings when `true`, Libertinus Sans-Serif when `false` |
+| `heading-numbering-depth` | `int` | `3` | Deepest heading level that receives a number; deeper levels are styled but not numbered |
 | `own-publications` | `content \| none` | `none` | Back-matter publications list |
 | `own-patents` | `content \| none` | `none` | Back-matter patents list |
 | `supervised-theses` | `content \| none` | `none` | Back-matter supervised theses list |
@@ -133,6 +132,8 @@ which is auto-generated from the source code.
 | `colored-links` | `bool` | `true` | KIT Blue links (screen); `false` = black (print) |
 | `draft` | `bool` | `false` | Show "ENTWURF"/"DRAFT" watermark |
 | `draft-info` | `str \| none` | `none` | Optional version string next to watermark |
+| `serif-headings` | `bool` | `false` | Use Libertinus Serif for headings when `true`, Libertinus Sans-Serif when `false` |
+| `heading-numbering-depth` | `int` | `3` | Deepest heading level that receives a number; deeper levels are styled but not numbered |
 | `abstract-en` | `content \| none` | `none` | |
 | `abstract-de` | `content \| none` | `none` | |
 | `acknowledgements` | `content \| none` | `none` | |
@@ -237,7 +238,7 @@ Use the [glossarium](https://typst.app/universe/package/glossarium) package for 
 
 ```typst
 #import "@local/kinetic-kit:0.1.0": dissertation
-#import "@preview/glossarium:0.5.10": make-glossary, register-glossary, print-glossary, gls, glspl
+#import "@preview/glossarium:0.5.10": make-glossary, register-glossary, print-glossary
 
 #let abbrevs = (
   (key: "ml",  short: "ML",  long: "Machine Learning"),
@@ -254,8 +255,10 @@ Use the [glossarium](https://typst.app/universe/package/glossarium) package for 
   abbreviations: print-glossary(abbrevs),
 )
 
-// #gls("ml") expands to "Machine Learning (ML)" on first use, "ML" thereafter.
+// @ml expands to "Machine Learning (ML)" on first use, "ML" thereafter.
 ```
+
+For a nicer two-column grid layout (bold abbreviation on the left, long form on the right) instead of the default `print-glossary` output, see the custom `abbrevs-glossary()` helper in [`examples/content/abbreviations.typ`](examples/content/abbreviations.typ).
 
 </details>
 

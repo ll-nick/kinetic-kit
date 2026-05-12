@@ -30,6 +30,8 @@
 /// - colored-links (bool): KIT Blue links when `true`, black when `false`.
 /// - draft (bool): Show "ENTWURF" watermark when `true`.
 /// - draft-info (str): Optional version string below watermark. Default `none`.
+/// - serif-headings (bool): Use serif font for headings when `true`. Default `false` (sans-serif).
+/// - heading-numbering-depth (int): Deepest heading level to number. Default `3`.
 /// - abstract-en (content): English abstract. `none` = omit.
 /// - abstract-de (content): German abstract. `none` = omit.
 /// - acknowledgements (content): Acknowledgements. `none` = omit.
@@ -59,6 +61,8 @@
     colored-links: true,
     draft: false,
     draft-info: none,
+    serif-headings: false,
+    heading-numbering-depth: 3,
     abstract-en: none,
     abstract-de: none,
     acknowledgements: none,
@@ -86,6 +90,8 @@
         colored-links: colored-links,
         draft: draft,
         draft-info: draft-info,
+        serif-headings: serif-headings,
+        heading-numbering-depth: heading-numbering-depth,
     )
 
     // ── Title page ──────────────────────────────────────────────────────────

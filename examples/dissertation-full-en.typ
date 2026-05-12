@@ -5,13 +5,12 @@
 // Compile: typst compile --root . --font-path fonts examples/dissertation-full-en.typ examples/dissertation-full-en.pdf
 
 #import "/lib.typ": dissertation, flex-caption
+#import "content/abbreviations.typ": abbrevs-glossary
 
 // ── Third-party: glossarium ───────────────────────────────────────────────
 // IMPORTANT: #show: make-glossary must come before #show: dissertation.with(...)
 // so the show rule wraps the entire rendered document.
-#import "@preview/glossarium:0.5.10": (
-    gls, glspl, make-glossary, print-glossary, register-glossary,
-)
+#import "@preview/glossarium:0.5.10": make-glossary, register-glossary
 
 #let abbrevs = (
     (key: "kit", short: "KIT", long: "Karlsruhe Institute of Technology"),
@@ -29,7 +28,7 @@
 #show: alexandria(prefix: "t:", read: path => read(path))
 
 // ── Third-party: drafting (margin annotations) ────────────────────────────
-#import "@preview/drafting:0.2.2": margin-note, note-outline, set-margin-note-defaults
+#import "@preview/drafting:0.2.2": inline-note, note-outline, set-margin-note-defaults
 #let is-draft = true
 #set-margin-note-defaults(hidden: not is-draft)
 
@@ -42,7 +41,6 @@
     author-surname: "Doe",
     // false = feminine grammatical forms on the German title page
     author-male: false,
-    place-of-birth: "Musterstadt",
 
     // ── Title ───────────────────────────────────────────────────────────────
     title: [
@@ -64,7 +62,7 @@
 
     // ── Layout ──────────────────────────────────────────────────────────────
     margin-preset: "medium",
-    binding-correction: 8mm,
+    binding-correction: 5mm, // Add BCOR for physically bound print copies
     colored-links: true,
 
     // ── Status: submitted ───────────────────────────────────────────────────
@@ -74,20 +72,12 @@
     draft: is-draft,
     draft-info: "v0.1 — " + datetime.today().display("[day].[month].[year]"),
 
-    // ── CV ───────────────────────────────────────────────────────────────────
-    cv-name: "Jane Doe",
-    cv-entries: (
-        ("1992", "Born in Musterstadt"),
-        ("2012–2017", "Studies in Mechanical Engineering, KIT"),
-        ("2017–2025", "Research Associate, KIT"),
-    ),
-
     // ── Front matter ────────────────────────────────────────────────────────
     abstract-en: include "content/abstract-en.typ",
     abstract-de: include "content/abstract-de.typ",
     acknowledgements: include "content/acknowledgements.typ",
     notation: include "content/notation.typ",
-    abbreviations: print-glossary(abbrevs),
+    abbreviations: abbrevs-glossary(abbrevs),
 
     // ── Back matter ─────────────────────────────────────────────────────────
     show-lof: true,
@@ -130,12 +120,12 @@
 
 = A First Example Chapter
 
-// gls() expands to "Karlsruhe Institute of Technology (KIT)" on first use,
-// then "KIT" on subsequent uses. glspl() uses the plural form.
-This work was conducted at #gls("kit") and published via #gls("ksp"). The results improve
-the #gls("rmse") by 50 %. On second reference: #gls("kit") uses only the short form.
+// Abbreviations expand on first use. Both @key and #gls("key") syntax are supported.
+// First use: "Karlsruhe Institute of Technology (KIT)", subsequent: "KIT".
+This work was conducted at @kit and published via @ksp. The results improve the @rmse by
+50 %. The system model is an @ode. On second reference, @kit uses only the short form.
 
-#margin-note[Expand this section.]
+#inline-note[Expand this section.]
 
 #include "content/features-en.typ"
 #include "content/chapters-en.typ"

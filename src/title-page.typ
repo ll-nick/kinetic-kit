@@ -16,7 +16,6 @@
 /// - author-firstname (str): Author's first name.
 /// - author-surname (str): Author's surname.
 /// - author-male (bool): Selects grammatical gender for the degree article.
-/// - place-of-birth (str): Author's place of birth (`none` = omit).
 /// - doc-degree (str): Degree name in masculine form (e.g. `"Doktor-Ingenieur"`).
 /// - doc-degree-f (str): Degree name in feminine form (e.g. `"Doktor-Ingenieurin"`).
 /// - department (str): KIT department or faculty.
@@ -34,7 +33,6 @@
     author-firstname,
     author-surname,
     author-male,
-    place-of-birth,
     doc-degree,
     doc-degree-f,
     department,
@@ -113,11 +111,6 @@
         \
         #v(0.5mm)
         #text(size: font-sizes.author, weight: "bold")[#author-full]
-        #if place-of-birth != none [
-            \
-            #v(2mm)
-            #text(size: font-sizes.base)[#tr.born-in #place-of-birth]
-        ]
     ]
 
     v(1fr)

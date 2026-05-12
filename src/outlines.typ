@@ -6,9 +6,11 @@
 /// Print the table of contents, including a separate appendix outline when present.
 ///
 /// - lang (str): Document language — `"de"` or `"en"`.
+/// - serif-headings (bool): Use serif font for the appendix section title when `true`.
 /// -> content
-#let print-toc(lang: "de") = {
+#let print-toc(lang: "de", serif-headings: false) = {
     let tr = t.at(lang)
+    let hfont = if serif-headings { fonts.serif } else { fonts.sans }
 
     show outline.entry.where(level: 1): it => {
         v(1.6em, weak: true)
@@ -20,7 +22,7 @@
         target: heading.where(numbering: "1.1").or(heading.where(numbering: none)),
         title: tr.toc,
         depth: 3,
-        indent: 1.6em,
+        indent: auto,
     )
 
     // Appendix entries
@@ -28,16 +30,22 @@
         let has-appendix = query(heading.where(numbering: "A.1")).len() > 0
         if has-appendix {
             v(0.7em, weak: false)
-            // Add a title for the appendix section that does not trigger a page break
-            show outline: set heading(level: 2)
-            show heading.where(level: 2): it => block(
-                text(size: font-sizes.subsection, weight: "bold", it.body),
-            )
+            // Appendix outline title: styled like level 1 headings,
+            // but without the page break and counter resets.
+            show heading.where(level: 1): it => {
+                v(1.6em, weak: true)
+                block(text(
+                    font: fonts.sans,
+                    size: font-sizes.chapter,
+                    weight: "bold",
+                    it.body,
+                ))
+            }
             outline(
                 target: heading.where(numbering: "A.1"),
                 title: tr.appendix,
                 depth: 3,
-                indent: 1.6em,
+                indent: auto,
             )
         }
     }

@@ -7,8 +7,8 @@
 #import "translations.typ": t
 #import "title-page.typ": print-dissertation-title
 #import "front-matter.typ": (
-    print-abbreviations, print-abstract, print-acknowledgements, print-cv,
-    print-kurzfassung, print-notation,
+    print-abbreviations, print-abstract, print-acknowledgements, print-kurzfassung,
+    print-notation,
 )
 #import "back-matter.typ": (
     print-bibliography, print-own-patents, print-own-publications,
@@ -23,7 +23,6 @@
 /// - author-firstname (str): Author's first name.
 /// - author-surname (str): Author's surname.
 /// - author-male (bool): `true` for male, `false` for female grammatical forms.
-/// - place-of-birth (str): Author's place of birth. `none` = omit.
 /// - title (content): Dissertation title.
 /// - doc-degree (str): Degree name in masculine form.
 /// - doc-degree-f (str): Degree name in feminine form.
@@ -41,8 +40,8 @@
 /// - colored-links (bool): KIT Blue links when `true`, black when `false`.
 /// - draft (bool): Show "ENTWURF" watermark when `true`.
 /// - draft-info (str): Optional version string below watermark. Default `none`.
-/// - cv-name (str): Name for CV section heading. `none` = omit CV.
-/// - cv-entries (array): List of `(year, description)` pairs for the CV.
+/// - serif-headings (bool): Use serif font for headings when `true`. Default `false` (sans-serif).
+/// - heading-numbering-depth (int): Deepest heading level to number. Default `3`.
 /// - abstract-en (content): English abstract. `none` = omit.
 /// - abstract-de (content): German abstract. `none` = omit.
 /// - acknowledgements (content): Acknowledgements. `none` = omit.
@@ -65,7 +64,6 @@
     author-firstname: "Max",
     author-surname: "Mustermann",
     author-male: true,
-    place-of-birth: none,
     title: [Your Thesis Title],
     doc-degree: "Doktors der Ingenieurwissenschaften (Dr.-Ing.)",
     doc-degree-f: "Doktorin der Ingenieurwissenschaften (Dr.-Ing.)",
@@ -83,8 +81,8 @@
     colored-links: true,
     draft: false,
     draft-info: none,
-    cv-name: none,
-    cv-entries: (),
+    serif-headings: false,
+    heading-numbering-depth: 3,
     abstract-en: none,
     abstract-de: none,
     acknowledgements: none,
@@ -116,6 +114,8 @@
         colored-links: colored-links,
         draft: draft,
         draft-info: draft-info,
+        serif-headings: serif-headings,
+        heading-numbering-depth: heading-numbering-depth,
     )
 
     // ── Title page ──────────────────────────────────────────────────────────
@@ -125,7 +125,6 @@
         author-firstname,
         author-surname,
         author-male,
-        place-of-birth,
         doc-degree,
         doc-degree-f,
         department,
@@ -141,10 +140,6 @@
     // ── Front matter (Roman numerals) ───────────────────────────────────────
     show: setup-front-matter
     counter(page).update(0)
-
-    if cv-name != none {
-        print-cv(cv-name, cv-entries, lang)
-    }
 
     if abstract-en != none {
         print-abstract(abstract-en)

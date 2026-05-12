@@ -61,7 +61,7 @@ The single entry point re-exports:
 | `page-conf.typ` | Static A5 page layout constants: page size, margin presets (`short`/`medium`/`long`), paragraph spacing |
 | `translations.typ` | German/English label strings |
 | `title-page.typ` | Dissertation/thesis title page (German legal format) |
-| `front-matter.typ` | Abstract, Kurzfassung, acknowledgements, CV, notation, abbreviations |
+| `front-matter.typ` | Abstract, Kurzfassung, acknowledgements, notation, abbreviations |
 | `back-matter.typ` | Bibliography, own publications, own patents, supervised theses |
 | `outlines.typ` | TOC, List of Figures/Tables/Listings, `flex-caption` |
 
@@ -94,4 +94,6 @@ Shared content in `examples/content/` and bibliographies in `examples/bib/`.
 - **Base font size**: 10 pt Libertinus Serif — hard KSP requirement
 - **Line spacing**: 1.15× (0.75em leading in Typst)
 - **Margins**: Three presets keyed on final page count — short (<200 pages), medium (200–399), long (≥400)
+- **Heading font**: Libertinus Sans by default; `serif-headings: true` switches to Libertinus Serif
+- **Heading numbering**: Numbered up to level 3 by default; configurable via `heading-numbering-depth`
 - All formatting decisions should be validated against `guidelines.md`

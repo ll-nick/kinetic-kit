@@ -10,7 +10,7 @@
 //   setup-appendix()     — A.1 numbering wrapper
 
 #import "kit-colors.typ": kit-colors
-#import "kit-fonts.typ": font-sizes, fonts, line-spacing
+#import "kit-fonts.typ": font-sizes, fonts, leading
 #import "page-conf.typ": kit-page, margins-by-length, par-spacing
 #import "translations.typ": t
 
@@ -22,6 +22,7 @@
 // Suppressed on chapter-opening pages and before the first chapter.
 #let _header = context {
     set text(font: fonts.sans, size: font-sizes.small)
+    set par(spacing: par-spacing / 2)
     let this-page = here().page()
 
     // Suppress on chapter-opening pages
@@ -98,6 +99,9 @@
 /// - colored-links (bool): Render external hyperlinks in KIT blue when `true`.
 /// - draft (bool): Show the draft watermark on every page when `true`.
 /// - draft-info (content): Optional extra text appended to the watermark (e.g. a git SHA).
+/// - serif-headings (bool): Use Libertinus Serif for headings when `true`. Default `false`
+/// - heading-numbering-depth (int): Deepest heading level that receives a number. Default `3`.
+///   Headings deeper than this are styled normally but rendered without a number or indent grid.
 /// - doc (content): Document body (injected automatically by the show rule).
 /// -> content
 #let setup-page(
@@ -107,6 +111,8 @@
     colored-links: true,
     draft: false,
     draft-info: none,
+    serif-headings: false,
+    heading-numbering-depth: 3,
     doc,
 ) = {
     let base-margins = margins-by-length.at(margin-preset)
@@ -143,11 +149,13 @@
         },
     )
 
-    set text(font: fonts.serif, size: font-sizes.base, lang: lang)
+    let hfont = if serif-headings { fonts.serif } else { fonts.sans }
+
+    set text(font: fonts.serif, size: font-sizes.base, lang: lang, overhang: false)
     set par(
         justify: true,
         first-line-indent: 0pt,
-        leading: line-spacing,
+        leading: leading,
         spacing: par-spacing,
     )
 
@@ -161,73 +169,96 @@
     }
 
     // ── Headings ─────────────────────────────────────────────────────────
-    show heading.where(level: 1): it => {
-        counter(math.equation).update(0)
-        counter(figure.where(kind: image)).update(0)
-        counter(figure.where(kind: table)).update(0)
-        counter(figure.where(kind: raw)).update(0)
-        counter(footnote).update(0)
-        {
-            set page(header: none, footer: none)
-            pagebreak(weak: true, to: "odd")
+    show heading: set par(leading: leading * 0.75)
+
+    // Lay out a heading's number and body in a two-column grid so that text
+    // across all heading levels aligns at the same horizontal position.
+    // The indent width is determined by the longest numbering present in the
+    // document (i.e. the deepest heading level), measured at that level's font size.
+    let _heading-grid(it) = {
+        // Font size for each heading depth — used when measuring number widths.
+        // Index 0 is unused; depths start at 1.
+        let depth-sizes = (
+            font-sizes.chapter,
+            font-sizes.chapter, // depth 1
+            font-sizes.section, // depth 2
+            font-sizes.subsection, // depth 3
+            font-sizes.subsubsection, // depth 4
+        )
+
+        // Find the widest rendered heading number in the document.
+        // fold() walks every heading, measures its number at the correct font
+        // size, and keeps a running maximum — giving a pixel-precise indent.
+        let all-headings = query(heading)
+        let indent = all-headings.fold(0pt, (max-w, h) => {
+            if h.numbering == none or h.depth > heading-numbering-depth { return max-w }
+            let depth = calc.min(h.depth, depth-sizes.len() - 1)
+            // Reconstruct the number string from the counter at this heading's location.
+            let num = numbering(
+                h.numbering,
+                ..counter(heading).at(h.location()).slice(0, h.depth),
+            )
+            let w = measure(text(
+                font: hfont,
+                size: depth-sizes.at(depth),
+                weight: "bold",
+            )[#num]).width
+            calc.max(max-w, w)
+        })
+
+        if it.numbering != none and it.depth <= heading-numbering-depth {
+            let num = numbering(
+                it.numbering,
+                ..counter(heading).at(it.location()).slice(0, it.depth),
+            )
+            grid(
+                columns: (indent, 1fr),
+                column-gutter: 0.5em,
+                align: (top + left, top + left),
+                [#num], it.body,
+            )
+        } else {
+            // Unnumbered headings (e.g. front matter) need no grid.
+            it.body
         }
-        v(4em)
-        block[
-            #set par(justify: false)
-            #set text(
-                font: fonts.sans,
-                size: font-sizes.chapter,
-                weight: "bold",
-                hyphenate: false,
-            )
-            #it
-        ]
-        v(1em)
     }
 
-    show heading.where(level: 2): it => {
-        v(0.8em)
-        block[
-            #set par(justify: false)
-            #set text(
-                font: fonts.sans,
-                size: font-sizes.section,
-                weight: "bold",
-                hyphenate: false,
-            )
-            #it
-        ]
-        v(0.4em)
-    }
+    show heading: it => {
+        // Per-level sizes and spacing — index = level - 1, clamped so level 4+
+        // all inherit the last entry.
+        let sizes = (
+            font-sizes.chapter, // level 1
+            font-sizes.section, // level 2
+            font-sizes.subsection, // level 3
+            font-sizes.subsubsection, // level 4+
+        )
+        let above = (4em, 1.0em, 0.7em, 0.4em)
+        let below = (1em, 0.5em, 0.4em, 0.25em)
+        let idx = calc.min(it.level - 1, sizes.len() - 1)
 
-    show heading.where(level: 3): it => {
-        v(0.5em)
+        if it.level == 1 {
+            counter(math.equation).update(0)
+            counter(figure.where(kind: image)).update(0)
+            counter(figure.where(kind: table)).update(0)
+            counter(figure.where(kind: raw)).update(0)
+            counter(footnote).update(0)
+            {
+                set page(header: none, footer: none)
+                pagebreak(weak: true, to: "odd")
+            }
+        }
+        v(above.at(idx))
         block[
             #set par(justify: false)
             #set text(
-                font: fonts.sans,
-                size: font-sizes.subsection,
+                font: hfont,
+                size: sizes.at(idx),
                 weight: "bold",
                 hyphenate: false,
             )
-            #it
+            #context _heading-grid(it)
         ]
-        v(0.3em)
-    }
-
-    show heading.where(level: 4): it => {
-        v(0.3em)
-        block[
-            #set par(justify: false)
-            #set text(
-                font: fonts.sans,
-                size: font-sizes.subsubsection,
-                weight: "bold",
-                hyphenate: false,
-            )
-            #it.body
-        ]
-        v(0.2em)
+        v(below.at(idx))
     }
 
     // ── Outline entries ───────────────────────────────────────────────────
@@ -243,6 +274,8 @@
         },
     )
     show figure.where(kind: raw): set figure(supplement: context t.at(text.lang).listing)
+    show figure.where(kind: table): set figure.caption(position: top)
+    set table(stroke: 0.3pt)
 
     show figure.caption: it => layout(container => context {
         let body = [
@@ -252,11 +285,9 @@
             )[#it.supplement #it.counter.display(it.numbering):]
             #it.body
         ]
-        // left-align captions ≥ 3 lines, center shorter ones.
-        // Threshold sits between 2-line (~15.7 pt) and 3-line (~26.2 pt) heights
-        // measured at 8 pt Libertinus Serif with 0.75 em leading.
+        // Left-align captions ≥ 2 lines
         let h = measure(body, width: container.width).height
-        if h > font-sizes.small * 2.5 {
+        if h > font-sizes.small * 1.5 {
             align(left, body)
         } else {
             align(center, body)
@@ -282,6 +313,7 @@
     })
 
     set figure(gap: 0.8em)
+    show figure: set block(above: 1.5em, below: 1.5em)
 
     // ── Equations ────────────────────────────────────────────────────────
     set math.equation(numbering: it => {

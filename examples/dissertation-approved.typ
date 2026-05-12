@@ -13,7 +13,6 @@
     author-firstname: "Max",
     author-surname: "Mustermann",
     author-male: true,
-    place-of-birth: "Musterstadt",
 
     // ── Title ───────────────────────────────────────────────────────────────
     title: [
