@@ -99,6 +99,7 @@
 /// - colored-links (bool): Render external hyperlinks in KIT blue when `true`.
 /// - draft (bool): Show the draft watermark on every page when `true`.
 /// - draft-info (content): Optional extra text appended to the watermark (e.g. a git SHA).
+/// - serif-headings (bool): Use Libertinus Serif for headings when `true`. Default `false`
 /// - doc (content): Document body (injected automatically by the show rule).
 /// -> content
 #let setup-page(
@@ -108,6 +109,7 @@
     colored-links: true,
     draft: false,
     draft-info: none,
+    serif-headings: false,
     doc,
 ) = {
     let base-margins = margins-by-length.at(margin-preset)
@@ -143,6 +145,8 @@
             }
         },
     )
+
+    let hfont = if serif-headings { fonts.serif } else { fonts.sans }
 
     set text(font: fonts.serif, size: font-sizes.base, lang: lang, overhang: false)
     set par(
@@ -192,7 +196,7 @@
                 ..counter(heading).at(h.location()).slice(0, h.depth),
             )
             let w = measure(text(
-                font: fonts.sans,
+                font: hfont,
                 size: depth-sizes.at(depth),
                 weight: "bold",
             )[#num]).width
@@ -232,7 +236,7 @@
         block[
             #set par(justify: false)
             #set text(
-                font: fonts.sans,
+                font: hfont,
                 size: font-sizes.chapter,
                 weight: "bold",
                 hyphenate: false,
@@ -247,7 +251,7 @@
         block[
             #set par(justify: false)
             #set text(
-                font: fonts.sans,
+                font: hfont,
                 size: font-sizes.section,
                 weight: "bold",
                 hyphenate: false,
@@ -262,7 +266,7 @@
         block[
             #set par(justify: false)
             #set text(
-                font: fonts.sans,
+                font: hfont,
                 size: font-sizes.subsection,
                 weight: "bold",
                 hyphenate: false,
@@ -277,7 +281,7 @@
         block[
             #set par(justify: false)
             #set text(
-                font: fonts.sans,
+                font: hfont,
                 size: font-sizes.subsubsection,
                 weight: "bold",
                 hyphenate: false,

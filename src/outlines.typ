@@ -6,9 +6,11 @@
 /// Print the table of contents, including a separate appendix outline when present.
 ///
 /// - lang (str): Document language — `"de"` or `"en"`.
+/// - serif-headings (bool): Use serif font for the appendix section title when `true`.
 /// -> content
-#let print-toc(lang: "de") = {
+#let print-toc(lang: "de", serif-headings: false) = {
     let tr = t.at(lang)
+    let hfont = if serif-headings { fonts.serif } else { fonts.sans }
 
     show outline.entry.where(level: 1): it => {
         v(1.6em, weak: true)
