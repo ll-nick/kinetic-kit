@@ -30,20 +30,19 @@
         let has-appendix = query(heading.where(numbering: "A.1")).len() > 0
         if has-appendix {
             v(0.7em, weak: false)
-            // Appendix outline title: styled like level 1 headings,
-            // but without the page break and counter resets.
-            show heading.where(level: 1): it => {
-                v(1.6em, weak: true)
-                block(text(
-                    font: fonts.sans,
-                    size: font-sizes.chapter,
-                    weight: "bold",
-                    it.body,
-                ))
-            }
+            // Appendix section title rendered as styled text (not a real heading),
+            // so it doesn't register as a level-1 heading and won't suppress
+            // running headers on continuation pages of this outline.
+            v(1.6em, weak: true)
+            block(text(
+                font: hfont,
+                size: font-sizes.chapter,
+                weight: "bold",
+                tr.appendix,
+            ))
             outline(
                 target: heading.where(numbering: "A.1"),
-                title: tr.appendix,
+                title: none, // Already manually inserted above
                 depth: 3,
                 indent: auto,
             )
