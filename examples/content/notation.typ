@@ -1,7 +1,10 @@
 #table(
     columns: (2cm, 1fr),
     stroke: none,
-    inset: (x: 0pt, y: 4pt),
+    // Move entries to the top of the row
+    // Since there is no border stroke,
+    // there would be additional whitespace between the heading and the first entry otherwise.
+    inset: (x: 0pt, top: 0pt, bottom: 0.7em),
     [$bold(x)$], [State vector],
     [$bold(u)$], [Input vector],
     [$bold(y)$], [Output vector],
