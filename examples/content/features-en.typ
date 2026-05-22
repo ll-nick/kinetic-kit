@@ -60,7 +60,8 @@ As shown in @fig:example, #lorem(20)
     caption: [Comparison of methods.],
 ) <tab:example>
 
-@tab:example summarises the results.
+This chapter show-cases a table. It can be referenced just like a figure: @tab:example
+summarizes the results.
 
 == A Footnote Example
 

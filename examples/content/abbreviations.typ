@@ -8,7 +8,10 @@
 
 #let _abbrev-entry(entry, ..args) = grid(
     columns: (2cm, 1fr),
-    inset: (x: 0pt, y: 3pt),
+    // Move entries to the top of the row
+    // Since there is no border stroke,
+    // there would be additional whitespace between the heading and the first entry otherwise.
+    inset: (x: 0pt, top: 0pt, bottom: 0.7em),
     align: left,
     strong(entry.short), entry.long,
 )

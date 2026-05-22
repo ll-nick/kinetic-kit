@@ -60,7 +60,8 @@ Wie in @fig:beispiel gezeigt, #lorem(20)
     caption: [Vergleich der Methoden.],
 ) <tab:beispiel>
 
-@tab:beispiel fasst die Ergebnisse zusammen.
+Dieses Kapitel enthält eine Tabelle. Sie kann genauso wie eine Abbildung referenziert
+werden: @tab:beispiel fasst die Ergebnisse zusammen.
 
 == Fußnotenbeispiel
 
