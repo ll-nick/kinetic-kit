@@ -2,7 +2,10 @@
 // without any setup-page wrapper (each title page sets its own page geometry).
 #import "/lib.typ": components
 #import "/src/typography.typ": font-sizes-by-format
+#import "/src/page-conf.typ": title-page-margins-by-format
+
 #let font-sizes = font-sizes-by-format.at("a5")
+#let title-page-margins = title-page-margins-by-format.at("a5")
 
 #components.print-dissertation-title(
     [Titel der Dissertation],
@@ -21,6 +24,7 @@
     "Prof. Dr. Maria Musterreferentin",
     false,
     font-sizes,
+    title-page-margins,
 )
 
 #components.print-thesis-title(
@@ -35,4 +39,5 @@
     "01. März 2026",
     "de",
     font-sizes,
+    title-page-margins,
 )
