@@ -11,7 +11,7 @@
 
 #import "kit-colors.typ": kit-colors
 #import "typography.typ": font-sizes-by-format, fonts, leading
-#import "page-conf.typ": kit-page, margins-by-length, par-spacing
+#import "page-conf.typ": margins-by-format, page-dimensions-by-format, par-spacing
 #import "translations.typ": t
 
 
@@ -123,17 +123,19 @@
         message: "format must be \"a5\", \"17x24\" (170×240 mm), or \"a4\"",
     )
     let font-sizes = font-sizes-by-format.at(format)
-    let base-margins = margins-by-length.at(margin-preset)
-    let margins = (
-        top: base-margins.top,
-        bottom: base-margins.bottom,
-        inside: base-margins.inside + binding-correction,
-        outside: base-margins.outside,
+    let page-dimensions = page-dimensions-by-format.at(format)
+    let preset-margins = margins-by-format.at(format).at(margin-preset)
+    let body-margins = (
+        top: preset-margins.top,
+        bottom: preset-margins.bottom,
+        inside: preset-margins.inside + binding-correction,
+        outside: preset-margins.outside,
     )
 
     set page(
-        paper: kit-page.type,
-        margin: margins,
+        width: page-dimensions.width,
+        height: page-dimensions.height,
+        margin: body-margins,
         binding: left,
         header: _header(font-sizes),
         foreground: if draft {

@@ -109,6 +109,7 @@
     )
     let author-name = author-firstname + " " + author-surname
     let font-sizes = font-sizes-by-format.at(format)
+    let title-page-margins = title-page-margins-by-format.at(format)
 
     set document(
         title: title,
@@ -147,6 +148,7 @@
         co-advisor,
         co-advisor-male,
         font-sizes,
+        title-page-margins,
     )
 
     // ── Front matter (Roman numerals) ───────────────────────────────────────
