@@ -92,6 +92,8 @@
 /// typography, heading styles, figure captions, equations, and code blocks.
 /// Use as a show rule: `#show: setup-page.with(...)`.
 ///
+/// - format (str): Paper format — `"a5"` (148×210 mm, default), `"17x24"` (170×240 mm),
+///   or `"a4"` (210×297 mm). Font sizes and margins are set automatically per KSP specifications.
 /// - margin-preset (str): Margin profile keyed on expected page count —
 ///   `"short"` (under 200 pp), `"medium"` (200–399 pp), `"long"` (400+ pp).
 /// - lang (str): Document language — `"de"` or `"en"`.
@@ -105,6 +107,7 @@
 /// - doc (content): Document body (injected automatically by the show rule).
 /// -> content
 #let setup-page(
+    format: "a5",
     margin-preset: "short",
     lang: "de",
     binding-correction: 0mm,
@@ -115,13 +118,17 @@
     heading-numbering-depth: 3,
     doc,
 ) = {
+    assert(
+        format in ("a5", "17x24", "a4"),
+        message: "format must be \"a5\", \"17x24\" (170×240 mm), or \"a4\"",
+    )
+    let font-sizes = font-sizes-by-format.at(format)
     let base-margins = margins-by-length.at(margin-preset)
     let margins = (
         top: base-margins.top,
         bottom: base-margins.bottom,
         inside: base-margins.inside + binding-correction,
         outside: base-margins.outside,
-    let font-sizes = font-sizes-by-format.at(format)
     )
 
     set page(

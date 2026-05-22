@@ -7,6 +7,7 @@
 #import "translations.typ": t
 #import "title-page.typ": print-dissertation-title
 #import "typography.typ": font-sizes-by-format
+#import "page-conf.typ": title-page-margins-by-format
 #import "front-matter.typ": (
     print-abbreviations, print-abstract, print-acknowledgements, print-kurzfassung,
     print-notation,
@@ -35,6 +36,8 @@
 /// - main-advisor-male (bool): Grammatical gender for main advisor label.
 /// - co-advisor (content): Co-referee (when approved).
 /// - co-advisor-male (bool): Grammatical gender for co-advisor label.
+/// - format (str): Paper format — `"a5"` (148×210 mm, default), `"17x24"` (170×240 mm),
+///   or `"a4"` (210×297 mm, discouraged by KSP). Font sizes and margins are set automatically.
 /// - lang (str): Document language (`"de"` or `"en"`).
 /// - margin-preset (str): `"short"`, `"medium"`, or `"long"`.
 /// - binding-correction (length): BCOR added to inside margin. Default `0mm`.
@@ -76,6 +79,7 @@
     main-advisor-male: true,
     co-advisor: none,
     co-advisor-male: true,
+    format: "a5",
     lang: "de",
     margin-preset: "short",
     binding-correction: 0mm,
@@ -99,6 +103,10 @@
     appendix: none,
     doc,
 ) = {
+    assert(
+        format in ("a5", "17x24", "a4"),
+        message: "format must be \"a5\", \"17x24\" (170×240 mm), or \"a4\"",
+    )
     let author-name = author-firstname + " " + author-surname
     let font-sizes = font-sizes-by-format.at(format)
 
@@ -110,6 +118,7 @@
 
     // ── Global page/text/heading setup -─────────────────────────────────────
     show: setup-page.with(
+        format: format,
         margin-preset: margin-preset,
         lang: lang,
         binding-correction: binding-correction,
