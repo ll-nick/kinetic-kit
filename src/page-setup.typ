@@ -10,7 +10,7 @@
 //   setup-appendix()     — A.1 numbering wrapper
 
 #import "kit-colors.typ": kit-colors
-#import "typography.typ": font-sizes, fonts, leading
+#import "typography.typ": font-sizes-by-format, fonts, leading
 #import "page-conf.typ": kit-page, margins-by-length, par-spacing
 #import "translations.typ": t
 
@@ -20,7 +20,7 @@
 // Even page: chapter number and title
 // Odd page:  section title, falls back to chapter title.
 // Suppressed on chapter-opening pages and before the first chapter.
-#let _header = context {
+#let _header(font-sizes) = context {
     set text(font: fonts.sans, size: font-sizes.small)
     set par(spacing: par-spacing / 2)
     let this-page = here().page()
@@ -75,7 +75,7 @@
 
 // ── Draft indicator ───────────────────────────────────────────────────────
 
-#let _draft-indicator(lang, draft-info) = place(
+#let _draft-indicator(lang, draft-info, font-sizes) = place(
     bottom + center,
     dy: -6mm,
     box(
@@ -121,15 +121,16 @@
         bottom: base-margins.bottom,
         inside: base-margins.inside + binding-correction,
         outside: base-margins.outside,
+    let font-sizes = font-sizes-by-format.at(format)
     )
 
     set page(
         paper: kit-page.type,
         margin: margins,
         binding: left,
-        header: _header,
+        header: _header(font-sizes),
         foreground: if draft {
-            _draft-indicator(lang, draft-info)
+            _draft-indicator(lang, draft-info, font-sizes)
         } else {
             none
         },

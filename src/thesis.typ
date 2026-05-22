@@ -6,6 +6,7 @@
 #import "page-setup.typ": setup-appendix, setup-content, setup-front-matter, setup-page
 #import "translations.typ": t
 #import "title-page.typ": print-thesis-title
+#import "typography.typ": font-sizes-by-format
 #import "front-matter.typ": (
     print-abbreviations, print-abstract, print-acknowledgements, print-kurzfassung,
 )
@@ -75,6 +76,7 @@
     doc,
 ) = {
     let author-name = author-firstname + " " + author-surname
+    let font-sizes = font-sizes-by-format.at(format)
 
     set document(
         title: title,
@@ -106,6 +108,7 @@
         supervisor,
         date-submitted,
         lang,
+        font-sizes,
     )
 
     // ── Front matter (Roman numerals) ───────────────────────────────────────
@@ -127,7 +130,7 @@
         print-abbreviations(abbreviations, lang)
     }
 
-    print-toc(lang: lang)
+    print-toc(font-sizes, lang: lang)
 
     // ── Main content (Arabic numerals) ──────────────────────────────────────
     show: setup-content
