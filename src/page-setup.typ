@@ -232,8 +232,14 @@
             font-sizes.subsection, // level 3
             font-sizes.subsubsection, // level 4+
         )
-        let above = (4em, 1.0em, 0.7em, 0.4em)
-        let below = (1em, 0.5em, 0.4em, 0.25em)
+        // Spacing uses block(above:, below:) with explicit values (weakness=3) so that
+        // adjacent spacings collapse to the larger of the two rather than stacking.
+        // This makes H1→text, H1→H2, and H1→figure all produce the same gap.
+        // H1.above is a strong v() instead of block.above because it must survive at
+        // the top of the fresh page after the pagebreak.
+        let h1-above = 4em
+        let above = (0pt, 2.0em, 1.7em, 1.4em) // H1: handled by h1-above; H2+: block.above
+        let below = (3em, 1.5em, 1.4em, 1.25em)
         let idx = calc.min(it.level - 1, sizes.len() - 1)
 
         if it.level == 1 {
@@ -246,9 +252,9 @@
                 set page(header: none, footer: none)
                 pagebreak(weak: true, to: "odd")
             }
+            v(h1-above)
         }
-        v(above.at(idx))
-        block[
+        block(above: above.at(idx), below: below.at(idx))[
             #set par(justify: false)
             #set text(
                 font: hfont,
@@ -258,7 +264,6 @@
             )
             #context _heading-grid(it)
         ]
-        v(below.at(idx))
     }
 
     // ── Outline entries ───────────────────────────────────────────────────
