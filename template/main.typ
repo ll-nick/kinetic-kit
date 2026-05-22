@@ -44,14 +44,17 @@
 
     // ── Language & layout ─────────────────────────────────────────────────────
     lang: "en", // "de" or "en" — affects all auto-generated headings
+    format: "a5", // "a5" (148×210 mm) | "17x24" (170×240 mm) | "a4" (210×297 mm)
     margin-preset: "short", // "short" (<200 pp) | "medium" (200–399) | "long" (≥400)
     binding-correction: 0mm, // Add 8–10 mm for physically bound print copies (BCOR)
     colored-links: true, // Set to false for the black-link print copy submitted to KSP
+    serif-headings: false, // true = Libertinus Serif headings; false = Libertinus Sans
+    heading-numbering-depth: 3, // Deepest numbered level: 3 = 1.1.1, 4 = 1.1.1.1
 
     // ── Draft watermark ───────────────────────────────────────────────────────
-    // Shows "DRAFT" watermark on every page. Set to false before submission.
+    // Shows "DRAFT" / "ENTWURF" on every page. Set to false before submission.
     draft: true,
-    // draft-info: "v0.1 — 2025-06-01", // Optional extra info next to the watermark, e.g. version number, date or commit hash.
+    // draft-info: "v0.1 — 2025-06-01", // Optional extra info next to the watermark, e.g. version, date or commit hash.
 
     // ── Front matter ──────────────────────────────────────────────────────────
     abstract-en: [
@@ -72,8 +75,8 @@
     //   // Uncomment to add a notation / symbol list.
     // ],
 
-    // Pass your abbreviations list here. You can optionally use the glossary module to generate this list.
-    // See the examples in the documentation for details:
+    // Pass your abbreviations list here. You can optionally use the glossarium package
+    // for automatic first-use expansion. See the full example in the documentation.
     // abbreviations: [...],
 
     // ── Back matter ───────────────────────────────────────────────────────────
@@ -124,9 +127,9 @@
 //   title: [Titel der Arbeit],
 //
 //   // ── Type & institution ──────────────────────────────────────────────────
-//   thesis-type:          "Masterarbeit", // or "Bachelorarbeit" / "Diplomarbeit"
-//   department:           "KIT-Fakultät für Maschinenbau",
-//   university-genitive:  "des Karlsruher Instituts für Technologie (KIT)",
+//   thesis-type:         "Masterarbeit", // or "Bachelorarbeit" / "Diplomarbeit"
+//   department:          "KIT-Fakultät für Maschinenbau",
+//   university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
 //
 //   // ── Supervisors ─────────────────────────────────────────────────────────
 //   examiner:       "Prof. Dr.-Ing. Vorname Nachname",
@@ -134,18 +137,23 @@
 //   date-submitted: "01. März 2026",
 //
 //   // ── Language & layout ───────────────────────────────────────────────────
-//   lang: "de",
-//   margin-preset: "short",
-//   binding-correction: 0mm,
-//   colored-links: true,
+//   lang:                    "de",
+//   format:                  "a5",     // "a5" | "17x24" | "a4"
+//   margin-preset:           "short",  // "short" (<200 pp) | "medium" (200–399) | "long" (≥400)
+//   binding-correction:      0mm,      // Add 8–10 mm for physically bound print copies (BCOR)
+//   colored-links:           true,     // Set to false for the black-link print copy
+//   serif-headings:          false,    // true = Libertinus Serif headings; false = Libertinus Sans
+//   heading-numbering-depth: 3,        // Deepest numbered level: 3 = 1.1.1, 4 = 1.1.1.1
 //
+//   // ── Draft watermark ─────────────────────────────────────────────────────
 //   draft: true,
+//   // draft-info: "v0.1 — 2025-06-01",
 //
 //   // ── Front matter ────────────────────────────────────────────────────────
 //   abstract-en: [...],
 //   abstract-de: [...],
 //   // acknowledgements: [...],
-//   // abbreviations: [...],
+//   // abbreviations:    [...],
 //
 //   // ── Back matter ─────────────────────────────────────────────────────────
 //   show-lof: true,
