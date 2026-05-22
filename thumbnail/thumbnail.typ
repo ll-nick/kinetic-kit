@@ -1,6 +1,11 @@
 // Thumbnail for Typst Universe gallery.
 
 #import "../src/title-page.typ": print-dissertation-title
+#import "../src/kit-fonts.typ": font-sizes-by-format
+#import "../src/page-conf.typ": title-page-margins-by-format
+
+#let font-sizes = font-sizes-by-format.at("a5")
+#let title-page-margins = title-page-margins-by-format.at("a5")
 
 #print-dissertation-title(
     [Dissertation Title],
@@ -18,4 +23,6 @@
     false,
     [Prof. Dr. Korreferent],
     true,
+    font-sizes,
+    title-page-margins,
 )
