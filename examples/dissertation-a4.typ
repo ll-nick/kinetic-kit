@@ -1,0 +1,151 @@
+// KIT Dissertation Template — A4 format example
+// KSP advises against A4 but offers it as a fallback. Font sizes and margins
+// differ from A5/17×24 (chapter headings 25 pt, body 11 pt, fixed margins:
+// top 35 mm, inside 35 mm, bottom 30 mm, outside 25 mm). The margin-preset
+// parameter has no effect for A4 (all presets use the same fixed margins).
+//
+// Compile: typst compile --root . --font-path fonts examples/dissertation-a4.typ examples/dissertation-a4.pdf
+
+#import "/lib.typ": dissertation, flex-caption
+#import "content/abbreviations.typ": abbrevs-glossary
+
+// ── Third-party: glossarium ───────────────────────────────────────────────
+// IMPORTANT: #show: make-glossary must come before #show: dissertation.with(...)
+// so the show rule wraps the entire rendered document.
+#import "@preview/glossarium:0.5.10": make-glossary, register-glossary
+
+#let abbrevs = (
+    (key: "kit", short: "KIT", long: "Karlsruher Institut für Technologie"),
+    (key: "ksp", short: "KSP", long: "KIT Scientific Publishing"),
+    (key: "ode", short: "ODE", long: "Gewöhnliche Differentialgleichung"),
+    (key: "rmse", short: "RMSE", long: "Root Mean Square Error"),
+)
+
+#show: make-glossary
+#register-glossary(abbrevs)
+
+// ── Third-party: alexandria (multi-bibliography) ──────────────────────────
+// Allows bibliographyx() alongside the main bibliography() for own-publications,
+// supervised-theses, and own-patents. Citations use @prefix:key syntax.
+#import "@preview/alexandria:0.2.2": alexandria, bibliographyx
+#show: alexandria(prefix: "p:", read: path => read(path))
+#show: alexandria(prefix: "t:", read: path => read(path))
+
+// ── Third-party: drafting (margin annotations) ────────────────────────────
+// Set is-draft here so the same value drives both the watermark and the
+// visibility of margin notes — set to false before final submission.
+#import "@preview/drafting:0.2.2": inline-note, note-outline, set-margin-note-defaults
+#let is-draft = true
+#set-margin-note-defaults(hidden: not is-draft)
+
+// ── Dissertation ──────────────────────────────────────────────────────────
+
+#show: dissertation.with(
+    // ── Format ──────────────────────────────────────────────────────────────
+    format: "a4",
+
+    // ── Author ──────────────────────────────────────────────────────────────
+    author-title: "M.Sc.",
+    author-firstname: "Max",
+    author-surname: "Mustermann",
+    author-male: true,
+
+    // ── Title ───────────────────────────────────────────────────────────────
+    title: [
+        Ein vollständiger Titel der Dissertation -- Über mehrere Zeilen
+    ],
+
+    // ── Degree ──────────────────────────────────────────────────────────────
+    doc-degree: "Doktors der Ingenieurwissenschaften (Dr.-Ing.)",
+    doc-degree-f: "Doktorin der Ingenieurwissenschaften (Dr.-Ing.)",
+
+    // ── Institution ─────────────────────────────────────────────────────────
+    department: "KIT-Fakultät für Maschinenbau",
+    university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
+
+    // ── Language ────────────────────────────────────────────────────────────
+    lang: "de",
+
+    // ── Layout ──────────────────────────────────────────────────────────────
+    // margin-preset has no effect for A4 — all presets use the same fixed margins.
+    colored-links: true,
+    heading-numbering-depth: 4,
+    serif-headings: true,
+
+    // ── Status: submitted ───────────────────────────────────────────────────
+    // Switch to status-approved: true and fill in the fields below once approved.
+    // See dissertation-approved.typ for the approved title page.
+    status-approved: false,
+    // exam-date:         "12. Dezember 2025",
+    // main-advisor:      "Prof. Dr.-Ing. Hans Musterbetreuer",
+    // main-advisor-male: true,
+    // co-advisor:        "Prof. Dr. Maria Musterreferentin",
+    // co-advisor-male:   false,
+
+    // ── Draft watermark ─────────────────────────────────────────────────────
+    draft: is-draft,
+    draft-info: "v0.1 — " + datetime.today().display("[day].[month].[year]"),
+
+    // ── Front matter ────────────────────────────────────────────────────────
+    abstract-en: include "content/abstract-en.typ",
+    abstract-de: include "content/abstract-de.typ",
+    acknowledgements: include "content/acknowledgements.typ",
+    notation: include "content/notation.typ",
+
+    abbreviations: abbrevs-glossary(abbrevs),
+
+    // ── Back matter ─────────────────────────────────────────────────────────
+    show-lof: true,
+    show-lot: true,
+    show-lol: true,
+
+    // alexandria: use bibliographyx() for sections alongside the main bibliography.
+    // full: true lists all entries regardless of in-text citations.
+    own-publications: bibliographyx(
+        "bib/own-publications.bib",
+        prefix: "p:",
+        title: none,
+        style: "ieee",
+        full: true,
+    ),
+    supervised-theses: bibliographyx(
+        "bib/supervised-theses.bib",
+        prefix: "t:",
+        title: none,
+        style: "ieee",
+        full: true,
+    ),
+    own-patents: [
+        Mustermann, M. (2024). *Verfahren zur Optimierung von Musterverfahren*. Deutsches
+        Patent- und Markenamt, DE 10 2024 000 001 A1.
+    ],
+
+    // ── Bibliography ────────────────────────────────────────────────────────
+    bibliography: bibliography(
+        "bib/references.bib",
+        title: none,
+        style: "ieee",
+    ),
+
+    // ── Appendix ─────────────────────────────────────────────────────────────
+    appendix: [
+        = Ergänzendes Material
+
+        #lorem(800)
+    ],
+)
+
+= Ein erstes Beispielkapitel
+
+// Abbreviations expand on first use. Both @key and #gls("key") syntax are supported.
+// First use: "Karlsruher Institut für Technologie (KIT)", subsequent: "KIT".
+Diese Arbeit wurde am @kit durchgeführt und über @ksp veröffentlicht. Die Ergebnisse
+verbessern den @rmse um 50 %. Das Systemmodell ist eine @ode. Bei erneuter Erwähnung zeigt
+@kit nur die Kurzform.
+
+#inline-note[Diesen Abschnitt noch ausbauen.]
+
+#include "content/features-de.typ"
+#include "content/chapters-de.typ"
+
+#if is-draft { note-outline() }
