@@ -1,6 +1,8 @@
 // Compile-only: full custom document assembled from individual components,
 // exercising the complete page-setup wrapper sequence.
 #import "/lib.typ": components, flex-caption
+#import "/src/typography.typ": font-sizes-by-format
+#let font-sizes = font-sizes-by-format.at("a5")
 
 #show: components.setup-page.with(
     margin-preset: "short",
@@ -28,9 +30,10 @@
     true,
     none,
     true,
+    font-sizes,
 )
 
-#components.print-toc(lang: "de")
+#components.print-toc(font-sizes, lang: "de")
 #components.print-lof(lang: "de")
 
 // ── Main content ──────────────────────────────────────────────────────────

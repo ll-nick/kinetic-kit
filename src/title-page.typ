@@ -1,7 +1,7 @@
 // KIT Dissertation / Thesis Title Page
 
+#import "typography.typ": fonts
 #import "page-conf.typ": kit-page, title-page-margins
-#import "typography.typ": font-sizes, fonts
 #import "kit-colors.typ": kit-colors
 #import "translations.typ": t
 
@@ -26,6 +26,7 @@
 /// - main-advisor-male (bool): Selects gendered label for the main advisor.
 /// - co-advisor (content): Co-referee — shown only when `status-approved` is `true`.
 /// - co-advisor-male (bool): Selects gendered label for the co-advisor.
+/// - font-sizes (dict): Format-specific font sizes resolved by the template.
 /// -> content
 #let print-dissertation-title(
     title,
@@ -43,6 +44,7 @@
     main-advisor-male,
     co-advisor,
     co-advisor-male,
+    font-sizes,
 ) = {
     set page(
         paper: kit-page.type,
@@ -150,6 +152,7 @@
 /// - supervisor (content): Supervisor (Betreuer).
 /// - date-submitted (content): Submission date string.
 /// - lang (str): Document language (currently unused — title page is always German).
+/// - font-sizes (dict): Format-specific font sizes resolved by the template.
 /// -> content
 #let print-thesis-title(
     title,
@@ -162,6 +165,7 @@
     supervisor,
     date-submitted,
     lang,
+    font-sizes,
 ) = {
     set page(
         paper: kit-page.type,

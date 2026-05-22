@@ -1,7 +1,7 @@
 // front-matter.typ — front-matter pages
 // abstract, kurzfassung, acknowledgements, notation, abbreviations
 
-#import "typography.typ": font-sizes, fonts
+#import "typography.typ": fonts
 #import "translations.typ": t
 
 // ── Abstract / Kurzfassung ────────────────────────────────────────────────
