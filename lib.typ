@@ -9,14 +9,15 @@
     import "src/kit-colors.typ": kit-colors
     (fonts: fonts, font-sizes: font-sizes, leading: leading, colors: kit-colors)
 }
-// ── Component exports ─────────────────────────────────────────────────────
-//
-// Individual building blocks for custom document composition.
-// Import only what you need, e.g.:
-//   #import "@preview/kinetic-kit:0.1.0": setup-page, setup-front-matter, print-toc
 
-#import "src/page-setup.typ": (
-    setup-appendix, setup-content, setup-front-matter, setup-page,
-)
-#import "src/title-page.typ": print-dissertation-title, print-thesis-title
-#import "src/outlines.typ": print-lof, print-lol, print-lot, print-toc
+/// Building blocks for fully custom document composition. Use when the
+/// high-level `dissertation` / `thesis` functions don't cover your layout.
+///
+/// Example:
+/// ```typst
+/// #import "@preview/kinetic-kit:0.1.0": components
+/// #show: components.setup-page.with(margin-preset: "short", lang: "de")
+/// #show: components.setup-front-matter
+/// #components.print-toc(lang: "de")
+/// ```
+#import "src/components.typ"

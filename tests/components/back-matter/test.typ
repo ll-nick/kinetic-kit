@@ -1,11 +1,9 @@
 // Compile-only: print-lof, print-lot, print-lol — verifies the flex-caption
 // state management compiles correctly when list functions are called directly.
-#import "/lib.typ": (
-    flex-caption, print-lof, print-lol, print-lot, setup-content, setup-page,
-)
+#import "/lib.typ": components, flex-caption
 
-#show: setup-page.with(lang: "en", margin-preset: "short")
-#show: setup-content
+#show: components.setup-page.with(lang: "en", margin-preset: "short")
+#show: components.setup-content
 
 = Chapter One
 
@@ -24,6 +22,6 @@
     kind: table,
 )
 
-#print-lof(lang: "en")
-#print-lot(lang: "en")
-#print-lol(lang: "en")
+#components.print-lof(lang: "en")
+#components.print-lot(lang: "en")
+#components.print-lol(lang: "en")

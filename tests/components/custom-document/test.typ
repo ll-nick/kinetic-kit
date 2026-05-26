@@ -1,11 +1,8 @@
 // Compile-only: full custom document assembled from individual components,
 // exercising the complete page-setup wrapper sequence.
-#import "/lib.typ": (
-    flex-caption, print-dissertation-title, print-lof, print-toc, setup-appendix,
-    setup-content, setup-front-matter, setup-page,
-)
+#import "/lib.typ": components, flex-caption
 
-#show: setup-page.with(
+#show: components.setup-page.with(
     margin-preset: "short",
     lang: "de",
     colored-links: true,
@@ -13,9 +10,9 @@
 
 // ── Front matter ─────────────────────────────────────────────────────────
 
-#show: setup-front-matter
+#show: components.setup-front-matter
 
-#print-dissertation-title(
+#components.print-dissertation-title(
     [Titel der Dissertation],
     "M.Sc.",
     "Max",
@@ -33,12 +30,12 @@
     true,
 )
 
-#print-toc(lang: "de")
-#print-lof(lang: "de")
+#components.print-toc(lang: "de")
+#components.print-lof(lang: "de")
 
 // ── Main content ──────────────────────────────────────────────────────────
 
-#show: setup-content
+#show: components.setup-content
 
 = Einleitung
 
@@ -56,7 +53,7 @@ Weiterer Inhalt.
 
 // ── Appendix ─────────────────────────────────────────────────────────────
 
-#show: setup-appendix
+#show: components.setup-appendix
 
 = Anhang
 
