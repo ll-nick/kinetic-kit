@@ -57,8 +57,8 @@ The single entry point re-exports:
 | `thesis.typ` | `thesis()` orchestrator — front/back matter, glossarium wiring |
 | `page-setup.typ` | Shared style engine — `kit-header`, `_page-base()`, draft indicator, section pagination wrappers |
 | `kit-colors.typ` | KIT color palette + syntax highlighting colors |
-| `typography.typ` | Font configuration (Libertinus family) and KSP-required sizes |
-| `page-conf.typ` | Static A5 page layout constants: page size, margin presets (`short`/`medium`/`long`), paragraph spacing |
+| `typography.typ` | Font configuration (Libertinus family) and KSP-required sizes per format (`font-sizes-by-format`) |
+| `page-conf.typ` | Page layout constants per format: page dimensions, margin presets (`short`/`medium`/`long`) per format, paragraph spacing |
 | `translations.typ` | German/English label strings |
 | `title-page.typ` | Dissertation/thesis title page (German legal format) |
 | `front-matter.typ` | Abstract, Kurzfassung, acknowledgements, notation, abbreviations |
@@ -90,8 +90,8 @@ Shared content in `examples/content/` and bibliographies in `examples/bib/`.
 ## Key Constraints
 
 - **Typst version**: Must use 0.14.2 (pinned in `mise.toml` and `typst.toml`)
-- **Paper format**: DIN A5 (148 × 210 mm) — hard KSP requirement
-- **Base font size**: 10 pt Libertinus Serif — hard KSP requirement
+- **Paper format**: A5 (148×210 mm, default), 17×24 (170×240 mm), or A4 (210×297 mm) — controlled via `format` parameter; KSP recommends A5 for dissertations
+- **Base font size**: 10 pt (A5/17×24) or 11 pt (A4) Libertinus Serif — set automatically per format
 - **Line spacing**: 1.15× (0.75em leading in Typst)
 - **Margins**: Three presets keyed on final page count — short (<200 pages), medium (200–399), long (≥400)
 - **Heading font**: Libertinus Sans by default; `serif-headings: true` switches to Libertinus Serif

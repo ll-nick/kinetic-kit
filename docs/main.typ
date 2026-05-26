@@ -44,7 +44,8 @@ exactly.
 ```typst
 #import "@local/kinetic-kit:0.1.0": kit-style
 
-#set text(font: kit-style.fonts.sans, size: kit-style.font-sizes.small)
+#let font-sizes = kit-style.font-sizes-by-format.at("a5")
+#set text(font: kit-style.fonts.sans, size: font-sizes.small)
 #rect(fill: kit-style.colors.green15, stroke: kit-style.colors.green)
 ```
 
@@ -61,21 +62,25 @@ exactly.
 
 == Font Sizes
 
-All values are `length`. KSP requires 10 pt body text on A5.
+`font-sizes-by-format` is a dictionary keyed by format string (`"a5"`, `"17x24"`, `"a4"`).
+Each entry contains the sizes below. Access them with
+`kit-style.font-sizes-by-format.at(format)`.
+
+All fields are `length`. Example values shown for the `"a5"` format (10 pt base).
 
 #table(
-    columns: (auto, auto, 1fr),
-    table.header([*Field*], [*Value*], [*Description*]),
-    [`font-sizes.base`], [`10pt`], [Body text — KSP required base size],
-    [`font-sizes.chapter`], [`18pt`], [Chapter heading (level 1)],
-    [`font-sizes.section`], [`14pt`], [Section heading (level 2)],
-    [`font-sizes.subsection`], [`12pt`], [Subsection heading (level 3)],
-    [`font-sizes.subsubsection`], [`10pt`], [Subsubsection heading (level 4+)],
-    [`font-sizes.small`], [`8pt`], [Running headers, footnotes, captions],
-    [`font-sizes.footnote`], [`8pt`], [Footnote text],
-    [`font-sizes.title`], [`18pt`], [Title page — document title],
-    [`font-sizes.author`], [`14pt`], [Title page — author name],
-    [`font-sizes.title-info`], [`14pt`], [Title page — info lines],
+    columns: (auto, auto, auto, 1fr),
+    table.header([*Field*], [*A5 / 17×24*], [*A4*], [*Description*]),
+    [`base`], [`10pt`], [`11pt`], [Body text],
+    [`chapter`], [`18pt`], [`25pt`], [Chapter heading (level 1)],
+    [`section`], [`14pt`], [`17pt`], [Section heading (level 2)],
+    [`subsection`], [`12pt`], [`14pt`], [Subsection heading (level 3)],
+    [`subsubsection`], [`10pt`], [`11pt`], [Subsubsection heading (level 4+)],
+    [`small`], [`8pt`], [`9pt`], [Running headers, footnotes, captions],
+    [`footnote`], [`8pt`], [`9pt`], [Footnote text],
+    [`title`], [`18pt`], [`25pt`], [Title page — document title],
+    [`author`], [`14pt`], [`14pt`], [Title page — author name],
+    [`title-info`], [`14pt`], [`14pt`], [Title page — info lines],
 )
 
 == Colors
@@ -120,11 +125,14 @@ without the full `dissertation()` / `thesis()` orchestrator. All symbols are acc
 through the `components` namespace:
 
 ```typst
-#import "@local/kinetic-kit:0.1.0": components
+#import "@local/kinetic-kit:0.1.0": components, kit-style
 
-#show: components.setup-page.with(margin-preset: "short", lang: "de")
+#let format = "a5"
+#let font-sizes = kit-style.font-sizes-by-format.at(format)
+
+#show: components.setup-page.with(format: format, margin-preset: "short", lang: "de")
 #show: components.setup-front-matter
-#components.print-toc(lang: "de")
+#components.print-toc(font-sizes, lang: "de")
 ```
 
 You are responsible for applying the wrappers in the correct order: `setup-page` →
