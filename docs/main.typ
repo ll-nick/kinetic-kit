@@ -23,8 +23,7 @@
 #line(length: 100%)
 #v(0.5em)
 
-This document lists all public functions exported by `kinetic-kit` with their parameters
-and types, as extracted from the source doc-comments.
+This document lists all public symbols exported by `kinetic-kit`.
 
 = Templates
 
@@ -36,9 +35,100 @@ and types, as extracted from the source doc-comments.
 #let thesis-module = tidy.parse-module(thesis-src, name: "thesis")
 #tidy.show-module(thesis-module, show-outline: true, sort-functions: false)
 
+= Style Constants
+
+The `kit-style` dictionary exposes the template's visual constants so that custom figures,
+diagrams, and other content can match the document's typography and KIT color palette
+exactly.
+
+```typst
+#import "@local/kinetic-kit:0.1.0": kit-style
+
+#set text(font: kit-style.fonts.sans, size: kit-style.font-sizes.small)
+#rect(fill: kit-style.colors.green15, stroke: kit-style.colors.green)
+```
+
+== Fonts
+
+#table(
+    columns: (auto, auto, 1fr),
+    table.header([*Field*], [*Value*], [*Description*]),
+    [`fonts.serif`], [`("Libertinus Serif",)`], [Serif body text],
+    [`fonts.sans`], [`("Libertinus Sans",)`], [Sans-serif headings and headers],
+    [`fonts.mono`], [`("Libertinus Mono",)`], [Code listings],
+    [`leading`], [`0.75em`], [Paragraph line spacing (≈ 1.15× at 10 pt)],
+)
+
+== Font Sizes
+
+All values are `length`. KSP requires 10 pt body text on A5.
+
+#table(
+    columns: (auto, auto, 1fr),
+    table.header([*Field*], [*Value*], [*Description*]),
+    [`font-sizes.base`], [`10pt`], [Body text — KSP required base size],
+    [`font-sizes.chapter`], [`18pt`], [Chapter heading (level 1)],
+    [`font-sizes.section`], [`14pt`], [Section heading (level 2)],
+    [`font-sizes.subsection`], [`12pt`], [Subsection heading (level 3)],
+    [`font-sizes.subsubsection`], [`10pt`], [Subsubsection heading (level 4+)],
+    [`font-sizes.small`], [`8pt`], [Running headers, footnotes, captions],
+    [`font-sizes.footnote`], [`8pt`], [Footnote text],
+    [`font-sizes.title`], [`18pt`], [Title page — document title],
+    [`font-sizes.author`], [`14pt`], [Title page — author name],
+    [`font-sizes.title-info`], [`14pt`], [Title page — info lines],
+)
+
+== Colors
+
+All values are `color`. KIT brand colors follow a systematic naming scheme: base name plus
+optional opacity suffix (`70`, `50`, `30`, `15` = 70 %, 50 %, 30 %, 15 % tint).
+
+#table(
+    columns: (auto, auto, 1fr),
+    table.header([*Field*], [*Hex*], [*Description*]),
+    [`colors.green`], [`#009682`], [KIT Green — primary brand color],
+    [`colors.green70`], [`#4CB5A7`], [],
+    [`colors.green50`], [`#7FCAC0`], [],
+    [`colors.green30`], [`#B2DFD9`], [],
+    [`colors.green15`], [`#D9EFEC`], [],
+    [`colors.blue`], [`#4664AA`], [KIT Blue — links and accents],
+    [`colors.blue70`], [`#7D92C3`], [],
+    [`colors.blue50`], [`#A2B1D4`], [],
+    [`colors.blue30`], [`#C7D0E5`], [],
+    [`colors.blue15`], [`#E3E8F2`], [],
+    [`colors.black`], [`#000000`], [],
+    [`colors.black70`], [`#4D4D4D`], [],
+    [`colors.black50`], [`#808080`], [],
+    [`colors.black30`], [`#B3B3B3`], [],
+    [`colors.black15`], [`#D9D9D9`], [],
+    [`colors.palegreen`], [`#82BE3C`], [KIT extended palette],
+    [`colors.yellow`], [`#FAE614`], [],
+    [`colors.orange`], [`#DCA01E`], [],
+    [`colors.brown`], [`#A08232`], [],
+    [`colors.red`], [`#A01E28`], [],
+    [`colors.lilac`], [`#A00078`], [],
+    [`colors.cyanblue`], [`#50AAE6`], [],
+    [`colors.keyword`], [`#0000C8`], [Syntax highlighting — keyword],
+    [`colors.comment`], [`#3F7F5F`], [Syntax highlighting — comment],
+    [`colors.string`], [`#700055`], [Syntax highlighting — string literal],
+)
+
 = Components
 
-Individual building blocks for custom document composition. Import only what you need.
+The `components` module exports the individual building blocks for assembling a document
+without the full `dissertation()` / `thesis()` orchestrator. All symbols are accessed
+through the `components` namespace:
+
+```typst
+#import "@local/kinetic-kit:0.1.0": components
+
+#show: components.setup-page.with(margin-preset: "short", lang: "de")
+#show: components.setup-front-matter
+#components.print-toc(lang: "de")
+```
+
+You are responsible for applying the wrappers in the correct order: `setup-page` →
+`setup-front-matter` → content → `setup-content` → (optionally) `setup-appendix`.
 
 == Page Setup
 

@@ -57,7 +57,7 @@ The single entry point re-exports:
 | `thesis.typ` | `thesis()` orchestrator — front/back matter, glossarium wiring |
 | `page-setup.typ` | Shared style engine — `kit-header`, `_page-base()`, draft indicator, section pagination wrappers |
 | `kit-colors.typ` | KIT color palette + syntax highlighting colors |
-| `kit-fonts.typ` | Font configuration (Libertinus family) and KSP-required sizes |
+| `typography.typ` | Font configuration (Libertinus family) and KSP-required sizes |
 | `page-conf.typ` | Static A5 page layout constants: page size, margin presets (`short`/`medium`/`long`), paragraph spacing |
 | `translations.typ` | German/English label strings |
 | `title-page.typ` | Dissertation/thesis title page (German legal format) |

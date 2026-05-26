@@ -1,8 +1,8 @@
 // Compile-only: render both title pages directly via components,
 // without any setup-page wrapper (each title page sets its own page geometry).
-#import "/lib.typ": print-dissertation-title, print-thesis-title
+#import "/lib.typ": components
 
-#print-dissertation-title(
+#components.print-dissertation-title(
     [Titel der Dissertation],
     "M.Sc.",
     "Max",
@@ -20,7 +20,7 @@
     false,
 )
 
-#print-thesis-title(
+#components.print-thesis-title(
     [Titel der Masterarbeit],
     "Masterarbeit",
     "Max",

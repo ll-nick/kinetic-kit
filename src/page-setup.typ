@@ -10,7 +10,7 @@
 //   setup-appendix()     — A.1 numbering wrapper
 
 #import "kit-colors.typ": kit-colors
-#import "kit-fonts.typ": font-sizes, fonts, leading
+#import "typography.typ": font-sizes, fonts, leading
 #import "page-conf.typ": kit-page, margins-by-length, par-spacing
 #import "translations.typ": t
 

@@ -161,28 +161,26 @@ Choose based on the total page count of the finished document (KSP requirement):
 <details>
 <summary><strong>Custom document composition</strong></summary>
 
-Individual building blocks are exported directly from the package, so you can compose a custom document without using the full `dissertation()` or `thesis()` orchestrator. Import only what you need. You are responsible for applying the setup wrappers in the correct order.
+The `components` namespace exports the individual building blocks for assembling a document without the full `dissertation()` / `thesis()` orchestrator. Use this when the high-level templates don't fit your layout needs. You are responsible for applying the setup wrappers in the correct order.
+
+Available components: `setup-page`, `setup-front-matter`, `setup-content`, `setup-appendix`, `print-dissertation-title`, `print-thesis-title`, `print-toc`, `print-lof`, `print-lot`, `print-lol`.
 
 ```typst
-#import "@local/kinetic-kit:0.1.0": (
-  setup-page, setup-front-matter, setup-content,
-  print-dissertation-title, print-toc,
-)
+#import "@local/kinetic-kit:0.1.0": components
 
 // 1. Apply base KIT formatting (page geometry, fonts, heading styles, …)
-#show: setup-page.with(
+#show: components.setup-page.with(
   margin-preset: "short",
   lang: "de",
   colored-links: true,
 )
 
 // 2. Front matter — Roman numerals, no heading numbers
-#show: setup-front-matter
+#show: components.setup-front-matter
 
-#print-dissertation-title(
+#components.print-dissertation-title(
   [Titel der Dissertation],
   "M.Sc.", "Vorname", "Nachname", true,
-  "Musterstadt",
   "Doktor-Ingenieur", "Doktor-Ingenieurin",
   "KIT-Fakultät für Maschinenbau",
   "des Karlsruher Instituts für Technologie (KIT)",
@@ -192,16 +190,44 @@ Individual building blocks are exported directly from the package, so you can co
 = Abstract
 Your abstract here.
 
-#print-toc(lang: "de")
+#components.print-toc(lang: "de")
 
 // 3. Main content — Arabic numerals, numbered headings
-#show: setup-content
+#show: components.setup-content
 
 = Introduction
 Your content here.
 
 = References
 #bibliography("refs.bib", title: none, style: "ieee")
+```
+
+</details>
+
+<details>
+<summary><strong>Matching template styles in custom figures</strong></summary>
+
+The `kit-style` namespace exposes the template's visual constants so custom figures and diagrams can match the document's typography and color palette exactly.
+
+```typst
+#import "@local/kinetic-kit:0.1.0": kit-style
+
+// kit-style.fonts       — (serif, sans, mono) font family arrays
+// kit-style.font-sizes  — (base, chapter, section, small, footnote, …) lengths
+// kit-style.leading     — paragraph line spacing (0.75em)
+// kit-style.colors      — KIT color palette (green, blue, red, …)
+
+#figure(
+  {
+    set text(font: kit-style.fonts.sans, size: kit-style.font-sizes.small)
+    rect(
+      fill: kit-style.colors.green15,
+      stroke: kit-style.colors.green,
+      width: 6cm, height: 3cm,
+    )
+  },
+  caption: [A custom figure using template styles.],
+)
 ```
 
 </details>
