@@ -207,6 +207,34 @@ Your content here.
 </details>
 
 <details>
+<summary><strong>Matching template styles in custom figures</strong></summary>
+
+The `kit-style` namespace exposes the template's visual constants so custom figures and diagrams can match the document's typography and color palette exactly.
+
+```typst
+#import "@local/kinetic-kit:0.1.0": kit-style
+
+// kit-style.fonts       — (serif, sans, mono) font family arrays
+// kit-style.font-sizes  — (base, chapter, section, small, footnote, …) lengths
+// kit-style.leading     — paragraph line spacing (0.75em)
+// kit-style.colors      — KIT color palette (green, blue, red, …)
+
+#figure(
+  {
+    set text(font: kit-style.fonts.sans, size: kit-style.font-sizes.small)
+    rect(
+      fill: kit-style.colors.green15,
+      stroke: kit-style.colors.green,
+      width: 6cm, height: 3cm,
+    )
+  },
+  caption: [A custom figure using template styles.],
+)
+```
+
+</details>
+
+<details>
 <summary><strong>Draft mode with git SHA watermark</strong></summary>
 
 Set `draft: true` to show an "ENTWURF" (German) or "DRAFT" (English) watermark on every page. Pass `draft-info` for an additional version string:

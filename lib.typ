@@ -2,6 +2,13 @@
 #import "src/thesis.typ": thesis
 #import "src/outlines.typ": flex-caption
 
+/// Style constants for custom figures and components that need to match the
+/// template's visual identity: font families, sizes, line spacing, and KIT colors.
+#let kit-style = {
+    import "src/typography.typ": font-sizes, fonts, leading
+    import "src/kit-colors.typ": kit-colors
+    (fonts: fonts, font-sizes: font-sizes, leading: leading, colors: kit-colors)
+}
 // ── Component exports ─────────────────────────────────────────────────────
 //
 // Individual building blocks for custom document composition.
