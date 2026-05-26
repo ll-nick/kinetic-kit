@@ -1,7 +1,7 @@
 // KIT Dissertation / Thesis Title Page
 
 #import "page-conf.typ": kit-page, title-page-margins
-#import "kit-fonts.typ": font-sizes, fonts
+#import "typography.typ": font-sizes, fonts
 #import "kit-colors.typ": kit-colors
 #import "translations.typ": t
 

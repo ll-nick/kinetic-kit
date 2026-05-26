@@ -41,23 +41,23 @@ Status column:
 
 | # | Level | Rule | Source | Status | Code ref |
 |---|-------|------|--------|--------|----------|
-| F1 | REQ | Computer Modern (cm, cmr, cms…) and LM fonts must **not** be used | KSP p.1 | ✅ | `src/kit-fonts.typ:4-8` (Libertinus family only) |
+| F1 | REQ | Computer Modern (cm, cmr, cms…) and LM fonts must **not** be used | KSP p.1 | ✅ | `src/typography.typ:4-8` (Libertinus family only) |
 | F2 | REQ | All fonts must be embedded in the final PDF | KSP p.1 | ✅ | Typst embeds all fonts by default at compile time |
-| F3 | REQ | Base font size: 10 pt for DIN A5 (no scaling) | KSP p.6 | ✅ | `src/kit-fonts.typ:11`, `src/page-setup.typ:146` |
-| F4 | REC | Approved serif fonts (body): Libertinus Serif, Nimbus Roman, URWPalladio, Utopia Roman | KSP p.6 | ✅ | `src/kit-fonts.typ:5` |
-| F5 | REC | Approved sans-serif font (headings): Nimbus Sans | KSP p.6 | ⚠️ | `src/kit-fonts.typ:6-7` — defaults to Libertinus Sans (visually comparable); `serif-headings: true` switches to Libertinus Serif for institutions requiring serif headings |
+| F3 | REQ | Base font size: 10 pt for DIN A5 (no scaling) | KSP p.6 | ✅ | `src/typography.typ:11`, `src/page-setup.typ:146` |
+| F4 | REC | Approved serif fonts (body): Libertinus Serif, Nimbus Roman, URWPalladio, Utopia Roman | KSP p.6 | ✅ | `src/typography.typ:5` |
+| F5 | REC | Approved sans-serif font (headings): Nimbus Sans | KSP p.6 | ⚠️ | `src/typography.typ:6-7` — defaults to Libertinus Sans (visually comparable); `serif-headings: true` switches to Libertinus Serif for institutions requiring serif headings |
 | F6 | REC | Italics for emphasis only; not used structurally | KSP p.1 | N/A | User responsibility; template does not use italics structurally |
 
 ### Font Size Table (DIN A5, no scaling) — REQ
 
 | Element | Size | Status | Code ref |
 |---------|------|--------|----------|
-| H1 / chapter | 18 pt | ✅ | `src/kit-fonts.typ:13`, `src/page-setup.typ:230` |
-| H2 / section | 14 pt | ✅ | `src/kit-fonts.typ:14`, `src/page-setup.typ:231` |
-| H3 / subsection | 12 pt | ✅ | `src/kit-fonts.typ:15`, `src/page-setup.typ:232` |
-| H4 / subsubsection | 10 pt | ✅ | `src/kit-fonts.typ:16`, `src/page-setup.typ:233` |
-| Body text | 10 pt | ✅ | `src/kit-fonts.typ:11`, `src/page-setup.typ:154` |
-| Headers, footnotes, captions | 8 pt | ✅ | `src/kit-fonts.typ:22-23`, `src/page-setup.typ:24,282,298` |
+| H1 / chapter | 18 pt | ✅ | `src/typography.typ:13`, `src/page-setup.typ:230` |
+| H2 / section | 14 pt | ✅ | `src/typography.typ:14`, `src/page-setup.typ:231` |
+| H3 / subsection | 12 pt | ✅ | `src/typography.typ:15`, `src/page-setup.typ:232` |
+| H4 / subsubsection | 10 pt | ✅ | `src/typography.typ:16`, `src/page-setup.typ:233` |
+| Body text | 10 pt | ✅ | `src/typography.typ:11`, `src/page-setup.typ:154` |
+| Headers, footnotes, captions | 8 pt | ✅ | `src/typography.typ:22-23`, `src/page-setup.typ:24,282,298` |
 
 ---
 
@@ -119,7 +119,7 @@ All measurements are from the paper edge, including above headers and below pagi
 | G4 | REC | Set in bold | KSP p.2 | ✅ | `src/page-setup.typ:256` (`weight: "bold"` for all levels) |
 | G5 | REC | No hyphenation in headings | KSP p.2 | ✅ | `src/page-setup.typ:257` (`hyphenate: false` for all levels) |
 | G6 | REC | Second line indented to the height of the first | KSP p.2 | ✅ | Handled naturally by Typst's `block` text wrapping |
-| G7 | REC | Font sizes must differ by at least 2 pt between levels | KSP p.2 | ✅ | `src/kit-fonts.typ:13-16` (18 → 14 → 12 → 10 pt; minimum gap is 2 pt) |
+| G7 | REC | Font sizes must differ by at least 2 pt between levels | KSP p.2 | ✅ | `src/typography.typ:13-16` (18 → 14 → 12 → 10 pt; minimum gap is 2 pt) |
 
 ---
 
@@ -139,7 +139,7 @@ All measurements are from the paper edge, including above headers and below pagi
 |---|-------|------|--------|--------|----------|
 | B1 | REQ | Body text in justification (Blocksatz) | KSP p.1 | ✅ | `src/page-setup.typ:156` (`justify: true`) |
 | B2 | REQ | Body text 100 % black | KSP p.1 | ✅ | Typst default; no fill override applied to body text |
-| B3 | REC | Line spacing 1.15–1.2 × (`\setstretch{1.15}` in LaTeX) | KSP p.4 | ✅ | `src/kit-fonts.typ:29` (`leading = 0.75em` ≈ 1.15×), `src/page-setup.typ:158` |
+| B3 | REC | Line spacing 1.15–1.2 × (`\setstretch{1.15}` in LaTeX) | KSP p.4 | ✅ | `src/typography.typ:29` (`leading = 0.75em` ≈ 1.15×), `src/page-setup.typ:158` |
 | B4 | REC | Delete all first-line indents; use paragraph spacing instead | KSP p.3 | ✅ | `src/page-setup.typ:157` (`first-line-indent: 0pt`), `src/page-conf.typ:25` (`par-spacing = 1.0em`) |
 | B5 | NTH | Do not indent first line after blank lines or at top of page | KSP p.3 | ✅ | `src/page-setup.typ:157` (`first-line-indent: 0pt` applied globally) |
 | B6 | REQ | Automatic hyphenation enabled | KSP p.3 | ✅ | Typst enables hyphenation by default for justified text; `src/page-setup.typ:154` |
@@ -152,7 +152,7 @@ All measurements are from the paper edge, including above headers and below pagi
 
 | # | Level | Rule | Source | Status | Code ref |
 |---|-------|------|--------|--------|----------|
-| FN1 | REQ | Footnotes 2 pt smaller than body text (8 pt for 10 pt base) | KSP p.2 | ✅ | `src/kit-fonts.typ:23` (`footnote: 8pt`), `src/page-setup.typ:298` |
+| FN1 | REQ | Footnotes 2 pt smaller than body text (8 pt for 10 pt base) | KSP p.2 | ✅ | `src/typography.typ:23` (`footnote: 8pt`), `src/page-setup.typ:298` |
 | FN2 | REQ | Numbers superscript in running text and front-aligned in footnote list | KSP p.2 | ✅ | Superscript in text: Typst default; front-aligned in list: `src/page-setup.typ:297-308` (custom grid layout) |
 | FN3 | REQ | Spacing between body text and footnote separator: approx. 2 lines (LaTeX: 20 pt) | KSP p.2 | ✅ | Typst default footnote separator spacing |
 | FN4 | REC | Align footnote text from second line with height of first line | KSP p.2 | ✅ | `src/page-setup.typ:297-308` (grid layout: superscript number in `auto`-width column + 0.3em gutter, body text fills remainder) |

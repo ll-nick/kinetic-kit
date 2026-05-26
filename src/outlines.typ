@@ -1,6 +1,6 @@
 // Table of contents and list pages
 
-#import "kit-fonts.typ": font-sizes, fonts
+#import "typography.typ": font-sizes, fonts
 #import "translations.typ": t
 
 /// Print the table of contents, including a separate appendix outline when present.
