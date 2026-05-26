@@ -10,8 +10,8 @@
 //   setup-appendix()     — A.1 numbering wrapper
 
 #import "kit-colors.typ": kit-colors
-#import "typography.typ": font-sizes, fonts, leading
-#import "page-conf.typ": kit-page, margins-by-length, par-spacing
+#import "typography.typ": font-sizes-by-format, fonts, leading
+#import "page-conf.typ": margins-by-format, page-dimensions-by-format, par-spacing
 #import "translations.typ": t
 
 
@@ -20,7 +20,7 @@
 // Even page: chapter number and title
 // Odd page:  section title, falls back to chapter title.
 // Suppressed on chapter-opening pages and before the first chapter.
-#let _header = context {
+#let _header(font-sizes) = context {
     set text(font: fonts.sans, size: font-sizes.small)
     set par(spacing: par-spacing / 2)
     let this-page = here().page()
@@ -75,7 +75,7 @@
 
 // ── Draft indicator ───────────────────────────────────────────────────────
 
-#let _draft-indicator(lang, draft-info) = place(
+#let _draft-indicator(lang, draft-info, font-sizes) = place(
     bottom + center,
     dy: -6mm,
     box(
@@ -92,6 +92,8 @@
 /// typography, heading styles, figure captions, equations, and code blocks.
 /// Use as a show rule: `#show: setup-page.with(...)`.
 ///
+/// - format (str): Paper format — `"a5"` (148×210 mm, default), `"17x24"` (170×240 mm),
+///   or `"a4"` (210×297 mm). Font sizes and margins are set automatically per KSP specifications.
 /// - margin-preset (str): Margin profile keyed on expected page count —
 ///   `"short"` (under 200 pp), `"medium"` (200–399 pp), `"long"` (400+ pp).
 /// - lang (str): Document language — `"de"` or `"en"`.
@@ -105,6 +107,7 @@
 /// - doc (content): Document body (injected automatically by the show rule).
 /// -> content
 #let setup-page(
+    format: "a5",
     margin-preset: "short",
     lang: "de",
     binding-correction: 0mm,
@@ -115,21 +118,28 @@
     heading-numbering-depth: 3,
     doc,
 ) = {
-    let base-margins = margins-by-length.at(margin-preset)
-    let margins = (
-        top: base-margins.top,
-        bottom: base-margins.bottom,
-        inside: base-margins.inside + binding-correction,
-        outside: base-margins.outside,
+    assert(
+        format in ("a5", "17x24", "a4"),
+        message: "format must be \"a5\", \"17x24\" (170×240 mm), or \"a4\"",
+    )
+    let font-sizes = font-sizes-by-format.at(format)
+    let page-dimensions = page-dimensions-by-format.at(format)
+    let preset-margins = margins-by-format.at(format).at(margin-preset)
+    let body-margins = (
+        top: preset-margins.top,
+        bottom: preset-margins.bottom,
+        inside: preset-margins.inside + binding-correction,
+        outside: preset-margins.outside,
     )
 
     set page(
-        paper: kit-page.type,
-        margin: margins,
+        width: page-dimensions.width,
+        height: page-dimensions.height,
+        margin: body-margins,
         binding: left,
-        header: _header,
+        header: _header(font-sizes),
         foreground: if draft {
-            _draft-indicator(lang, draft-info)
+            _draft-indicator(lang, draft-info, font-sizes)
         } else {
             none
         },
