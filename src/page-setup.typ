@@ -378,6 +378,8 @@
 #let setup-content(doc) = {
     set page(numbering: "1")
     set heading(numbering: "1.1")
+    set heading(supplement: context t.at(text.lang).section)
+    show heading.where(level: 1): set heading(supplement: context t.at(text.lang).chapter)
     doc
 }
 
