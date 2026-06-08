@@ -1,12 +1,12 @@
 #import "/lib.typ": flex-caption
 
-= Einleitung
+= Einleitung <ch:einleitung>
 
 #lorem(40) @example2024. #lorem(20)
 
 Weitere Informationen finden sich unter #link("https://www.kit.edu")[kit.edu].
 
-== Motivation
+== Motivation <sec:motivation>
 
 Wie in @example2023 gezeigt, #lorem(30)
 
@@ -62,6 +62,13 @@ Wie in @fig:beispiel gezeigt, #lorem(20)
 
 Dieses Kapitel enthält eine Tabelle. Sie kann genauso wie eine Abbildung referenziert
 werden: @tab:beispiel fasst die Ergebnisse zusammen.
+
+== Querverweis-Beispiel
+
+Überschriften mit einem `<...>`-Label können wie Abbildungen oder Tabellen referenziert
+werden. Die Vorlage bezeichnet Überschriften der Ebene 1 als „Kapitel“ und tiefere
+Überschriften als „Abschnitt“. Dies ist @ch:einleitung und wird in @sec:motivation
+motiviert.
 
 == Fußnotenbeispiel
 

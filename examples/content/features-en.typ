@@ -1,12 +1,12 @@
 #import "/lib.typ": flex-caption
 
-= Introduction
+= Introduction <ch:introduction>
 
 #lorem(40) @example2024. #lorem(20)
 
 Additional information can be found at #link("https://www.kit.edu")[kit.edu].
 
-== Motivation
+== Motivation <sec:motivation>
 
 As shown by @example2023, #lorem(30)
 
@@ -62,6 +62,12 @@ As shown in @fig:example, #lorem(20)
 
 This chapter show-cases a table. It can be referenced just like a figure: @tab:example
 summarizes the results.
+
+== A Cross-Reference Example
+
+Headings labelled with `<...>` can be cross-referenced like figures or tables. The
+template refers to level 1 headings as "Chapter" and nested headings as "Section". This is
+@ch:introduction and is being motivated in @sec:motivation.
 
 == A Footnote Example
 
