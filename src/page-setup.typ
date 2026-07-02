@@ -296,7 +296,6 @@
         ),
     )
     show outline: set par(justify: false)
-    show outline: set text(hyphenate: false)
 
     // ── Figures ──────────────────────────────────────────────────────────
     set figure(
