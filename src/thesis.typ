@@ -6,6 +6,8 @@
 #import "page-setup.typ": setup-appendix, setup-content, setup-front-matter, setup-page
 #import "translations.typ": t
 #import "title-page.typ": print-thesis-title
+#import "typography.typ": font-sizes-by-format
+#import "page-conf.typ": title-page-margins-by-format
 #import "front-matter.typ": (
     print-abbreviations, print-abstract, print-acknowledgements, print-kurzfassung,
 )
@@ -24,6 +26,8 @@
 /// - examiner (content): First examiner. `none` if unknown.
 /// - supervisor (content): Supervisor. `none` if unknown.
 /// - date-submitted (content): Submission date string. `none` if unknown.
+/// - format (str): Paper format — `"a5"` (148×210 mm, default), `"17x24"` (170×240 mm),
+///   or `"a4"` (210×297 mm). Font sizes and margins are set automatically.
 /// - lang (str): Document language (`"de"` or `"en"`).
 /// - margin-preset (str): `"short"`, `"medium"`, or `"long"`.
 /// - binding-correction (length): BCOR added to inside margin. Default `0mm`.
@@ -55,6 +59,7 @@
     examiner: none,
     supervisor: none,
     date-submitted: none,
+    format: "a5",
     lang: "de",
     margin-preset: "short",
     binding-correction: 0mm,
@@ -74,7 +79,13 @@
     appendix: none,
     doc,
 ) = {
+    assert(
+        format in ("a5", "17x24", "a4"),
+        message: "format must be \"a5\", \"17x24\" (170×240 mm), or \"a4\"",
+    )
     let author-name = author-firstname + " " + author-surname
+    let font-sizes = font-sizes-by-format.at(format)
+    let title-page-margins = title-page-margins-by-format.at(format)
 
     set document(
         title: title,
@@ -84,6 +95,7 @@
 
     // ── Global page/text/heading setup -─────────────────────────────────────
     show: setup-page.with(
+        format: format,
         margin-preset: margin-preset,
         lang: lang,
         binding-correction: binding-correction,
@@ -106,6 +118,8 @@
         supervisor,
         date-submitted,
         lang,
+        font-sizes,
+        title-page-margins,
     )
 
     // ── Front matter (Roman numerals) ───────────────────────────────────────
@@ -127,7 +141,7 @@
         print-abbreviations(abbreviations, lang)
     }
 
-    print-toc(lang: lang)
+    print-toc(font-sizes, lang: lang)
 
     // ── Main content (Arabic numerals) ──────────────────────────────────────
     show: setup-content

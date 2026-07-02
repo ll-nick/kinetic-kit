@@ -83,6 +83,7 @@ which is auto-generated from the source code.
 | `department` | `str` | `"KIT-Fakultät für Maschinenbau"` | |
 | `university-genitive` | `str` | `"des Karlsruher Instituts für Technologie (KIT)"` | University name in genitive case |
 | `lang` | `"de" \| "en"` | `"de"` | Document language |
+| `format` | `"a5" \| "17x24" \| "a4"` | `"a5"` | Paper format — `"a5"` (148×210 mm, default), `"17x24"` (170×240 mm), or `"a4"` (210×297 mm) |
 | `margin-preset` | `"short" \| "medium" \| "long"` | `"short"` | KSP margin profile (see [Margin Presets](#margin-presets)) |
 | `status-approved` | `bool` | `false` | `false` = eingereicht, `true` = angenommen |
 | `exam-date` | `str \| none` | `none` | Date of oral examination; required when `status-approved: true` |
@@ -126,6 +127,7 @@ which is auto-generated from the source code.
 | `examiner` | `str \| none` | `none` | Erstprüfer |
 | `supervisor` | `str \| none` | `none` | Betreuer |
 | `date-submitted` | `str \| none` | `none` | |
+| `format` | `"a5" \| "17x24" \| "a4"` | `"a5"` | Paper format — `"a5"` (148×210 mm, default), `"17x24"` (170×240 mm), or `"a4"` (210×297 mm) |
 | `lang` | `"de" \| "en"` | `"de"` | Document language |
 | `margin-preset` | `"short" \| "medium" \| "long"` | `"short"` | KSP margin profile (see [Margin Presets](#margin-presets)) |
 | `binding-correction` | `length` | `0mm` | BCOR added to inside margin (8–10 mm for physically bound copies) |
@@ -148,13 +150,18 @@ which is auto-generated from the source code.
 
 ## Margin Presets
 
-Choose based on the total page count of the finished document (KSP requirement):
+Choose based on the total page count of the finished document (KSP requirement).
+
+The following values apply to the `"a5"` and `"17x24"` formats:
 
 | Preset | Page count | Inner | Outer |
 |--------|-----------|-------|-------|
 | `"short"` | < 200 | 20 mm | 15 mm |
 | `"medium"` | 200–399 | 23 mm | 15 mm |
 | `"long"` | ≥ 400 | 25 mm | 15 mm |
+
+> [!NOTE]
+> The `"a4"` format uses fixed margins (35 mm inside / 25 mm outside) regardless of the preset. The page-count thresholds still select the preset, but all three presets result in the same margin values for A4.
 
 ## Cookbook
 
@@ -166,7 +173,12 @@ The `components` namespace exports the individual building blocks for assembling
 Available components: `setup-page`, `setup-front-matter`, `setup-content`, `setup-appendix`, `print-dissertation-title`, `print-thesis-title`, `print-toc`, `print-lof`, `print-lot`, `print-lol`.
 
 ```typst
-#import "@local/kinetic-kit:0.1.0": components
+#import "@local/kinetic-kit:0.1.0": components, kit-style
+#import "@local/kinetic-kit:0.1.0/src/page-conf.typ": title-page-margins-by-format
+
+#let format = "a5"
+#let font-sizes = kit-style.font-sizes-by-format.at(format)
+#let title-page-margins = title-page-margins-by-format.at(format)
 
 // 1. Apply base KIT formatting (page geometry, fonts, heading styles, …)
 #show: components.setup-page.with(
@@ -185,12 +197,13 @@ Available components: `setup-page`, `setup-front-matter`, `setup-content`, `setu
   "KIT-Fakultät für Maschinenbau",
   "des Karlsruher Instituts für Technologie (KIT)",
   false, none, none, true, none, true,
+  font-sizes, title-page-margins,
 )
 
 = Abstract
 Your abstract here.
 
-#components.print-toc(lang: "de")
+#components.print-toc(font-sizes, lang: "de")
 
 // 3. Main content — Arabic numerals, numbered headings
 #show: components.setup-content
@@ -212,14 +225,14 @@ The `kit-style` namespace exposes the template's visual constants so custom figu
 ```typst
 #import "@local/kinetic-kit:0.1.0": kit-style
 
-// kit-style.fonts       — (serif, sans, mono) font family arrays
-// kit-style.font-sizes  — (base, chapter, section, small, footnote, …) lengths
-// kit-style.leading     — paragraph line spacing (0.75em)
-// kit-style.colors      — KIT color palette (green, blue, red, …)
+// kit-style.fonts                — (serif, sans, mono) font family arrays
+// kit-style.font-sizes-by-format  — dict keyed by format: font sizes per format
+// kit-style.leading               — paragraph line spacing (0.75em)
+// kit-style.colors                — KIT color palette (green, blue, red, …)
 
 #figure(
   {
-    set text(font: kit-style.fonts.sans, size: kit-style.font-sizes.small)
+    set text(font: kit-style.fonts.sans, size: kit-style.font-sizes-by-format.at("a5").small)
     rect(
       fill: kit-style.colors.green15,
       stroke: kit-style.colors.green,

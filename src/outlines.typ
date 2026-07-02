@@ -1,14 +1,15 @@
 // Table of contents and list pages
 
-#import "typography.typ": font-sizes, fonts
+#import "typography.typ": fonts
 #import "translations.typ": t
 
 /// Print the table of contents, including a separate appendix outline when present.
 ///
 /// - lang (str): Document language — `"de"` or `"en"`.
 /// - serif-headings (bool): Use serif font for the appendix section title when `true`.
+/// - font-sizes (dict): Format-specific font sizes resolved by the template.
 /// -> content
-#let print-toc(lang: "de", serif-headings: false) = {
+#let print-toc(font-sizes, lang: "de", serif-headings: false) = {
     let tr = t.at(lang)
     let hfont = if serif-headings { fonts.serif } else { fonts.sans }
 
