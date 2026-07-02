@@ -60,7 +60,7 @@
 /// - bibliography (content): Bibliography content. Pass `bibliography("refs.bib", title: none, style: "ieee")`.
 ///   The template adds a translated heading. `none` = omit.
 /// - appendix (content): Appendix chapters. Template applies `A`, `A.1`, … numbering
-///   and places the appendix at the very end, after all back-matter lists. `none` = omit.
+///   and places the appendix before the back-matter lists. `none` = omit.
 /// - doc (content): Main document body (chapters only).
 /// -> content
 #let dissertation(
@@ -182,19 +182,10 @@
 
     doc
 
-    if bibliography != none {
-        print-bibliography(bibliography, lang)
-    }
-
     // ── Back matter ─────────────────────────────────────────────────────────
-    if own-publications != none {
-        print-own-publications(own-publications, lang)
-    }
-    if own-patents != none {
-        print-own-patents(own-patents, lang)
-    }
-    if supervised-theses != none {
-        print-supervised-theses(supervised-theses, lang)
+    if appendix != none {
+        show: setup-appendix
+        appendix
     }
 
     if show-lof {
@@ -207,8 +198,17 @@
         print-lol(lang: lang)
     }
 
-    if appendix != none {
-        show: setup-appendix
-        appendix
+    if bibliography != none {
+        print-bibliography(bibliography, lang)
+    }
+
+    if own-publications != none {
+        print-own-publications(own-publications, lang)
+    }
+    if own-patents != none {
+        print-own-patents(own-patents, lang)
+    }
+    if supervised-theses != none {
+        print-supervised-theses(supervised-theses, lang)
     }
 }

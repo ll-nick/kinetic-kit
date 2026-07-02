@@ -109,7 +109,7 @@ which is auto-generated from the source code.
 | `show-lot` | `bool` | `true` | List of tables |
 | `show-lol` | `bool` | `false` | List of listings |
 | `bibliography` | `content \| none` | `none` | Pass `bibliography("refs.bib", title: none, style: "ieee")`; template adds a translated heading |
-| `appendix` | `content \| none` | `none` | Appendix chapters; template applies A, A.1, … numbering, placed after back-matter lists |
+| `appendix` | `content \| none` | `none` | Appendix chapters; template applies A, A.1, … numbering, placed before the back-matter lists |
 
 </details>
 
@@ -144,7 +144,7 @@ which is auto-generated from the source code.
 | `show-lot` | `bool` | `true` | List of tables |
 | `show-lol` | `bool` | `false` | List of listings |
 | `bibliography` | `content \| none` | `none` | Pass `bibliography("refs.bib", title: none, style: "ieee")`; template adds a translated heading |
-| `appendix` | `content \| none` | `none` | Appendix chapters; template applies A, A.1, … numbering, placed after back-matter lists |
+| `appendix` | `content \| none` | `none` | Appendix chapters; template applies A, A.1, … numbering, placed before the back-matter lists |
 
 </details>
 

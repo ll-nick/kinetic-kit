@@ -46,7 +46,7 @@
 /// - bibliography (content): Bibliography content. Pass `bibliography("refs.bib", title: none, style: "ieee")`.
 ///   The template adds a translated heading. `none` = omit.
 /// - appendix (content): Appendix chapters. Template applies `A`, `A.1`, … numbering
-///   and places the appendix at the very end, after all back-matter lists. `none` = omit.
+///   and places the appendix before the back-matter lists. `none` = omit.
 /// - doc (content): Main document body (chapters only).
 /// -> content
 #let thesis(
@@ -149,21 +149,15 @@
 
     doc
 
-    if bibliography != none { print-bibliography(bibliography, lang) }
-
     // ── Back matter ─────────────────────────────────────────────────────────
-    if show-lof {
-        print-lof(lang: lang)
-    }
-    if show-lot {
-        print-lot(lang: lang)
-    }
-    if show-lol {
-        print-lol(lang: lang)
-    }
-
     if appendix != none {
         show: setup-appendix
         appendix
     }
+
+    if show-lof { print-lof(lang: lang) }
+    if show-lot { print-lot(lang: lang) }
+    if show-lol { print-lol(lang: lang) }
+
+    if bibliography != none { print-bibliography(bibliography, lang) }
 }
