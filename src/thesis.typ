@@ -126,15 +126,15 @@
     show: setup-front-matter
     counter(page).update(0)
 
+    if acknowledgements != none {
+        print-acknowledgements(acknowledgements, lang)
+    }
+
     if abstract-en != none {
         print-abstract(abstract-en)
     }
     if abstract-de != none {
         print-kurzfassung(abstract-de)
-    }
-
-    if acknowledgements != none {
-        print-acknowledgements(acknowledgements, lang)
     }
 
     if abbreviations != none {
