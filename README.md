@@ -3,12 +3,7 @@
 [![CI](https://github.com/ll-nick/kinetic-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/ll-nick/kinetic-kit/actions/workflows/ci.yml)
 [![License: MIT-0](https://img.shields.io/badge/license-MIT--0-blue.svg)](LICENSE)
 
-An unofficial[^1] KIT dissertation and thesis[^2] template for [Typst](https://typst.app), designed to comply with the formatting requirements of [KIT Scientific Publishing (KSP)](https://www.bibliothek.kit.edu/ksp-toolbox.php).
-
-> [!NOTE]
-> This template is in early development and may contain incomplete features, bugs, or formatting issues.
-> It doesn't have a stable API either.
-> You should probably not use it until it has reached a more mature state.
+The official[^1] [Typst](https://typst.app) template for dissertations[^2] published through [KIT Scientific Publishing (KSP)](https://www.bibliothek.kit.edu/ksp-toolbox.php).
 
 See the build artifacts of the [latest CI run](https://github.com/ll-nick/kinetic-kit/actions/workflows/ci.yml) for example PDFs.
 
@@ -20,7 +15,6 @@ See the build artifacts of the [latest CI run](https://github.com/ll-nick/kineti
 [mise](https://mise.jdx.dev) is recommended for managing tasks and tooling (including Typst itself).
 
 However, all tasks are plain shell scripts in `mise/tasks/` and can be run directly assuming Typst is installed and available in your `PATH`.
-The template is developed with Typst `0.14.2`, but it may work with other versions as well.
 
 ### Installation
 
@@ -399,10 +393,9 @@ as well as [this great LaTeX template](https://gitlab.cc-asp.fraunhofer.de/kit-k
 Some inpiration was also drawn from the [TUM-tastic thesis template](https://github.com/santiagonar1/tum-tastic-thesis).
 
 
-[^1]: This is an unofficial community template, not affiliated with, endorsed by,
-or approved by KIT (Karlsruhe Institute of Technology) or KSP (KIT Scientific Publishing).
-The template attempts to follow the [KSP Basic Layout Guidelines](https://www.bibliothek.kit.edu/downloads/KSP/KSP-Basic-Layout-Guidelines.pdf) but compliance is not guaranteed.
-Always verify your final manuscript with KSP before submission.
+[^1]: This template is provided "as is".
+Please note that further technical assistance is currently not available. 
 
-[^2]: This template was implemented to ~~procrastinate writing~~ write a dissertation. The thesis template is more of a byproduct and probably less polished.
+[^2]: This template was implemented to ~~procrastinate writing~~ write a dissertation.
+The thesis template is more of a byproduct and probably less polished.
 
