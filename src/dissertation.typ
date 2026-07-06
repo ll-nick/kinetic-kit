@@ -7,7 +7,6 @@
 #import "translations.typ": t
 #import "title-page.typ": print-dissertation-title
 #import "typography.typ": font-sizes-by-format
-#import "page-conf.typ": title-page-margins-by-format
 #import "front-matter.typ": (
     print-abbreviations, print-abstract, print-acknowledgements, print-kurzfassung,
     print-notation,
@@ -109,7 +108,6 @@
     )
     let author-name = author-firstname + " " + author-surname
     let font-sizes = font-sizes-by-format.at(format)
-    let title-page-margins = title-page-margins-by-format.at(format)
 
     set document(
         title: title,
@@ -133,22 +131,21 @@
     // ── Title page ──────────────────────────────────────────────────────────
     print-dissertation-title(
         title,
-        author-title,
-        author-firstname,
-        author-surname,
-        author-male,
-        doc-degree,
-        doc-degree-f,
-        department,
-        university-genitive,
-        status-approved,
-        exam-date,
-        main-advisor,
-        main-advisor-male,
-        co-advisor,
-        co-advisor-male,
-        font-sizes,
-        title-page-margins,
+        author-title: author-title,
+        author-firstname: author-firstname,
+        author-surname: author-surname,
+        author-male: author-male,
+        doc-degree: doc-degree,
+        doc-degree-f: doc-degree-f,
+        department: department,
+        university-genitive: university-genitive,
+        status-approved: status-approved,
+        exam-date: exam-date,
+        main-advisor: main-advisor,
+        main-advisor-male: main-advisor-male,
+        co-advisor: co-advisor,
+        co-advisor-male: co-advisor-male,
+        format: format,
     )
 
     // ── Front matter (Roman numerals) ───────────────────────────────────────

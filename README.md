@@ -168,14 +168,13 @@ Available components: `setup-page`, `setup-front-matter`, `setup-content`, `setu
 
 ```typst
 #import "@local/kinetic-kit:0.1.0": components, kit-style
-#import "@local/kinetic-kit:0.1.0/src/page-conf.typ": title-page-margins-by-format
 
 #let format = "a5"
 #let font-sizes = kit-style.font-sizes-by-format.at(format)
-#let title-page-margins = title-page-margins-by-format.at(format)
 
 // 1. Apply base KIT formatting (page geometry, fonts, heading styles, …)
 #show: components.setup-page.with(
+  format: format,
   margin-preset: "short",
   lang: "de",
   colored-links: true,
@@ -186,12 +185,12 @@ Available components: `setup-page`, `setup-front-matter`, `setup-content`, `setu
 
 #components.print-dissertation-title(
   [Titel der Dissertation],
-  "M.Sc.", "Vorname", "Nachname", true,
-  "Doktor-Ingenieur", "Doktor-Ingenieurin",
-  "KIT-Fakultät für Maschinenbau",
-  "des Karlsruher Instituts für Technologie (KIT)",
-  false, none, none, true, none, true,
-  font-sizes, title-page-margins,
+  author-title: "M.Sc.",
+  author-firstname: "Vorname",
+  author-surname: "Nachname",
+  department: "KIT-Fakultät für Maschinenbau",
+  university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
+  format: format,
 )
 
 = Abstract

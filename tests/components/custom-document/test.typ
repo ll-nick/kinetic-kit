@@ -2,10 +2,8 @@
 // exercising the complete page-setup wrapper sequence.
 #import "/lib.typ": components, flex-caption
 #import "/src/typography.typ": font-sizes-by-format
-#import "/src/page-conf.typ": title-page-margins-by-format
 
 #let font-sizes = font-sizes-by-format.at("a5")
-#let title-page-margins = title-page-margins-by-format.at("a5")
 
 #show: components.setup-page.with(
     margin-preset: "short",
@@ -19,22 +17,16 @@
 
 #components.print-dissertation-title(
     [Titel der Dissertation],
-    "M.Sc.",
-    "Max",
-    "Mustermann",
-    true,
-    "Doktor-Ingenieur",
-    "Doktor-Ingenieurin",
-    "KIT-Fakultät für Maschinenbau",
-    "des Karlsruher Instituts für Technologie (KIT)",
-    false,
-    none,
-    none,
-    true,
-    none,
-    true,
-    font-sizes,
-    title-page-margins,
+    author-title: "M.Sc.",
+    author-firstname: "Max",
+    author-surname: "Mustermann",
+    author-male: true,
+    doc-degree: "Doktor-Ingenieur",
+    doc-degree-f: "Doktor-Ingenieurin",
+    department: "KIT-Fakultät für Maschinenbau",
+    university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
+    status-approved: false,
+    format: "a5",
 )
 
 #components.print-toc(font-sizes, lang: "de")

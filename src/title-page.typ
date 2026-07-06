@@ -1,7 +1,8 @@
 // KIT Dissertation / Thesis Title Page
 
-#import "typography.typ": fonts
+#import "typography.typ": font-sizes-by-format, fonts
 #import "kit-colors.typ": kit-colors
+#import "page-conf.typ": title-page-margins-by-format
 #import "translations.typ": t
 
 // ── Dissertation Title Page ────────────────────────────────────────────────
@@ -25,28 +26,30 @@
 /// - main-advisor-male (bool): Selects gendered label for the main advisor.
 /// - co-advisor (content): Co-referee — shown only when `status-approved` is `true`.
 /// - co-advisor-male (bool): Selects gendered label for the co-advisor.
-/// - font-sizes (dict): Format-specific font sizes resolved by the template.
-/// - title-page-margins (dict): Format-specific title-page margins resolved by the template.
+/// - format (str): Paper format — `"a5"`, `"17x24"`, or `"a4"`. Determines font
+///   sizes and title-page margins.
 /// -> content
 #let print-dissertation-title(
     title,
-    author-title,
-    author-firstname,
-    author-surname,
-    author-male,
-    doc-degree,
-    doc-degree-f,
-    department,
-    university-genitive,
-    status-approved,
-    exam-date,
-    main-advisor,
-    main-advisor-male,
-    co-advisor,
-    co-advisor-male,
-    font-sizes,
-    title-page-margins,
+    author-title: "M.Sc.",
+    author-firstname: "Max",
+    author-surname: "Mustermann",
+    author-male: true,
+    doc-degree: "Doktors der Ingenieurwissenschaften (Dr.-Ing.)",
+    doc-degree-f: "Doktorin der Ingenieurwissenschaften (Dr.-Ing.)",
+    department: "KIT-Fakultät für Maschinenbau",
+    university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
+    status-approved: false,
+    exam-date: none,
+    main-advisor: none,
+    main-advisor-male: true,
+    co-advisor: none,
+    co-advisor-male: true,
+    format: "a5",
 ) = {
+    let font-sizes = font-sizes-by-format.at(format)
+    let title-page-margins = title-page-margins-by-format.at(format)
+
     set page(
         margin: title-page-margins,
         binding: left,
@@ -151,24 +154,24 @@
 /// - examiner (content): First examiner (Erstprüfer).
 /// - supervisor (content): Supervisor (Betreuer).
 /// - date-submitted (content): Submission date string.
-/// - lang (str): Document language (currently unused — title page is always German).
-/// - font-sizes (dict): Format-specific font sizes resolved by the template.
-/// - title-page-margins (dict): Format-specific title-page margins resolved by the template.
+/// - format (str): Paper format — `"a5"`, `"17x24"`, or `"a4"`. Determines font
+///   sizes and title-page margins.
 /// -> content
 #let print-thesis-title(
     title,
-    thesis-type,
-    author-firstname,
-    author-surname,
-    department,
-    university-genitive,
-    examiner,
-    supervisor,
-    date-submitted,
-    lang,
-    font-sizes,
-    title-page-margins,
+    thesis-type: "Masterarbeit",
+    author-firstname: "Max",
+    author-surname: "Mustermann",
+    department: "KIT-Fakultät für Maschinenbau",
+    university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
+    examiner: none,
+    supervisor: none,
+    date-submitted: none,
+    format: "a5",
 ) = {
+    let font-sizes = font-sizes-by-format.at(format)
+    let title-page-margins = title-page-margins-by-format.at(format)
+
     set page(
         margin: title-page-margins,
         binding: left,

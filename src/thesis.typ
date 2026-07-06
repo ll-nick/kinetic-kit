@@ -7,7 +7,6 @@
 #import "translations.typ": t
 #import "title-page.typ": print-thesis-title
 #import "typography.typ": font-sizes-by-format
-#import "page-conf.typ": title-page-margins-by-format
 #import "front-matter.typ": (
     print-abbreviations, print-abstract, print-acknowledgements, print-kurzfassung,
 )
@@ -85,7 +84,6 @@
     )
     let author-name = author-firstname + " " + author-surname
     let font-sizes = font-sizes-by-format.at(format)
-    let title-page-margins = title-page-margins-by-format.at(format)
 
     set document(
         title: title,
@@ -109,17 +107,15 @@
     // ── Title page ──────────────────────────────────────────────────────────
     print-thesis-title(
         title,
-        thesis-type,
-        author-firstname,
-        author-surname,
-        department,
-        university-genitive,
-        examiner,
-        supervisor,
-        date-submitted,
-        lang,
-        font-sizes,
-        title-page-margins,
+        thesis-type: thesis-type,
+        author-firstname: author-firstname,
+        author-surname: author-surname,
+        department: department,
+        university-genitive: university-genitive,
+        examiner: examiner,
+        supervisor: supervisor,
+        date-submitted: date-submitted,
+        format: format,
     )
 
     // ── Front matter (Roman numerals) ───────────────────────────────────────
