@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Build Commands
 
-This project uses [mise](https://mise.jdx.dev/) for task management with Typst pinned to v0.14.2.
+This project uses [mise](https://mise.jdx.dev/) for task management. The development/CI toolchain uses Typst 0.15.0 (pinned in `mise.toml`), while the package declares a minimum supported compiler of 0.14.2 (`compiler` in `typst.toml`).
 
 ```sh
 # Compile all examples and API docs
@@ -89,7 +89,7 @@ Shared content in `examples/content/` and bibliographies in `examples/bib/`.
 
 ## Key Constraints
 
-- **Typst version**: Must use 0.14.2 (pinned in `mise.toml` and `typst.toml`)
+- **Typst version**: Minimum supported compiler is 0.14.2 (`compiler` in `typst.toml`); the dev/CI toolchain is 0.15.0 (`mise.toml`). The package (`lib.typ` + `src/`) compiles on 0.14.2 — verified; some examples may rely on newer features.
 - **Paper format**: A5 (148×210 mm, default), 17×24 (170×240 mm), or A4 (210×297 mm) — controlled via `format` parameter; KSP recommends A5 for dissertations
 - **Base font size**: 10 pt (A5/17×24) or 11 pt (A4) Libertinus Serif — set automatically per format
 - **Line spacing**: 1.15× (0.75em leading in Typst)
