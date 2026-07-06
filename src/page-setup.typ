@@ -278,7 +278,7 @@
 
     // ── Outline entries ───────────────────────────────────────────────────
 
-    set outline.entry(fill: repeat(".", gap: 0.4em))
+    set outline.entry(fill: repeat(".", gap: 0.4em, justify: false))
     // Two-column grid: body + fill in column 1 (1fr), page number in column 2 (auto).
     // The hard right boundary of column 1 ensures multi-line entries never reach
     // the page-number column regardless of caption length.
