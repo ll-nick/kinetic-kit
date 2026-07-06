@@ -223,7 +223,7 @@
             )
             grid(
                 columns: (indent, 1fr),
-                column-gutter: 0.5em,
+                column-gutter: 0.5 * font-sizes.base,
                 align: (top + left, top + left),
                 [#num], it.body,
             )
