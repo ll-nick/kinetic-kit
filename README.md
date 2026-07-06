@@ -296,32 +296,6 @@ For a nicer two-column grid layout (bold abbreviation on the left, long form on 
 </details>
 
 <details>
-<summary><strong>Separate bibliography sections (Alexandria)</strong></summary>
-
-Use the [alexandria](https://typst.app/universe/package/alexandria) package for separate bibliography sections for own publications, patents, and supervised theses alongside the main bibliography.
-
-```typst
-#import "@local/kinetic-kit:0.1.0": dissertation
-#import "@preview/alexandria:0.2.2": alexandria, bibliographyx
-
-// Must come before #show: dissertation.with(...)
-#show: alexandria(prefix: "p:", read: path => read(path))
-
-#show: dissertation.with(
-  ...
-  own-publications: bibliographyx(
-    "bib/own-publications.bib",
-    title: none, style: "ieee", full: true,
-  ),
-  bibliography: bibliography("bib/references.bib", title: none, style: "ieee"),
-)
-```
-
-In-text citations to own publications use `@p:key` syntax.
-
-</details>
-
-<details>
 <summary><strong>Margin notes for drafts (Drafting)</strong></summary>
 
 Use the [drafting](https://typst.app/universe/package/drafting) package to add margin notes during writing. Tie `is-draft` to both the watermark and note visibility so they are toggled in one place:
