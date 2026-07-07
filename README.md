@@ -334,37 +334,9 @@ Set `is-draft = false` before final compilation to hide all margin notes and rem
 
 ## Contributing
 
-### Prerequisites
-
-This project uses [mise](https://mise.jdx.dev) to manage both development tasks and tooling.
-With it installed, you can run all tasks with `mise run <task>` (e.g. `mise run build`).
-
-### Tasks
-
-| Task | Description |
-|------|-------------|
-| `mise run build` | Compile examples, API docs, template, and thumbnail |
-| `mise run build:examples` | Compile example documents only |
-| `mise run build:docs` | Compile API reference (`docs/api-reference.pdf`) |
-| `mise run build:template` | Compile the Typst Universe template (`template/`) |
-| `mise run build:thumbnail` | Compile the template thumbnail |
-| `mise run format` | Format all Typst files in-place |
-| `mise run format:check` | Check formatting without modifying files (used in CI) |
-| `mise run format:diff` | Show formatting diff for all Typst files |
-| `mise run install` | Install as local Typst package (copy) |
-| `mise run install:editable` | Install as local Typst package (symlink) |
-| `mise run install:fonts` | Install bundled Libertinus fonts to user font directory |
-| `mise run test` | Run tytanic test suite |
-
-### Tests
-
-Tests live in `tests/` and are organized by template type and scenario (e.g. `tests/dissertation/approved/`, `tests/thesis/minimal/`). Each test compiles a `.typ` file targeting a specific layout scenario.
-As of right now, these tests are pure compilation tests.
-
-```bash
-mise run test # run all tests
-tt run --font-path fonts tests/dissertation/appendix  # run a single test
-```
+Contributions are welcome.
+Refer to [CONTRIBUTING.md](https://github.com/ll-nick/kinetic-kit/blob/main/CONTRIBUTING.md)
+for details and development setup.
 
 ## License
 
@@ -375,8 +347,8 @@ Template code: MIT-0 (no attribution required). Bundled fonts (`fonts/`): SIL OF
 This template has been implemented with AI assistance (Claude Code by Anthropic).
 The basis for the template are the [KSP handbook](https://www.bibliothek.kit.edu/downloads/KSP/KSP-Manuskripthandbuch.pdf),
 the [official KSP LaTeX template](https://gitlab.kit.edu/kit/ksp/ksp-vorlage-a5-de-diss),
-as well as [this great LaTeX template](https://gitlab.cc-asp.fraunhofer.de/kit-ksp/dissertation-template).
-Some inpiration was also drawn from the [TUM-tastic thesis template](https://github.com/santiagonar1/tum-tastic-thesis).
+as well as [this LaTeX template](https://gitlab.cc-asp.fraunhofer.de/kit-ksp/dissertation-template).
+Some inspiration was also drawn from the [TUM-tastic thesis template](https://github.com/santiagonar1/tum-tastic-thesis).
 
 
 [^1]: This template is provided "as is".
