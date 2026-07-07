@@ -1,43 +1,35 @@
 // Compile-only: render both title pages directly via components,
 // without any setup-page wrapper (each title page sets its own page geometry).
 #import "/lib.typ": components
-#import "/src/typography.typ": font-sizes-by-format
-#import "/src/page-conf.typ": title-page-margins-by-format
-
-#let font-sizes = font-sizes-by-format.at("a5")
-#let title-page-margins = title-page-margins-by-format.at("a5")
 
 #components.print-dissertation-title(
     [Titel der Dissertation],
-    "M.Sc.",
-    "Max",
-    "Mustermann",
-    true,
-    "Doktor-Ingenieur",
-    "Doktor-Ingenieurin",
-    "KIT-Fakultät für Maschinenbau",
-    "des Karlsruher Instituts für Technologie (KIT)",
-    true,
-    "12. Dezember 2025",
-    "Prof. Dr.-Ing. Hans Musterbetreuer",
-    true,
-    "Prof. Dr. Maria Musterreferentin",
-    false,
-    font-sizes,
-    title-page-margins,
+    author-title: "M.Sc.",
+    author-firstname: "Max",
+    author-surname: "Mustermann",
+    author-male: true,
+    doc-degree: "Doktor-Ingenieur",
+    doc-degree-f: "Doktor-Ingenieurin",
+    department: "KIT-Fakultät für Maschinenbau",
+    university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
+    status-approved: true,
+    exam-date: "12. Dezember 2025",
+    main-advisor: "Prof. Dr.-Ing. Hans Musterbetreuer",
+    main-advisor-male: true,
+    co-advisor: "Prof. Dr. Maria Musterreferentin",
+    co-advisor-male: false,
+    format: "a5",
 )
 
 #components.print-thesis-title(
     [Titel der Masterarbeit],
-    "Masterarbeit",
-    "Max",
-    "Mustermann",
-    "KIT-Fakultät für Maschinenbau",
-    "des Karlsruher Instituts für Technologie (KIT)",
-    "Prof. Dr.-Ing. Hans Musterbetreuer",
-    "M.Sc. Maria Musterbetreuerin",
-    "01. März 2026",
-    "de",
-    font-sizes,
-    title-page-margins,
+    thesis-type: "Masterarbeit",
+    author-firstname: "Max",
+    author-surname: "Mustermann",
+    department: "KIT-Fakultät für Maschinenbau",
+    university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
+    examiner: "Prof. Dr.-Ing. Hans Musterbetreuer",
+    supervisor: "M.Sc. Maria Musterbetreuerin",
+    date-submitted: "01. März 2026",
+    format: "a5",
 )

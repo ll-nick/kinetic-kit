@@ -7,7 +7,6 @@
 #import "translations.typ": t
 #import "title-page.typ": print-thesis-title
 #import "typography.typ": font-sizes-by-format
-#import "page-conf.typ": title-page-margins-by-format
 #import "front-matter.typ": (
     print-abbreviations, print-abstract, print-acknowledgements, print-kurzfassung,
 )
@@ -23,30 +22,30 @@
 /// - thesis-type (str): e.g. `"Masterarbeit"`, `"Bachelorarbeit"`.
 /// - department (str): Faculty / department name.
 /// - university-genitive (str): University name in genitive case.
-/// - examiner (content): First examiner. `none` if unknown.
-/// - supervisor (content): Supervisor. `none` if unknown.
-/// - date-submitted (content): Submission date string. `none` if unknown.
-/// - format (str): Paper format — `"a5"` (148×210 mm, default), `"17x24"` (170×240 mm),
-///   or `"a4"` (210×297 mm). Font sizes and margins are set automatically.
-/// - lang (str): Document language (`"de"` or `"en"`).
-/// - margin-preset (str): `"short"`, `"medium"`, or `"long"`.
+/// - examiner (str | none): First examiner. `none` if unknown.
+/// - supervisor (str | none): Supervisor. `none` if unknown.
+/// - date-submitted (str | none): Submission date string. `none` if unknown.
+/// - format ("a5" | "17x24" | "a4"): Paper format — `"a5"` (148×210 mm, default),
+///   `"17x24"` (170×240 mm), or `"a4"` (210×297 mm). Font sizes and margins are set automatically.
+/// - lang ("de" | "en"): Document language.
+/// - margin-preset ("short" | "medium" | "long"): Margin profile keyed on page count.
 /// - binding-correction (length): BCOR added to inside margin. Default `0mm`.
 /// - colored-links (bool): KIT Blue links when `true`, black when `false`.
 /// - draft (bool): Show "ENTWURF" watermark when `true`.
-/// - draft-info (str): Optional version string below watermark. Default `none`.
+/// - draft-info (str | none): Optional version string below watermark. Default `none`.
 /// - serif-headings (bool): Use serif font for headings when `true`. Default `false` (sans-serif).
 /// - heading-numbering-depth (int): Deepest heading level to number. Default `3`.
-/// - abstract-en (content): English abstract. `none` = omit.
-/// - abstract-de (content): German abstract. `none` = omit.
-/// - acknowledgements (content): Acknowledgements. `none` = omit.
-/// - abbreviations (content): Abbreviations list. `none` = omit.
+/// - abstract-en (content | none): English abstract. `none` = omit.
+/// - abstract-de (content | none): German abstract. `none` = omit.
+/// - acknowledgements (content | none): Acknowledgements. `none` = omit.
+/// - abbreviations (content | none): Abbreviations list. `none` = omit.
 /// - show-lof (bool): Include List of Figures.
 /// - show-lot (bool): Include List of Tables.
 /// - show-lol (bool): Include List of Listings.
-/// - bibliography (content): Bibliography content. Pass `bibliography("refs.bib", title: none, style: "ieee")`.
+/// - bibliography (content | none): Bibliography content. Pass `bibliography("refs.bib", title: none, style: "ieee")`.
 ///   The template adds a translated heading. `none` = omit.
-/// - appendix (content): Appendix chapters. Template applies `A`, `A.1`, … numbering
-///   and places the appendix at the very end, after all back-matter lists. `none` = omit.
+/// - appendix (content | none): Appendix chapters. Template applies `A`, `A.1`, … numbering
+///   and places the appendix before the back-matter lists. `none` = omit.
 /// - doc (content): Main document body (chapters only).
 /// -> content
 #let thesis(
@@ -85,7 +84,6 @@
     )
     let author-name = author-firstname + " " + author-surname
     let font-sizes = font-sizes-by-format.at(format)
-    let title-page-margins = title-page-margins-by-format.at(format)
 
     set document(
         title: title,
@@ -109,32 +107,30 @@
     // ── Title page ──────────────────────────────────────────────────────────
     print-thesis-title(
         title,
-        thesis-type,
-        author-firstname,
-        author-surname,
-        department,
-        university-genitive,
-        examiner,
-        supervisor,
-        date-submitted,
-        lang,
-        font-sizes,
-        title-page-margins,
+        thesis-type: thesis-type,
+        author-firstname: author-firstname,
+        author-surname: author-surname,
+        department: department,
+        university-genitive: university-genitive,
+        examiner: examiner,
+        supervisor: supervisor,
+        date-submitted: date-submitted,
+        format: format,
     )
 
     // ── Front matter (Roman numerals) ───────────────────────────────────────
     show: setup-front-matter
     counter(page).update(0)
 
+    if acknowledgements != none {
+        print-acknowledgements(acknowledgements, lang)
+    }
+
     if abstract-en != none {
         print-abstract(abstract-en)
     }
     if abstract-de != none {
         print-kurzfassung(abstract-de)
-    }
-
-    if acknowledgements != none {
-        print-acknowledgements(acknowledgements, lang)
     }
 
     if abbreviations != none {
@@ -149,21 +145,15 @@
 
     doc
 
-    if bibliography != none { print-bibliography(bibliography, lang) }
-
     // ── Back matter ─────────────────────────────────────────────────────────
-    if show-lof {
-        print-lof(lang: lang)
-    }
-    if show-lot {
-        print-lot(lang: lang)
-    }
-    if show-lol {
-        print-lol(lang: lang)
-    }
-
     if appendix != none {
         show: setup-appendix
         appendix
     }
+
+    if show-lof { print-lof(lang: lang) }
+    if show-lot { print-lot(lang: lang) }
+    if show-lol { print-lol(lang: lang) }
+
+    if bibliography != none { print-bibliography(bibliography, lang) }
 }

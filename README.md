@@ -1,14 +1,9 @@
 # kinetic-kit
 
-[![CI](https://github.com/ll-nick/kinetic-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/ll-nick/kinetic-kit/actions/workflows/ci.yml)
+[![CI build status](https://github.com/ll-nick/kinetic-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/ll-nick/kinetic-kit/actions/workflows/ci.yml)
 [![License: MIT-0](https://img.shields.io/badge/license-MIT--0-blue.svg)](LICENSE)
 
-An unofficial[^1] KIT dissertation and thesis[^2] template for [Typst](https://typst.app), designed to comply with the formatting requirements of [KIT Scientific Publishing (KSP)](https://www.bibliothek.kit.edu/ksp-toolbox.php).
-
-> [!NOTE]
-> This template is in early development and may contain incomplete features, bugs, or formatting issues.
-> It doesn't have a stable API either.
-> You should probably not use it until it has reached a more mature state.
+The official[^1] [Typst](https://typst.app) template for dissertations[^2] published through [KIT Scientific Publishing (KSP)](https://www.bibliothek.kit.edu/ksp-toolbox.php).
 
 See the build artifacts of the [latest CI run](https://github.com/ll-nick/kinetic-kit/actions/workflows/ci.yml) for example PDFs.
 
@@ -20,7 +15,6 @@ See the build artifacts of the [latest CI run](https://github.com/ll-nick/kineti
 [mise](https://mise.jdx.dev) is recommended for managing tasks and tooling (including Typst itself).
 
 However, all tasks are plain shell scripts in `mise/tasks/` and can be run directly assuming Typst is installed and available in your `PATH`.
-The template is developed with Typst `0.14.2`, but it may work with other versions as well.
 
 ### Installation
 
@@ -65,8 +59,8 @@ See the [`examples/`](examples/) directory for more complete examples.
 
 ## API Reference
 
-For complete and up-to-date documentation, refer to [`docs/api-reference.pdf`](docs/api-reference.pdf),
-which is auto-generated from the source code.
+Refer to [`docs/api-reference.pdf`](docs/api-reference.pdf),
+for the API documentation auto-generated from the source code.
 
 <details>
 <summary><strong>Parameters — <code>dissertation(...)</code></strong></summary>
@@ -109,7 +103,7 @@ which is auto-generated from the source code.
 | `show-lot` | `bool` | `true` | List of tables |
 | `show-lol` | `bool` | `false` | List of listings |
 | `bibliography` | `content \| none` | `none` | Pass `bibliography("refs.bib", title: none, style: "ieee")`; template adds a translated heading |
-| `appendix` | `content \| none` | `none` | Appendix chapters; template applies A, A.1, … numbering, placed after back-matter lists |
+| `appendix` | `content \| none` | `none` | Appendix chapters; template applies A, A.1, … numbering, placed before the back-matter lists |
 
 </details>
 
@@ -144,7 +138,7 @@ which is auto-generated from the source code.
 | `show-lot` | `bool` | `true` | List of tables |
 | `show-lol` | `bool` | `false` | List of listings |
 | `bibliography` | `content \| none` | `none` | Pass `bibliography("refs.bib", title: none, style: "ieee")`; template adds a translated heading |
-| `appendix` | `content \| none` | `none` | Appendix chapters; template applies A, A.1, … numbering, placed after back-matter lists |
+| `appendix` | `content \| none` | `none` | Appendix chapters; template applies A, A.1, … numbering, placed before the back-matter lists |
 
 </details>
 
@@ -160,8 +154,7 @@ The following values apply to the `"a5"` and `"17x24"` formats:
 | `"medium"` | 200–399 | 23 mm | 15 mm |
 | `"long"` | ≥ 400 | 25 mm | 15 mm |
 
-> [!NOTE]
-> The `"a4"` format uses fixed margins (35 mm inside / 25 mm outside) regardless of the preset. The page-count thresholds still select the preset, but all three presets result in the same margin values for A4.
+> **Note:** The `"a4"` format uses fixed margins (35 mm inside / 25 mm outside) regardless of the preset. The page-count thresholds still select the preset, but all three presets result in the same margin values for A4.
 
 ## Cookbook
 
@@ -174,14 +167,13 @@ Available components: `setup-page`, `setup-front-matter`, `setup-content`, `setu
 
 ```typst
 #import "@local/kinetic-kit:0.1.0": components, kit-style
-#import "@local/kinetic-kit:0.1.0/src/page-conf.typ": title-page-margins-by-format
 
 #let format = "a5"
 #let font-sizes = kit-style.font-sizes-by-format.at(format)
-#let title-page-margins = title-page-margins-by-format.at(format)
 
 // 1. Apply base KIT formatting (page geometry, fonts, heading styles, …)
 #show: components.setup-page.with(
+  format: format,
   margin-preset: "short",
   lang: "de",
   colored-links: true,
@@ -192,12 +184,12 @@ Available components: `setup-page`, `setup-front-matter`, `setup-content`, `setu
 
 #components.print-dissertation-title(
   [Titel der Dissertation],
-  "M.Sc.", "Vorname", "Nachname", true,
-  "Doktor-Ingenieur", "Doktor-Ingenieurin",
-  "KIT-Fakultät für Maschinenbau",
-  "des Karlsruher Instituts für Technologie (KIT)",
-  false, none, none, true, none, true,
-  font-sizes, title-page-margins,
+  author-title: "M.Sc.",
+  author-firstname: "Vorname",
+  author-surname: "Nachname",
+  department: "KIT-Fakultät für Maschinenbau",
+  university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
+  format: format,
 )
 
 = Abstract
@@ -252,7 +244,7 @@ Set `draft: true` to show an "ENTWURF" (German) or "DRAFT" (English) watermark o
 
 ```typst
 #show: dissertation.with(
-  ...
+  // ...
   draft:      true,
   draft-info: sys.inputs.at("git-sha", default: none),
 )
@@ -289,7 +281,7 @@ Use the [glossarium](https://typst.app/universe/package/glossarium) package for 
 #register-glossary(abbrevs)
 
 #show: dissertation.with(
-  ...
+  // ...
   // The template adds the translated section heading automatically.
   abbreviations: print-glossary(abbrevs),
 )
@@ -298,32 +290,6 @@ Use the [glossarium](https://typst.app/universe/package/glossarium) package for 
 ```
 
 For a nicer two-column grid layout (bold abbreviation on the left, long form on the right) instead of the default `print-glossary` output, see the custom `abbrevs-glossary()` helper in [`examples/content/abbreviations.typ`](examples/content/abbreviations.typ).
-
-</details>
-
-<details>
-<summary><strong>Separate bibliography sections (Alexandria)</strong></summary>
-
-Use the [alexandria](https://typst.app/universe/package/alexandria) package for separate bibliography sections for own publications, patents, and supervised theses alongside the main bibliography.
-
-```typst
-#import "@local/kinetic-kit:0.1.0": dissertation
-#import "@preview/alexandria:0.2.2": alexandria, bibliographyx
-
-// Must come before #show: dissertation.with(...)
-#show: alexandria(prefix: "p:", read: path => read(path))
-
-#show: dissertation.with(
-  ...
-  own-publications: bibliographyx(
-    "bib/own-publications.bib",
-    title: none, style: "ieee", full: true,
-  ),
-  bibliography: bibliography("bib/references.bib", title: none, style: "ieee"),
-)
-```
-
-In-text citations to own publications use `@p:key` syntax.
 
 </details>
 
@@ -340,7 +306,7 @@ Use the [drafting](https://typst.app/universe/package/drafting) package to add m
 #set-margin-note-defaults(hidden: not is-draft)
 
 #show: dissertation.with(
-  ...
+  // ...
   draft: is-draft,
 )
 
@@ -399,10 +365,9 @@ as well as [this great LaTeX template](https://gitlab.cc-asp.fraunhofer.de/kit-k
 Some inpiration was also drawn from the [TUM-tastic thesis template](https://github.com/santiagonar1/tum-tastic-thesis).
 
 
-[^1]: This is an unofficial community template, not affiliated with, endorsed by,
-or approved by KIT (Karlsruhe Institute of Technology) or KSP (KIT Scientific Publishing).
-The template attempts to follow the [KSP Basic Layout Guidelines](https://www.bibliothek.kit.edu/downloads/KSP/KSP-Basic-Layout-Guidelines.pdf) but compliance is not guaranteed.
-Always verify your final manuscript with KSP before submission.
+[^1]: This template is provided "as is".
+Please note that further technical assistance is currently not available. 
 
-[^2]: This template was implemented to ~~procrastinate writing~~ write a dissertation. The thesis template is more of a byproduct and probably less polished.
+[^2]: This template was implemented to ~~procrastinate writing~~ write a dissertation.
+The thesis template is more of a byproduct and probably less polished.
 

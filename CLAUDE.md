@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**kinetic-kit** is an unofficial KIT (Karlsruhe Institute of Technology) dissertation and thesis template for [Typst](https://typst.app/), targeting KIT Scientific Publishing (KSP) formatting requirements. The authoritative requirements are documented in `guidelines.md`.
+**kinetic-kit** is a KIT (Karlsruhe Institute of Technology) dissertation and thesis template for [Typst](https://typst.app/), targeting KIT Scientific Publishing (KSP) formatting requirements. The dissertation template is official / KSP-approved; the thesis template is included as a companion and is not separately KSP-approved. The authoritative requirements are documented in `guidelines.md`.
 
 ## Build Commands
 
-This project uses [mise](https://mise.jdx.dev/) for task management with Typst pinned to v0.14.2.
+This project uses [mise](https://mise.jdx.dev/) for task management, with Typst 0.15.0 pinned in both `mise.toml` (dev/CI toolchain) and `typst.toml` (`compiler`, the minimum supported version).
 
 ```sh
 # Compile all examples and API docs
@@ -69,8 +69,8 @@ The single entry point re-exports:
 
 Both `dissertation()` and `thesis()` share the same structure:
 1. **Front matter** — Roman page numbering (i, ii, …), no running headers; includes title page, abstracts, TOC
-2. **Content** — Arabic page numbering (1, 2, …), chapter/section running headers, bibliography injected at end
-3. **Back matter** — own-publications/patents/supervised-theses sections, LoF/LoT/LoL, appendices with A.1 numbering
+2. **Content** — Arabic page numbering (1, 2, …), chapter/section running headers
+3. **Back matter** — appendix (A, A.1, … numbering), then LoF/LoT/LoL, bibliography, and (dissertation only) own-publications/patents/supervised-theses sections
 
 Headers are suppressed on chapter-opening pages and blank pages. The draft watermark is rendered as a background element on every page when enabled.
 
@@ -80,7 +80,7 @@ Headers are suppressed on chapter-opening pages and blank pages. The draft water
 
 ### Examples (`examples/`)
 
-- `dissertation-full.typ` — comprehensive feature showcase (multi-bibliography via alexandria)
+- `dissertation-full.typ` — comprehensive feature showcase (native multi-bibliography via `bibliography(full: true)`)
 - `dissertation-full-en.typ` — English dissertation variant
 - `dissertation-approved.typ` — approved dissertation variant
 - `thesis-full.typ`, `thesis-full-en.typ` — master's/bachelor's/diploma thesis variants
@@ -89,7 +89,7 @@ Shared content in `examples/content/` and bibliographies in `examples/bib/`.
 
 ## Key Constraints
 
-- **Typst version**: Must use 0.14.2 (pinned in `mise.toml` and `typst.toml`)
+- **Typst version**: 0.15.0 — both the minimum supported compiler (`compiler` in `typst.toml`) and the dev/CI toolchain (`mise.toml`).
 - **Paper format**: A5 (148×210 mm, default), 17×24 (170×240 mm), or A4 (210×297 mm) — controlled via `format` parameter; KSP recommends A5 for dissertations
 - **Base font size**: 10 pt (A5/17×24) or 11 pt (A4) Libertinus Serif — set automatically per format
 - **Line spacing**: 1.15× (0.75em leading in Typst)

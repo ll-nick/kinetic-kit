@@ -1,4 +1,4 @@
 [tools]
-"github:typst-community/tytanic" = "0.3.3"
-typst = "0.14.2"
-typstyle = "latest"
+"github:typst-community/tytanic" = "0.4.0"
+typst = "0.15.0"
+typstyle = "0.15.0"

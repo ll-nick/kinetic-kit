@@ -1,7 +1,7 @@
 // KIT Dissertation Template — Full-featured German example
-// Demonstrates every dissertation() parameter and optional integrations:
-// glossarium (abbreviation expansion), alexandria (multi-bibliography),
-// and drafting (margin annotations during the draft stage).
+// Demonstrates every dissertation() parameter, native multi-bibliography, and
+// optional integrations: glossarium (abbreviation expansion) and drafting
+// (margin annotations during the draft stage).
 //
 // Compile: typst compile --root . --font-path fonts examples/dissertation-full.typ examples/dissertation-full.pdf
 
@@ -22,13 +22,6 @@
 
 #show: make-glossary
 #register-glossary(abbrevs)
-
-// ── Third-party: alexandria (multi-bibliography) ──────────────────────────
-// Allows bibliographyx() alongside the main bibliography() for own-publications,
-// supervised-theses, and own-patents. Citations use @prefix:key syntax.
-#import "@preview/alexandria:0.2.2": alexandria, bibliographyx
-#show: alexandria(prefix: "p:", read: path => read(path))
-#show: alexandria(prefix: "t:", read: path => read(path))
 
 // ── Third-party: drafting (margin annotations) ────────────────────────────
 // Set is-draft here so the same value drives both the watermark and the
@@ -96,18 +89,16 @@
     show-lot: true,
     show-lol: true,
 
-    // alexandria: use bibliographyx() for sections alongside the main bibliography.
+    // Separate publication lists via native multi-bibliography.
     // full: true lists all entries regardless of in-text citations.
-    own-publications: bibliographyx(
+    own-publications: bibliography(
         "bib/own-publications.bib",
-        prefix: "p:",
         title: none,
         style: "ieee",
         full: true,
     ),
-    supervised-theses: bibliographyx(
+    supervised-theses: bibliography(
         "bib/supervised-theses.bib",
-        prefix: "t:",
         title: none,
         style: "ieee",
         full: true,

@@ -10,6 +10,7 @@
 /// - font-sizes (dict): Format-specific font sizes resolved by the template.
 /// -> content
 #let print-toc(font-sizes, lang: "de", serif-headings: false) = {
+    set text(hyphenate: false)
     let tr = t.at(lang)
     let hfont = if serif-headings { fonts.serif } else { fonts.sans }
 
@@ -56,6 +57,7 @@
 /// - lang (str): Document language — `"de"` or `"en"`.
 /// -> content
 #let print-lof(lang: "de") = {
+    set text(hyphenate: true)
     state("in-outline", false).update(true)
     outline(
         title: t.at(lang).lof,
@@ -69,6 +71,7 @@
 /// - lang (str): Document language — `"de"` or `"en"`.
 /// -> content
 #let print-lot(lang: "de") = {
+    set text(hyphenate: true)
     state("in-outline", false).update(true)
     outline(
         title: t.at(lang).lot,
@@ -82,6 +85,7 @@
 /// - lang (str): Document language — `"de"` or `"en"`.
 /// -> content
 #let print-lol(lang: "de") = {
+    set text(hyphenate: true)
     state("in-outline", false).update(true)
     outline(
         title: t.at(lang).lol,

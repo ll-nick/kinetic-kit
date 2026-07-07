@@ -35,8 +35,8 @@ All document metadata lives in the `#show: dissertation.with(...)` call at the t
     than 200 pages, `"medium"` for 200–399, `"long"` for 400 or more. Add
     `binding-correction: 8mm` (or as specified by your print shop) for the physical bound
     copy.
-+ *Draft watermark:* `draft: true` shows "ENTWURF" on every page. Set it to `false` before
-    submitting.
++ *Draft watermark:* the template ships with `draft: false`. Set `draft: true` while
+    writing to stamp "ENTWURF" on every page, and back to `false` before submitting.
 
 == Writing Chapters
 
@@ -153,7 +153,7 @@ The template uses the IEEE citation style by default. To switch to another style
 
 Before you submit, work through the following items in `main.typ`:
 
-+ Set `draft: false` to remove the watermark.
++ If you enabled draft mode, set `draft: false` to remove the watermark.
 + If approved: set `status-approved: true` and fill in `exam-date`, `main-advisor`, and
     `co-advisor`.
 + Update `margin-preset` to match your final page count (`"short"`, `"medium"`, or
