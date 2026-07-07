@@ -1,6 +1,6 @@
 # kinetic-kit
 
-[![CI](https://github.com/ll-nick/kinetic-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/ll-nick/kinetic-kit/actions/workflows/ci.yml)
+[![CI build status](https://github.com/ll-nick/kinetic-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/ll-nick/kinetic-kit/actions/workflows/ci.yml)
 [![License: MIT-0](https://img.shields.io/badge/license-MIT--0-blue.svg)](LICENSE)
 
 The official[^1] [Typst](https://typst.app) template for dissertations[^2] published through [KIT Scientific Publishing (KSP)](https://www.bibliothek.kit.edu/ksp-toolbox.php).
@@ -154,8 +154,7 @@ The following values apply to the `"a5"` and `"17x24"` formats:
 | `"medium"` | 200–399 | 23 mm | 15 mm |
 | `"long"` | ≥ 400 | 25 mm | 15 mm |
 
-> [!NOTE]
-> The `"a4"` format uses fixed margins (35 mm inside / 25 mm outside) regardless of the preset. The page-count thresholds still select the preset, but all three presets result in the same margin values for A4.
+> **Note:** The `"a4"` format uses fixed margins (35 mm inside / 25 mm outside) regardless of the preset. The page-count thresholds still select the preset, but all three presets result in the same margin values for A4.
 
 ## Cookbook
 
@@ -245,7 +244,7 @@ Set `draft: true` to show an "ENTWURF" (German) or "DRAFT" (English) watermark o
 
 ```typst
 #show: dissertation.with(
-  ...
+  // ...
   draft:      true,
   draft-info: sys.inputs.at("git-sha", default: none),
 )
@@ -282,7 +281,7 @@ Use the [glossarium](https://typst.app/universe/package/glossarium) package for 
 #register-glossary(abbrevs)
 
 #show: dissertation.with(
-  ...
+  // ...
   // The template adds the translated section heading automatically.
   abbreviations: print-glossary(abbrevs),
 )
@@ -307,7 +306,7 @@ Use the [drafting](https://typst.app/universe/package/drafting) package to add m
 #set-margin-note-defaults(hidden: not is-draft)
 
 #show: dissertation.with(
-  ...
+  // ...
   draft: is-draft,
 )
 
