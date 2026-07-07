@@ -1,12 +1,23 @@
 #!/usr/bin/env bash
-# [MISE] description="Render thumbnail title page as thumbnail.png"
+# [MISE] description="Render the initialized template's title page as thumbnail.png"
+#
+# As in build:template, we map preview/kinetic-kit/0.1.0 to the project root
+# via a temporary package path so the template's @preview import resolves.
 set -euo pipefail
 
+PKG_DIR=$(mktemp -d)
+mkdir -p "$PKG_DIR/preview/kinetic-kit"
+ln -s "$PWD" "$PKG_DIR/preview/kinetic-kit/0.1.0"
+
 typst compile \
-    --root . \
+    --package-path "$PKG_DIR" \
+    --root template \
     --font-path fonts \
+    --format png \
+    --pages 1 \
     --ppi 300 \
-    thumbnail/thumbnail.typ \
+    template/main.typ \
     thumbnail/thumbnail.png
 
+rm -rf "$PKG_DIR"
 echo "  → thumbnail/thumbnail.png"
