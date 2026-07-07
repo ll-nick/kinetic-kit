@@ -22,29 +22,29 @@
 /// - thesis-type (str): e.g. `"Masterarbeit"`, `"Bachelorarbeit"`.
 /// - department (str): Faculty / department name.
 /// - university-genitive (str): University name in genitive case.
-/// - examiner (content): First examiner. `none` if unknown.
-/// - supervisor (content): Supervisor. `none` if unknown.
-/// - date-submitted (content): Submission date string. `none` if unknown.
-/// - format (str): Paper format — `"a5"` (148×210 mm, default), `"17x24"` (170×240 mm),
-///   or `"a4"` (210×297 mm). Font sizes and margins are set automatically.
-/// - lang (str): Document language (`"de"` or `"en"`).
-/// - margin-preset (str): `"short"`, `"medium"`, or `"long"`.
+/// - examiner (str | none): First examiner. `none` if unknown.
+/// - supervisor (str | none): Supervisor. `none` if unknown.
+/// - date-submitted (str | none): Submission date string. `none` if unknown.
+/// - format ("a5" | "17x24" | "a4"): Paper format — `"a5"` (148×210 mm, default),
+///   `"17x24"` (170×240 mm), or `"a4"` (210×297 mm). Font sizes and margins are set automatically.
+/// - lang ("de" | "en"): Document language.
+/// - margin-preset ("short" | "medium" | "long"): Margin profile keyed on page count.
 /// - binding-correction (length): BCOR added to inside margin. Default `0mm`.
 /// - colored-links (bool): KIT Blue links when `true`, black when `false`.
 /// - draft (bool): Show "ENTWURF" watermark when `true`.
-/// - draft-info (str): Optional version string below watermark. Default `none`.
+/// - draft-info (str | none): Optional version string below watermark. Default `none`.
 /// - serif-headings (bool): Use serif font for headings when `true`. Default `false` (sans-serif).
 /// - heading-numbering-depth (int): Deepest heading level to number. Default `3`.
-/// - abstract-en (content): English abstract. `none` = omit.
-/// - abstract-de (content): German abstract. `none` = omit.
-/// - acknowledgements (content): Acknowledgements. `none` = omit.
-/// - abbreviations (content): Abbreviations list. `none` = omit.
+/// - abstract-en (content | none): English abstract. `none` = omit.
+/// - abstract-de (content | none): German abstract. `none` = omit.
+/// - acknowledgements (content | none): Acknowledgements. `none` = omit.
+/// - abbreviations (content | none): Abbreviations list. `none` = omit.
 /// - show-lof (bool): Include List of Figures.
 /// - show-lot (bool): Include List of Tables.
 /// - show-lol (bool): Include List of Listings.
-/// - bibliography (content): Bibliography content. Pass `bibliography("refs.bib", title: none, style: "ieee")`.
+/// - bibliography (content | none): Bibliography content. Pass `bibliography("refs.bib", title: none, style: "ieee")`.
 ///   The template adds a translated heading. `none` = omit.
-/// - appendix (content): Appendix chapters. Template applies `A`, `A.1`, … numbering
+/// - appendix (content | none): Appendix chapters. Template applies `A`, `A.1`, … numbering
 ///   and places the appendix before the back-matter lists. `none` = omit.
 /// - doc (content): Main document body (chapters only).
 /// -> content
