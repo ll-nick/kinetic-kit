@@ -59,8 +59,8 @@ See the [`examples/`](examples/) directory for more complete examples.
 
 ## API Reference
 
-For complete and up-to-date documentation, refer to [`docs/api-reference.pdf`](docs/api-reference.pdf),
-which is auto-generated from the source code.
+Refer to [`docs/api-reference.pdf`](docs/api-reference.pdf),
+for the API documentation auto-generated from the source code.
 
 <details>
 <summary><strong>Parameters — <code>dissertation(...)</code></strong></summary>
