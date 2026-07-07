@@ -2,45 +2,33 @@
 
 [![CI build status](https://github.com/ll-nick/kinetic-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/ll-nick/kinetic-kit/actions/workflows/ci.yml)
 [![License: MIT-0](https://img.shields.io/badge/license-MIT--0-blue.svg)](LICENSE)
+[![Example PDFs](https://img.shields.io/badge/example%20PDFs-latest%20build-informational.svg)](https://nightly.link/ll-nick/kinetic-kit/workflows/ci/main/pdfs.zip)
+<!-- TODO: Add version badge after the first tagged release -->
+<!-- [![Version](https://img.shields.io/github/v/tag/ll-nick/kinetic-kit?sort=semver&label=version)](https://github.com/ll-nick/kinetic-kit/tags) -->
 
-The official[^1] [Typst](https://typst.app) template for dissertations[^2] published through [KIT Scientific Publishing (KSP)](https://www.bibliothek.kit.edu/ksp-toolbox.php).
-
-See the build artifacts of the [latest CI run](https://github.com/ll-nick/kinetic-kit/actions/workflows/ci.yml) for example PDFs.
+The official[^1] [Typst](https://typst.app) template for dissertations[^2] published through [KIT Scientific Publishing (KSP)](https://www.ksp.kit.edu/).
 
 
 ## Getting Started
 
-### Prerequisites
+> [!NOTE]  
+> **This package is not yet published on Typst Universe.**  
+> Until it is, the `typst init` command below won't resolve.
+> In the meantime, use the local install (see the collapsible section below).
 
-[mise](https://mise.jdx.dev) is recommended for managing tasks and tooling (including Typst itself).
-
-However, all tasks are plain shell scripts in `mise/tasks/` and can be run directly assuming Typst is installed and available in your `PATH`.
-
-### Installation
-
-The template is not currently published on the Typst Universe registry, so you need to install it as a local package to use it in your documents.
-In the root of the repository, run either of the following:
+Start a new project from the template with:
 
 ```bash
-# copy — changes require re-installation (recommended for stability)
-mise run install # or bash mise/tasks/install/_default
-
-# symlink — changes apply immediately (recommended during development)
-mise run install:editable # or bash mise/tasks/install/editable
+typst init @preview/kinetic-kit:0.1.0
 ```
 
-#### Fonts
+Or pick **kinetic-kit** from the template gallery in the [Typst web app](https://typst.app).
+Either way you get a ready-to-fill `main.typ`.
 
-This template expects the [Libertinus font family](https://github.com/alerque/libertinus) to be installed on the system.
-For convenience, this repository includes these fonts.
-Install them using `mise run install:fonts` (or `bash mise/tasks/install/fonts`) if you don't have them yet.
-
-### Usage
-
-Import the `dissertation` or `thesis` component from the package in your Typst document and call `with(...)` to set parameters and content:
+To add the template to an existing document instead, import it and apply it with a show rule:
 
 ```typst
-#import "@local/kinetic-kit:0.1.0": dissertation
+#import "@preview/kinetic-kit:0.1.0": dissertation
 
 #show: dissertation.with(
   author-firstname: "Max",
@@ -56,6 +44,46 @@ Import the `dissertation` or `thesis` component from the package in your Typst d
 ```
 
 See the [`examples/`](examples/) directory for more complete examples.
+
+### Fonts
+
+The template is set in the [Libertinus](https://github.com/alerque/libertinus) font family.
+
+- **Typst web app:** Libertinus is pre-installed, so no additional steps are required.
+- **Local compilation:** The Libertinus font family must be installed on your system for the compiler to find it.
+You can get it from the [Libertinus releases](https://github.com/alerque/libertinus/releases).
+
+<details>
+<summary><strong>Local install</strong></summary>
+
+To use a local checkout of [the template's repository](https://github.com/ll-nick/kinetic-kit) as a package
+(e.g. while contributing or to get the bleeding-edge version),
+follow these steps to install it into your local Typst package directory.
+
+[mise-en-place](https://mise.jdx.dev) is an optional but recommended prerequisite here.
+It can be used to install both the template and Typst itself.
+However, assuming Typst is installed, each task is a plain shell script, so you can also run the `bash mise/tasks/…` form directly.
+
+Inside your clone of the repository, run either of the following:
+
+```bash
+# copy — changes require re-installation (recommended for stability)
+mise run install # or bash mise/tasks/install/_default
+
+# symlink — changes apply immediately (recommended during development)
+mise run install:editable # or bash mise/tasks/install/editable
+```
+
+When installed this way, imports use `@local/kinetic-kit:0.1.0` in place of `@preview/kinetic-kit:0.1.0`.
+
+The repository also bundles the Libertinus fonts.
+Install them into your user font directory with
+
+```bash
+mise run install:fonts # or bash mise/tasks/install/fonts
+```
+
+</details>
 
 ## API Reference
 
@@ -78,7 +106,7 @@ for the API documentation auto-generated from the source code.
 | `university-genitive` | `str` | `"des Karlsruher Instituts für Technologie (KIT)"` | University name in genitive case |
 | `lang` | `"de" \| "en"` | `"de"` | Document language |
 | `format` | `"a5" \| "17x24" \| "a4"` | `"a5"` | Paper format — `"a5"` (148×210 mm, default), `"17x24"` (170×240 mm), or `"a4"` (210×297 mm) |
-| `margin-preset` | `"short" \| "medium" \| "long"` | `"short"` | KSP margin profile (see [Margin Presets](#margin-presets)) |
+| `margin-preset` | `"short" \| "medium" \| "long"` | `"short"` | KSP margin profile keyed on final page count — `short` < 200 pp, `medium` 200–399, `long` ≥ 400 |
 | `status-approved` | `bool` | `false` | `false` = eingereicht, `true` = angenommen |
 | `exam-date` | `str \| none` | `none` | Date of oral examination; required when `status-approved: true` |
 | `main-advisor` | `str \| none` | `none` | Hauptreferent |
@@ -123,7 +151,7 @@ for the API documentation auto-generated from the source code.
 | `date-submitted` | `str \| none` | `none` | |
 | `format` | `"a5" \| "17x24" \| "a4"` | `"a5"` | Paper format — `"a5"` (148×210 mm, default), `"17x24"` (170×240 mm), or `"a4"` (210×297 mm) |
 | `lang` | `"de" \| "en"` | `"de"` | Document language |
-| `margin-preset` | `"short" \| "medium" \| "long"` | `"short"` | KSP margin profile (see [Margin Presets](#margin-presets)) |
+| `margin-preset` | `"short" \| "medium" \| "long"` | `"short"` | KSP margin profile keyed on final page count — `short` < 200 pp, `medium` 200–399, `long` ≥ 400 |
 | `binding-correction` | `length` | `0mm` | BCOR added to inside margin (8–10 mm for physically bound copies) |
 | `colored-links` | `bool` | `true` | KIT Blue links (screen); `false` = black (print) |
 | `draft` | `bool` | `false` | Show "ENTWURF"/"DRAFT" watermark |
@@ -142,20 +170,6 @@ for the API documentation auto-generated from the source code.
 
 </details>
 
-## Margin Presets
-
-Choose based on the total page count of the finished document (KSP requirement).
-
-The following values apply to the `"a5"` and `"17x24"` formats:
-
-| Preset | Page count | Inner | Outer |
-|--------|-----------|-------|-------|
-| `"short"` | < 200 | 20 mm | 15 mm |
-| `"medium"` | 200–399 | 23 mm | 15 mm |
-| `"long"` | ≥ 400 | 25 mm | 15 mm |
-
-> **Note:** The `"a4"` format uses fixed margins (35 mm inside / 25 mm outside) regardless of the preset. The page-count thresholds still select the preset, but all three presets result in the same margin values for A4.
-
 ## Cookbook
 
 <details>
@@ -166,7 +180,7 @@ The `components` namespace exports the individual building blocks for assembling
 Available components: `setup-page`, `setup-front-matter`, `setup-content`, `setup-appendix`, `print-dissertation-title`, `print-thesis-title`, `print-toc`, `print-lof`, `print-lot`, `print-lol`.
 
 ```typst
-#import "@local/kinetic-kit:0.1.0": components, kit-style
+#import "@preview/kinetic-kit:0.1.0": components, kit-style
 
 #let format = "a5"
 #let font-sizes = kit-style.font-sizes-by-format.at(format)
@@ -215,7 +229,7 @@ Your content here.
 The `kit-style` namespace exposes the template's visual constants so custom figures and diagrams can match the document's typography and color palette exactly.
 
 ```typst
-#import "@local/kinetic-kit:0.1.0": kit-style
+#import "@preview/kinetic-kit:0.1.0": kit-style
 
 // kit-style.fonts                — (serif, sans, mono) font family arrays
 // kit-style.font-sizes-by-format  — dict keyed by format: font sizes per format
@@ -268,7 +282,7 @@ Use the [glossarium](https://typst.app/universe/package/glossarium) package for 
 **Important:** `#show: make-glossary` must appear *before* `#show: dissertation.with(...)`. Forgetting this causes silent failure — abbreviations will not expand.
 
 ```typst
-#import "@local/kinetic-kit:0.1.0": dissertation
+#import "@preview/kinetic-kit:0.1.0": dissertation
 #import "@preview/glossarium:0.5.10": make-glossary, register-glossary, print-glossary
 
 #let abbrevs = (
@@ -299,7 +313,7 @@ For a nicer two-column grid layout (bold abbreviation on the left, long form on 
 Use the [drafting](https://typst.app/universe/package/drafting) package to add margin notes during writing. Tie `is-draft` to both the watermark and note visibility so they are toggled in one place:
 
 ```typst
-#import "@local/kinetic-kit:0.1.0": dissertation
+#import "@preview/kinetic-kit:0.1.0": dissertation
 #import "@preview/drafting:0.2.2": set-margin-note-defaults, margin-note
 
 #let is-draft = true
@@ -320,37 +334,9 @@ Set `is-draft = false` before final compilation to hide all margin notes and rem
 
 ## Contributing
 
-### Prerequisites
-
-This project uses [mise](https://mise.jdx.dev) to manage both development tasks and tooling.
-With it installed, you can run all tasks with `mise run <task>` (e.g. `mise run build`).
-
-### Tasks
-
-| Task | Description |
-|------|-------------|
-| `mise run build` | Compile examples, API docs, template, and thumbnail |
-| `mise run build:examples` | Compile example documents only |
-| `mise run build:docs` | Compile API reference (`docs/api-reference.pdf`) |
-| `mise run build:template` | Compile the Typst Universe template (`template/`) |
-| `mise run build:thumbnail` | Compile the template thumbnail |
-| `mise run format` | Format all Typst files in-place |
-| `mise run format:check` | Check formatting without modifying files (used in CI) |
-| `mise run format:diff` | Show formatting diff for all Typst files |
-| `mise run install` | Install as local Typst package (copy) |
-| `mise run install:editable` | Install as local Typst package (symlink) |
-| `mise run install:fonts` | Install bundled Libertinus fonts to user font directory |
-| `mise run test` | Run tytanic test suite |
-
-### Tests
-
-Tests live in `tests/` and are organized by template type and scenario (e.g. `tests/dissertation/approved/`, `tests/thesis/minimal/`). Each test compiles a `.typ` file targeting a specific layout scenario.
-As of right now, these tests are pure compilation tests.
-
-```bash
-mise run test # run all tests
-tt run --font-path fonts tests/dissertation/appendix  # run a single test
-```
+Contributions are welcome.
+Refer to [CONTRIBUTING.md](https://github.com/ll-nick/kinetic-kit/blob/main/CONTRIBUTING.md)
+for details and development setup.
 
 ## License
 
@@ -359,15 +345,15 @@ Template code: MIT-0 (no attribution required). Bundled fonts (`fonts/`): SIL OF
 ## Acknowledgements
 
 This template has been implemented with AI assistance (Claude Code by Anthropic).
-The basis for the template are the [KSP guidelines](https://www.bibliothek.kit.edu/downloads/KSP/KSP-Basic-Layout-Guidelines.pdf),
+The basis for the template are the [KSP handbook](https://www.bibliothek.kit.edu/downloads/KSP/KSP-Manuskripthandbuch.pdf),
 the [official KSP LaTeX template](https://gitlab.kit.edu/kit/ksp/ksp-vorlage-a5-de-diss),
-as well as [this great LaTeX template](https://gitlab.cc-asp.fraunhofer.de/kit-ksp/dissertation-template).
-Some inpiration was also drawn from the [TUM-tastic thesis template](https://github.com/santiagonar1/tum-tastic-thesis).
+as well as [this LaTeX template](https://gitlab.cc-asp.fraunhofer.de/kit-ksp/dissertation-template).
+Some inspiration was also drawn from the [TUM-tastic thesis template](https://github.com/santiagonar1/tum-tastic-thesis).
 
 
 [^1]: This template is provided "as is".
 Please note that further technical assistance is currently not available. 
 
 [^2]: This template was implemented to ~~procrastinate writing~~ write a dissertation.
-The thesis template is more of a byproduct and probably less polished.
+The thesis template is more of a byproduct, less polished and **not** covered by the KSP endorsement.
 

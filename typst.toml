@@ -17,6 +17,7 @@ exclude = [
     "/.github/",
     "/.gitignore",
     "/CLAUDE.md",
+    "/CONTRIBUTING.md",
     "/docs/",
     "/examples/",
     "/fonts/",
