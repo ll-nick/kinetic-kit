@@ -22,11 +22,6 @@
 #show: make-glossary
 #register-glossary(abbrevs)
 
-// ── Third-party: alexandria (multi-bibliography) ──────────────────────────
-#import "@preview/alexandria:0.2.2": alexandria, bibliographyx
-#show: alexandria(prefix: "p:", read: path => read(path))
-#show: alexandria(prefix: "t:", read: path => read(path))
-
 // ── Third-party: drafting (margin annotations) ────────────────────────────
 #import "@preview/drafting:0.2.2": inline-note, note-outline, set-margin-note-defaults
 #let is-draft = true
@@ -84,16 +79,14 @@
     show-lot: true,
     show-lol: true,
 
-    own-publications: bibliographyx(
+    own-publications: bibliography(
         "bib/own-publications.bib",
-        prefix: "p:",
         title: none,
         style: "ieee",
         full: true,
     ),
-    supervised-theses: bibliographyx(
+    supervised-theses: bibliography(
         "bib/supervised-theses.bib",
-        prefix: "t:",
         title: none,
         style: "ieee",
         full: true,

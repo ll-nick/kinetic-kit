@@ -23,13 +23,6 @@
 #show: make-glossary
 #register-glossary(abbrevs)
 
-// ── Third-party: alexandria (multi-bibliography) ──────────────────────────
-// Allows bibliographyx() alongside the main bibliography() for own-publications,
-// supervised-theses, and own-patents. Citations use @prefix:key syntax.
-#import "@preview/alexandria:0.2.2": alexandria, bibliographyx
-#show: alexandria(prefix: "p:", read: path => read(path))
-#show: alexandria(prefix: "t:", read: path => read(path))
-
 // ── Third-party: drafting (margin annotations) ────────────────────────────
 // Set is-draft here so the same value drives both the watermark and the
 // visibility of margin notes — set to false before final submission.
@@ -99,18 +92,16 @@
     show-lot: true,
     show-lol: true,
 
-    // alexandria: use bibliographyx() for sections alongside the main bibliography.
+    // Separate publication lists via native multi-bibliography.
     // full: true lists all entries regardless of in-text citations.
-    own-publications: bibliographyx(
+    own-publications: bibliography(
         "bib/own-publications.bib",
-        prefix: "p:",
         title: none,
         style: "ieee",
         full: true,
     ),
-    supervised-theses: bibliographyx(
+    supervised-theses: bibliography(
         "bib/supervised-theses.bib",
-        prefix: "t:",
         title: none,
         style: "ieee",
         full: true,

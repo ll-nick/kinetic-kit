@@ -80,7 +80,7 @@ Headers are suppressed on chapter-opening pages and blank pages. The draft water
 
 ### Examples (`examples/`)
 
-- `dissertation-full.typ` — comprehensive feature showcase (multi-bibliography via alexandria)
+- `dissertation-full.typ` — comprehensive feature showcase (native multi-bibliography via `bibliography(full: true)`)
 - `dissertation-full-en.typ` — English dissertation variant
 - `dissertation-approved.typ` — approved dissertation variant
 - `thesis-full.typ`, `thesis-full-en.typ` — master's/bachelor's/diploma thesis variants
