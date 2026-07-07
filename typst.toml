@@ -11,6 +11,22 @@ categories = ["thesis"]
 disciplines = ["engineering", "computer-science"]
 keywords = ["dissertation", "doctoral", "thesis", "karlsruhe", "kit", "ksp"]
 
+# Kept in the repository but left out of the compiler-downloaded package bundle.
+exclude = [
+    "/.claude/",
+    "/.github/",
+    "/.gitignore",
+    "/CLAUDE.md",
+    "/docs/",
+    "/examples/",
+    "/fonts/",
+    "/guidelines.md",
+    "/mise/",
+    "/mise.toml",
+    "/template/main.pdf",
+    "/tests/",
+]
+
 [template]
 path = "template"
 entrypoint = "main.typ"
