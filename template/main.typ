@@ -4,7 +4,7 @@
 //   1. Fill in your metadata in the dissertation.with(...) call below.
 //   2. Replace the abstract placeholders with your own text.
 //   3. Add your chapters below the #show: line.
-//   4. Set draft: false before your final submission.
+//   4. Optionally set draft: true while writing to stamp a "DRAFT" watermark.
 //
 // For a thesis (Masterarbeit / Bachelorarbeit) instead of a dissertation,
 // see the commented-out thesis.with(...) block at the bottom of this file.
@@ -52,8 +52,8 @@
     heading-numbering-depth: 3, // Deepest numbered level: 3 = 1.1.1, 4 = 1.1.1.1
 
     // ── Draft watermark ───────────────────────────────────────────────────────
-    // Shows "DRAFT" / "ENTWURF" on every page. Set to false before submission.
-    draft: true,
+    // Set to true while writing to stamp "DRAFT" / "ENTWURF" on every page.
+    draft: false,
     // draft-info: "v0.1 — 2025-06-01", // Optional extra info next to the watermark, e.g. version, date or commit hash.
 
     // ── Front matter ──────────────────────────────────────────────────────────
@@ -146,7 +146,8 @@
 //   heading-numbering-depth: 3,        // Deepest numbered level: 3 = 1.1.1, 4 = 1.1.1.1
 //
 //   // ── Draft watermark ─────────────────────────────────────────────────────
-//   draft: true,
+//   // Set to true while writing to stamp "DRAFT" / "ENTWURF" on every page.
+//   draft: false,
 //   // draft-info: "v0.1 — 2025-06-01",
 //
 //   // ── Front matter ────────────────────────────────────────────────────────
