@@ -278,23 +278,40 @@
 
     // ── Outline entries ───────────────────────────────────────────────────
 
-    set outline.entry(fill: repeat(".", gap: 0.4em, justify: false))
-    // Two-column grid: body + fill in column 1 (1fr), page number in column 2 (auto).
-    // The hard right boundary of column 1 ensures multi-line entries never reach
-    // the page-number column regardless of caption length.
-    show outline.entry: it => link(
-        it.element.location(),
-        grid(
-            columns: (1fr, auto),
-            column-gutter: 0.5em,
-            align: (top + left, bottom + right),
-            it.indented(
-                it.prefix(),
-                [#it.body()#if it.fill != none [#h(0.5em)#box(width: 1fr, it.fill)]],
-            ),
-            it.page(),
-        ),
-    )
+    set outline.entry(fill: repeat(".", gap: 0.7em, justify: false))
+    // The page number sits in a fixed-width, right-aligned box flush to the
+    // right margin. The leftover space before it is absorbed by a `1fr` box
+    // whose dots are right-aligned, so the leader always *ends* at the box's
+    // left edge — the same x on every row — and only the start offset varies
+    // with the title length. This is the default outline layout plus two
+    // tweaks: the fixed page column, and bolding *only* the prefix/title/page
+    // of top-level headings.
+    show outline.entry: it => context {
+        // Size the page-number column to the widest page number anywhere in the
+        // document.
+        let page-width = query(outline.entry).fold(0pt, (w, e) => calc.max(
+            w,
+            measure(e.page()).width,
+        ))
+        // The leader is never bolded: `strong` is an additive weight delta, so
+        // thickening the whole entry would also thicken the shared regular-weight
+        // dot grid. (Figure/table/listing entries are never bolded.)
+        let bold = if it.level == 1 and it.element.func() == heading {
+            strong
+        } else {
+            it => it
+        }
+        link(
+            it.element.location(),
+            it.indented(bold(it.prefix()), {
+                bold(it.body())
+                h(0.5em)
+                box(width: 1fr, align(right, it.fill))
+                h(0.5em)
+                box(width: page-width, align(right, bold(it.page())))
+            }),
+        )
+    }
     show outline: set par(justify: false)
 
     // ── Figures ──────────────────────────────────────────────────────────

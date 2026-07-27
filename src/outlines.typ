@@ -14,9 +14,10 @@
     let tr = t.at(lang)
     let hfont = if serif-headings { fonts.serif } else { fonts.sans }
 
+    // Extra space above each top-level entry.
     show outline.entry.where(level: 1): it => {
         v(1.6em, weak: true)
-        strong(it)
+        it
     }
 
     // Main content entries
