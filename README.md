@@ -91,7 +91,7 @@ Refer to [`docs/api-reference.pdf`](docs/api-reference.pdf),
 for the API documentation auto-generated from the source code.
 
 <details>
-<summary><strong>Parameters — <code>dissertation(...)</code></strong></summary>
+<summary><strong>Doctoral Thesis: <code>dissertation(...)</code></strong></summary>
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
@@ -136,7 +136,7 @@ for the API documentation auto-generated from the source code.
 </details>
 
 <details>
-<summary><strong>Parameters — <code>thesis(...)</code></strong></summary>
+<summary><strong>Bachelor's/Master's/Diploma Thesis: <code>thesis(...)</code></strong></summary>
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
