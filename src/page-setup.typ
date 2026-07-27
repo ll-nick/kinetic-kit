@@ -13,6 +13,7 @@
 #import "typography.typ": font-sizes-by-format, fonts, leading
 #import "page-conf.typ": margins-by-format, page-dimensions-by-format, par-spacing
 #import "translations.typ": t
+#import "outlines.typ": setup-outlines
 
 
 // ── Running header ────────────────────────────────────────────────────────
@@ -276,26 +277,8 @@
         ]
     }
 
-    // ── Outline entries ───────────────────────────────────────────────────
-
-    set outline.entry(fill: repeat(".", gap: 0.4em, justify: false))
-    // Two-column grid: body + fill in column 1 (1fr), page number in column 2 (auto).
-    // The hard right boundary of column 1 ensures multi-line entries never reach
-    // the page-number column regardless of caption length.
-    show outline.entry: it => link(
-        it.element.location(),
-        grid(
-            columns: (1fr, auto),
-            column-gutter: 0.5em,
-            align: (top + left, bottom + right),
-            it.indented(
-                it.prefix(),
-                [#it.body()#if it.fill != none [#h(0.5em)#box(width: 1fr, it.fill)]],
-            ),
-            it.page(),
-        ),
-    )
-    show outline: set par(justify: false)
+    // ── Outlines ──────────────────────────────────────────────────────────
+    show: setup-outlines
 
     // ── Figures ──────────────────────────────────────────────────────────
     set figure(
