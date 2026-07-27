@@ -72,7 +72,7 @@ The single entry point re-exports:
 Both `dissertation()` and `thesis()` share the same structure:
 1. **Front matter** — Roman page numbering (i, ii, …), no running headers; includes title page, abstracts, TOC
 2. **Content** — Arabic page numbering (1, 2, …), chapter/section running headers
-3. **Back matter** — appendix (A, A.1, … numbering), then LoF/LoT/LoL, bibliography, and (dissertation only) own-publications/patents/supervised-theses sections
+3. **Back matter** — LoF/LoT/LoL, bibliography, and (dissertation only) own-publications/patents/supervised-theses sections, then the appendix (A, A.1, … numbering) at the very end
 
 Headers are suppressed on chapter-opening pages and blank pages. The draft watermark is rendered as a background element on every page when enabled.
 
