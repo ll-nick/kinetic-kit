@@ -13,6 +13,7 @@
 #import "typography.typ": font-sizes-by-format, fonts, leading
 #import "page-conf.typ": margins-by-format, page-dimensions-by-format, par-spacing
 #import "translations.typ": t
+#import "outlines.typ": setup-outlines
 
 
 // ── Running header ────────────────────────────────────────────────────────
@@ -276,43 +277,8 @@
         ]
     }
 
-    // ── Outline entries ───────────────────────────────────────────────────
-
-    set outline.entry(fill: repeat(".", gap: 0.7em, justify: false))
-    // The page number sits in a fixed-width, right-aligned box flush to the
-    // right margin. The leftover space before it is absorbed by a `1fr` box
-    // whose dots are right-aligned, so the leader always *ends* at the box's
-    // left edge — the same x on every row — and only the start offset varies
-    // with the title length. This is the default outline layout plus two
-    // tweaks: the fixed page column, and bolding *only* the prefix/title/page
-    // of top-level headings.
-    show outline.entry: it => context {
-        // Size the page-number column to the widest page number anywhere in the
-        // document.
-        let page-width = query(outline.entry).fold(0pt, (w, e) => calc.max(
-            w,
-            measure(e.page()).width,
-        ))
-        // The leader is never bolded: `strong` is an additive weight delta, so
-        // thickening the whole entry would also thicken the shared regular-weight
-        // dot grid. (Figure/table/listing entries are never bolded.)
-        let bold = if it.level == 1 and it.element.func() == heading {
-            strong
-        } else {
-            it => it
-        }
-        link(
-            it.element.location(),
-            it.indented(bold(it.prefix()), {
-                bold(it.body())
-                h(0.5em)
-                box(width: 1fr, align(right, it.fill))
-                h(0.5em)
-                box(width: page-width, align(right, bold(it.page())))
-            }),
-        )
-    }
-    show outline: set par(justify: false)
+    // ── Outlines ──────────────────────────────────────────────────────────
+    show: setup-outlines
 
     // ── Figures ──────────────────────────────────────────────────────────
     set figure(

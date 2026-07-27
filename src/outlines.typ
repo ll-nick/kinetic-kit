@@ -3,6 +3,48 @@
 #import "typography.typ": fonts
 #import "translations.typ": t
 
+/// Shared outline styling, applied as a show rule so every outline in the
+/// document — including a user's own — matches.
+///
+/// - body (content): Document body (injected automatically by the show rule).
+/// -> content
+#let setup-outlines(body) = {
+    set outline.entry(fill: repeat(".", gap: 0.7em, justify: false))
+    show outline: set par(justify: false)
+    show outline.entry: it => context {
+        // Measured rather than fixed because Roman front-matter page numbers can
+        // exceed a 3-digit Arabic one.
+        let page-width = query(outline.entry).fold(0pt, (w, e) => calc.max(
+            w,
+            measure(e.page()).width,
+        ))
+        // Bold only the parts, never the leader: `strong` is an additive weight,
+        // so bolding the whole entry would also thicken the dots.
+        let bold = if it.level == 1 and it.element.func() == heading {
+            strong
+        } else {
+            it => it
+        }
+        // Two columns keep the body from wrapping under the page number;
+        // right-aligning the leader makes it end at the same x on every row.
+        link(
+            it.element.location(),
+            grid(
+                columns: (1fr, page-width),
+                column-gutter: 0.5em,
+                align: (top + left, bottom + right),
+                it.indented(bold(it.prefix()), {
+                    bold(it.body())
+                    h(0.5em)
+                    box(width: 1fr, align(right, it.fill))
+                }),
+                bold(it.page()),
+            ),
+        )
+    }
+    body
+}
+
 /// Print the table of contents, including a separate appendix outline when present.
 ///
 /// - lang (str): Document language — `"de"` or `"en"`.
