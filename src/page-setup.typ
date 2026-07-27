@@ -14,6 +14,7 @@
 #import "page-conf.typ": margins-by-format, page-dimensions-by-format, par-spacing
 #import "translations.typ": t
 #import "outlines.typ": setup-outlines
+#import "figures.typ": setup-figures
 
 
 // ── Running header ────────────────────────────────────────────────────────
@@ -281,32 +282,9 @@
     show: setup-outlines
 
     // ── Figures ──────────────────────────────────────────────────────────
-    set figure(
-        supplement: it => if it.func() == table { t.at(lang).table } else {
-            t.at(lang).figure
-        },
-    )
-    show figure.where(kind: raw): set figure(supplement: context t.at(text.lang).listing)
-    show figure.where(kind: table): set figure.caption(position: top)
-    set table(stroke: 0.3pt)
+    show: setup-figures.with(font-sizes, lang: lang)
 
-    show figure.caption: it => layout(container => context {
-        let body = [
-            #set text(size: font-sizes.small)
-            #text(
-                weight: "bold",
-            )[#it.supplement #it.counter.display(it.numbering):]
-            #it.body
-        ]
-        // Left-align captions ≥ 2 lines
-        let h = measure(body, width: container.width).height
-        if h > font-sizes.small * 1.5 {
-            align(left, body)
-        } else {
-            align(center, body)
-        }
-    })
-
+    // ── Footnotes ────────────────────────────────────────────────────────
     show footnote.entry: it => {
         set text(size: font-sizes.footnote)
         context {
@@ -319,14 +297,6 @@
             )
         }
     }
-
-    set figure(numbering: it => {
-        let ch = counter(heading.where(level: 1)).at(here()).first()
-        if ch > 0 { numbering("1.1", ch, it) } else { numbering("1", it) }
-    })
-
-    set figure(gap: 0.8em)
-    show figure: set block(above: 1.5em, below: 1.5em)
 
     // ── Equations ────────────────────────────────────────────────────────
     set math.equation(numbering: it => {
