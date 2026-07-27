@@ -65,6 +65,7 @@ The single entry point re-exports:
 | `back-matter.typ` | Bibliography, own publications, own patents, supervised theses |
 | `outlines.typ` | TOC, List of Figures/Tables/Listings, and their `outline.entry` styling (`setup-outlines`) |
 | `figures.typ` | Figure/caption/table styling (`setup-figures`) and `flex-caption` |
+| `headings.typ` | Heading styling — per-level sizes/spacing, chapter page breaks, number–body alignment (`setup-headings`) |
 
 ### Template Flow
 
@@ -77,7 +78,7 @@ Headers are suppressed on chapter-opening pages and blank pages. The draft water
 
 ### API Documentation (`docs/`)
 
-`docs/main.typ` uses the [tidy](https://typst.universe/package/tidy) package to auto-generate `docs/api-reference.pdf` from doc-comments in `dissertation.typ`, `thesis.typ`, `outlines.typ`, and `figures.typ`.
+`docs/main.typ` uses the [tidy](https://typst.universe/package/tidy) package to auto-generate `docs/api-reference.pdf` from doc-comments in `dissertation.typ`, `thesis.typ`, `outlines.typ`, `figures.typ`, and `headings.typ`.
 
 ### Examples (`examples/`)
 
