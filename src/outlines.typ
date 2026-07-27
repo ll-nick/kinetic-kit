@@ -2,6 +2,7 @@
 
 #import "typography.typ": fonts
 #import "translations.typ": t
+#import "figures.typ": in-outline
 
 /// Shared outline styling, applied as a show rule so every outline in the
 /// document — including a user's own — matches.
@@ -101,12 +102,12 @@
 /// -> content
 #let print-lof(lang: "de") = {
     set text(hyphenate: true)
-    state("in-outline", false).update(true)
+    in-outline.update(true)
     outline(
         title: t.at(lang).lof,
         target: figure.where(kind: image),
     )
-    state("in-outline", false).update(false)
+    in-outline.update(false)
 }
 
 /// Print the list of tables.
@@ -115,12 +116,12 @@
 /// -> content
 #let print-lot(lang: "de") = {
     set text(hyphenate: true)
-    state("in-outline", false).update(true)
+    in-outline.update(true)
     outline(
         title: t.at(lang).lot,
         target: figure.where(kind: table),
     )
-    state("in-outline", false).update(false)
+    in-outline.update(false)
 }
 
 /// Print the list of listings.
@@ -129,26 +130,10 @@
 /// -> content
 #let print-lol(lang: "de") = {
     set text(hyphenate: true)
-    state("in-outline", false).update(true)
+    in-outline.update(true)
     outline(
         title: t.at(lang).lol,
         target: figure.where(kind: raw),
     )
-    state("in-outline", false).update(false)
-}
-
-/// Two-part caption: short version for LoF/LoT, long version under the figure.
-///
-/// Usage: `#figure(…, caption: flex-caption(short: [Short], long: [Long.]))`
-///
-/// - short (content): Short caption shown in List of Figures / Tables.
-/// - long (content): Full caption shown below the figure in the document body.
-/// -> content
-#let flex-caption(short: none, long: none) = context if state(
-    "in-outline",
-    false,
-).get() {
-    short
-} else {
-    long
+    in-outline.update(false)
 }

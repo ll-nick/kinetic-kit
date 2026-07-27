@@ -156,3 +156,15 @@ You are responsible for applying the wrappers in the correct order: `setup-page`
 #let outlines-module = tidy.parse-module(outlines-src, name: "outlines")
 #tidy.show-module(outlines-module, show-outline: true, sort-functions: false)
 
+== Figures
+
+#let figures-src = read("../src/figures.typ")
+#let figures-module = tidy.parse-module(figures-src, name: "figures")
+#tidy.show-module(figures-module, show-outline: true, sort-functions: false)
+
+== Headings
+
+#let headings-src = read("../src/headings.typ")
+#let headings-module = tidy.parse-module(headings-src, name: "headings")
+#tidy.show-module(headings-module, show-outline: true, sort-functions: false)
+
