@@ -6,7 +6,7 @@ Please read this document before opening an issue or pull request.
 
 ## Scope & KSP approval
 
-kinetic-kit is the official, KSP-approved KIT dissertation template. Because of that
+kinetic-kit is the official, KSP-approved KIT doctoral thesis template. Because of that
 approval, not every change is equally easy to land:
 
 - **Straightforward:** bug fixes, typos, documentation, examples, tests, tooling,
@@ -17,8 +17,8 @@ approval, not every change is equally easy to land:
   longer and may not be accepted if they conflict with KSP's requirements.
   **Please open an issue to discuss before investing effort.**
 
-The thesis template is a companion and is not separately KSP-approved, so it has
-more room for change.
+The Bachelor's/Master's thesis template is a companion and is not separately
+KSP-approved, so it has more room for change.
 
 ## How to contribute
 
