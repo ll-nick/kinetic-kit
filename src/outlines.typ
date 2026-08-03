@@ -20,9 +20,11 @@
             measure(e.page()).width,
         ))
         // Bold only the parts, never the leader: `strong` is an additive weight,
-        // so bolding the whole entry would also thicken the dots.
+        // so bolding the whole entry would also thicken the dots. Passing `none`
+        // through unwrapped keeps unnumbered chapters from getting an indent:
+        // `strong(none)` is an empty prefix, not an absent one.
         let bold = if it.level == 1 and it.element.func() == heading {
-            strong
+            it => if it == none { none } else { strong(it) }
         } else {
             it => it
         }
