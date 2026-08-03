@@ -60,7 +60,7 @@
 /// - bibliography (content | none): Bibliography content. Pass `bibliography("refs.bib", title: none, style: "ieee")`.
 ///   The template adds a translated heading. `none` = omit.
 /// - appendix (content | none): Appendix chapters. Template applies `A`, `A.1`, … numbering
-///   and places the appendix at the very end, after all back-matter lists. `none` = omit.
+///   and places the appendix before the back-matter lists. `none` = omit.
 /// - doc (content): Main document body (chapters only).
 /// -> content
 #let dissertation(
@@ -172,7 +172,7 @@
         print-abbreviations(abbreviations, lang)
     }
 
-    print-toc(font-sizes, lang: lang)
+    print-toc(lang: lang)
 
     // ── Main content (Arabic numerals) ──────────────────────────────────────
     show: setup-content
@@ -181,6 +181,11 @@
     doc
 
     // ── Back matter ─────────────────────────────────────────────────────────
+    if appendix != none {
+        show: setup-appendix
+        appendix
+    }
+
     if show-lof {
         print-lof(lang: lang)
     }
@@ -203,10 +208,5 @@
     }
     if supervised-theses != none {
         print-supervised-theses(supervised-theses, lang)
-    }
-
-    if appendix != none {
-        show: setup-appendix
-        appendix
     }
 }

@@ -1,6 +1,5 @@
 // Table of contents and list pages
 
-#import "typography.typ": fonts
 #import "translations.typ": t
 #import "figures.typ": in-outline
 
@@ -10,7 +9,7 @@
 /// - body (content): Document body (injected automatically by the show rule).
 /// -> content
 #let setup-outlines(body) = {
-    set outline.entry(fill: repeat(".", gap: 0.7em, justify: false))
+    set outline.entry(fill: repeat(".", gap: 0.4em, justify: false))
     show outline: set par(justify: false)
     show outline.entry: it => context {
         // Measured rather than fixed because Roman front-matter page numbers can
@@ -20,9 +19,11 @@
             measure(e.page()).width,
         ))
         // Bold only the parts, never the leader: `strong` is an additive weight,
-        // so bolding the whole entry would also thicken the dots.
+        // so bolding the whole entry would also thicken the dots. Passing `none`
+        // through unwrapped keeps unnumbered chapters from getting an indent:
+        // `strong(none)` is an empty prefix, not an absent one.
         let bold = if it.level == 1 and it.element.func() == heading {
-            strong
+            it => if it == none { none } else { strong(it) }
         } else {
             it => it
         }
@@ -46,16 +47,12 @@
     body
 }
 
-/// Print the table of contents, including a separate appendix outline when present.
+/// Print the table of contents.
 ///
 /// - lang (str): Document language — `"de"` or `"en"`.
-/// - serif-headings (bool): Use serif font for the appendix section title when `true`.
-/// - font-sizes (dict): Format-specific font sizes resolved by the template.
 /// -> content
-#let print-toc(font-sizes, lang: "de", serif-headings: false) = {
+#let print-toc(lang: "de") = {
     set text(hyphenate: false)
-    let tr = t.at(lang)
-    let hfont = if serif-headings { fonts.serif } else { fonts.sans }
 
     // Extra space above each top-level entry.
     show outline.entry.where(level: 1): it => {
@@ -63,37 +60,11 @@
         it
     }
 
-    // Main content entries
     outline(
-        target: heading.where(numbering: "1.1").or(heading.where(numbering: none)),
-        title: tr.toc,
+        title: t.at(lang).toc,
         depth: 3,
         indent: auto,
     )
-
-    // Appendix entries
-    context {
-        let has-appendix = query(heading.where(numbering: "A.1")).len() > 0
-        if has-appendix {
-            v(0.7em, weak: false)
-            // Appendix section title rendered as styled text (not a real heading),
-            // so it doesn't register as a level-1 heading and won't suppress
-            // running headers on continuation pages of this outline.
-            v(1.6em, weak: true)
-            block(text(
-                font: hfont,
-                size: font-sizes.chapter,
-                weight: "bold",
-                tr.appendix,
-            ))
-            outline(
-                target: heading.where(numbering: "A.1"),
-                title: none, // Already manually inserted above
-                depth: 3,
-                indent: auto,
-            )
-        }
-    }
 }
 
 /// Print the list of figures.
