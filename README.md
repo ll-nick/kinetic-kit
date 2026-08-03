@@ -6,7 +6,7 @@
 <!-- TODO: Add version badge after the first tagged release -->
 <!-- [![Version](https://img.shields.io/github/v/tag/ll-nick/kinetic-kit?sort=semver&label=version)](https://github.com/ll-nick/kinetic-kit/tags) -->
 
-The official [Typst](https://typst.app) template for doctoral theses published through [KIT Scientific Publishing (KSP)](https://www.ksp.kit.edu/)[^1].
+The official [Typst](https://typst.app) template[^1] for doctoral theses published through [KIT Scientific Publishing (KSP)](https://www.ksp.kit.edu/).
 
 
 ## Getting Started
