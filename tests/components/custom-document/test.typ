@@ -29,7 +29,7 @@
     format: "a5",
 )
 
-#components.print-toc(font-sizes, lang: "de")
+#components.print-toc(lang: "de")
 #components.print-lof(lang: "de")
 
 // ── Main content ──────────────────────────────────────────────────────────
