@@ -10,7 +10,7 @@
 /// - body (content): Document body (injected automatically by the show rule).
 /// -> content
 #let setup-outlines(body) = {
-    set outline.entry(fill: repeat(".", gap: 0.7em, justify: false))
+    set outline.entry(fill: repeat(".", gap: 0.4em, justify: false))
     show outline: set par(justify: false)
     show outline.entry: it => context {
         // Measured rather than fixed because Roman front-matter page numbers can
