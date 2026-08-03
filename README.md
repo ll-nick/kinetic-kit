@@ -6,7 +6,7 @@
 <!-- TODO: Add version badge after the first tagged release -->
 <!-- [![Version](https://img.shields.io/github/v/tag/ll-nick/kinetic-kit?sort=semver&label=version)](https://github.com/ll-nick/kinetic-kit/tags) -->
 
-The official[^1] [Typst](https://typst.app) template for doctoral theses[^2] published through [KIT Scientific Publishing (KSP)](https://www.ksp.kit.edu/).
+The official [Typst](https://typst.app) template for doctoral theses published through [KIT Scientific Publishing (KSP)](https://www.ksp.kit.edu/)[^1].
 
 
 ## Getting Started
@@ -353,7 +353,4 @@ Some inspiration was also drawn from the [TUM-tastic thesis template](https://gi
 
 [^1]: This template is provided "as is".
 Please note that further technical assistance is currently not available. 
-
-[^2]: This template was implemented to ~~procrastinate writing~~ write a doctoral thesis.
-The Bachelor's/Master's thesis template is **not** covered by the KSP endorsement.
 
