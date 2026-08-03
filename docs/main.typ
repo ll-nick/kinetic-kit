@@ -125,14 +125,13 @@ without the full `dissertation()` / `thesis()` orchestrator. All symbols are acc
 through the `components` namespace:
 
 ```typst
-#import "@local/kinetic-kit:0.1.0": components, kit-style
+#import "@local/kinetic-kit:0.1.0": components
 
 #let format = "a5"
-#let font-sizes = kit-style.font-sizes-by-format.at(format)
 
 #show: components.setup-page.with(format: format, margin-preset: "short", lang: "de")
 #show: components.setup-front-matter
-#components.print-toc(font-sizes, lang: "de")
+#components.print-toc(lang: "de")
 ```
 
 You are responsible for applying the wrappers in the correct order: `setup-page` →
