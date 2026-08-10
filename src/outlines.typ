@@ -78,9 +78,10 @@
 /// -> content
 #let print-list-of(kind, title: none) = {
     set text(hyphenate: true)
+    heading(level: 1, numbering: none, outlined: true, bookmarked: true)[#title]
     in-outline.update(true)
     outline(
-        title: title,
+        title: none,
         target: figure.where(kind: kind),
     )
     in-outline.update(false)
