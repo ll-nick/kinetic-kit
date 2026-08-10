@@ -63,8 +63,9 @@ The single entry point re-exports:
 | `title-page.typ` | Dissertation/thesis title page (German legal format) |
 | `front-matter.typ` | Abstract, Kurzfassung, acknowledgements, notation, abbreviations |
 | `back-matter.typ` | Bibliography, own publications, own patents, supervised theses |
-| `outlines.typ` | TOC, List of Figures/Tables/Listings, and their `outline.entry` styling (`setup-outlines`) |
+| `outlines.typ` | TOC, back-matter list pages (`print-list-of` and the `print-lo*` shorthands), and their `outline.entry` styling (`setup-outlines`) |
 | `figures.typ` | Figure/caption/table styling (`setup-figures`) and `flex-caption` |
+| `figure-kinds.typ` | Registry of figure kinds — `resolve-figure-kinds` appends a document's own kinds after Typst's built-in `image`/`table`/`raw` |
 | `headings.typ` | Heading styling — per-level sizes/spacing, chapter page breaks, number–body alignment (`setup-headings`) |
 
 ### Template Flow
@@ -78,11 +79,11 @@ Headers are suppressed on chapter-opening pages and blank pages. The draft water
 
 ### API Documentation (`docs/`)
 
-`docs/main.typ` uses the [tidy](https://typst.universe/package/tidy) package to auto-generate `docs/api-reference.pdf` from doc-comments in `dissertation.typ`, `thesis.typ`, `outlines.typ`, `figures.typ`, and `headings.typ`.
+`docs/main.typ` uses the [tidy](https://typst.universe/package/tidy) package to auto-generate `docs/api-reference.pdf` from doc-comments in `dissertation.typ`, `thesis.typ`, `outlines.typ`, `figures.typ`, `figure-kinds.typ`, and `headings.typ`.
 
 ### Examples (`examples/`)
 
-- `dissertation-full.typ` — comprehensive feature showcase (native multi-bibliography via `bibliography(full: true)`)
+- `dissertation-full.typ` — comprehensive feature showcase (native multi-bibliography via `bibliography(full: true)`); the only example that declares a custom figure kind, via `content/figure-kinds-de.typ`
 - `dissertation-full-en.typ` — English dissertation variant
 - `dissertation-approved.typ` — approved dissertation variant
 - `thesis-full.typ`, `thesis-full-en.typ` — master's/bachelor's/diploma thesis variants

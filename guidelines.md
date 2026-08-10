@@ -201,17 +201,17 @@ All measurements are from the paper edge, including above headers and below pagi
 
 | # | Level | Rule | Source | Status | Code ref |
 |---|-------|------|--------|--------|----------|
-| T1 | REQ | All headings up to 3rd level included | KSP p.5 | ✅ | `src/outlines.typ:22` (`depth: 3`) |
+| T1 | REQ | All headings up to 3rd level included | KSP p.5 | ✅ | `src/outlines.typ:65` (`depth: 3`) |
 | T2 | REQ | The TOC heading itself is **not** listed in the TOC | KSP p.5 | ✅ | Typst automatically excludes the outline's own title from the outline |
 | T3 | REQ | Page numbers right-aligned at the right margin of the type area | KSP p.5 | ✅ | Typst default outline layout |
-| T4 | REQ | All entries begin at the same vertical height | KSP p.5 | ✅ | `src/outlines.typ:23` (`indent: 1.6em`) |
+| T4 | REQ | All entries begin at the same vertical height | KSP p.5 | ✅ | `src/outlines.typ:66` (`indent: auto`) plus the two-column entry grid at `src/outlines.typ:32-45` |
 | T5 | REQ | Entries wrap before running into page numbers | KSP p.5 | ✅ | Typst outline handles entry wrapping automatically |
-| T6 | REC | Maximum three heading levels listed | KSP p.5 | ✅ | `src/outlines.typ:22` (`depth: 3`) |
-| T7 | REC | Main chapters (level 1) in bold | KSP p.5 | ✅ | `src/outlines.typ:13-16` (`strong(it)` for level-1 entries) |
-| T8 | REC | Dotted lines from entry to page number (including chapter entries) | KSP p.5 | ✅ | `src/page-setup.typ:266` (`set outline.entry(fill: repeat(".", gap: 0.4em))`) |
-| T9 | REC | Set in ragged text (flutter text) | KSP p.5 | ✅ | `src/page-setup.typ:267` (`show outline: set par(justify: false)`) |
-| T10 | REC | No hyphenation in TOC entries | KSP p.5 | ✅ | `src/page-setup.typ:268` (`show outline: set text(hyphenate: false)`) |
-| T11 | NTH | Slightly increase space between number and text for multi-digit numbers | KSP p.5 | ⚠️ | Not explicitly handled; Typst's fixed `indent: 1.6em` may be tight for double-digit appendix numbering |
+| T6 | REC | Maximum three heading levels listed | KSP p.5 | ✅ | `src/outlines.typ:65` (`depth: 3`) |
+| T7 | REC | Main chapters (level 1) in bold | KSP p.5 | ✅ | `src/outlines.typ:25-29` (`strong` applied to prefix, body and page number of level-1 heading entries, never to the leader) |
+| T8 | REC | Dotted lines from entry to page number (including chapter entries) | KSP p.5 | ✅ | `src/outlines.typ:12` (`set outline.entry(fill: repeat(".", gap: 0.4em, justify: false))`) |
+| T9 | REC | Set in ragged text (flutter text) | KSP p.5 | ✅ | `src/outlines.typ:13` (`show outline: set par(justify: false)`) |
+| T10 | REC | No hyphenation in TOC entries | KSP p.5 | ✅ | `src/outlines.typ:55` (`set text(hyphenate: false)` in `print-toc`) |
+| T11 | NTH | Slightly increase space between number and text for multi-digit numbers | KSP p.5 | ✅ | `src/outlines.typ:66` (`indent: auto`) sizes the indent from the widest prefix, so double-digit chapter numbers widen it automatically; verified with a 12-chapter document |
 
 ---
 

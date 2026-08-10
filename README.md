@@ -130,6 +130,7 @@ for the API documentation auto-generated from the source code.
 | `show-lof` | `bool` | `true` | List of figures |
 | `show-lot` | `bool` | `true` | List of tables |
 | `show-lol` | `bool` | `false` | List of listings |
+| `figure-kinds` | `array` | `()` | Figure kinds beyond `image`/`table`/`raw`, as dicts with `kind`, `supplement`, and optionally `list-title`/`show-list` |
 | `bibliography` | `content \| none` | `none` | Pass `bibliography("refs.bib", title: none, style: "ieee")`; template adds a translated heading |
 | `appendix` | `content \| none` | `none` | Appendix chapters; template applies A, A.1, … numbering, placed before the back-matter lists |
 
@@ -165,6 +166,7 @@ for the API documentation auto-generated from the source code.
 | `show-lof` | `bool` | `true` | List of figures |
 | `show-lot` | `bool` | `true` | List of tables |
 | `show-lol` | `bool` | `false` | List of listings |
+| `figure-kinds` | `array` | `()` | Figure kinds beyond `image`/`table`/`raw`, as dicts with `kind`, `supplement`, and optionally `list-title`/`show-list` |
 | `bibliography` | `content \| none` | `none` | Pass `bibliography("refs.bib", title: none, style: "ieee")`; template adds a translated heading |
 | `appendix` | `content \| none` | `none` | Appendix chapters; template applies A, A.1, … numbering, placed before the back-matter lists |
 
@@ -177,7 +179,7 @@ for the API documentation auto-generated from the source code.
 
 The `components` namespace exports the individual building blocks for assembling a document without the full `dissertation()` / `thesis()` orchestrator. Use this when the high-level templates don't fit your layout needs. You are responsible for applying the setup wrappers in the correct order.
 
-Available components: `setup-page`, `setup-front-matter`, `setup-content`, `setup-appendix`, `print-dissertation-title`, `print-thesis-title`, `print-toc`, `print-lof`, `print-lot`, `print-lol`.
+Available components: `setup-page`, `setup-front-matter`, `setup-content`, `setup-appendix`, `print-dissertation-title`, `print-thesis-title`, `print-toc`, `print-lof`, `print-lot`, `print-lol`, `print-list-of`.
 
 ```typst
 #import "@preview/kinetic-kit:0.1.0": components, kit-style
@@ -248,6 +250,45 @@ The `kit-style` namespace exposes the template's visual constants so custom figu
   caption: [A custom figure using template styles.],
 )
 ```
+
+</details>
+
+<details>
+<summary><strong>Custom figure kinds (algorithms, theorems, …)</strong></summary>
+
+Typst gives every figure `kind` its own counter and supplement, but only styles the ones it knows: `image`, `table` and `raw`. The template carries strings for exactly those three, because their names are template chrome. Anything else is your document's vocabulary, so you declare it.
+
+**Declaring a kind.** Give it a `supplement`, and a `list-title` if it should get a back-matter list page. Both take either one value or one per language:
+
+```typst
+#show: dissertation.with(
+  figure-kinds: (
+    (
+      kind:       "algorithm",
+      supplement: (de: [Algorithmus],            en: [Algorithm]),
+      list-title: (de: [Algorithmenverzeichnis], en: [List of Algorithms]),
+      show-list:  true,
+    ),
+    // Supplement only — no list page.
+    (kind: "theorem", supplement: (de: [Satz], en: [Theorem])),
+  ),
+)
+```
+
+Then tag the figure:
+
+```typst
+#figure(
+  ...,
+  kind: "algorithm",
+)
+```
+
+`kind: "algorithm"` must be spelled out. A figure whose body is a raw block is inferred as `kind: raw` otherwise, and lands among the listings.
+
+**The built-in kinds stay out of it.** `image`, `table` and `raw` are configured by `show-lof` / `show-lot` / `show-lol` alone
+
+**List order.** Figures, tables, listings, then your kinds in declaration order. For a different order, place them yourself with `components.print-list-of`, which also sets the state that switches `flex-caption` to its short form.
 
 </details>
 
