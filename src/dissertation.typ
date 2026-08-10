@@ -4,7 +4,6 @@
 //   dissertation(...) — doctoral dissertation
 
 #import "page-setup.typ": setup-appendix, setup-content, setup-front-matter, setup-page
-#import "translations.typ": t
 #import "title-page.typ": print-dissertation-title
 #import "typography.typ": font-sizes-by-format
 #import "front-matter.typ": (
@@ -15,7 +14,8 @@
     print-bibliography, print-own-patents, print-own-publications,
     print-supervised-theses,
 )
-#import "outlines.typ": print-lof, print-lol, print-lot, print-toc
+#import "outlines.typ": print-list-of, print-toc
+#import "figure-kinds.typ": resolve-figure-kinds, resolve-localized
 
 
 /// KIT doctoral dissertation template.
@@ -54,6 +54,12 @@
 /// - show-lof (bool): Include List of Figures.
 /// - show-lot (bool): Include List of Tables.
 /// - show-lol (bool): Include List of Listings.
+/// - figure-kinds (array): Figure kinds beyond `image`, `table` and `raw`, as dictionaries
+///   with `kind`, `supplement`, and optionally `list-title` and `show-list`. `supplement`
+///   and `list-title` take either one value or one per language, e.g.
+///   `(de: [Algorithmus], en: [Algorithm])`. The built-in kinds are not declared here —
+///   their list pages are governed by `show-lof` / `show-lot` / `show-lol`. Declared
+///   kinds get a list page after the built-in ones, in declaration order.
 /// - own-publications (content | none): Own publications content (heading added by template). `none` = omit.
 /// - own-patents (content | none): Own patents content (heading added by template). `none` = omit.
 /// - supervised-theses (content | none): Supervised theses content (heading added by template). `none` = omit.
@@ -96,6 +102,7 @@
     show-lof: true,
     show-lot: true,
     show-lol: false,
+    figure-kinds: (),
     own-publications: none,
     own-patents: none,
     supervised-theses: none,
@@ -109,6 +116,12 @@
     )
     let author-name = author-firstname + " " + author-surname
     let font-sizes = font-sizes-by-format.at(format)
+    let resolved-figure-kinds = resolve-figure-kinds(
+        figure-kinds,
+        show-lof: show-lof,
+        show-lot: show-lot,
+        show-lol: show-lol,
+    )
 
     set document(
         title: title,
@@ -127,6 +140,7 @@
         draft-info: draft-info,
         serif-headings: serif-headings,
         heading-numbering-depth: heading-numbering-depth,
+        figure-kinds: figure-kinds,
     )
 
     // ── Title page ──────────────────────────────────────────────────────────
@@ -186,14 +200,20 @@
         appendix
     }
 
-    if show-lof {
-        print-lof(lang: lang)
-    }
-    if show-lot {
-        print-lot(lang: lang)
-    }
-    if show-lol {
-        print-lol(lang: lang)
+    // Titles resolve against the document language rather than `text.lang`: a list
+    // page is one back-matter section, unlike a supplement that follows its figure.
+    for entry in resolved-figure-kinds {
+        if entry.show-list {
+            print-list-of(
+                entry.kind,
+                title: resolve-localized(
+                    entry.list-title,
+                    lang,
+                    kind: entry.kind,
+                    field: "list-title",
+                ),
+            )
+        }
     }
 
     if bibliography != none {

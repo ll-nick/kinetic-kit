@@ -107,6 +107,9 @@
 /// - serif-headings (bool): Use Libertinus Serif for headings when `true`. Default `false`
 /// - heading-numbering-depth (int): Deepest heading level that receives a number. Default `3`.
 ///   Headings deeper than this are styled normally but rendered without a number or indent grid.
+/// - figure-kinds (array): Figure kind declarations, merged onto the built-in
+///   `image`, `table` and `raw` entries. Supplies the caption supplements;
+///   printing the matching list pages is the caller's job.
 /// - doc (content): Document body (injected automatically by the show rule).
 /// -> content
 #let setup-page(
@@ -119,6 +122,7 @@
     draft-info: none,
     serif-headings: false,
     heading-numbering-depth: 3,
+    figure-kinds: (),
     doc,
 ) = {
     assert(
@@ -190,7 +194,7 @@
     show: setup-outlines
 
     // ── Figures ──────────────────────────────────────────────────────────
-    show: setup-figures.with(font-sizes, lang: lang)
+    show: setup-figures.with(font-sizes, lang: lang, figure-kinds: figure-kinds)
 
     // ── Footnotes ────────────────────────────────────────────────────────
     show footnote.entry: it => {

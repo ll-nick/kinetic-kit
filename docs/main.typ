@@ -161,6 +161,38 @@ You are responsible for applying the wrappers in the correct order: `setup-page`
 #let figures-module = tidy.parse-module(figures-src, name: "figures")
 #tidy.show-module(figures-module, show-outline: true, sort-functions: false)
 
+== Figure Kinds
+
+Typst keeps a separate counter and supplement for every figure `kind`. The template
+carries strings for Typst's own `image`, `table` and `raw`, because those names are
+template chrome; their list pages are governed by the `show-lo*` booleans. Any other kind
+— pseudocode, theorems, whatever a document needs — is declared through the `figure-kinds`
+parameter of `dissertation()` / `thesis()`, which supplies the caption supplement and,
+optionally, a back-matter list page.
+
+Per-chapter counter resets are not part of this registry. `setup-headings` derives them
+from the figures present in the document, so every kind restarts each chapter whether or
+not it has been declared.
+
+```typst
+#show: dissertation.with(
+  figure-kinds: (
+    (
+      kind: "algorithm",
+      supplement: (de: [Algorithmus],           en: [Algorithm]),
+      list-title: (de: [Algorithmenverzeichnis], en: [List of Algorithms]),
+      show-list: true,
+    ),
+    // Supplement only — no list page.
+    (kind: "theorem", supplement: (de: [Satz], en: [Theorem])),
+  ),
+)
+```
+
+#let figure-kinds-src = read("../src/figure-kinds.typ")
+#let figure-kinds-module = tidy.parse-module(figure-kinds-src, name: "figure-kinds")
+#tidy.show-module(figure-kinds-module, show-outline: true, sort-functions: false)
+
 == Headings
 
 #let headings-src = read("../src/headings.typ")

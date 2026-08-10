@@ -93,10 +93,17 @@
 
         if it.level == 1 {
             counter(math.equation).update(0)
-            counter(figure.where(kind: image)).update(0)
-            counter(figure.where(kind: table)).update(0)
-            counter(figure.where(kind: raw)).update(0)
             counter(footnote).update(0)
+            // Typst never resets figure counters at a heading, and it keeps one
+            // counter per `kind`. Reading the kinds off the document instead of a
+            // fixed list means custom kinds restart per chapter too — otherwise
+            // their numbers pick up the new chapter but keep counting on
+            // (2.1, 2.2, 4.3), with nothing to warn about it.
+            context {
+                for kind in query(figure).map(fig => fig.kind).dedup() {
+                    counter(figure.where(kind: kind)).update(0)
+                }
+            }
             {
                 set page(header: none, footer: none)
                 pagebreak(weak: true, to: "odd")
