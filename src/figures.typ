@@ -1,6 +1,7 @@
 // Figure, caption, and table styling
 
 #import "translations.typ": t
+#import "figure-kinds.typ": resolve-figure-kinds, resolve-localized
 
 // Whether we're rendering inside an outline; lets captions switch to short form.
 #let in-outline = state("in-outline", false)
@@ -18,19 +19,49 @@
     long
 }
 
+// One show-set rule per registered kind. A `show` rule governs only the rest of its
+// enclosing block, so rules emitted straight into the loop body would never reach the
+// document. Re-wrapping the accumulated content each pass puts every rule ahead of
+// everything it has to style.
+#let _setup-supplements(kinds, lang, body) = {
+    let styled = body
+    for entry in kinds {
+        styled = {
+            // Resolved at the figure rather than here, so a passage that switches
+            // `text.lang` gets that language's supplement.
+            show figure.where(kind: entry.kind): set figure(
+                supplement: context resolve-localized(
+                    entry.supplement,
+                    text.lang,
+                    fallback: lang,
+                    kind: entry.kind,
+                    field: "supplement",
+                ),
+            )
+            styled
+        }
+    }
+    styled
+}
+
 /// Shared figure, caption, and table styling. Apply as a show rule.
 ///
 /// - font-sizes (dict): Format-specific font sizes resolved by the template.
 /// - lang (str): Document language — `"de"` or `"en"`.
+/// - figure-kinds (array): Figure kind declarations, merged onto the built-in
+///   ones. Only the supplements are read here; list pages are printed by the
+///   template's back matter.
 /// - body (content): Document body (injected automatically by the show rule).
 /// -> content
-#let setup-figures(font-sizes, lang: "de", body) = {
+#let setup-figures(font-sizes, lang: "de", figure-kinds: (), body) = {
+    // Fallback for kinds the document never declared — they still get a caption,
+    // just a generic one.
     set figure(supplement: it => if it.func() == table {
         t.at(lang).table
     } else {
         t.at(lang).figure
     })
-    show figure.where(kind: raw): set figure(supplement: context t.at(text.lang).listing)
+    show: _setup-supplements.with(resolve-figure-kinds(figure-kinds), lang)
     show figure.where(kind: table): set figure.caption(position: top)
     set table(stroke: 0.3pt)
 
