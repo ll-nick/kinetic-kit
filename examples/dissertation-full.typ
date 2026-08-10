@@ -88,6 +88,15 @@
     show-lof: true,
     show-lot: true,
     show-lol: true,
+    // Pseudocode counts separately from the code listings.
+    figure-kinds: (
+        (
+            kind: "algorithm",
+            supplement: (de: [Algorithmus], en: [Algorithm]),
+            list-title: (de: [Algorithmenverzeichnis], en: [List of Algorithms]),
+            show-list: true,
+        ),
+    ),
 
     // Separate publication lists via native multi-bibliography.
     // full: true lists all entries regardless of in-text citations.
@@ -134,6 +143,7 @@ verbessern den @rmse um 50 %. Das Systemmodell ist eine @ode. Bei erneuter Erwä
 #inline-note[Diesen Abschnitt noch ausbauen.]
 
 #include "content/features-de.typ"
+#include "content/figure-kinds-de.typ"
 #include "content/chapters-de.typ"
 
 #if is-draft { note-outline() }
