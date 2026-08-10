@@ -67,44 +67,39 @@
     )
 }
 
+/// Print a back-matter list page for one figure kind.
+///
+/// Handles the `in-outline` state that switches `flex-caption` to its short form,
+/// which a hand-rolled `outline(target: …)` would miss.
+///
+/// - kind (function | str): Figure kind to list — an element function such as
+///   `image`, or a string such as `"algorithm"`.
+/// - title (content | str): Heading of the list page.
+/// -> content
+#let print-list-of(kind, title: none) = {
+    set text(hyphenate: true)
+    in-outline.update(true)
+    outline(
+        title: title,
+        target: figure.where(kind: kind),
+    )
+    in-outline.update(false)
+}
+
 /// Print the list of figures.
 ///
 /// - lang (str): Document language — `"de"` or `"en"`.
 /// -> content
-#let print-lof(lang: "de") = {
-    set text(hyphenate: true)
-    in-outline.update(true)
-    outline(
-        title: t.at(lang).lof,
-        target: figure.where(kind: image),
-    )
-    in-outline.update(false)
-}
+#let print-lof(lang: "de") = print-list-of(image, title: t.at(lang).lof)
 
 /// Print the list of tables.
 ///
 /// - lang (str): Document language — `"de"` or `"en"`.
 /// -> content
-#let print-lot(lang: "de") = {
-    set text(hyphenate: true)
-    in-outline.update(true)
-    outline(
-        title: t.at(lang).lot,
-        target: figure.where(kind: table),
-    )
-    in-outline.update(false)
-}
+#let print-lot(lang: "de") = print-list-of(table, title: t.at(lang).lot)
 
 /// Print the list of listings.
 ///
 /// - lang (str): Document language — `"de"` or `"en"`.
 /// -> content
-#let print-lol(lang: "de") = {
-    set text(hyphenate: true)
-    in-outline.update(true)
-    outline(
-        title: t.at(lang).lol,
-        target: figure.where(kind: raw),
-    )
-    in-outline.update(false)
-}
+#let print-lol(lang: "de") = print-list-of(raw, title: t.at(lang).lol)
