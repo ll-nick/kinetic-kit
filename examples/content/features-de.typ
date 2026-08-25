@@ -16,9 +16,11 @@ Wie in @example2023 gezeigt, #lorem(30)
 
 Diese Arbeit befasst sich mit den folgenden Fragen:
 
-+ #lorem(15)
-+ #lorem(15)
-+ #lorem(15)
+#block(breakable: false)[
+    + #lorem(15)
+    + #lorem(15)
+    + #lorem(15)
+]
 
 == Aufbau der Arbeit
 
