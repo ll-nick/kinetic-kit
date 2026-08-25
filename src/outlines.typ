@@ -55,10 +55,7 @@
     set text(hyphenate: false)
 
     // Extra space above each top-level entry.
-    show outline.entry.where(level: 1): it => {
-        v(1.6em, weak: true)
-        it
-    }
+    show outline.entry.where(level: 1): set block(above: 1.6em)
 
     outline(
         title: t.at(lang).toc,
