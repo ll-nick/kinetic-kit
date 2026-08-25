@@ -9,7 +9,7 @@
 
 // ── Kapitel mit langem Titel (testet mehrzeilige Einträge im Inhaltsverzeichnis) ──
 
-= Ergebnisse, Diskussion und Ausblick auf zukünftige Arbeiten
+= Ergebnisse, Diskussion und \ Ausblick auf zukünftige Arbeiten
 
 == Ergebnisse
 
