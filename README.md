@@ -49,6 +49,7 @@ The template is set in the [Libertinus](https://github.com/alerque/libertinus) f
 - **Typst web app:** Libertinus is pre-installed, so no additional steps are required.
 - **Local compilation:** The Libertinus font family must be installed on your system for the compiler to find it.
 You can get it from the [Libertinus releases](https://github.com/alerque/libertinus/releases).
+The bundled copy is version 7.051.
 
 <details>
 <summary><strong>Local install</strong></summary>
