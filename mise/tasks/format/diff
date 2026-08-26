@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
-# [MISE] description="Show formatting diff for all Typst files"
+# [MISE] description="Show formatting diff for all Typst and Python files"
+
+status=0
 
 typstyle \
     --indent-width 4 \
     --line-width 90 \
     --wrap-text \
     --diff \
-    .
+    . || status=1
+
+# The package tasks have no .py extension, so ruff only picks them up by name.
+ruff format --diff mise/tasks/package/* || status=1
+
+exit "$status"

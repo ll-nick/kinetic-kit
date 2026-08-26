@@ -29,7 +29,7 @@ mise run install:editable
 # Install Libertinus fonts for the current user
 mise run install:fonts
 
-# Format all Typst files in-place
+# Format all Typst and Python files in-place
 mise run format
 
 # Check formatting without modifying files
