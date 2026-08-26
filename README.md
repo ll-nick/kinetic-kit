@@ -1,9 +1,11 @@
 # kinetic-kit
 
+<!-- package:strip-start — Typst Universe shows version and license itself, and CI state is of no interest there -->
 [![CI build status](https://github.com/ll-nick/kinetic-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/ll-nick/kinetic-kit/actions/workflows/ci.yml)
 [![License: MIT-0](https://img.shields.io/badge/license-MIT--0-blue.svg)](LICENSE)
 [![Example PDFs](https://img.shields.io/badge/example%20PDFs-latest%20build-informational.svg)](https://nightly.link/ll-nick/kinetic-kit/workflows/ci/main/pdfs.zip)
 [![Current version](https://img.shields.io/github/v/tag/ll-nick/kinetic-kit?sort=semver&label=version)](https://github.com/ll-nick/kinetic-kit/tags)
+<!-- package:strip-end -->
 
 The official [Typst](https://typst.app) template[^1] for doctoral theses published through [KIT Scientific Publishing (KSP)](https://www.ksp.kit.edu/).
 
@@ -37,7 +39,8 @@ To add the template to an existing document instead, import it and apply it with
 #include "content/01-introduction.typ"
 ```
 
-See the [`examples/`](examples/) directory for more complete examples.
+See the [`examples/`](examples/) directory for more complete examples;
+the [latest release](https://github.com/ll-nick/kinetic-kit/releases/latest) has them attached as rendered PDFs.
 
 ### Fonts
 

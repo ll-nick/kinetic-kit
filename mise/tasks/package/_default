@@ -54,6 +54,7 @@ def strip_repo_only_sections(readme: str) -> tuple[str, int]:
     kept_lines = []
     open_markers = 0
     sections_stripped = 0
+    just_closed_section = False
 
     for line_number, line in enumerate(readme.splitlines(keepends=True), start=1):
         if STRIP_START_MARKER in line:
@@ -61,11 +62,20 @@ def strip_repo_only_sections(readme: str) -> tuple[str, int]:
             sections_stripped += 1
         elif STRIP_END_MARKER in line:
             open_markers -= 1
+            just_closed_section = True
             if open_markers < 0:
                 sys.exit(
                     f"Error: README.md:{line_number} closes a strip section that was never opened"
                 )
         elif open_markers == 0:
+            # A removed section otherwise leaves the blank lines that framed it
+            # stacked on top of each other.
+            blank_line = not line.strip()
+            follows_blank_line = bool(kept_lines) and not kept_lines[-1].strip()
+            if just_closed_section and blank_line and follows_blank_line:
+                just_closed_section = False
+                continue
+            just_closed_section = False
             kept_lines.append(line)
 
     if open_markers != 0:
