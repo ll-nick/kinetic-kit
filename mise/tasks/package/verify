@@ -1,0 +1,175 @@
+#!/usr/bin/env python3
+# [MISE] description="Check the dist/ submission tree the way Typst Universe will"
+"""Check the dist/ submission tree the way Typst Universe will.
+
+Every check reports on its own rather than aborting, so a single run surfaces
+everything a reviewer would ask about.
+"""
+
+import re
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+from tempfile import TemporaryDirectory
+
+import tomllib
+
+# Markdown extensions GitHub renders but Typst Universe does not.
+UNSUPPORTED_MARKUP = {
+    "GitHub alert blocks": re.compile(r"^> \[!"),
+    "task lists": re.compile(r"^\s*[-*] \[[ xX]\] "),
+}
+
+RELATIVE_LINK_PATTERN = re.compile(r"\]\((?![a-z][a-z0-9+.-]*:|#)([^)]+)\)")
+
+failures: list[str] = []
+
+
+def fail(message: str) -> None:
+    print(f"  FAIL: {message}", file=sys.stderr)
+    failures.append(message)
+
+
+def check_readme(destination: Path) -> None:
+    readme = (destination / "README.md").read_text()
+
+    for line_number, line in enumerate(readme.splitlines(), start=1):
+        for markup, pattern in UNSUPPORTED_MARKUP.items():
+            if pattern.match(line):
+                fail(
+                    f"README.md:{line_number} uses {markup}, which do not render on Typst Universe"
+                )
+
+    if "package:strip" in readme:
+        fail("strip markers survived packaging")
+
+    for target in sorted(set(RELATIVE_LINK_PATTERN.findall(readme))):
+        if not (destination / target).exists():
+            fail(f"README links {target}, which is not part of the submission")
+
+
+def check_version_references(root: Path, name: str, version: str) -> None:
+    """Catch imports that a version bump missed.
+
+    Both namespaces matter: users copy the `@preview` spec out of the README and
+    the API reference, while a local install is what contributors compile against.
+    """
+    import_pattern = re.compile(
+        rf"@(?:preview|local)/{re.escape(name)}:(\d+\.\d+\.\d+)"
+    )
+
+    for path in sorted(root.rglob("*")):
+        relative_path = path.relative_to(root)
+        if path.suffix not in {".typ", ".md", ".toml"}:
+            continue
+        if {".git", "dist"} & set(relative_path.parts):
+            continue
+        for referenced in sorted(set(import_pattern.findall(path.read_text()))):
+            if referenced != version:
+                fail(f"{relative_path} imports version {referenced}, not {version}")
+
+
+def assemble_downloaded_bundle(destination: Path, manifest: dict, bundle: Path) -> None:
+    """Reproduce what the compiler downloads: the submission minus what it strips.
+
+    `exclude` globs follow gitignore semantics, so git itself is the authority on
+    which files they match. Typst Universe drops the thumbnail on top of that.
+    """
+    shutil.copytree(destination, bundle, dirs_exist_ok=True)
+    stripped_patterns = list(manifest["package"].get("exclude", []))
+    stripped_patterns.append(f"/{manifest['template']['thumbnail']}")
+
+    subprocess.run(["git", "init", "--quiet"], cwd=bundle, check=True)
+    (bundle / ".git/info/exclude").write_text("\n".join(stripped_patterns) + "\n")
+    listing = subprocess.run(
+        ["git", "ls-files", "--others", "--ignored", "--exclude-standard", "-z"],
+        cwd=bundle,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    for relative_path in filter(None, listing.stdout.split("\0")):
+        (bundle / relative_path).unlink()
+    shutil.rmtree(bundle / ".git")
+
+    for path in sorted(bundle.rglob("*"), reverse=True):
+        if path.is_dir() and not any(path.iterdir()):
+            path.rmdir()
+
+
+def check_template_compiles(bundle: Path, font_path: Path) -> None:
+    # tytanic resolves the package spec against the tree it runs in, so the
+    # template's `@preview` import is served by the bundle rather than the repo.
+    compilation = subprocess.run(
+        ["tt", "run", "@template", "--font-path", str(font_path)], cwd=bundle
+    )
+    if compilation.returncode != 0:
+        fail("the template does not compile from the bundle")
+
+
+def check_with_package_check(destination: Path) -> None:
+    if shutil.which("typst-package-check"):
+        print("Running typst-package-check …")
+        command = ["typst-package-check", "check"]
+        working_directory = destination
+    elif shutil.which("docker"):
+        print("Running typst-package-check (docker) …")
+        command = [
+            "docker",
+            "run",
+            "--rm",
+            "-v",
+            f"{destination}:/data",
+            "ghcr.io/typst/package-check",
+            "check",
+        ]
+        working_directory = None
+    else:
+        print(
+            "Skipping typst-package-check (neither the binary nor docker is available)"
+        )
+        return
+
+    if subprocess.run(command, cwd=working_directory).returncode != 0:
+        fail("typst-package-check reported problems")
+
+
+def main() -> None:
+    # Keep progress labels interleaved with the output of the tools they announce.
+    sys.stdout.reconfigure(line_buffering=True)
+
+    project_root = Path(__file__).resolve().parents[3]
+    manifest = tomllib.loads((project_root / "typst.toml").read_text())
+    name = manifest["package"]["name"]
+    version = manifest["package"]["version"]
+
+    destination = project_root / "dist" / name / version
+    if not destination.is_dir():
+        sys.exit(
+            f"Error: {destination.relative_to(project_root)} does not exist. Run 'mise run package' first."
+        )
+
+    print("Checking README …")
+    check_readme(destination)
+
+    print("Checking version references …")
+    check_version_references(destination, name, version)
+    check_version_references(project_root, name, version)
+
+    print("Compiling the template against the downloaded bundle …")
+    with TemporaryDirectory() as temporary_directory:
+        bundle = Path(temporary_directory) / name
+        assemble_downloaded_bundle(destination, manifest, bundle)
+        check_template_compiles(bundle, project_root / "fonts")
+
+    check_with_package_check(destination)
+
+    if failures:
+        sys.exit(f"\n{len(failures)} problem(s) found.")
+    print("dist/ looks ready to submit")
+
+
+main()
+
+# vim: set filetype=python :

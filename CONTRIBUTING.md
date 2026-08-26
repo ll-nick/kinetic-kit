@@ -30,7 +30,7 @@ KSP-approved, so it has more room for change.
 ## Development
 
 This project uses [mise](https://mise.jdx.dev) to manage tasks and pinned tooling
-(Typst, tytanic, typstyle). With it installed:
+(Typst, tytanic, typstyle, Python, ruff). With it installed:
 
 ```bash
 mise install       # fetch the pinned toolchain

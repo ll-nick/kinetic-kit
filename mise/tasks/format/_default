@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# [MISE] description="Format all Typst files in-place"
+# [MISE] description="Format all Typst and Python files in-place"
+set -euo pipefail
 
 typstyle \
     --indent-width 4 \
@@ -7,3 +8,6 @@ typstyle \
     --wrap-text \
     --inplace \
     .
+
+# The package tasks have no .py extension, so ruff only picks them up by name.
+ruff format mise/tasks/package/*

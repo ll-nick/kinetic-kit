@@ -1,0 +1,73 @@
+# Releasing kinetic-kit to Typst Universe.
+#
+# Publishing is not automated: Typst Universe takes submissions as pull requests
+# against typst/packages. This workflow is the gate in front of that, and the
+# manual steps around it are:
+#
+#   1. Bump the version in typst.toml and in every @preview/kinetic-kit:… import
+#      in README.md and template/, then `mise run build`.
+#      `mise run package && mise run package:verify` catches problems locally,
+#      before a tag exists.
+#   2. Commit, tag the release commit v{version}, and push the tag — everything
+#      below then runs, and no release is created if any of it fails.
+#   3. Unzip the release's submission archive into packages/preview/ in a fork of
+#      typst/packages, commit the plain files, and open the pull request. Never
+#      copy a .git directory along with them, or the submission becomes a
+#      submodule reference instead of a package.
+
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up mise
+        uses: jdx/mise-action@v4
+
+      - name: Check version matches tag
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          VERSION=$(mise exec -- python3 -c "import tomllib; print(tomllib.load(open('typst.toml','rb'))['package']['version'])")
+          if [ "$TAG" != "$VERSION" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match typst.toml version $VERSION"
+            exit 1
+          fi
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+
+      - name: Run tests
+        run: mise run test
+
+      - name: Build PDFs and thumbnail
+        run: mise run build
+
+      - name: Check the committed thumbnail is current
+        run: git diff --exit-code thumbnail/
+
+      - name: Assemble and verify the Typst Universe submission
+        run: |
+          mise run package
+          mise run package:verify
+
+      # Mirrors packages/preview/, so the archive unzips straight into a clone
+      # of typst/packages.
+      - name: Bundle the submission for the release
+        run: cd dist && zip -qr "../kinetic-kit-$VERSION-universe.zip" .
+
+      - name: Create GitHub release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: >
+          gh release create "$GITHUB_REF_NAME"
+          "kinetic-kit-$VERSION-universe.zip"
+          docs/api-reference.pdf
+          examples/*.pdf
+          --generate-notes

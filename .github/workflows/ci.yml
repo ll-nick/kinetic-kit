@@ -24,6 +24,12 @@ jobs:
       - name: Build PDFs
         run: mise run build
 
+      - name: Assemble Typst Universe submission
+        run: mise run package
+
+      - name: Verify Typst Universe submission
+        run: mise run package:verify
+
       - name: Rename template PDF
         run: cp template/main.pdf template/template.pdf
 
@@ -35,3 +41,9 @@ jobs:
             docs/api-reference.pdf
             examples/*.pdf
             template/template.pdf
+
+      - name: Upload Typst Universe submission
+        uses: actions/upload-artifact@v7
+        with:
+          name: universe-submission
+          path: dist/

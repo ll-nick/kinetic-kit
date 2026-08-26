@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
-# [MISE] description="Check Typst formatting without modifying files"
+# [MISE] description="Check Typst and Python formatting without modifying files"
+
+status=0
 
 typstyle \
     --indent-width 4 \
     --line-width 90 \
     --wrap-text \
     --check \
-    .
+    . || status=1
+
+# The package tasks have no .py extension, so ruff only picks them up by name.
+ruff format --check mise/tasks/package/* || status=1
+
+exit "$status"
