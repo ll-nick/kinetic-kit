@@ -49,17 +49,25 @@ def check_readme(destination: Path) -> None:
             fail(f"README links {target}, which is not part of the submission")
 
 
-def check_version_references(destination: Path, name: str, version: str) -> None:
-    import_pattern = re.compile(rf"@preview/{re.escape(name)}:(\d+\.\d+\.\d+)")
+def check_version_references(root: Path, name: str, version: str) -> None:
+    """Catch imports that a version bump missed.
 
-    for path in sorted(destination.rglob("*")):
+    Both namespaces matter: users copy the `@preview` spec out of the README and
+    the API reference, while a local install is what contributors compile against.
+    """
+    import_pattern = re.compile(
+        rf"@(?:preview|local)/{re.escape(name)}:(\d+\.\d+\.\d+)"
+    )
+
+    for path in sorted(root.rglob("*")):
+        relative_path = path.relative_to(root)
         if path.suffix not in {".typ", ".md", ".toml"}:
+            continue
+        if {".git", "dist"} & set(relative_path.parts):
             continue
         for referenced in sorted(set(import_pattern.findall(path.read_text()))):
             if referenced != version:
-                fail(
-                    f"{path.relative_to(destination)} imports version {referenced}, not {version}"
-                )
+                fail(f"{relative_path} imports version {referenced}, not {version}")
 
 
 def assemble_downloaded_bundle(destination: Path, manifest: dict, bundle: Path) -> None:
@@ -147,6 +155,7 @@ def main() -> None:
 
     print("Checking version references …")
     check_version_references(destination, name, version)
+    check_version_references(project_root, name, version)
 
     print("Compiling the template against the downloaded bundle …")
     with TemporaryDirectory() as temporary_directory:
