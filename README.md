@@ -3,8 +3,7 @@
 [![CI build status](https://github.com/ll-nick/kinetic-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/ll-nick/kinetic-kit/actions/workflows/ci.yml)
 [![License: MIT-0](https://img.shields.io/badge/license-MIT--0-blue.svg)](LICENSE)
 [![Example PDFs](https://img.shields.io/badge/example%20PDFs-latest%20build-informational.svg)](https://nightly.link/ll-nick/kinetic-kit/workflows/ci/main/pdfs.zip)
-<!-- TODO: Add version badge after the first tagged release -->
-<!-- [![Version](https://img.shields.io/github/v/tag/ll-nick/kinetic-kit?sort=semver&label=version)](https://github.com/ll-nick/kinetic-kit/tags) -->
+[![Current version](https://img.shields.io/github/v/tag/ll-nick/kinetic-kit?sort=semver&label=version)](https://github.com/ll-nick/kinetic-kit/tags)
 
 The official [Typst](https://typst.app) template[^1] for doctoral theses published through [KIT Scientific Publishing (KSP)](https://www.ksp.kit.edu/).
 
