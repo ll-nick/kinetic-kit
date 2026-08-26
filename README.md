@@ -11,11 +11,6 @@ The official [Typst](https://typst.app) template[^1] for doctoral theses publish
 
 ## Getting Started
 
-> [!NOTE]  
-> **This package is not yet published on Typst Universe.**  
-> Until it is, the `typst init` command below won't resolve.
-> In the meantime, use the local install (see the collapsible section below).
-
 Start a new project from the template with:
 
 ```bash
