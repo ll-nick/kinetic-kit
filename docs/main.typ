@@ -42,7 +42,7 @@ diagrams, and other content can match the document's typography and KIT color pa
 exactly.
 
 ```typst
-#import "@local/kinetic-kit:0.1.0": kit-style
+#import "@preview/kinetic-kit:0.1.0": kit-style
 
 #let font-sizes = kit-style.font-sizes-by-format.at("a5")
 #set text(font: kit-style.fonts.sans, size: font-sizes.small)
@@ -125,7 +125,7 @@ without the full `dissertation()` / `thesis()` orchestrator. All symbols are acc
 through the `components` namespace:
 
 ```typst
-#import "@local/kinetic-kit:0.1.0": components
+#import "@preview/kinetic-kit:0.1.0": components
 
 #let format = "a5"
 
