@@ -279,7 +279,8 @@ Then tag the figure:
 
 ```typst
 #figure(
-  ...,
+  algorithm-body,
+  caption: [This is an algorithm.],
   kind: "algorithm",
 )
 ```
