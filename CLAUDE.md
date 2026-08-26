@@ -37,9 +37,16 @@ mise run format:check
 
 # Show formatting diff
 mise run format:diff
+
+# Assemble the Typst Universe submission tree in dist/
+mise run package
+
+# Check that tree the way Typst Universe will
+mise run package:verify
 ```
 
-The mise tasks are plain bash scripts in `mise/tasks/` and can be run directly without mise if needed.
+The mise tasks live in `mise/tasks/` and can be run directly without mise if needed.
+Most are plain bash; the `package` tasks are stdlib-only Python (3.11+ for `tomllib`, pinned in `mise.toml`).
 
 ## Architecture
 
@@ -86,6 +93,7 @@ Headers are suppressed on chapter-opening pages and blank pages. The draft water
 - `dissertation-full.typ` — comprehensive feature showcase (native multi-bibliography via `bibliography(full: true)`); the only example that declares a custom figure kind, via `content/figure-kinds-de.typ`
 - `dissertation-full-en.typ` — English dissertation variant
 - `dissertation-approved.typ` — approved dissertation variant
+- `dissertation-17x24.typ`, `dissertation-a4.typ` — non-default paper formats (the A4 variant uses fixed margins, so `margin-preset` has no effect there)
 - `thesis-full.typ`, `thesis-full-en.typ` — master's/bachelor's/diploma thesis variants
 
 Shared content in `examples/content/` and bibliographies in `examples/bib/`.
