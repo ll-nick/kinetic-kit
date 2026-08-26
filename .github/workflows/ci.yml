@@ -28,10 +28,10 @@ jobs:
       - name: Check the committed thumbnail is current
         run: git diff --exit-code thumbnail/
 
-      - name: Assemble Typst Universe submission
+      - name: Assemble Typst Universe package
         run: mise run package
 
-      - name: Verify Typst Universe submission
+      - name: Verify Typst Universe package
         run: mise run package:verify
 
       - name: Rename template PDF
@@ -46,8 +46,8 @@ jobs:
             examples/*.pdf
             template/template.pdf
 
-      - name: Upload Typst Universe submission
+      - name: Upload Typst Universe package
         uses: actions/upload-artifact@v7
         with:
-          name: universe-submission
+          name: universe-package
           path: dist/

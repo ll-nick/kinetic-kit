@@ -10,7 +10,7 @@
 #      before a tag exists.
 #   2. Commit, tag the release commit v{version}, and push the tag — everything
 #      below then runs, and no release is created if any of it fails.
-#   3. Unzip the release's submission archive into packages/preview/ in a fork of
+#   3. Unzip the release's package archive into packages/preview/ in a fork of
 #      typst/packages, commit the plain files, and open the pull request. Never
 #      copy a .git directory along with them, or the submission becomes a
 #      submodule reference instead of a package.
@@ -52,22 +52,27 @@ jobs:
       - name: Check the committed thumbnail is current
         run: git diff --exit-code thumbnail/
 
-      - name: Assemble and verify the Typst Universe submission
+      - name: Rename template PDF
+        run: cp template/main.pdf template/template.pdf
+
+      - name: Bundle the PDFs for the release
+        run: zip -qj "kinetic-kit-$VERSION-pdfs.zip" docs/api-reference.pdf examples/*.pdf template/template.pdf
+
+      - name: Assemble and verify the Typst Universe package
         run: |
           mise run package
           mise run package:verify
 
       # Mirrors packages/preview/, so the archive unzips straight into a clone
       # of typst/packages.
-      - name: Bundle the submission for the release
-        run: cd dist && zip -qr "../kinetic-kit-$VERSION-universe.zip" .
+      - name: Bundle the package for the release
+        run: cd dist && zip -qr "../kinetic-kit-$VERSION-universe-package.zip" .
 
       - name: Create GitHub release
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: >
           gh release create "$GITHUB_REF_NAME"
-          "kinetic-kit-$VERSION-universe.zip"
-          docs/api-reference.pdf
-          examples/*.pdf
+          "kinetic-kit-$VERSION-universe-package.zip"
+          "kinetic-kit-$VERSION-pdfs.zip"
           --generate-notes
