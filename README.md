@@ -377,7 +377,10 @@ for details and development setup.
 
 ## License
 
-Template code: MIT-0 (no attribution required). Bundled fonts (`fonts/`): SIL OFL 1.1.
+Template code: MIT-0 (no attribution required).
+<!-- package:strip-start — the fonts are not part of the published package -->
+The Libertinus fonts bundled in this repository (`fonts/`) are licensed under the SIL OFL 1.1.
+<!-- package:strip-end -->
 
 ## Acknowledgements
 
