@@ -1,32 +1,26 @@
 [package]
 name = "kinetic-kit"
 version = "0.1.0"
-compiler = "0.15.0"
-repository = "https://github.com/ll-nick/kinetic-kit"
 entrypoint = "lib.typ"
-description = "Doctoral thesis (KSP-approved) and Bachelor's/Master's thesis template for Karlsruhe Institute of Technology (KIT)."
-authors = ["Nick Le Large <https://github.com/ll-nick>"]
+
+authors = ["Nick Le Large <@ll-nick>"]
 license = "MIT-0"
+description = "Doctoral, Bachelor's and Master's theses at the Karlsruhe Institute of Technology."
+
+repository = "https://github.com/ll-nick/kinetic-kit"
+keywords = [
+  "dissertation",
+  "doctoral",
+  "thesis",
+  "karlsruhe",
+  "kit",
+  "karlsruhe institute of technology",
+  "ksp",
+]
 categories = ["thesis"]
 disciplines = ["engineering", "computer-science"]
-keywords = ["dissertation", "doctoral", "thesis", "karlsruhe", "kit", "ksp"]
-
-# Kept in the repository but left out of the compiler-downloaded package bundle.
-exclude = [
-    "/.claude/",
-    "/.github/",
-    "/.gitignore",
-    "/CLAUDE.md",
-    "/CONTRIBUTING.md",
-    "/docs/",
-    "/examples/",
-    "/fonts/",
-    "/guidelines.md",
-    "/mise/",
-    "/mise.toml",
-    "/template/main.pdf",
-    "/tests/",
-]
+compiler = "0.15.0"
+exclude = ["/docs/"]
 
 [template]
 path = "template"
