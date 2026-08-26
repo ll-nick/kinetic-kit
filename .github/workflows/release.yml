@@ -52,6 +52,12 @@ jobs:
       - name: Check the committed thumbnail is current
         run: git diff --exit-code thumbnail/
 
+      - name: Rename template PDF
+        run: cp template/main.pdf template/template.pdf
+
+      - name: Bundle the PDFs for the release
+        run: zip -qj "kinetic-kit-$VERSION-pdfs.zip" docs/api-reference.pdf examples/*.pdf template/template.pdf
+
       - name: Assemble and verify the Typst Universe submission
         run: |
           mise run package
@@ -68,6 +74,5 @@ jobs:
         run: >
           gh release create "$GITHUB_REF_NAME"
           "kinetic-kit-$VERSION-universe.zip"
-          docs/api-reference.pdf
-          examples/*.pdf
+          "kinetic-kit-$VERSION-pdfs.zip"
           --generate-notes
