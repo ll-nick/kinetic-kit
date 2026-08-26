@@ -1,0 +1,137 @@
+#!/usr/bin/env python3
+# [MISE] description="Assemble the Typst Universe submission tree in dist/"
+"""Assemble the Typst Universe submission tree in dist/.
+
+Typst Universe submissions are static copies: the contents of dist/ are meant to
+be committed verbatim to packages/preview/{name}/{version} in a clone of
+github.com/typst/packages. See CONTRIBUTING.md for the release checklist.
+"""
+
+import re
+import shutil
+import sys
+from pathlib import Path
+
+import tomllib
+
+# Files the submission consists of. Everything else stays behind: fonts may not
+# be shipped in packages at all, and files that are neither needed at compile
+# time nor linked from the README are unreachable for users anyway.
+SHIPPED_PATHS = [
+    "typst.toml",
+    "lib.typ",
+    "src",
+    "template",
+    "README.md",
+    "LICENSE",
+    "docs/api-reference.pdf",
+    "thumbnail/thumbnail.png",
+]
+
+STRIP_START_MARKER = "<!-- package:strip-start"
+STRIP_END_MARKER = "<!-- package:strip-end"
+
+# Markdown links that are neither an anchor nor a scheme-qualified URL.
+RELATIVE_LINK_PATTERN = re.compile(r"\]\((?![a-z][a-z0-9+.-]*:|#)([^)]+)\)")
+
+
+def copy_shipped_files(project_root: Path, destination: Path) -> None:
+    for relative_path in SHIPPED_PATHS:
+        source = project_root / relative_path
+        if not source.exists():
+            sys.exit(f"Error: {relative_path} is missing. Run 'mise run build' first?")
+
+        target = destination / relative_path
+        target.parent.mkdir(parents=True, exist_ok=True)
+        if source.is_dir():
+            shutil.copytree(source, target)
+        else:
+            shutil.copy2(source, target)
+
+
+def strip_repo_only_sections(readme: str) -> tuple[str, int]:
+    """Drop passages describing the repository rather than the published package."""
+    kept_lines = []
+    open_markers = 0
+    sections_stripped = 0
+
+    for line_number, line in enumerate(readme.splitlines(keepends=True), start=1):
+        if STRIP_START_MARKER in line:
+            open_markers += 1
+            sections_stripped += 1
+        elif STRIP_END_MARKER in line:
+            open_markers -= 1
+            if open_markers < 0:
+                sys.exit(
+                    f"Error: README.md:{line_number} closes a strip section that was never opened"
+                )
+        elif open_markers == 0:
+            kept_lines.append(line)
+
+    if open_markers != 0:
+        sys.exit(f"Error: README.md leaves {open_markers} strip section(s) unclosed")
+
+    return "".join(kept_lines), sections_stripped
+
+
+def repoint_links_at_release_tag(
+    readme: str, destination: Path, repository: str, version: str
+) -> tuple[str, list[str]]:
+    """Point links the package cannot resolve back at the tagged repository.
+
+    Relative links resolve against the package directory on Typst Universe, and
+    links to the default branch drift away from the released version over time.
+    """
+    tag_url = f"{repository}/blob/v{version}"
+    repointed = []
+
+    def repoint(link: re.Match[str]) -> str:
+        target = link.group(1)
+        if (destination / target).exists():
+            return link.group(0)
+        repointed.append(f"{target} → {tag_url}/{target}")
+        return f"]({tag_url}/{target})"
+
+    readme = RELATIVE_LINK_PATTERN.sub(repoint, readme)
+    readme = readme.replace(f"{repository}/blob/main/", f"{tag_url}/")
+    return readme, repointed
+
+
+def main() -> None:
+    project_root = Path(__file__).resolve().parents[3]
+    manifest = tomllib.loads((project_root / "typst.toml").read_text())
+    name = manifest["package"]["name"]
+    version = manifest["package"]["version"]
+
+    destination = project_root / "dist" / name / version
+    shutil.rmtree(destination.parent, ignore_errors=True)
+    destination.mkdir(parents=True)
+    copy_shipped_files(project_root, destination)
+
+    # Gitignored local build artifacts that would otherwise bloat the bundle.
+    for stale_pdf in (destination / "template").glob("*.pdf"):
+        stale_pdf.unlink()
+
+    readme_path = destination / "README.md"
+    readme, sections_stripped = strip_repo_only_sections(readme_path.read_text())
+    readme, repointed = repoint_links_at_release_tag(
+        readme, destination, manifest["package"]["repository"], version
+    )
+    readme_path.write_text(readme)
+
+    if sections_stripped:
+        print(f"  stripped {sections_stripped} repo-only README section(s)")
+    for repointed_link in repointed:
+        print(f"  repointed README link: {repointed_link}")
+
+    shipped_files = [path for path in destination.rglob("*") if path.is_file()]
+    total_kilobytes = sum(path.stat().st_size for path in shipped_files) / 1024
+    print(
+        f"Assembled {name}:{version} → {destination.relative_to(project_root)} "
+        f"({total_kilobytes:.0f} KB, {len(shipped_files)} files)"
+    )
+
+
+main()
+
+# vim: set filetype=python :
