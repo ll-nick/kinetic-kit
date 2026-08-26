@@ -15,6 +15,7 @@ typst compile \
     --package-path "$PKG_DIR" \
     --root template \
     --font-path fonts \
+    --ignore-system-fonts \
     template/main.typ \
     template/main.pdf
 

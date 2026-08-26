@@ -13,6 +13,7 @@ typst compile \
     --package-path "$PKG_DIR" \
     --root template \
     --font-path fonts \
+    --ignore-system-fonts \
     --format png \
     --pages 1 \
     --ppi 300 \
