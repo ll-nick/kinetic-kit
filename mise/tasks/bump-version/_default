@@ -1,0 +1,111 @@
+#!/usr/bin/env python3
+# [MISE] description="Increment the package version across typst.toml and every pinned reference"
+"""Increment the package version across typst.toml and every pinned reference.
+
+Typst import specs are string literals, so `@preview/kinetic-kit:<version>` in the
+README, the template and the docs cannot follow typst.toml on their own. This walks
+the same files `mise run package:verify` checks and rewrites them together.
+
+Usage: mise run bump-version <major|minor|patch>
+"""
+
+import re
+import sys
+from pathlib import Path
+
+import tomllib
+
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+PACKAGE_NAME = "kinetic-kit"
+
+# Mirrors the file set of check_version_references in mise/tasks/package/verify.
+SEARCHED_SUFFIXES = {".typ", ".md", ".toml"}
+SKIPPED_DIRECTORIES = {".git", "dist"}
+
+BUMP_PARTS = ("major", "minor", "patch")
+
+
+def parse_version(version: str) -> tuple[int, int, int]:
+    major, minor, patch = (int(part) for part in version.split("."))
+    return major, minor, patch
+
+
+def bumped_version(version: tuple[int, int, int], part: str) -> tuple[int, int, int]:
+    major, minor, patch = version
+    if part == "major":
+        return major + 1, 0, 0
+    if part == "minor":
+        return major, minor + 1, 0
+    return major, minor, patch + 1
+
+
+def rewrite_file(path: Path, old_version: str, new_version: str) -> int:
+    """Replace every occurrence of the old version in one file. Returns the count."""
+    text = path.read_text()
+    substitutions = [
+        # Pinned import specs: @preview/ (README, docs, template users copy) and
+        # @local/ (what an editable install compiles against).
+        (
+            re.compile(
+                rf"(@(?:preview|local)/{PACKAGE_NAME}:){re.escape(old_version)}\b"
+            ),
+            rf"\g<1>{new_version}",
+        ),
+    ]
+    if path.name == "typst.toml":
+        substitutions.append(
+            (
+                re.compile(
+                    rf'(^version\s*=\s*"){re.escape(old_version)}(")', re.MULTILINE
+                ),
+                rf"\g<1>{new_version}\g<2>",
+            )
+        )
+    if path == PROJECT_ROOT / "docs" / "main.typ":
+        # Version shown on the API reference cover page.
+        substitutions.append(
+            (re.compile(rf"\bv{re.escape(old_version)}\b"), f"v{new_version}")
+        )
+
+    replacements = 0
+    for pattern, replacement in substitutions:
+        text, count = pattern.subn(replacement, text)
+        replacements += count
+
+    if replacements:
+        path.write_text(text)
+    return replacements
+
+
+def main() -> None:
+    if len(sys.argv) != 2 or sys.argv[1] not in BUMP_PARTS:
+        sys.exit("Usage: mise run bump-version <major|minor|patch>")
+    part = sys.argv[1]
+
+    manifest = tomllib.loads((PROJECT_ROOT / "typst.toml").read_text())
+    old_version = manifest["package"]["version"]
+    new_version = ".".join(
+        str(number) for number in bumped_version(parse_version(old_version), part)
+    )
+
+    print(f"Bumping {PACKAGE_NAME} {old_version} → {new_version}")
+
+    total_replacements = 0
+    for path in sorted(PROJECT_ROOT.rglob("*")):
+        relative_path = path.relative_to(PROJECT_ROOT)
+        if path.suffix not in SEARCHED_SUFFIXES:
+            continue
+        if SKIPPED_DIRECTORIES & set(relative_path.parts):
+            continue
+
+        replacements = rewrite_file(path, old_version, new_version)
+        if replacements:
+            print(f"  {relative_path}: {replacements} occurrence(s)")
+            total_replacements += replacements
+
+    print(f"Updated {total_replacements} occurrence(s). Run 'mise run build' next.")
+
+
+main()
+
+# vim: set filetype=python :
