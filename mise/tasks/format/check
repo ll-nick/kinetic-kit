@@ -10,7 +10,7 @@ typstyle \
     --check \
     . || status=1
 
-# The package tasks have no .py extension, so ruff only picks them up by name.
-ruff format --check mise/tasks/package/* || status=1
+# The Python tasks have no .py extension, so ruff only picks them up by name.
+ruff format --check mise/tasks/bump-version/* mise/tasks/package/* || status=1
 
 exit "$status"
