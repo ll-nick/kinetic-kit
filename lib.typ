@@ -20,7 +20,7 @@
 ///
 /// Example:
 /// ```typst
-/// #import "@preview/kinetic-kit:0.1.0": components
+/// #import "@preview/kinetic-kit:0.1.1": components
 /// #show: components.setup-page.with(margin-preset: "short", lang: "de")
 /// #show: components.setup-front-matter
 /// #components.print-toc(lang: "de")

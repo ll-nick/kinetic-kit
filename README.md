@@ -15,7 +15,7 @@ The official [Typst](https://typst.app) template[^1] for doctoral theses publish
 Start a new project from the template with:
 
 ```bash
-typst init @preview/kinetic-kit:0.1.0
+typst init @preview/kinetic-kit:0.1.1
 ```
 
 Or pick **kinetic-kit** from the template gallery in the [Typst web app](https://typst.app).
@@ -24,7 +24,7 @@ Either way you get a ready-to-fill `main.typ`.
 To add the template to an existing document instead, import it and apply it with a show rule:
 
 ```typst
-#import "@preview/kinetic-kit:0.1.0": dissertation
+#import "@preview/kinetic-kit:0.1.1": dissertation
 
 #show: dissertation.with(
   author-firstname: "Max",
@@ -72,7 +72,7 @@ mise run install # or bash mise/tasks/install/_default
 mise run install:editable # or bash mise/tasks/install/editable
 ```
 
-When installed this way, imports use `@local/kinetic-kit:0.1.0` in place of `@preview/kinetic-kit:0.1.0`.
+When installed this way, imports use `@local/kinetic-kit:0.1.1` in place of `@preview/kinetic-kit:0.1.1`.
 
 The repository also bundles the Libertinus fonts.
 Install them into your user font directory with
@@ -184,7 +184,7 @@ The `components` namespace exports the individual building blocks for assembling
 Available components: `setup-page`, `setup-front-matter`, `setup-content`, `setup-appendix`, `print-dissertation-title`, `print-thesis-title`, `print-toc`, `print-lof`, `print-lot`, `print-lol`, `print-list-of`.
 
 ```typst
-#import "@preview/kinetic-kit:0.1.0": components, kit-style
+#import "@preview/kinetic-kit:0.1.1": components, kit-style
 
 #let format = "a5"
 #let font-sizes = kit-style.font-sizes-by-format.at(format)
@@ -233,7 +233,7 @@ Your content here.
 The `kit-style` namespace exposes the template's visual constants so custom figures and diagrams can match the document's typography and color palette exactly.
 
 ```typst
-#import "@preview/kinetic-kit:0.1.0": kit-style
+#import "@preview/kinetic-kit:0.1.1": kit-style
 
 // kit-style.fonts                — (serif, sans, mono) font family arrays
 // kit-style.font-sizes-by-format  — dict keyed by format: font sizes per format
@@ -326,7 +326,7 @@ Use the [glossarium](https://typst.app/universe/package/glossarium) package for 
 **Important:** `#show: make-glossary` must appear *before* `#show: dissertation.with(...)`. Forgetting this causes silent failure — abbreviations will not expand.
 
 ```typst
-#import "@preview/kinetic-kit:0.1.0": dissertation
+#import "@preview/kinetic-kit:0.1.1": dissertation
 #import "@preview/glossarium:0.5.10": make-glossary, register-glossary, print-glossary
 
 #let abbrevs = (
@@ -357,7 +357,7 @@ For a nicer two-column grid layout (bold abbreviation on the left, long form on 
 Use the [drafting](https://typst.app/universe/package/drafting) package to add margin notes during writing. Tie `is-draft` to both the watermark and note visibility so they are toggled in one place:
 
 ```typst
-#import "@preview/kinetic-kit:0.1.0": dissertation
+#import "@preview/kinetic-kit:0.1.1": dissertation
 #import "@preview/drafting:0.2.2": set-margin-note-defaults, margin-note
 
 #let is-draft = true
