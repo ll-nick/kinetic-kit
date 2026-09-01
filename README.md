@@ -88,6 +88,10 @@ mise run install:fonts # or bash mise/tasks/install/fonts
 Refer to [`docs/api-reference.pdf`](docs/api-reference.pdf),
 for the API documentation auto-generated from the source code.
 
+> Please note: The `thesis()` template is a companion for Bachelor's, Master's, and Diploma theses.
+> KSP's endorsement applies to the doctoral thesis template only.
+> This companion is provided as a convenience.
+
 <details>
 <summary><strong>Doctoral Thesis: <code>dissertation(...)</code></strong></summary>
 
