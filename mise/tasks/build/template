@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 # [MISE] description="Compile template/main.typ to PDF for local preview"
 #
-# To use the current state of this repo, we create a
-# temporary package-path directory that maps preview/kinetic-kit/0.1.0
-# to the project root. This is equivalent to what tytanic does internally
-# for the @template test.
+# To use the current state of this repo, we create a temporary package-path
+# directory that maps preview/kinetic-kit/<version> to the project root. This is
+# equivalent to what tytanic does internally for the @template test.
 set -euo pipefail
+
+VERSION=$(grep '^version' typst.toml | sed 's/.*= *"\(.*\)"/\1/')
 
 PKG_DIR=$(mktemp -d)
 mkdir -p "$PKG_DIR/preview/kinetic-kit"
-ln -s "$PWD" "$PKG_DIR/preview/kinetic-kit/0.1.0"
+ln -s "$PWD" "$PKG_DIR/preview/kinetic-kit/$VERSION"
 
 typst compile \
     --package-path "$PKG_DIR" \

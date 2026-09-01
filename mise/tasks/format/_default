@@ -9,5 +9,5 @@ typstyle \
     --inplace \
     .
 
-# The package tasks have no .py extension, so ruff only picks them up by name.
-ruff format mise/tasks/package/*
+# The Python tasks have no .py extension, so ruff only picks them up by name.
+ruff format mise/tasks/bump-version/* mise/tasks/package/*

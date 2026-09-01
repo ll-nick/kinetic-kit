@@ -4,10 +4,10 @@
 # against typst/packages. This workflow is the gate in front of that, and the
 # manual steps around it are:
 #
-#   1. Bump the version in typst.toml and in every @preview/kinetic-kit:… import
-#      in README.md and template/, then `mise run build`.
-#      `mise run package && mise run package:verify` catches problems locally,
-#      before a tag exists.
+#   1. `mise run bump-version <major|minor|patch>` — rewrites typst.toml and every
+#      pinned reference in README.md, template/, lib.typ and docs/. Then
+#      `mise run build`. `mise run package && mise run package:verify` catches
+#      problems locally, before a tag exists.
 #   2. Commit, tag the release commit v{version}, and push the tag — everything
 #      below then runs, and no release is created if any of it fails.
 #   3. Unzip the release's package archive into packages/preview/ in a fork of

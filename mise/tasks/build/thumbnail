@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 # [MISE] description="Render the initialized template's title page as thumbnail.png"
 #
-# As in build:template, we map preview/kinetic-kit/0.1.0 to the project root
+# As in build:template, we map preview/kinetic-kit/<version> to the project root
 # via a temporary package path so the template's @preview import resolves.
 set -euo pipefail
 
+VERSION=$(grep '^version' typst.toml | sed 's/.*= *"\(.*\)"/\1/')
+
 PKG_DIR=$(mktemp -d)
 mkdir -p "$PKG_DIR/preview/kinetic-kit"
-ln -s "$PWD" "$PKG_DIR/preview/kinetic-kit/0.1.0"
+ln -s "$PWD" "$PKG_DIR/preview/kinetic-kit/$VERSION"
 
 typst compile \
     --package-path "$PKG_DIR" \
