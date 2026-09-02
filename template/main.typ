@@ -11,7 +11,7 @@
 //
 // Documentation: https://github.com/ll-nick/kinetic-kit
 
-#import "@preview/kinetic-kit:0.1.0": dissertation, flex-caption
+#import "@preview/kinetic-kit:0.1.1": dissertation, flex-caption
 
 // ── Dissertation configuration ─────────────────────────────────────────────
 #show: dissertation.with(
@@ -115,7 +115,7 @@
 // ║  uncomment the block below for a Masterarbeit / Bachelorarbeit.          ║
 // ╚═══════════════════════════════════════════════════════════════════════════╝
 //
-// #import "@preview/kinetic-kit:0.1.0": thesis, flex-caption
+// #import "@preview/kinetic-kit:0.1.1": thesis, flex-caption
 //
 // #show: thesis.with(
 //

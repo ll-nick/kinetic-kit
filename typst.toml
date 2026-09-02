@@ -1,16 +1,18 @@
 [package]
 name = "kinetic-kit"
-version = "0.1.0"
+version = "0.1.1"
 entrypoint = "lib.typ"
 
 authors = ["Nick Le Large <@ll-nick>"]
 license = "MIT-0"
-description = "Doctoral, Bachelor's and Master's theses at the Karlsruhe Institute of Technology."
+description = "Doctoral thesis published through KIT Scientific Publishing"
 
 repository = "https://github.com/ll-nick/kinetic-kit"
 keywords = [
   "dissertation",
   "doctoral",
+  "master",
+  "bachelor",
   "thesis",
   "karlsruhe",
   "kit",
