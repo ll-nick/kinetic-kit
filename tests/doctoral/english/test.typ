@@ -1,8 +1,8 @@
 // Compile-only: dissertation in English — verifies all translated strings
 // resolve without error when lang: "en".
-#import "/lib.typ": dissertation, doctoral-title-page
+#import "/lib.typ": doctoral-title-page, thesis
 
-#show: dissertation.with(
+#show: thesis.with(
     author-firstname: "Max",
     author-surname: "Mustermann",
     title: [Test Dissertation in English],

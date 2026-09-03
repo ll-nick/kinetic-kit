@@ -1,5 +1,5 @@
-// Compile-only: render both title pages directly via components,
-// without any setup-page wrapper (each title page sets its own page geometry).
+// Compile-only: render the doctoral title page directly via components,
+// without any setup-page wrapper (it sets its own page geometry).
 #import "/lib.typ": components
 
 #components.doctoral-title-page(

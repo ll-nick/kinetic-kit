@@ -5,9 +5,9 @@
 //
 // Compile: typst compile --root . --font-path fonts examples/doctoral-approved.typ examples/doctoral-approved.pdf
 
-#import "/lib.typ": dissertation, doctoral-title-page
+#import "/lib.typ": doctoral-title-page, thesis
 
-#show: dissertation.with(
+#show: thesis.with(
     author-firstname: "Max",
     author-surname: "Mustermann",
 

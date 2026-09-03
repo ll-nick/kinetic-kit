@@ -1,7 +1,7 @@
 // Compile-only: draft mode with watermark and draft-info string.
-#import "/lib.typ": dissertation, doctoral-title-page
+#import "/lib.typ": doctoral-title-page, thesis
 
-#show: dissertation.with(
+#show: thesis.with(
     author-firstname: "Max",
     author-surname: "Mustermann",
     title: [Draft Dissertation],

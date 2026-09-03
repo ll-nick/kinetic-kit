@@ -1,9 +1,9 @@
 // Compile-only: exercises `heading-numbering-depth`. Set to 4 (non-default), so
 // levels 1–4 are numbered and level 5 is styled but unnumbered. Also stresses the
 // heading-grid indent measurement, which folds over every heading level.
-#import "/lib.typ": dissertation
+#import "/lib.typ": thesis
 
-#show: dissertation.with(
+#show: thesis.with(
     title: [Heading Numbering Depth],
     heading-numbering-depth: 4,
 )

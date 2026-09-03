@@ -1,7 +1,7 @@
-// Compile-only: dissertation() with format: "a4" — verifies A4 format compiles.
-#import "/lib.typ": dissertation
+// Compile-only: thesis() with format: "a4" — verifies A4 format compiles.
+#import "/lib.typ": thesis
 
-#show: dissertation.with(format: "a4")
+#show: thesis.with(format: "a4")
 
 = Chapter One
 

@@ -1,15 +1,15 @@
 // KIT Doctoral Thesis — Full-featured German example
-// Demonstrates every dissertation() parameter, native multi-bibliography, and
+// Demonstrates every thesis() parameter, native multi-bibliography, and
 // optional integrations: glossarium (abbreviation expansion) and drafting
 // (margin annotations during the draft stage).
 //
 // Compile: typst compile --root . --font-path fonts examples/doctoral-full.typ examples/doctoral-full.pdf
 
-#import "/lib.typ": dissertation, doctoral-title-page, flex-caption
+#import "/lib.typ": doctoral-title-page, flex-caption, thesis
 #import "content/abbreviations.typ": abbrevs-glossary
 
 // ── Third-party: glossarium ───────────────────────────────────────────────
-// IMPORTANT: #show: make-glossary must come before #show: dissertation.with(...)
+// IMPORTANT: #show: make-glossary must come before #show: thesis.with(...)
 // so the show rule wraps the entire rendered document.
 #import "@preview/glossarium:0.5.10": make-glossary, register-glossary
 
@@ -32,7 +32,7 @@
 
 // ── Dissertation ──────────────────────────────────────────────────────────
 
-#show: dissertation.with(
+#show: thesis.with(
     author-firstname: "Max",
     author-surname: "Mustermann",
 

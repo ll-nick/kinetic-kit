@@ -1,6 +1,6 @@
 // Compile-only: figure kinds on the components path — `setup-page` supplies the
 // supplements, and the list pages are placed by hand with `list-of` rather
-// than by the back matter of `dissertation()`.
+// than by the back matter of `thesis()`.
 #import "/lib.typ": components, flex-caption
 
 #let box-body = rect(width: 3cm, height: 1cm)
