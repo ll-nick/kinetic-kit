@@ -23,6 +23,6 @@
 /// #import "@preview/kinetic-kit:0.1.1": components
 /// #show: components.setup-page.with(margin-preset: "short", lang: "de")
 /// #show: components.setup-front-matter
-/// #components.toc(lang: "de")
+/// #components.table-of-contents(lang: "de")
 /// ```
 #import "src/components.typ"
