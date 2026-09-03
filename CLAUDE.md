@@ -70,7 +70,7 @@ The single entry point re-exports:
 | `title-page.typ` | Dissertation/thesis title page (German legal format) |
 | `front-matter.typ` | Abstract, Kurzfassung, acknowledgements, notation, abbreviations |
 | `back-matter.typ` | Bibliography, own publications, own patents, supervised theses |
-| `outlines.typ` | TOC, back-matter list pages (`print-list-of` and the `print-lo*` shorthands), and their `outline.entry` styling (`setup-outlines`) |
+| `outlines.typ` | TOC, back-matter list pages (`list-of` and the `list-of-figures`/`list-of-tables`/`list-of-listings` shorthands), and their `outline.entry` styling (`setup-outlines`) |
 | `figures.typ` | Figure/caption/table styling (`setup-figures`) and `flex-caption` |
 | `figure-kinds.typ` | Registry of figure kinds — `resolve-figure-kinds` appends a document's own kinds after Typst's built-in `image`/`table`/`raw` |
 | `headings.typ` | Heading styling — per-level sizes/spacing, chapter page breaks, number–body alignment (`setup-headings`) |

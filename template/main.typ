@@ -80,9 +80,9 @@
     // abbreviations: [...],
 
     // ── Back matter ───────────────────────────────────────────────────────────
-    show-lof: true, // List of Figures
-    show-lot: true, // List of Tables
-    show-lol: false, // List of Listings (set true if you include code listings)
+    show-list-of-figures: true, // List of Figures
+    show-list-of-tables: true, // List of Tables
+    show-list-of-listings: false, // List of Listings (set true if you include code listings)
 
     bibliography: bibliography("refs.bib", title: none, style: "ieee"),
 
@@ -157,9 +157,9 @@
 //   // abbreviations:    [...],
 //
 //   // ── Back matter ─────────────────────────────────────────────────────────
-//   show-lof: true,
-//   show-lot: true,
-//   show-lol: false,
+//   show-list-of-figures: true,
+//   show-list-of-tables: true,
+//   show-list-of-listings: false,
 //
 //   bibliography: bibliography("refs.bib", title: none, style: "ieee"),
 //

@@ -129,9 +129,9 @@ for the API documentation auto-generated from the source code.
 | `own-publications` | `content \| none` | `none` | Back-matter publications list |
 | `own-patents` | `content \| none` | `none` | Back-matter patents list |
 | `supervised-theses` | `content \| none` | `none` | Back-matter supervised theses list |
-| `show-lof` | `bool` | `true` | List of figures |
-| `show-lot` | `bool` | `true` | List of tables |
-| `show-lol` | `bool` | `false` | List of listings |
+| `show-list-of-figures` | `bool` | `true` | List of figures |
+| `show-list-of-tables` | `bool` | `true` | List of tables |
+| `show-list-of-listings` | `bool` | `false` | List of listings |
 | `figure-kinds` | `array` | `()` | Figure kinds beyond `image`/`table`/`raw`, as dicts with `kind`, `supplement`, and optionally `list-title`/`show-list` |
 | `bibliography` | `content \| none` | `none` | Pass `bibliography("refs.bib", title: none, style: "ieee")`; template adds a translated heading |
 | `appendix` | `content \| none` | `none` | Appendix chapters; template applies A, A.1, … numbering, placed before the back-matter lists |
@@ -165,9 +165,9 @@ for the API documentation auto-generated from the source code.
 | `abstract-de` | `content \| none` | `none` | |
 | `acknowledgements` | `content \| none` | `none` | |
 | `abbreviations` | `content \| none` | `none` | Abbreviations / acronym list |
-| `show-lof` | `bool` | `true` | List of figures |
-| `show-lot` | `bool` | `true` | List of tables |
-| `show-lol` | `bool` | `false` | List of listings |
+| `show-list-of-figures` | `bool` | `true` | List of figures |
+| `show-list-of-tables` | `bool` | `true` | List of tables |
+| `show-list-of-listings` | `bool` | `false` | List of listings |
 | `figure-kinds` | `array` | `()` | Figure kinds beyond `image`/`table`/`raw`, as dicts with `kind`, `supplement`, and optionally `list-title`/`show-list` |
 | `bibliography` | `content \| none` | `none` | Pass `bibliography("refs.bib", title: none, style: "ieee")`; template adds a translated heading |
 | `appendix` | `content \| none` | `none` | Appendix chapters; template applies A, A.1, … numbering, placed before the back-matter lists |
@@ -181,13 +181,12 @@ for the API documentation auto-generated from the source code.
 
 The `components` namespace exports the individual building blocks for assembling a document without the full `dissertation()` / `thesis()` orchestrator. Use this when the high-level templates don't fit your layout needs. You are responsible for applying the setup wrappers in the correct order.
 
-Available components: `setup-page`, `setup-front-matter`, `setup-content`, `setup-appendix`, `print-dissertation-title`, `print-thesis-title`, `print-toc`, `print-lof`, `print-lot`, `print-lol`, `print-list-of`.
+Available components: `setup-page`, `setup-front-matter`, `setup-content`, `setup-appendix`, `print-dissertation-title`, `print-thesis-title`, `table-of-contents`, `list-of-figures`, `list-of-tables`, `list-of-listings`, `list-of`.
 
 ```typst
-#import "@preview/kinetic-kit:0.1.1": components, kit-style
+#import "@preview/kinetic-kit:0.1.1": components
 
 #let format = "a5"
-#let font-sizes = kit-style.font-sizes-by-format.at(format)
 
 // 1. Apply base KIT formatting (page geometry, fonts, heading styles, …)
 #show: components.setup-page.with(
@@ -213,7 +212,7 @@ Available components: `setup-page`, `setup-front-matter`, `setup-content`, `setu
 = Abstract
 Your abstract here.
 
-#components.print-toc(font-sizes, lang: "de")
+#components.table-of-contents(lang: "de")
 
 // 3. Main content — Arabic numerals, numbered headings
 #show: components.setup-content
@@ -289,9 +288,9 @@ Then tag the figure:
 
 `kind: "algorithm"` must be spelled out. A figure whose body is a raw block is inferred as `kind: raw` otherwise, and lands among the listings.
 
-**The built-in kinds stay out of it.** `image`, `table` and `raw` are configured by `show-lof` / `show-lot` / `show-lol` alone
+**The built-in kinds stay out of it.** `image`, `table` and `raw` are configured by `show-list-of-figures` / `show-list-of-tables` / `show-list-of-listings` alone
 
-**List order.** Figures, tables, listings, then your kinds in declaration order. For a different order, place them yourself with `components.print-list-of`, which also sets the state that switches `flex-caption` to its short form.
+**List order.** Figures, tables, listings, then your kinds in declaration order. For a different order, place them yourself with `components.list-of`, which also sets the state that switches `flex-caption` to its short form.
 
 </details>
 

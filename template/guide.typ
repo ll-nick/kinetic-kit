@@ -100,8 +100,8 @@ state vector $bold(x) in RR^n$.
 
 == Code Listings
 
-Code blocks inside `figure()` appear in the List of Listings (if `show-lol: true` is set
-in `main.typ`).
+Code blocks inside `figure()` appear in the List of Listings (if
+`show-list-of-listings: true` is set in `main.typ`).
 
 #figure(
     ```python

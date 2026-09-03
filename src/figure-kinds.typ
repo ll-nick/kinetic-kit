@@ -33,13 +33,17 @@
     figure: (
         kind: image,
         supplement: _localized("figure"),
-        list-title: _localized("lof"),
+        list-title: _localized("list-of-figures"),
     ),
-    table: (kind: table, supplement: _localized("table"), list-title: _localized("lot")),
+    table: (
+        kind: table,
+        supplement: _localized("table"),
+        list-title: _localized("list-of-tables"),
+    ),
     listing: (
         kind: raw,
         supplement: _localized("listing"),
-        list-title: _localized("lol"),
+        list-title: _localized("list-of-listings"),
     ),
 )
 
@@ -106,8 +110,8 @@
     assert(
         entry.kind not in _builtin-kind-values,
         message: repr(entry.kind)
-            + " is a built-in figure kind and cannot be redeclared. Use show-lof, "
-            + "show-lot or show-lol to control its list page.",
+            + " is a built-in figure kind and cannot be redeclared. Use show-list-of-figures, "
+            + "show-list-of-tables or show-list-of-listings to control its list page.",
     )
     assert(
         entry.kind not in declared,
@@ -145,15 +149,15 @@
 /// declaration order. Declaring a built-in kind is an error.
 ///
 /// - figure-kinds (array): Entries declared by the document.
-/// - show-lof (bool): Whether the list of figures is printed.
-/// - show-lot (bool): Whether the list of tables is printed.
-/// - show-lol (bool): Whether the list of listings is printed.
+/// - show-list-of-figures (bool): Whether the list of figures is printed.
+/// - show-list-of-tables (bool): Whether the list of tables is printed.
+/// - show-list-of-listings (bool): Whether the list of listings is printed.
 /// -> array
 #let resolve-figure-kinds(
     figure-kinds,
-    show-lof: true,
-    show-lot: true,
-    show-lol: false,
+    show-list-of-figures: true,
+    show-list-of-tables: true,
+    show-list-of-listings: false,
 ) = {
     assert(
         type(figure-kinds) == array,
@@ -162,9 +166,9 @@
     )
 
     let resolved = (
-        (.._builtin-kinds.figure, show-list: show-lof),
-        (.._builtin-kinds.table, show-list: show-lot),
-        (.._builtin-kinds.listing, show-list: show-lol),
+        (.._builtin-kinds.figure, show-list: show-list-of-figures),
+        (.._builtin-kinds.table, show-list: show-list-of-tables),
+        (.._builtin-kinds.listing, show-list: show-list-of-listings),
     )
 
     let declared = ()

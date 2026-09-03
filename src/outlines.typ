@@ -51,14 +51,14 @@
 ///
 /// - lang (str): Document language — `"de"` or `"en"`.
 /// -> content
-#let print-toc(lang: "de") = {
+#let table-of-contents(lang: "de") = {
     set text(hyphenate: false)
 
     // Extra space above each top-level entry.
     show outline.entry.where(level: 1): set block(above: 1.6em)
 
     outline(
-        title: t.at(lang).toc,
+        title: t.at(lang).table-of-contents,
         depth: 3,
         indent: auto,
     )
@@ -73,7 +73,7 @@
 ///   `image`, or a string such as `"algorithm"`.
 /// - title (content | str): Heading of the list page.
 /// -> content
-#let print-list-of(kind, title: none) = {
+#let list-of(kind, title: none) = {
     set text(hyphenate: true)
     heading(level: 1, numbering: none, outlined: true, bookmarked: true)[#title]
     in-outline.update(true)
@@ -88,16 +88,16 @@
 ///
 /// - lang (str): Document language — `"de"` or `"en"`.
 /// -> content
-#let print-lof(lang: "de") = print-list-of(image, title: t.at(lang).lof)
+#let list-of-figures(lang: "de") = list-of(image, title: t.at(lang).list-of-figures)
 
 /// Print the list of tables.
 ///
 /// - lang (str): Document language — `"de"` or `"en"`.
 /// -> content
-#let print-lot(lang: "de") = print-list-of(table, title: t.at(lang).lot)
+#let list-of-tables(lang: "de") = list-of(table, title: t.at(lang).list-of-tables)
 
 /// Print the list of listings.
 ///
 /// - lang (str): Document language — `"de"` or `"en"`.
 /// -> content
-#let print-lol(lang: "de") = print-list-of(raw, title: t.at(lang).lol)
+#let list-of-listings(lang: "de") = list-of(raw, title: t.at(lang).list-of-listings)

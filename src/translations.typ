@@ -2,10 +2,10 @@
 
 #let t = (
     de: (
-        toc: "Inhaltsverzeichnis",
-        lof: "Abbildungsverzeichnis",
-        lot: "Tabellenverzeichnis",
-        lol: "Quellcodeverzeichnis",
+        table-of-contents: "Inhaltsverzeichnis",
+        list-of-figures: "Abbildungsverzeichnis",
+        list-of-tables: "Tabellenverzeichnis",
+        list-of-listings: "Quellcodeverzeichnis",
         chapter: "Kapitel",
         section: "Abschnitt",
         figure: "Abbildung",
@@ -38,10 +38,10 @@
         co-advisor-f: "Korreferentin:",
     ),
     en: (
-        toc: "Contents",
-        lof: "List of Figures",
-        lot: "List of Tables",
-        lol: "List of Listings",
+        table-of-contents: "Contents",
+        list-of-figures: "List of Figures",
+        list-of-tables: "List of Tables",
+        list-of-listings: "List of Listings",
         chapter: "Chapter",
         section: "Section",
         figure: "Figure",

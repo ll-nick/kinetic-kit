@@ -32,14 +32,14 @@
 /// - abstract-de (content | none): German abstract. `none` = omit.
 /// - acknowledgements (content | none): Acknowledgements. `none` = omit.
 /// - abbreviations (content | none): Abbreviations list. `none` = omit.
-/// - show-lof (bool): Include List of Figures.
-/// - show-lot (bool): Include List of Tables.
-/// - show-lol (bool): Include List of Listings.
+/// - show-list-of-figures (bool): Include List of Figures.
+/// - show-list-of-tables (bool): Include List of Tables.
+/// - show-list-of-listings (bool): Include List of Listings.
 /// - figure-kinds (array): Figure kinds beyond `image`, `table` and `raw`, as dictionaries
 ///   with `kind`, `supplement`, and optionally `list-title` and `show-list`. `supplement`
 ///   and `list-title` take either one value or one per language, e.g.
 ///   `(de: [Algorithmus], en: [Algorithm])`. The built-in kinds are not declared here —
-///   their list pages are governed by `show-lof` / `show-lot` / `show-lol`. Declared
+///   their list pages are governed by `show-list-of-figures` / `show-list-of-tables` / `show-list-of-listings`. Declared
 ///   kinds get a list page after the built-in ones, in declaration order.
 /// - bibliography (content | none): Bibliography content. Pass `bibliography("refs.bib", title: none, style: "ieee")`.
 ///   The template adds a translated heading. `none` = omit.
@@ -70,9 +70,9 @@
     abstract-de: none,
     acknowledgements: none,
     abbreviations: none,
-    show-lof: true,
-    show-lot: true,
-    show-lol: false,
+    show-list-of-figures: true,
+    show-list-of-tables: true,
+    show-list-of-listings: false,
     figure-kinds: (),
     bibliography: none,
     appendix: none,
@@ -106,9 +106,9 @@
     abstract-de: abstract-de,
     acknowledgements: acknowledgements,
     abbreviations: abbreviations,
-    show-lof: show-lof,
-    show-lot: show-lot,
-    show-lol: show-lol,
+    show-list-of-figures: show-list-of-figures,
+    show-list-of-tables: show-list-of-tables,
+    show-list-of-listings: show-list-of-listings,
     figure-kinds: figure-kinds,
     bibliography: bibliography,
     appendix: appendix,

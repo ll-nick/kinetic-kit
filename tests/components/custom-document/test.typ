@@ -29,8 +29,8 @@
     format: "a5",
 )
 
-#components.print-toc(lang: "de")
-#components.print-lof(lang: "de")
+#components.table-of-contents(lang: "de")
+#components.list-of-figures(lang: "de")
 
 // ── Main content ──────────────────────────────────────────────────────────
 
