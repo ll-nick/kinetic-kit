@@ -1,19 +1,20 @@
-// thesis.typ — KIT Master's / Bachelor's / Diploma thesis template
+// dissertation.typ — KIT doctoral dissertation template
 //
 // Public API (re-exported via lib.typ):
-//   thesis(...) — Master's / Bachelor's / Diploma thesis
+//   dissertation(...) — doctoral dissertation
 
 #import "document.typ": _document
-#import "title-page.typ": print-thesis-title
+#import "title-page.typ": doctoral-title-page
 
 
-/// KIT Master's / Bachelor's / Diploma thesis template.
+/// KIT doctoral dissertation template.
 ///
 /// - author-firstname (str): Author's first name.
 /// - author-surname (str): Author's surname.
-/// - title (content): Thesis title.
+/// - title (content): Dissertation title.
 /// - format ("a5" | "17x24" | "a4"): Paper format — `"a5"` (148×210 mm, default),
-///   `"17x24"` (170×240 mm), or `"a4"` (210×297 mm). Font sizes and margins are set automatically.
+///   `"17x24"` (170×240 mm), or `"a4"` (210×297 mm, discouraged by KSP). Font sizes and
+///   margins are set automatically.
 /// - lang ("de" | "en"): Document language.
 /// - margin-preset ("short" | "medium" | "long"): Margin profile keyed on page count.
 /// - binding-correction (length): BCOR added to inside margin. Default `0mm`.
@@ -36,17 +37,20 @@
 ///   `(de: [Algorithmus], en: [Algorithm])`. The built-in kinds are not declared here —
 ///   their list pages are governed by `show-list-of-figures` / `show-list-of-tables` / `show-list-of-listings`. Declared
 ///   kinds get a list page after the built-in ones, in declaration order.
+/// - own-publications (content | none): Own publications content (heading added by template). `none` = omit.
+/// - own-patents (content | none): Own patents content (heading added by template). `none` = omit.
+/// - supervised-theses (content | none): Supervised theses content (heading added by template). `none` = omit.
 /// - bibliography (content | none): Bibliography content. Pass `bibliography("refs.bib", title: none, style: "ieee")`.
 ///   The template adds a translated heading. `none` = omit.
 /// - appendix (content | none): Appendix chapters. Template applies `A`, `A.1`, … numbering
 ///   and places the appendix before the back-matter lists. `none` = omit.
-/// - title-page (content | function | none): Title page. Defaults to the built-in thesis
-///   page; pass `print-thesis-title.with(..)` to configure it, your own content, a function
+/// - title-page (content | function | none): Title page. Defaults to the doctoral
+///   page; pass `doctoral-title-page.with(..)` to configure it, your own content, a function
 ///   called as `(title, author-firstname:, author-surname:, format:, lang:)`, or `none`
 ///   to omit it.
 /// - doc (content): Main document body (chapters only).
 /// -> content
-#let thesis(
+#let dissertation(
     author-firstname: "Max",
     author-surname: "Mustermann",
     title: [Your Thesis Title],
@@ -68,9 +72,12 @@
     show-list-of-tables: true,
     show-list-of-listings: false,
     figure-kinds: (),
+    own-publications: none,
+    own-patents: none,
+    supervised-theses: none,
     bibliography: none,
     appendix: none,
-    title-page: print-thesis-title,
+    title-page: doctoral-title-page,
     doc,
 ) = _document(
     title-page: title-page,
@@ -95,6 +102,9 @@
     show-list-of-tables: show-list-of-tables,
     show-list-of-listings: show-list-of-listings,
     figure-kinds: figure-kinds,
+    own-publications: own-publications,
+    own-patents: own-patents,
+    supervised-theses: supervised-theses,
     bibliography: bibliography,
     appendix: appendix,
     doc,
