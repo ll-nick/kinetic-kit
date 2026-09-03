@@ -39,9 +39,9 @@
     acknowledgements: none,
     notation: none,
     abbreviations: none,
-    show-lof: true,
-    show-lot: true,
-    show-lol: false,
+    show-list-of-figures: true,
+    show-list-of-tables: true,
+    show-list-of-listings: false,
     figure-kinds: (),
     own-publications: none,
     own-patents: none,
@@ -57,9 +57,9 @@
     let author-name = author-firstname + " " + author-surname
     let resolved-figure-kinds = resolve-figure-kinds(
         figure-kinds,
-        show-lof: show-lof,
-        show-lot: show-lot,
-        show-lol: show-lol,
+        show-list-of-figures: show-list-of-figures,
+        show-list-of-tables: show-list-of-tables,
+        show-list-of-listings: show-list-of-listings,
     )
 
     set document(
