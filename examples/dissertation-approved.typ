@@ -47,8 +47,8 @@
     abstract-de: include "content/abstract-de.typ",
 
     // ── Back matter ─────────────────────────────────────────────────────────
-    show-lof: true,
-    show-lot: true,
+    show-list-of-figures: true,
+    show-list-of-tables: true,
 
     // ── Bibliography ────────────────────────────────────────────────────────
     bibliography: bibliography(

@@ -88,9 +88,9 @@
     abbreviations: abbrevs-glossary(abbrevs),
 
     // ── Back matter ─────────────────────────────────────────────────────────
-    show-lof: true,
-    show-lot: true,
-    show-lol: true,
+    show-list-of-figures: true,
+    show-list-of-tables: true,
+    show-list-of-listings: true,
 
     // Separate publication lists via native multi-bibliography.
     // full: true lists all entries regardless of in-text citations.
