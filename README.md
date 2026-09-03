@@ -24,9 +24,9 @@ Either way you get a ready-to-fill `main.typ`.
 To add the template to an existing document instead, import it and apply it with a show rule:
 
 ```typst
-#import "@preview/kinetic-kit:0.1.1": dissertation
+#import "@preview/kinetic-kit:0.1.1": thesis
 
-#show: dissertation.with(
+#show: thesis.with(
   author-firstname: "Max",
   author-surname:   "Mustermann",
   title:            [Title of the Dissertation],
@@ -88,51 +88,50 @@ mise run install:fonts # or bash mise/tasks/install/fonts
 Refer to [`docs/api-reference.pdf`](docs/api-reference.pdf),
 for the API documentation auto-generated from the source code.
 
-> Please note: The `thesis()` template is a companion for Bachelor's, Master's, and Diploma theses.
-> KSP's endorsement applies to the doctoral thesis template only.
-> This companion is provided as a convenience.
+Upgrading from 0.1.x? See [MIGRATING.md](MIGRATING.md).
 
 <details>
-<summary><strong>Doctoral Thesis: <code>dissertation(...)</code></strong></summary>
+<summary><strong>Template: <code>thesis(...)</code></strong></summary>
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
 | `author-firstname` | `str` | `"Max"` | |
 | `author-surname` | `str` | `"Mustermann"` | |
 | `title` | `content` | | Dissertation title |
-| `lang` | `"de" \| "en"` | `"de"` | Document language |
+| `title-page` | `content \| function \| none` | `doctoral-title-page` | Title page. Configure the default with `doctoral-title-page.with(…)` (see below), pass your own content or function, or `none` to omit it |
 | `format` | `"a5" \| "17x24" \| "a4"` | `"a5"` | Paper format — `"a5"` (148×210 mm, default), `"17x24"` (170×240 mm), or `"a4"` (210×297 mm) |
+| `lang` | `"de" \| "en"` | `"de"` | Document language |
 | `margin-preset` | `"short" \| "medium" \| "long"` | `"short"` | KSP margin profile keyed on final page count — `short` < 200 pp, `medium` 200–399, `long` ≥ 400 |
-| `abstract-en` | `content \| none` | `none` | |
-| `abstract-de` | `content \| none` | `none` | |
-| `acknowledgements` | `content \| none` | `none` | |
-| `notation` | `content \| none` | `none` | Symbol/notation list |
-| `abbreviations` | `content \| none` | `none` | Abbreviations / acronym list |
 | `binding-correction` | `length` | `0mm` | BCOR added to inside margin (8–10 mm for physically bound copies) |
 | `colored-links` | `bool` | `true` | KIT Blue hyperlinks (screen); `false` = black (print) |
 | `draft` | `bool` | `false` | Show "ENTWURF"/"DRAFT" watermark |
 | `draft-info` | `str \| none` | `none` | Optional version string next to watermark (e.g. git SHA) |
 | `serif-headings` | `bool` | `false` | Use Libertinus Serif for headings when `true`, Libertinus Sans-Serif when `false` |
 | `heading-numbering-depth` | `int` | `3` | Deepest heading level that receives a number; deeper levels are styled but not numbered |
-| `own-publications` | `content \| none` | `none` | Back-matter publications list |
-| `own-patents` | `content \| none` | `none` | Back-matter patents list |
-| `supervised-theses` | `content \| none` | `none` | Back-matter supervised theses list |
+| `abstract-en` | `content \| none` | `none` | |
+| `abstract-de` | `content \| none` | `none` | |
+| `acknowledgements` | `content \| none` | `none` | |
+| `notation` | `content \| none` | `none` | Symbol/notation list |
+| `abbreviations` | `content \| none` | `none` | Abbreviations / acronym list |
 | `show-list-of-figures` | `bool` | `true` | List of figures |
 | `show-list-of-tables` | `bool` | `true` | List of tables |
 | `show-list-of-listings` | `bool` | `false` | List of listings |
 | `figure-kinds` | `array` | `()` | Figure kinds beyond `image`/`table`/`raw`, as dicts with `kind`, `supplement`, and optionally `list-title`/`show-list` |
-| `bibliography` | `content \| none` | `none` | Pass `bibliography("refs.bib", title: none, style: "ieee")`; template adds a translated heading |
 | `appendix` | `content \| none` | `none` | Appendix chapters; template applies A, A.1, … numbering, placed before the back-matter lists |
-| `title-page` | `content \| function \| none` | `doctoral-title-page` | Title page. Configure the default with `doctoral-title-page.with(…)` (see below), pass your own content or function, or `none` to omit it |
+| `bibliography` | `content \| none` | `none` | Pass `bibliography("refs.bib", title: none, style: "ieee")`; template adds a translated heading |
+| `own-publications` | `content \| none` | `none` | Back-matter publications list |
+| `own-patents` | `content \| none` | `none` | Back-matter patents list |
+| `supervised-theses` | `content \| none` | `none` | Back-matter supervised theses list |
 
 </details>
 
 <details>
 <summary><strong>Doctoral title page: <code>doctoral-title-page(...)</code></strong></summary>
 
-Everything printed on the KSP doctoral title page. Pass it to `title-page`, configured with
-`.with(…)`. `title`, `author-firstname`, `author-surname`, `format` and `lang` are supplied
-by the template — setting them here has no effect.
+Everything printed on the default doctoral title page.
+Pass it to `title-page`, configured with `.with(…)`.
+`title`, `author-firstname`, `author-surname`, `format` and `lang`
+are supplied by the template — setting them here has no effect.
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
@@ -151,52 +150,6 @@ by the template — setting them here has no effect.
 
 </details>
 
-
-<details>
-<summary><strong>Bachelor's/Master's/Diploma Thesis: <code>thesis(...)</code></strong></summary>
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `author-firstname` | `str` | `"Max"` | |
-| `author-surname` | `str` | `"Mustermann"` | |
-| `title` | `content` | | Thesis title |
-| `format` | `"a5" \| "17x24" \| "a4"` | `"a5"` | Paper format — `"a5"` (148×210 mm, default), `"17x24"` (170×240 mm), or `"a4"` (210×297 mm) |
-| `lang` | `"de" \| "en"` | `"de"` | Document language |
-| `margin-preset` | `"short" \| "medium" \| "long"` | `"short"` | KSP margin profile keyed on final page count — `short` < 200 pp, `medium` 200–399, `long` ≥ 400 |
-| `binding-correction` | `length` | `0mm` | BCOR added to inside margin (8–10 mm for physically bound copies) |
-| `colored-links` | `bool` | `true` | KIT Blue links (screen); `false` = black (print) |
-| `draft` | `bool` | `false` | Show "ENTWURF"/"DRAFT" watermark |
-| `draft-info` | `str \| none` | `none` | Optional version string next to watermark |
-| `serif-headings` | `bool` | `false` | Use Libertinus Serif for headings when `true`, Libertinus Sans-Serif when `false` |
-| `heading-numbering-depth` | `int` | `3` | Deepest heading level that receives a number; deeper levels are styled but not numbered |
-| `abstract-en` | `content \| none` | `none` | |
-| `abstract-de` | `content \| none` | `none` | |
-| `acknowledgements` | `content \| none` | `none` | |
-| `notation` | `content \| none` | `none` | Notation / symbol list |
-| `abbreviations` | `content \| none` | `none` | Abbreviations / acronym list |
-| `show-list-of-figures` | `bool` | `true` | List of figures |
-| `show-list-of-tables` | `bool` | `true` | List of tables |
-| `show-list-of-listings` | `bool` | `false` | List of listings |
-| `figure-kinds` | `array` | `()` | Figure kinds beyond `image`/`table`/`raw`, as dicts with `kind`, `supplement`, and optionally `list-title`/`show-list` |
-| `bibliography` | `content \| none` | `none` | Pass `bibliography("refs.bib", title: none, style: "ieee")`; template adds a translated heading |
-| `appendix` | `content \| none` | `none` | Appendix chapters; template applies A, A.1, … numbering, placed before the back-matter lists |
-| `title-page` | `content \| function \| none` | `print-thesis-title` | Title page. Configure the default with `print-thesis-title.with(…)` (see below), pass your own content or function, or `none` to omit it |
-
-</details>
-
-<details>
-<summary><strong>Thesis title page: <code>print-thesis-title(...)</code></strong></summary>
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `thesis-type` | `str` | `"Masterarbeit"` | e.g. `"Bachelorarbeit"`, `"Diplomarbeit"` |
-| `department` | `str` | `"KIT-Fakultät für Maschinenbau"` | Faculty / department |
-| `university-genitive` | `str` | `"des Karlsruher Instituts für Technologie (KIT)"` | University name, genitive |
-| `examiner` | `str \| none` | `none` | First examiner (Erstprüfer) |
-| `supervisor` | `str \| none` | `none` | Supervisor (Betreuer) |
-| `date-submitted` | `str \| none` | `none` | Submission date |
-
-</details>
 
 ## Cookbook
 
@@ -254,9 +207,11 @@ the top level) to build the default page yourself:
 <details>
 <summary><strong>Custom document composition</strong></summary>
 
-The `components` namespace exports the individual building blocks for assembling a document without the full `dissertation()` / `thesis()` orchestrator. Use this when the high-level templates don't fit your layout needs. You are responsible for applying the setup wrappers in the correct order.
+The `components` namespace exports the individual building blocks for assembling a document without the full `thesis()` orchestrator.
+Use this when the high-level template doesn't fit your layout needs. You are responsible for applying the setup wrappers in the correct order.
 
-Available components: `setup-page`, `setup-front-matter`, `setup-content`, `setup-appendix`, `doctoral-title-page`, `print-thesis-title`, `table-of-contents`, `list-of-figures`, `list-of-tables`, `list-of-listings`, `list-of`.
+Available components:
+`setup-page`, `setup-front-matter`, `setup-content`, `setup-appendix`, `doctoral-title-page`, `table-of-contents`, `list-of-figures`, `list-of-tables`, `list-of-listings`, `list-of`.
 
 ```typst
 #import "@preview/kinetic-kit:0.1.1": components
@@ -337,7 +292,7 @@ Typst gives every figure `kind` its own counter and supplement, but only styles 
 **Declaring a kind.** Give it a `supplement`, and a `list-title` if it should get a back-matter list page. Both take either one value or one per language:
 
 ```typst
-#show: dissertation.with(
+#show: thesis.with(
   figure-kinds: (
     (
       kind:       "algorithm",
@@ -375,7 +330,7 @@ Then tag the figure:
 Set `draft: true` to show an "ENTWURF" (German) or "DRAFT" (English) watermark on every page. Pass `draft-info` for an additional version string:
 
 ```typst
-#show: dissertation.with(
+#show: thesis.with(
   // ...
   draft:      true,
   draft-info: sys.inputs.at("git-sha", default: none),
@@ -397,10 +352,10 @@ Set `draft: false` before submission.
 
 Use the [glossarium](https://typst.app/universe/package/glossarium) package for automatic first-use expansion.
 
-**Important:** `#show: make-glossary` must appear *before* `#show: dissertation.with(...)`. Forgetting this causes silent failure — abbreviations will not expand.
+**Important:** `#show: make-glossary` must appear *before* `#show: thesis.with(...)`. Forgetting this causes silent failure — abbreviations will not expand.
 
 ```typst
-#import "@preview/kinetic-kit:0.1.1": dissertation
+#import "@preview/kinetic-kit:0.1.1": thesis
 #import "@preview/glossarium:0.5.10": make-glossary, register-glossary, print-glossary
 
 #let abbrevs = (
@@ -408,11 +363,11 @@ Use the [glossarium](https://typst.app/universe/package/glossarium) package for 
   (key: "cnn", short: "CNN", long: "Convolutional Neural Network"),
 )
 
-// Must come before #show: dissertation.with(...)
+// Must come before #show: thesis.with(...)
 #show: make-glossary
 #register-glossary(abbrevs)
 
-#show: dissertation.with(
+#show: thesis.with(
   // ...
   // The template adds the translated section heading automatically.
   abbreviations: print-glossary(abbrevs),
@@ -431,13 +386,13 @@ For a nicer two-column grid layout (bold abbreviation on the left, long form on 
 Use the [drafting](https://typst.app/universe/package/drafting) package to add margin notes during writing. Tie `is-draft` to both the watermark and note visibility so they are toggled in one place:
 
 ```typst
-#import "@preview/kinetic-kit:0.1.1": dissertation
+#import "@preview/kinetic-kit:0.1.1": thesis
 #import "@preview/drafting:0.2.2": set-margin-note-defaults, margin-note
 
 #let is-draft = true
 #set-margin-note-defaults(hidden: not is-draft)
 
-#show: dissertation.with(
+#show: thesis.with(
   // ...
   draft: is-draft,
 )

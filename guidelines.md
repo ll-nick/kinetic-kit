@@ -88,7 +88,7 @@ All measurements are from the paper edge, including above headers and below pagi
 | N2 | REQ | Page numbers not placed in the header | KSP p.4 | ✅ | `src/page-setup.typ:136` (footer, not header) |
 | N3 | REQ | Same font characteristics as body text (10 pt) | KSP p.4 | ✅ | `src/page-setup.typ:143` (`font: fonts.serif, size: font-sizes.base`) |
 | N4 | REC | Place page numbers outside (right on odd, left on even pages) | KSP p.4 | ✅ | `src/page-setup.typ:144-148` |
-| N5 | REC | First page with quotable content begins with Roman numeral "i" | KSP p.4 | ✅ | `src/dissertation.typ:141-142` (`setup-front-matter` + `counter(page).update(0)`) |
+| N5 | REC | First page with quotable content begins with Roman numeral "i" | KSP p.4 | ✅ | `src/thesis.typ:156-157` (`setup-front-matter` + `counter(page).update(0)`) |
 
 ---
 
