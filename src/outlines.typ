@@ -83,14 +83,20 @@
     in-outline.update(false)
 }
 
+// The `auto` title is resolved inside a `context` that wraps the whole call, so
+// it lands in the heading as a plain string. Resolving it lazily (a bare
+// `context` expression passed as the title) would re-resolve against `text.lang`
+// wherever the outlined heading is rendered — the list page and, differently, its
+// entry in a table of contents that a stray `set text(lang: …)` had switched.
+
 /// Print the list of figures.
 ///
 /// - title (content | str | auto): Heading of the list page. `auto` uses the
 ///   localized default for the document language.
 /// -> content
-#let list-of-figures(title: auto) = list-of(
+#let list-of-figures(title: auto) = context list-of(
     image,
-    if title == auto { context t.at(text.lang).list-of-figures } else { title },
+    if title == auto { t.at(text.lang).list-of-figures } else { title },
 )
 
 /// Print the list of tables.
@@ -98,9 +104,9 @@
 /// - title (content | str | auto): Heading of the list page. `auto` uses the
 ///   localized default for the document language.
 /// -> content
-#let list-of-tables(title: auto) = list-of(
+#let list-of-tables(title: auto) = context list-of(
     table,
-    if title == auto { context t.at(text.lang).list-of-tables } else { title },
+    if title == auto { t.at(text.lang).list-of-tables } else { title },
 )
 
 /// Print the list of listings.
@@ -108,7 +114,7 @@
 /// - title (content | str | auto): Heading of the list page. `auto` uses the
 ///   localized default for the document language.
 /// -> content
-#let list-of-listings(title: auto) = list-of(
+#let list-of-listings(title: auto) = context list-of(
     raw,
-    if title == auto { context t.at(text.lang).list-of-listings } else { title },
+    if title == auto { t.at(text.lang).list-of-listings } else { title },
 )
