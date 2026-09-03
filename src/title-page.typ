@@ -1,7 +1,6 @@
 // Doctoral thesis title page
 
 #import "typography.typ": font-sizes-by-format, fonts
-#import "kit-colors.typ": kit-colors
 #import "page-conf.typ": title-page-margins-by-format
 #import "translations.typ": t
 
