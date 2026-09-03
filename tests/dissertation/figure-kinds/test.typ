@@ -11,7 +11,7 @@
     title: [Eigene Abbildungsarten],
     lang: "de",
     // Expected list order: Abbildungen, Tabellen, Quellcode, Algorithmen, Sätze.
-    show-lol: true,
+    show-list-of-listings: true,
     figure-kinds: (
         // Declared by this document, with one string per language.
         (

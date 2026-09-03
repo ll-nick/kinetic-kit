@@ -10,7 +10,7 @@
     author-surname: "Mustermann",
     title: [Custom Figure Kinds],
     lang: "en",
-    show-lol: true,
+    show-list-of-listings: true,
     figure-kinds: (
         (
             kind: "algorithm",

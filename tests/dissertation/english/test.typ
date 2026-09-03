@@ -10,8 +10,8 @@
     title: [Test Dissertation in English],
     lang: "en",
     abstract-en: [English abstract.],
-    show-lof: true,
-    show-lot: true,
+    show-list-of-figures: true,
+    show-list-of-tables: true,
     bibliography: bibliography(
         "/examples/bib/references.bib",
         title: none,

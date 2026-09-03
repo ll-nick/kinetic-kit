@@ -15,8 +15,8 @@
     abstract-en: [English abstract.],
     abstract-de: [Deutsche Kurzfassung.],
     acknowledgements: [Acknowledgements.],
-    show-lof: true,
-    show-lot: true,
+    show-list-of-figures: true,
+    show-list-of-tables: true,
     bibliography: bibliography(
         "/examples/bib/references.bib",
         title: none,
