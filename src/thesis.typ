@@ -12,12 +12,6 @@
 /// - author-firstname (str): Author's first name.
 /// - author-surname (str): Author's surname.
 /// - title (content): Thesis title.
-/// - thesis-type (str): e.g. `"Masterarbeit"`, `"Bachelorarbeit"`.
-/// - department (str): Faculty / department name.
-/// - university-genitive (str): University name in genitive case.
-/// - examiner (str | none): First examiner. `none` if unknown.
-/// - supervisor (str | none): Supervisor. `none` if unknown.
-/// - date-submitted (str | none): Submission date string. `none` if unknown.
 /// - format ("a5" | "17x24" | "a4"): Paper format — `"a5"` (148×210 mm, default),
 ///   `"17x24"` (170×240 mm), or `"a4"` (210×297 mm). Font sizes and margins are set automatically.
 /// - lang ("de" | "en"): Document language.
@@ -31,6 +25,7 @@
 /// - abstract-en (content | none): English abstract. `none` = omit.
 /// - abstract-de (content | none): German abstract. `none` = omit.
 /// - acknowledgements (content | none): Acknowledgements. `none` = omit.
+/// - notation (content | none): Notation list. `none` = omit.
 /// - abbreviations (content | none): Abbreviations list. `none` = omit.
 /// - show-list-of-figures (bool): Include List of Figures.
 /// - show-list-of-tables (bool): Include List of Tables.
@@ -45,18 +40,16 @@
 ///   The template adds a translated heading. `none` = omit.
 /// - appendix (content | none): Appendix chapters. Template applies `A`, `A.1`, … numbering
 ///   and places the appendix before the back-matter lists. `none` = omit.
+/// - title-page (content | function | none): Title page. Defaults to the built-in thesis
+///   page; pass `print-thesis-title.with(..)` to configure it, your own content, a function
+///   called as `(title, author-firstname:, author-surname:, format:, lang:)`, or `none`
+///   to omit it.
 /// - doc (content): Main document body (chapters only).
 /// -> content
 #let thesis(
     author-firstname: "Max",
     author-surname: "Mustermann",
     title: [Your Thesis Title],
-    thesis-type: "Masterarbeit",
-    department: "KIT-Fakultät für Maschinenbau",
-    university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
-    examiner: none,
-    supervisor: none,
-    date-submitted: none,
     format: "a5",
     lang: "de",
     margin-preset: "short",
@@ -69,6 +62,7 @@
     abstract-en: none,
     abstract-de: none,
     acknowledgements: none,
+    notation: none,
     abbreviations: none,
     show-list-of-figures: true,
     show-list-of-tables: true,
@@ -76,20 +70,10 @@
     figure-kinds: (),
     bibliography: none,
     appendix: none,
+    title-page: print-thesis-title,
     doc,
 ) = _document(
-    title-page: print-thesis-title(
-        title,
-        thesis-type: thesis-type,
-        author-firstname: author-firstname,
-        author-surname: author-surname,
-        department: department,
-        university-genitive: university-genitive,
-        examiner: examiner,
-        supervisor: supervisor,
-        date-submitted: date-submitted,
-        format: format,
-    ),
+    title-page: title-page,
     title: title,
     author-firstname: author-firstname,
     author-surname: author-surname,
@@ -105,6 +89,7 @@
     abstract-en: abstract-en,
     abstract-de: abstract-de,
     acknowledgements: acknowledgements,
+    notation: notation,
     abbreviations: abbreviations,
     show-list-of-figures: show-list-of-figures,
     show-list-of-tables: show-list-of-tables,
