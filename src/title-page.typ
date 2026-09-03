@@ -1,4 +1,4 @@
-// KIT Dissertation / Thesis Title Page
+// KIT Dissertation / Thesis Title Pages
 
 #import "typography.typ": font-sizes-by-format, fonts
 #import "kit-colors.typ": kit-colors
@@ -28,8 +28,14 @@
 /// - co-advisor-male (bool): Selects gendered label for the co-advisor.
 /// - format (str): Paper format — `"a5"`, `"17x24"`, or `"a4"`. Determines font
 ///   sizes and title-page margins.
+/// - lang (str): Accepted for the `title-page` contract and ignored — this page is
+///   always German.
 /// -> content
-#let print-dissertation-title(
+///
+/// `title`, `author-firstname`, `author-surname`, `format` and `lang` are supplied by
+/// the template when this is passed to `title-page`; setting them via `.with()` has no
+/// effect there.
+#let doctoral-title-page(
     title,
     author-title: "M.Sc.",
     author-firstname: "Max",
@@ -46,6 +52,7 @@
     co-advisor: none,
     co-advisor-male: true,
     format: "a5",
+    lang: "de",
 ) = {
     let font-sizes = font-sizes-by-format.at(format)
     let title-page-margins = title-page-margins-by-format.at(format)
@@ -156,6 +163,8 @@
 /// - date-submitted (content): Submission date string.
 /// - format (str): Paper format — `"a5"`, `"17x24"`, or `"a4"`. Determines font
 ///   sizes and title-page margins.
+/// - lang (str): Accepted for the `title-page` contract and ignored — this page is
+///   always German.
 /// -> content
 #let print-thesis-title(
     title,
@@ -168,6 +177,7 @@
     supervisor: none,
     date-submitted: none,
     format: "a5",
+    lang: "de",
 ) = {
     let font-sizes = font-sizes-by-format.at(format)
     let title-page-margins = title-page-margins-by-format.at(format)
