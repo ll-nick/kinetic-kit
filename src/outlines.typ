@@ -51,14 +51,14 @@
 ///
 /// - lang (str): Document language — `"de"` or `"en"`.
 /// -> content
-#let toc(lang: "de") = {
+#let table-of-contents(lang: "de") = {
     set text(hyphenate: false)
 
     // Extra space above each top-level entry.
     show outline.entry.where(level: 1): set block(above: 1.6em)
 
     outline(
-        title: t.at(lang).toc,
+        title: t.at(lang).table-of-contents,
         depth: 3,
         indent: auto,
     )
