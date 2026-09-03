@@ -2,7 +2,7 @@
 
 #let t = (
     de: (
-        toc: "Inhaltsverzeichnis",
+        table-of-contents: "Inhaltsverzeichnis",
         list-of-figures: "Abbildungsverzeichnis",
         list-of-tables: "Tabellenverzeichnis",
         list-of-listings: "Quellcodeverzeichnis",
@@ -38,7 +38,7 @@
         co-advisor-f: "Korreferentin:",
     ),
     en: (
-        toc: "Contents",
+        table-of-contents: "Contents",
         list-of-figures: "List of Figures",
         list-of-tables: "List of Tables",
         list-of-listings: "List of Listings",

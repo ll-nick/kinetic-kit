@@ -14,7 +14,7 @@
     print-bibliography, print-own-patents, print-own-publications,
     print-supervised-theses,
 )
-#import "outlines.typ": list-of, toc
+#import "outlines.typ": list-of, table-of-contents
 #import "figure-kinds.typ": resolve-figure-kinds, resolve-localized
 
 
@@ -108,7 +108,7 @@
         print-abbreviations(abbreviations, lang)
     }
 
-    toc(lang: lang)
+    table-of-contents(lang: lang)
 
     // ── Main content (Arabic numerals) ──────────────────────────────────────
     show: setup-content
