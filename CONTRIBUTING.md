@@ -45,11 +45,11 @@ Before opening a PR, make sure the CI checks pass:
 ## Tests
 
 Tests live in `tests/`, organized by template type and scenario
-(e.g. `tests/dissertation/approved/`, `tests/thesis/minimal/`).
+(e.g. `tests/doctoral/approved/`, `tests/masters/minimal/`).
 They are compilation tests run with [tytanic](https://typst-community.github.io/tytanic/).
 Add a `test.typ` under a new scenario directory to cover a case:
 
 ```bash
 mise run test                                          # all tests
-tt run --font-path fonts tests/dissertation/appendix   # a single test
+tt run --font-path fonts tests/doctoral/appendix       # a single test
 ```

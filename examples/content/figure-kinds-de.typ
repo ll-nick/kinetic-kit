@@ -1,5 +1,5 @@
 // Demonstriert eine selbst deklarierte Abbildungsart.
-// Wird nur von dissertation-full.typ eingebunden und setzt die passende
+// Wird nur von doctoral-full.typ eingebunden und setzt die passende
 // `figure-kinds`-Deklaration im Dokumentkopf voraus.
 
 = Eigene Abbildungsarten

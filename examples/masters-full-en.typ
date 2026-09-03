@@ -1,8 +1,8 @@
-// KIT Thesis Template — Full-featured English example
-// Mirrors thesis-full.typ with lang: "en" and colored-links: false
+// KIT Master's Thesis — Full-featured English example
+// Mirrors masters-full.typ with lang: "en" and colored-links: false
 // to verify English labels and black-link print output.
 //
-// Compile: typst compile --root . --font-path fonts examples/thesis-full-en.typ examples/thesis-full-en.pdf
+// Compile: typst compile --root . --font-path fonts examples/masters-full-en.typ examples/masters-full-en.pdf
 
 #import "/lib.typ": flex-caption, print-thesis-title, thesis
 #import "content/abbreviations.typ": abbrevs-glossary
@@ -56,6 +56,7 @@
     abstract-en: include "content/abstract-en.typ",
     abstract-de: include "content/abstract-de.typ",
     acknowledgements: include "content/acknowledgements.typ",
+    notation: include "content/notation.typ",
     abbreviations: abbrevs-glossary(abbrevs),
 
     // ── Back matter ─────────────────────────────────────────────────────────

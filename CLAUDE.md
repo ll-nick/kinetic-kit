@@ -93,11 +93,11 @@ Headers are suppressed on chapter-opening pages and blank pages. The draft water
 
 ### Examples (`examples/`)
 
-- `dissertation-full.typ` — comprehensive feature showcase (native multi-bibliography via `bibliography(full: true)`); the only example that declares a custom figure kind, via `content/figure-kinds-de.typ`
-- `dissertation-full-en.typ` — English dissertation variant
-- `dissertation-approved.typ` — approved dissertation variant
-- `dissertation-17x24.typ`, `dissertation-a4.typ` — non-default paper formats (the A4 variant uses fixed margins, so `margin-preset` has no effect there)
-- `thesis-full.typ`, `thesis-full-en.typ` — master's/bachelor's/diploma thesis variants
+- `doctoral-full.typ` — comprehensive feature showcase (native multi-bibliography via `bibliography(full: true)`); the only example that declares a custom figure kind, via `content/figure-kinds-de.typ`
+- `doctoral-full-en.typ` — English doctoral variant
+- `doctoral-approved.typ` — approved doctoral variant
+- `doctoral-17x24.typ`, `doctoral-a4.typ` — non-default paper formats (the A4 variant uses fixed margins, so `margin-preset` has no effect there)
+- `masters-full.typ`, `masters-full-en.typ` — student-thesis variants (`thesis()`)
 
 Shared content in `examples/content/` and bibliographies in `examples/bib/`.
 

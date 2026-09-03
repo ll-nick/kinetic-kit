@@ -1,9 +1,9 @@
-// KIT Dissertation Template — 170×240 mm format example
-// The 17×24 format is offered by KSP alongside A5. Font sizes are adjusted
-// per KSP Manuscript Handbook p. 13 (chapter headings 20 pt, section 15 pt, etc.);
-// margins follow the same page-count-based presets as A5.
+// KIT Doctoral Thesis — Full-featured German example
+// Demonstrates every dissertation() parameter, native multi-bibliography, and
+// optional integrations: glossarium (abbreviation expansion) and drafting
+// (margin annotations during the draft stage).
 //
-// Compile: typst compile --root . --font-path fonts examples/dissertation-17x24.typ examples/dissertation-17x24.pdf
+// Compile: typst compile --root . --font-path fonts examples/doctoral-full.typ examples/doctoral-full.pdf
 
 #import "/lib.typ": dissertation, doctoral-title-page, flex-caption
 #import "content/abbreviations.typ": abbrevs-glossary
@@ -33,8 +33,6 @@
 // ── Dissertation ──────────────────────────────────────────────────────────
 
 #show: dissertation.with(
-    // ── Format ──────────────────────────────────────────────────────────────
-    format: "17x24",
     author-firstname: "Max",
     author-surname: "Mustermann",
 
@@ -74,6 +72,15 @@
     show-list-of-figures: true,
     show-list-of-tables: true,
     show-list-of-listings: true,
+    // Pseudocode counts separately from the code listings.
+    figure-kinds: (
+        (
+            kind: "algorithm",
+            supplement: (de: [Algorithmus], en: [Algorithm]),
+            list-title: (de: [Algorithmenverzeichnis], en: [List of Algorithms]),
+            show-list: true,
+        ),
+    ),
 
     // Separate publication lists via native multi-bibliography.
     // full: true lists all entries regardless of in-text citations.
@@ -122,7 +129,7 @@
 
         // ── Status: submitted ───────────────────────────────────────────────────
         // Switch to status-approved: true and fill in the fields below once approved.
-        // See dissertation-approved.typ for the approved title page.
+        // See doctoral-approved.typ for the approved title page.
         status-approved: false,
     ),
 )
@@ -138,6 +145,7 @@ verbessern den @rmse um 50 %. Das Systemmodell ist eine @ode. Bei erneuter Erwä
 #inline-note[Diesen Abschnitt noch ausbauen.]
 
 #include "content/features-de.typ"
+#include "content/figure-kinds-de.typ"
 #include "content/chapters-de.typ"
 
 #if is-draft { note-outline() }

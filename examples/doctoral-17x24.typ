@@ -1,8 +1,9 @@
-// KIT Dissertation Template — Full-featured English example
-// Mirrors dissertation-full.typ with lang: "en" and a female author
-// (author-male: false) to verify gendered German title page strings.
+// KIT Doctoral Thesis — 170×240 mm format example
+// The 17×24 format is offered by KSP alongside A5. Font sizes are adjusted
+// per KSP Manuscript Handbook p. 13 (chapter headings 20 pt, section 15 pt, etc.);
+// margins follow the same page-count-based presets as A5.
 //
-// Compile: typst compile --root . --font-path fonts examples/dissertation-full-en.typ examples/dissertation-full-en.pdf
+// Compile: typst compile --root . --font-path fonts examples/doctoral-17x24.typ examples/doctoral-17x24.pdf
 
 #import "/lib.typ": dissertation, doctoral-title-page, flex-caption
 #import "content/abbreviations.typ": abbrevs-glossary
@@ -13,9 +14,9 @@
 #import "@preview/glossarium:0.5.10": make-glossary, register-glossary
 
 #let abbrevs = (
-    (key: "kit", short: "KIT", long: "Karlsruhe Institute of Technology"),
+    (key: "kit", short: "KIT", long: "Karlsruher Institut für Technologie"),
     (key: "ksp", short: "KSP", long: "KIT Scientific Publishing"),
-    (key: "ode", short: "ODE", long: "Ordinary Differential Equation"),
+    (key: "ode", short: "ODE", long: "Gewöhnliche Differentialgleichung"),
     (key: "rmse", short: "RMSE", long: "Root Mean Square Error"),
 )
 
@@ -23,6 +24,8 @@
 #register-glossary(abbrevs)
 
 // ── Third-party: drafting (margin annotations) ────────────────────────────
+// Set is-draft here so the same value drives both the watermark and the
+// visibility of margin notes — set to false before final submission.
 #import "@preview/drafting:0.2.2": inline-note, note-outline, set-margin-note-defaults
 #let is-draft = true
 #set-margin-note-defaults(hidden: not is-draft)
@@ -30,23 +33,30 @@
 // ── Dissertation ──────────────────────────────────────────────────────────
 
 #show: dissertation.with(
-    author-firstname: "Jane",
-    author-surname: "Doe",
+    // ── Format ──────────────────────────────────────────────────────────────
+    format: "17x24",
+    author-firstname: "Max",
+    author-surname: "Mustermann",
 
     // ── Title ───────────────────────────────────────────────────────────────
     title: [
-        A Complete Dissertation Title --- Spanning Multiple Lines
+        Ein vollständiger Titel der Dissertation -- Über mehrere Zeilen
     ],
 
-    // ── Language: English ───────────────────────────────────────────────────
-    // Body text labels (TOC, LoF, bibliography heading, …) are in English.
-    // The title page always uses German strings regardless of lang.
-    lang: "en",
+    // ── Language ────────────────────────────────────────────────────────────
+    lang: "de",
 
     // ── Layout ──────────────────────────────────────────────────────────────
+    // "short" < 200 pages | "medium" 200–399 | "long" ≥ 400
     margin-preset: "medium",
-    binding-correction: 5mm, // Add BCOR for physically bound print copies
     colored-links: true,
+    heading-numbering-depth: 4,
+    serif-headings: true,
+    // exam-date:         "12. Dezember 2025",
+    // main-advisor:      "Prof. Dr.-Ing. Hans Musterbetreuer",
+    // main-advisor-male: true,
+    // co-advisor:        "Prof. Dr. Maria Musterreferentin",
+    // co-advisor-male:   false,
 
     // ── Draft watermark ─────────────────────────────────────────────────────
     draft: is-draft,
@@ -57,6 +67,7 @@
     abstract-de: include "content/abstract-de.typ",
     acknowledgements: include "content/acknowledgements.typ",
     notation: include "content/notation.typ",
+
     abbreviations: abbrevs-glossary(abbrevs),
 
     // ── Back matter ─────────────────────────────────────────────────────────
@@ -64,6 +75,8 @@
     show-list-of-tables: true,
     show-list-of-listings: true,
 
+    // Separate publication lists via native multi-bibliography.
+    // full: true lists all entries regardless of in-text citations.
     own-publications: bibliography(
         "bib/own-publications.bib",
         title: none,
@@ -77,8 +90,8 @@
         full: true,
     ),
     own-patents: [
-        Doe, J. (2024). *A Method for Optimising Sample Processes*. Deutsches Patent- und
-        Markenamt, DE 10 2024 000 002 A1.
+        Mustermann, M. (2024). *Verfahren zur Optimierung von Musterverfahren*. Deutsches
+        Patent- und Markenamt, DE 10 2024 000 001 A1.
     ],
 
     // ── Bibliography ────────────────────────────────────────────────────────
@@ -90,15 +103,14 @@
 
     // ── Appendix ─────────────────────────────────────────────────────────────
     appendix: [
-        = Supplementary Material
+        = Ergänzendes Material
 
         #lorem(800)
     ],
     title-page: doctoral-title-page.with(
         // ── Author ──────────────────────────────────────────────────────────────
         author-title: "M.Sc.",
-        // false = feminine grammatical forms on the German title page
-        author-male: false,
+        author-male: true,
 
         // ── Degree ──────────────────────────────────────────────────────────────
         doc-degree: "Doktors der Ingenieurwissenschaften (Dr.-Ing.)",
@@ -109,20 +121,23 @@
         university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
 
         // ── Status: submitted ───────────────────────────────────────────────────
+        // Switch to status-approved: true and fill in the fields below once approved.
+        // See doctoral-approved.typ for the approved title page.
         status-approved: false,
     ),
 )
 
-= A First Example Chapter
+= Ein erstes Beispielkapitel
 
 // Abbreviations expand on first use. Both @key and #gls("key") syntax are supported.
-// First use: "Karlsruhe Institute of Technology (KIT)", subsequent: "KIT".
-This work was conducted at @kit and published via @ksp. The results improve the @rmse by
-50 %. The system model is an @ode. On second reference, @kit uses only the short form.
+// First use: "Karlsruher Institut für Technologie (KIT)", subsequent: "KIT".
+Diese Arbeit wurde am @kit durchgeführt und über @ksp veröffentlicht. Die Ergebnisse
+verbessern den @rmse um 50 %. Das Systemmodell ist eine @ode. Bei erneuter Erwähnung zeigt
+@kit nur die Kurzform.
 
-#inline-note[Expand this section.]
+#inline-note[Diesen Abschnitt noch ausbauen.]
 
-#include "content/features-en.typ"
-#include "content/chapters-en.typ"
+#include "content/features-de.typ"
+#include "content/chapters-de.typ"
 
 #if is-draft { note-outline() }

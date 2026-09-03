@@ -1,8 +1,8 @@
-// KIT Thesis Template — Full-featured German example
+// KIT Master's Thesis — Full-featured German example
 // Demonstrates every thesis() parameter and optional integrations:
 // glossarium (abbreviation expansion) and drafting (margin annotations).
 //
-// Compile: typst compile --root . --font-path fonts examples/thesis-full.typ examples/thesis-full.pdf
+// Compile: typst compile --root . --font-path fonts examples/masters-full.typ examples/masters-full.pdf
 
 #import "/lib.typ": flex-caption, print-thesis-title, thesis
 #import "content/abbreviations.typ": abbrevs-glossary
@@ -55,6 +55,7 @@
     abstract-en: include "content/abstract-en.typ",
     abstract-de: include "content/abstract-de.typ",
     acknowledgements: include "content/acknowledgements.typ",
+    notation: include "content/notation.typ",
 
     abbreviations: abbrevs-glossary(abbrevs),
 
