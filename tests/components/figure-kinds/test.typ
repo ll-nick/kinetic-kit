@@ -1,5 +1,5 @@
 // Compile-only: figure kinds on the components path — `setup-page` supplies the
-// supplements, and the list pages are placed by hand with `print-list-of` rather
+// supplements, and the list pages are placed by hand with `list-of` rather
 // than by the back matter of `dissertation()`.
 #import "/lib.typ": components, flex-caption
 
@@ -26,7 +26,7 @@
 
 #show: components.setup-front-matter
 
-#components.print-toc(lang: "de")
+#components.toc(lang: "de")
 
 #show: components.setup-content
 
@@ -45,7 +45,7 @@
 #figure(box-body, kind: "algorithm", caption: [Algorithmus im zweiten Kapitel])
 #figure(box-body, kind: "theorem", caption: [Satz im zweiten Kapitel])
 
-// `print-list-of` sets the state that switches `flex-caption` to its short form;
+// `list-of` sets the state that switches `flex-caption` to its short form;
 // a hand-written `outline(target: …)` would not.
-#components.print-list-of("algorithm", title: [Algorithmenverzeichnis])
-#components.print-list-of("theorem", title: [Satzverzeichnis])
+#components.list-of("algorithm", title: [Algorithmenverzeichnis])
+#components.list-of("theorem", title: [Satzverzeichnis])
