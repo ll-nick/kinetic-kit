@@ -175,7 +175,7 @@
         print-abbreviations(abbreviations, lang)
     }
 
-    table-of-contents(lang: lang)
+    table-of-contents()
 
     // ── Main content (Arabic numerals) ──────────────────────────────────────
     show: setup-content
@@ -195,7 +195,7 @@
         if entry.show-list {
             list-of(
                 entry.kind,
-                title: resolve-localized(
+                resolve-localized(
                     entry.list-title,
                     lang,
                     kind: entry.kind,
