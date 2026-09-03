@@ -29,7 +29,7 @@
     format: "a5",
 )
 
-#components.toc(lang: "de")
+#components.table-of-contents(lang: "de")
 #components.list-of-figures(lang: "de")
 
 // ── Main content ──────────────────────────────────────────────────────────

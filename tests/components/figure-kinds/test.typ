@@ -26,7 +26,7 @@
 
 #show: components.setup-front-matter
 
-#components.toc(lang: "de")
+#components.table-of-contents(lang: "de")
 
 #show: components.setup-content
 
