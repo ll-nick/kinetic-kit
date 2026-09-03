@@ -1,8 +1,8 @@
-// KIT Dissertation Template — Full-featured English example
-// Mirrors dissertation-full.typ with lang: "en" and a female author
+// KIT Doctoral Thesis — Full-featured English example
+// Mirrors doctoral-full.typ with lang: "en" and a female author
 // (author-male: false) to verify gendered German title page strings.
 //
-// Compile: typst compile --root . --font-path fonts examples/dissertation-full-en.typ examples/dissertation-full-en.pdf
+// Compile: typst compile --root . --font-path fonts examples/doctoral-full-en.typ examples/doctoral-full-en.pdf
 
 #import "/lib.typ": dissertation, doctoral-title-page, flex-caption
 #import "content/abbreviations.typ": abbrevs-glossary

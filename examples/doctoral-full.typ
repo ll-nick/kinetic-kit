@@ -1,9 +1,9 @@
-// KIT Dissertation Template — Full-featured German example
+// KIT Doctoral Thesis — Full-featured German example
 // Demonstrates every dissertation() parameter, native multi-bibliography, and
 // optional integrations: glossarium (abbreviation expansion) and drafting
 // (margin annotations during the draft stage).
 //
-// Compile: typst compile --root . --font-path fonts examples/dissertation-full.typ examples/dissertation-full.pdf
+// Compile: typst compile --root . --font-path fonts examples/doctoral-full.typ examples/doctoral-full.pdf
 
 #import "/lib.typ": dissertation, doctoral-title-page, flex-caption
 #import "content/abbreviations.typ": abbrevs-glossary
@@ -129,7 +129,7 @@
 
         // ── Status: submitted ───────────────────────────────────────────────────
         // Switch to status-approved: true and fill in the fields below once approved.
-        // See dissertation-approved.typ for the approved title page.
+        // See doctoral-approved.typ for the approved title page.
         status-approved: false,
     ),
 )

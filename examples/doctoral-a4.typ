@@ -1,10 +1,10 @@
-// KIT Dissertation Template — A4 format example
+// KIT Doctoral Thesis — A4 format example
 // KSP advises against A4 but offers it as a fallback. Font sizes and margins
 // differ from A5/17×24 (chapter headings 25 pt, body 11 pt, fixed margins:
 // top 35 mm, inside 35 mm, bottom 30 mm, outside 25 mm). The margin-preset
 // parameter has no effect for A4 (all presets use the same fixed margins).
 //
-// Compile: typst compile --root . --font-path fonts examples/dissertation-a4.typ examples/dissertation-a4.pdf
+// Compile: typst compile --root . --font-path fonts examples/doctoral-a4.typ examples/doctoral-a4.pdf
 
 #import "/lib.typ": dissertation, doctoral-title-page, flex-caption
 #import "content/abbreviations.typ": abbrevs-glossary
@@ -122,7 +122,7 @@
 
         // ── Status: submitted ───────────────────────────────────────────────────
         // Switch to status-approved: true and fill in the fields below once approved.
-        // See dissertation-approved.typ for the approved title page.
+        // See doctoral-approved.typ for the approved title page.
         status-approved: false,
     ),
 )

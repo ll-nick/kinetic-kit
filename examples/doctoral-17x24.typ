@@ -1,9 +1,9 @@
-// KIT Dissertation Template — 170×240 mm format example
+// KIT Doctoral Thesis — 170×240 mm format example
 // The 17×24 format is offered by KSP alongside A5. Font sizes are adjusted
 // per KSP Manuscript Handbook p. 13 (chapter headings 20 pt, section 15 pt, etc.);
 // margins follow the same page-count-based presets as A5.
 //
-// Compile: typst compile --root . --font-path fonts examples/dissertation-17x24.typ examples/dissertation-17x24.pdf
+// Compile: typst compile --root . --font-path fonts examples/doctoral-17x24.typ examples/doctoral-17x24.pdf
 
 #import "/lib.typ": dissertation, doctoral-title-page, flex-caption
 #import "content/abbreviations.typ": abbrevs-glossary
@@ -122,7 +122,7 @@
 
         // ── Status: submitted ───────────────────────────────────────────────────
         // Switch to status-approved: true and fill in the fields below once approved.
-        // See dissertation-approved.typ for the approved title page.
+        // See doctoral-approved.typ for the approved title page.
         status-approved: false,
     ),
 )

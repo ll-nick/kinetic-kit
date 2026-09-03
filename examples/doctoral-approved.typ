@@ -1,9 +1,9 @@
-// KIT Dissertation Template — Approved state example
+// KIT Doctoral Thesis — Approved state example
 // Shows only the parameters specific to status-approved: true (exam date,
-// advisors, black links for print submission). See dissertation-full.typ
+// advisors, black links for print submission). See doctoral-full.typ
 // for a complete example with all features.
 //
-// Compile: typst compile --root . --font-path fonts examples/dissertation-approved.typ examples/dissertation-approved.pdf
+// Compile: typst compile --root . --font-path fonts examples/doctoral-approved.typ examples/doctoral-approved.pdf
 
 #import "/lib.typ": dissertation, doctoral-title-page
 

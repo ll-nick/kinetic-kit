@@ -137,8 +137,8 @@ first mention, "KIT" thereafter), the #link(
     "https://typst.app/universe/package/glossarium",
 )[glossarium] package integrates well with the template. See the full example in
 #link(
-    "https://github.com/ll-nick/kinetic-kit/blob/main/examples/dissertation-full.typ",
-)[`examples/dissertation-full.typ`]
+    "https://github.com/ll-nick/kinetic-kit/blob/main/examples/doctoral-full.typ",
+)[`examples/doctoral-full.typ`]
 in the repository.
 
 == Citations and the Bibliography
