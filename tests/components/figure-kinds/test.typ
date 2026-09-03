@@ -1,11 +1,12 @@
-// Compile-only: figure kinds on the components path — `setup-page` supplies the
-// supplements, and the list pages are placed by hand with `list-of` rather
-// than by the back matter of `thesis()`.
-#import "/lib.typ": components, flex-caption
+// Compile-only: figure kinds without `thesis()` — `setup-page` supplies the
+// supplements, and the list pages are placed by hand with `outlines.list-of`
+// rather than by the back matter of `thesis()`.
+#import "/lib.typ": flex-caption, outlines
+#import "/src/page-setup.typ": setup-content, setup-front-matter, setup-page
 
 #let box-body = rect(width: 3cm, height: 1cm)
 
-#show: components.setup-page.with(
+#show: setup-page.with(
     margin-preset: "short",
     lang: "de",
     figure-kinds: (
@@ -24,11 +25,11 @@
     ),
 )
 
-#show: components.setup-front-matter
+#show: setup-front-matter
 
-#components.table-of-contents(lang: "de")
+#outlines.table-of-contents()
 
-#show: components.setup-content
+#show: setup-content
 
 = Einleitung
 
@@ -47,5 +48,5 @@
 
 // `list-of` sets the state that switches `flex-caption` to its short form;
 // a hand-written `outline(target: …)` would not.
-#components.list-of("algorithm", title: [Algorithmenverzeichnis])
-#components.list-of("theorem", title: [Satzverzeichnis])
+#outlines.list-of("algorithm", [Algorithmenverzeichnis])
+#outlines.list-of("theorem", [Satzverzeichnis])

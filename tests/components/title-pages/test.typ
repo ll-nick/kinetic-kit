@@ -1,8 +1,8 @@
-// Compile-only: render the doctoral title page directly via components,
+// Compile-only: render the doctoral title page directly,
 // without any setup-page wrapper (it sets its own page geometry).
-#import "/lib.typ": components
+#import "/lib.typ": doctoral-title-page
 
-#components.doctoral-title-page(
+#doctoral-title-page(
     [Titel der Dissertation],
     author-title: "M.Sc.",
     author-firstname: "Max",

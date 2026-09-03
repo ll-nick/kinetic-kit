@@ -1,9 +1,10 @@
 // Compile-only: list-of-figures, list-of-tables, list-of-listings — verifies the flex-caption
 // state management compiles correctly when list functions are called directly.
-#import "/lib.typ": components, flex-caption
+#import "/lib.typ": flex-caption, outlines
+#import "/src/page-setup.typ": setup-content, setup-page
 
-#show: components.setup-page.with(lang: "en", margin-preset: "short")
-#show: components.setup-content
+#show: setup-page.with(lang: "en", margin-preset: "short")
+#show: setup-content
 
 = Chapter One
 
@@ -22,6 +23,6 @@
     kind: table,
 )
 
-#components.list-of-figures(lang: "en")
-#components.list-of-tables(lang: "en")
-#components.list-of-listings(lang: "en")
+#outlines.list-of-figures()
+#outlines.list-of-tables()
+#outlines.list-of-listings()

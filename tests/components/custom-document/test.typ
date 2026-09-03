@@ -1,11 +1,14 @@
-// Compile-only: full custom document assembled from individual components,
+// Compile-only: full custom document assembled from the internal setup wrappers,
 // exercising the complete page-setup wrapper sequence.
-#import "/lib.typ": components, flex-caption
+#import "/lib.typ": doctoral-title-page, flex-caption, outlines
+#import "/src/page-setup.typ": (
+    setup-appendix, setup-content, setup-front-matter, setup-page,
+)
 #import "/src/typography.typ": font-sizes-by-format
 
 #let font-sizes = font-sizes-by-format.at("a5")
 
-#show: components.setup-page.with(
+#show: setup-page.with(
     margin-preset: "short",
     lang: "de",
     colored-links: true,
@@ -13,9 +16,9 @@
 
 // ── Front matter ─────────────────────────────────────────────────────────
 
-#show: components.setup-front-matter
+#show: setup-front-matter
 
-#components.doctoral-title-page(
+#doctoral-title-page(
     [Titel der Dissertation],
     author-title: "M.Sc.",
     author-firstname: "Max",
@@ -29,12 +32,12 @@
     format: "a5",
 )
 
-#components.table-of-contents(lang: "de")
-#components.list-of-figures(lang: "de")
+#outlines.table-of-contents()
+#outlines.list-of-figures()
 
 // ── Main content ──────────────────────────────────────────────────────────
 
-#show: components.setup-content
+#show: setup-content
 
 = Einleitung
 
@@ -52,7 +55,7 @@ Weiterer Inhalt.
 
 // ── Appendix ─────────────────────────────────────────────────────────────
 
-#show: components.setup-appendix
+#show: setup-appendix
 
 = Anhang
 

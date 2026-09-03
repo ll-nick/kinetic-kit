@@ -1,9 +1,9 @@
 // Compile-only: setup-front-matter wrapper — verifies Roman numeral pagination
 // and heading numbering suppression compile correctly.
-#import "/lib.typ": components
+#import "/src/page-setup.typ": setup-front-matter, setup-page
 
-#show: components.setup-page.with(lang: "de", margin-preset: "short")
-#show: components.setup-front-matter
+#show: setup-page.with(lang: "de", margin-preset: "short")
+#show: setup-front-matter
 
 = Vorwort
 
