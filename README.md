@@ -97,24 +97,12 @@ for the API documentation auto-generated from the source code.
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `author-title` | `str \| none` | `"M.Sc."` | Academic title preceding the name; `none` to omit |
 | `author-firstname` | `str` | `"Max"` | |
 | `author-surname` | `str` | `"Mustermann"` | |
-| `author-male` | `bool` | `true` | Controls gendered German text on the title page |
 | `title` | `content` | | Dissertation title |
-| `doc-degree` | `str` | `"Doktors der Ingenieurwissenschaften (Dr.-Ing.)"` | Degree in masculine form |
-| `doc-degree-f` | `str` | `"Doktorin der Ingenieurwissenschaften (Dr.-Ing.)"` | Degree in feminine form |
-| `department` | `str` | `"KIT-Fakultät für Maschinenbau"` | |
-| `university-genitive` | `str` | `"des Karlsruher Instituts für Technologie (KIT)"` | University name in genitive case |
 | `lang` | `"de" \| "en"` | `"de"` | Document language |
 | `format` | `"a5" \| "17x24" \| "a4"` | `"a5"` | Paper format — `"a5"` (148×210 mm, default), `"17x24"` (170×240 mm), or `"a4"` (210×297 mm) |
 | `margin-preset` | `"short" \| "medium" \| "long"` | `"short"` | KSP margin profile keyed on final page count — `short` < 200 pp, `medium` 200–399, `long` ≥ 400 |
-| `status-approved` | `bool` | `false` | `false` = eingereicht, `true` = angenommen |
-| `exam-date` | `str \| none` | `none` | Date of oral examination; required when `status-approved: true` |
-| `main-advisor` | `str \| none` | `none` | Hauptreferent |
-| `main-advisor-male` | `bool` | `true` | |
-| `co-advisor` | `str \| none` | `none` | Korreferent |
-| `co-advisor-male` | `bool` | `true` | |
 | `abstract-en` | `content \| none` | `none` | |
 | `abstract-de` | `content \| none` | `none` | |
 | `acknowledgements` | `content \| none` | `none` | |
@@ -135,8 +123,34 @@ for the API documentation auto-generated from the source code.
 | `figure-kinds` | `array` | `()` | Figure kinds beyond `image`/`table`/`raw`, as dicts with `kind`, `supplement`, and optionally `list-title`/`show-list` |
 | `bibliography` | `content \| none` | `none` | Pass `bibliography("refs.bib", title: none, style: "ieee")`; template adds a translated heading |
 | `appendix` | `content \| none` | `none` | Appendix chapters; template applies A, A.1, … numbering, placed before the back-matter lists |
+| `title-page` | `content \| function \| none` | `doctoral-title-page` | Title page. Configure the default with `doctoral-title-page.with(…)` (see below), pass your own content or function, or `none` to omit it |
 
 </details>
+
+<details>
+<summary><strong>Doctoral title page: <code>doctoral-title-page(...)</code></strong></summary>
+
+Everything printed on the KSP doctoral title page. Pass it to `title-page`, configured with
+`.with(…)`. `title`, `author-firstname`, `author-surname`, `format` and `lang` are supplied
+by the template — setting them here has no effect.
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `author-title` | `str \| none` | `"M.Sc."` | Academic title preceding the name; `none` to omit |
+| `author-male` | `bool` | `true` | `true` = male grammatical forms, `false` = female |
+| `doc-degree` | `str` | `"Doktors der Ingenieurwissenschaften (Dr.-Ing.)"` | Degree name, masculine |
+| `doc-degree-f` | `str` | `"Doktorin der Ingenieurwissenschaften (Dr.-Ing.)"` | Degree name, feminine |
+| `department` | `str` | `"KIT-Fakultät für Maschinenbau"` | Faculty / department |
+| `university-genitive` | `str` | `"des Karlsruher Instituts für Technologie (KIT)"` | University name, genitive |
+| `status-approved` | `bool` | `false` | `false` = submitted, `true` = approved |
+| `exam-date` | `str \| none` | `none` | Date of the oral examination; shown when approved |
+| `main-advisor` | `str \| none` | `none` | Main referee; shown when approved |
+| `main-advisor-male` | `bool` | `true` | Grammatical gender of the main advisor label |
+| `co-advisor` | `str \| none` | `none` | Co-referee; shown when approved |
+| `co-advisor-male` | `bool` | `true` | Grammatical gender of the co-advisor label |
+
+</details>
+
 
 <details>
 <summary><strong>Bachelor's/Master's/Diploma Thesis: <code>thesis(...)</code></strong></summary>
@@ -146,12 +160,6 @@ for the API documentation auto-generated from the source code.
 | `author-firstname` | `str` | `"Max"` | |
 | `author-surname` | `str` | `"Mustermann"` | |
 | `title` | `content` | | Thesis title |
-| `thesis-type` | `str` | `"Masterarbeit"` | e.g. `"Bachelorarbeit"`, `"Diplomarbeit"` |
-| `department` | `str` | `"KIT-Fakultät für Maschinenbau"` | |
-| `university-genitive` | `str` | `"des Karlsruher Instituts für Technologie (KIT)"` | University name in genitive case |
-| `examiner` | `str \| none` | `none` | Erstprüfer |
-| `supervisor` | `str \| none` | `none` | Betreuer |
-| `date-submitted` | `str \| none` | `none` | |
 | `format` | `"a5" \| "17x24" \| "a4"` | `"a5"` | Paper format — `"a5"` (148×210 mm, default), `"17x24"` (170×240 mm), or `"a4"` (210×297 mm) |
 | `lang` | `"de" \| "en"` | `"de"` | Document language |
 | `margin-preset` | `"short" \| "medium" \| "long"` | `"short"` | KSP margin profile keyed on final page count — `short` < 200 pp, `medium` 200–399, `long` ≥ 400 |
@@ -164,6 +172,7 @@ for the API documentation auto-generated from the source code.
 | `abstract-en` | `content \| none` | `none` | |
 | `abstract-de` | `content \| none` | `none` | |
 | `acknowledgements` | `content \| none` | `none` | |
+| `notation` | `content \| none` | `none` | Notation / symbol list |
 | `abbreviations` | `content \| none` | `none` | Abbreviations / acronym list |
 | `show-list-of-figures` | `bool` | `true` | List of figures |
 | `show-list-of-tables` | `bool` | `true` | List of tables |
@@ -171,17 +180,83 @@ for the API documentation auto-generated from the source code.
 | `figure-kinds` | `array` | `()` | Figure kinds beyond `image`/`table`/`raw`, as dicts with `kind`, `supplement`, and optionally `list-title`/`show-list` |
 | `bibliography` | `content \| none` | `none` | Pass `bibliography("refs.bib", title: none, style: "ieee")`; template adds a translated heading |
 | `appendix` | `content \| none` | `none` | Appendix chapters; template applies A, A.1, … numbering, placed before the back-matter lists |
+| `title-page` | `content \| function \| none` | `print-thesis-title` | Title page. Configure the default with `print-thesis-title.with(…)` (see below), pass your own content or function, or `none` to omit it |
+
+</details>
+
+<details>
+<summary><strong>Thesis title page: <code>print-thesis-title(...)</code></strong></summary>
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `thesis-type` | `str` | `"Masterarbeit"` | e.g. `"Bachelorarbeit"`, `"Diplomarbeit"` |
+| `department` | `str` | `"KIT-Fakultät für Maschinenbau"` | Faculty / department |
+| `university-genitive` | `str` | `"des Karlsruher Instituts für Technologie (KIT)"` | University name, genitive |
+| `examiner` | `str \| none` | `none` | First examiner (Erstprüfer) |
+| `supervisor` | `str \| none` | `none` | Supervisor (Betreuer) |
+| `date-submitted` | `str \| none` | `none` | Submission date |
 
 </details>
 
 ## Cookbook
 
 <details>
+<summary><strong>Your own title page</strong></summary>
+
+You can fully customize the title page if you need something other than the default.
+The `title-page` parameter accepts content, or a function the template calls with the details it already knows:
+
+```typst
+#import "@preview/kinetic-kit:0.1.1": thesis
+
+#let your-custom-title-page(
+  title,
+  author-firstname: "",
+  author-surname: "",
+  format: "a5",
+  lang: "de",
+  ..rest,
+) = align(center)[
+  #v(2cm)
+  #text(size: 20pt, weight: "bold")[#title]
+  #v(1cm)
+  #author-firstname #author-surname
+]
+
+#show: thesis.with(
+  title: [Titel der Masterarbeit],
+  author-firstname: "Max",
+  author-surname: "Mustermann",
+  title-page: your-custom-title-page,
+)
+```
+
+The template supplies `title`, `author-firstname`, `author-surname`, `format` and `lang`,
+so they stay in step with the PDF metadata — pre-binding them with `.with()` has no effect.
+Take only what you need and let `..rest` absorb the others. Page geometry, and the
+suppressed header, footer and page number, are applied for you; a `set page` of your own
+overrides them.
+
+Pass `title-page: none` to omit the page entirely, or `doctoral-title-page` (exported at
+the top level) to build the default page yourself:
+
+```typst
+#import "@preview/kinetic-kit:0.1.1": doctoral-title-page, thesis
+
+#show: thesis.with(
+  title: [Titel der Dissertation],
+  title-page: doctoral-title-page.with(status-approved: true, exam-date: "12. Mai 2026"),
+)
+```
+
+</details>
+
+<details>
 <summary><strong>Custom document composition</strong></summary>
 
 The `components` namespace exports the individual building blocks for assembling a document without the full `dissertation()` / `thesis()` orchestrator. Use this when the high-level templates don't fit your layout needs. You are responsible for applying the setup wrappers in the correct order.
 
-Available components: `setup-page`, `setup-front-matter`, `setup-content`, `setup-appendix`, `print-dissertation-title`, `print-thesis-title`, `table-of-contents`, `list-of-figures`, `list-of-tables`, `list-of-listings`, `list-of`.
+Available components: `setup-page`, `setup-front-matter`, `setup-content`, `setup-appendix`, `doctoral-title-page`, `print-thesis-title`, `table-of-contents`, `list-of-figures`, `list-of-tables`, `list-of-listings`, `list-of`.
 
 ```typst
 #import "@preview/kinetic-kit:0.1.1": components
@@ -199,7 +274,7 @@ Available components: `setup-page`, `setup-front-matter`, `setup-content`, `setu
 // 2. Front matter — Roman numerals, no heading numbers
 #show: components.setup-front-matter
 
-#components.print-dissertation-title(
+#components.doctoral-title-page(
   [Titel der Dissertation],
   author-title: "M.Sc.",
   author-firstname: "Vorname",
