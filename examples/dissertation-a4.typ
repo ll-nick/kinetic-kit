@@ -6,7 +6,7 @@
 //
 // Compile: typst compile --root . --font-path fonts examples/dissertation-a4.typ examples/dissertation-a4.pdf
 
-#import "/lib.typ": dissertation, flex-caption
+#import "/lib.typ": dissertation, doctoral-title-page, flex-caption
 #import "content/abbreviations.typ": abbrevs-glossary
 
 // ── Third-party: glossarium ───────────────────────────────────────────────
@@ -36,25 +36,13 @@
 #show: dissertation.with(
     // ── Format ──────────────────────────────────────────────────────────────
     format: "a4",
-
-    // ── Author ──────────────────────────────────────────────────────────────
-    author-title: "M.Sc.",
     author-firstname: "Max",
     author-surname: "Mustermann",
-    author-male: true,
 
     // ── Title ───────────────────────────────────────────────────────────────
     title: [
         Ein vollständiger Titel der Dissertation -- Über mehrere Zeilen
     ],
-
-    // ── Degree ──────────────────────────────────────────────────────────────
-    doc-degree: "Doktors der Ingenieurwissenschaften (Dr.-Ing.)",
-    doc-degree-f: "Doktorin der Ingenieurwissenschaften (Dr.-Ing.)",
-
-    // ── Institution ─────────────────────────────────────────────────────────
-    department: "KIT-Fakultät für Maschinenbau",
-    university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
 
     // ── Language ────────────────────────────────────────────────────────────
     lang: "de",
@@ -64,11 +52,6 @@
     colored-links: true,
     heading-numbering-depth: 4,
     serif-headings: true,
-
-    // ── Status: submitted ───────────────────────────────────────────────────
-    // Switch to status-approved: true and fill in the fields below once approved.
-    // See dissertation-approved.typ for the approved title page.
-    status-approved: false,
     // exam-date:         "12. Dezember 2025",
     // main-advisor:      "Prof. Dr.-Ing. Hans Musterbetreuer",
     // main-advisor-male: true,
@@ -124,6 +107,24 @@
 
         #lorem(800)
     ],
+    title-page: doctoral-title-page.with(
+        // ── Author ──────────────────────────────────────────────────────────────
+        author-title: "M.Sc.",
+        author-male: true,
+
+        // ── Degree ──────────────────────────────────────────────────────────────
+        doc-degree: "Doktors der Ingenieurwissenschaften (Dr.-Ing.)",
+        doc-degree-f: "Doktorin der Ingenieurwissenschaften (Dr.-Ing.)",
+
+        // ── Institution ─────────────────────────────────────────────────────────
+        department: "KIT-Fakultät für Maschinenbau",
+        university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
+
+        // ── Status: submitted ───────────────────────────────────────────────────
+        // Switch to status-approved: true and fill in the fields below once approved.
+        // See dissertation-approved.typ for the approved title page.
+        status-approved: false,
+    ),
 )
 
 = Ein erstes Beispielkapitel

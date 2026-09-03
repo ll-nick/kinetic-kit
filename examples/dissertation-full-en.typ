@@ -4,7 +4,7 @@
 //
 // Compile: typst compile --root . --font-path fonts examples/dissertation-full-en.typ examples/dissertation-full-en.pdf
 
-#import "/lib.typ": dissertation, flex-caption
+#import "/lib.typ": dissertation, doctoral-title-page, flex-caption
 #import "content/abbreviations.typ": abbrevs-glossary
 
 // ── Third-party: glossarium ───────────────────────────────────────────────
@@ -30,25 +30,13 @@
 // ── Dissertation ──────────────────────────────────────────────────────────
 
 #show: dissertation.with(
-    // ── Author ──────────────────────────────────────────────────────────────
-    author-title: "M.Sc.",
     author-firstname: "Jane",
     author-surname: "Doe",
-    // false = feminine grammatical forms on the German title page
-    author-male: false,
 
     // ── Title ───────────────────────────────────────────────────────────────
     title: [
         A Complete Dissertation Title --- Spanning Multiple Lines
     ],
-
-    // ── Degree ──────────────────────────────────────────────────────────────
-    doc-degree: "Doktors der Ingenieurwissenschaften (Dr.-Ing.)",
-    doc-degree-f: "Doktorin der Ingenieurwissenschaften (Dr.-Ing.)",
-
-    // ── Institution ─────────────────────────────────────────────────────────
-    department: "KIT-Fakultät für Maschinenbau",
-    university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
 
     // ── Language: English ───────────────────────────────────────────────────
     // Body text labels (TOC, LoF, bibliography heading, …) are in English.
@@ -59,9 +47,6 @@
     margin-preset: "medium",
     binding-correction: 5mm, // Add BCOR for physically bound print copies
     colored-links: true,
-
-    // ── Status: submitted ───────────────────────────────────────────────────
-    status-approved: false,
 
     // ── Draft watermark ─────────────────────────────────────────────────────
     draft: is-draft,
@@ -109,6 +94,23 @@
 
         #lorem(800)
     ],
+    title-page: doctoral-title-page.with(
+        // ── Author ──────────────────────────────────────────────────────────────
+        author-title: "M.Sc.",
+        // false = feminine grammatical forms on the German title page
+        author-male: false,
+
+        // ── Degree ──────────────────────────────────────────────────────────────
+        doc-degree: "Doktors der Ingenieurwissenschaften (Dr.-Ing.)",
+        doc-degree-f: "Doktorin der Ingenieurwissenschaften (Dr.-Ing.)",
+
+        // ── Institution ─────────────────────────────────────────────────────────
+        department: "KIT-Fakultät für Maschinenbau",
+        university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
+
+        // ── Status: submitted ───────────────────────────────────────────────────
+        status-approved: false,
+    ),
 )
 
 = A First Example Chapter

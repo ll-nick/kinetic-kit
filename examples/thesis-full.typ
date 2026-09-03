@@ -4,7 +4,7 @@
 //
 // Compile: typst compile --root . --font-path fonts examples/thesis-full.typ examples/thesis-full.pdf
 
-#import "/lib.typ": flex-caption, thesis
+#import "/lib.typ": flex-caption, print-thesis-title, thesis
 #import "content/abbreviations.typ": abbrevs-glossary
 
 // ── Third-party: glossarium ───────────────────────────────────────────────
@@ -39,20 +39,6 @@
     title: [
         Ein vollständiger Titel der Masterarbeit --- Über mehrere Zeilen
     ],
-
-    // thesis-type options: "Masterarbeit" | "Bachelorarbeit" | "Diplomarbeit"
-    thesis-type: "Masterarbeit",
-
-    // ── Institution ─────────────────────────────────────────────────────────
-    department: "KIT-Fakultät für Maschinenbau",
-    university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
-
-    // ── Supervisors ─────────────────────────────────────────────────────────
-    examiner: "Prof. Dr.-Ing. Hans Musterbetreuer",
-    supervisor: "M.Sc. Maria Musterbetreuerin",
-
-    // ── Submission date ─────────────────────────────────────────────────────
-    date-submitted: "01. März 2026",
 
     // ── Language ────────────────────────────────────────────────────────────
     lang: "de",
@@ -90,6 +76,21 @@
 
         #lorem(400)
     ],
+    title-page: print-thesis-title.with(
+        // thesis-type options: "Masterarbeit" | "Bachelorarbeit" | "Diplomarbeit"
+        thesis-type: "Masterarbeit",
+
+        // ── Institution ─────────────────────────────────────────────────────────
+        department: "KIT-Fakultät für Maschinenbau",
+        university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
+
+        // ── Supervisors ─────────────────────────────────────────────────────────
+        examiner: "Prof. Dr.-Ing. Hans Musterbetreuer",
+        supervisor: "M.Sc. Maria Musterbetreuerin",
+
+        // ── Submission date ─────────────────────────────────────────────────────
+        date-submitted: "01. März 2026",
+    ),
 )
 
 // ── Chapters ──────────────────────────────────────────────────────────────
