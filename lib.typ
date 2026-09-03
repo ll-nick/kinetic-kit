@@ -15,14 +15,15 @@
     )
 }
 
-/// Building blocks for fully custom document composition. Use when the
-/// high-level `thesis` function don't cover your layout.
+/// Table of contents and back-matter list pages, for placing inside the
+/// `front-matter` / `back-matter` content of `thesis`.
 ///
 /// Example:
 /// ```typst
-/// #import "@preview/kinetic-kit:0.1.1": components
-/// #show: components.setup-page.with(margin-preset: "short", lang: "de")
-/// #show: components.setup-front-matter
-/// #components.table-of-contents(lang: "de")
+/// #import "@preview/kinetic-kit:0.1.1": outlines, thesis
+/// #show: thesis.with(back-matter: [
+///     #outlines.list-of-figures()
+///     #bibliography("refs.bib", title: [Literaturverzeichnis], style: "ieee")
+/// ])
 /// ```
-#import "src/components.typ"
+#import "src/outlines.typ"
