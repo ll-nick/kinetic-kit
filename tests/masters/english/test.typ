@@ -1,5 +1,6 @@
 // Compile-only: thesis in English — verifies translated strings for thesis.
-#import "/lib.typ": print-thesis-title, thesis
+#import "/lib.typ": thesis
+#import "/examples/content/masters-title-page.typ": masters-title-page
 
 #show: thesis.with(
     author-firstname: "Max",
@@ -14,7 +15,7 @@
         title: none,
         style: "ieee",
     ),
-    title-page: print-thesis-title.with(
+    title-page: masters-title-page.with(
         thesis-type: "Masterarbeit",
         department: "KIT-Fakultät für Maschinenbau",
         examiner: "Prof. Dr.-Ing. Hans Musterbetreuer",

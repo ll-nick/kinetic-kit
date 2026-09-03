@@ -4,7 +4,8 @@
 //
 // Compile: typst compile --root . --font-path fonts examples/masters-full.typ examples/masters-full.pdf
 
-#import "/lib.typ": flex-caption, print-thesis-title, thesis
+#import "/lib.typ": flex-caption, thesis
+#import "content/masters-title-page.typ": masters-title-page
 #import "content/abbreviations.typ": abbrevs-glossary
 
 // ── Third-party: glossarium ───────────────────────────────────────────────
@@ -77,7 +78,7 @@
 
         #lorem(400)
     ],
-    title-page: print-thesis-title.with(
+    title-page: masters-title-page.with(
         // thesis-type options: "Masterarbeit" | "Bachelorarbeit" | "Diplomarbeit"
         thesis-type: "Masterarbeit",
 

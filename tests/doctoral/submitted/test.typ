@@ -1,8 +1,8 @@
-// Compile-only: submitted dissertation with abstract, bibliography,
+// Compile-only: submitted doctoral thesis with abstract, bibliography,
 // and the most commonly used optional sections.
-#import "/lib.typ": dissertation, doctoral-title-page
+#import "/lib.typ": doctoral-title-page, thesis
 
-#show: dissertation.with(
+#show: thesis.with(
     author-firstname: "Max",
     author-surname: "Mustermann",
     title: [Test Dissertation],

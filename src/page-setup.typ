@@ -1,7 +1,6 @@
 // page-setup.typ — shared document style engine
 //
-// Provides the dynamic page and style configuration used by both the
-// dissertation and thesis templates:
+// Provides the dynamic page and style configuration used by the thesis template:
 //   _header               — context-aware running header
 //   _draft-indicator()   — "ENTWURF"/"DRAFT" watermark
 //   setup-page()         — full document style setup (page, headings, figures, equations, code)

@@ -1,11 +1,11 @@
 // Compile-only: figure kinds in an English document — per-language dictionaries
 // must resolve to `en`, the `show-lo*` booleans alone govern the built-in list
 // pages, and a document kind's list page follows them.
-#import "/lib.typ": dissertation
+#import "/lib.typ": thesis
 
 #let box-body = rect(width: 3cm, height: 1cm)
 
-#show: dissertation.with(
+#show: thesis.with(
     author-firstname: "Max",
     author-surname: "Mustermann",
     title: [Custom Figure Kinds],

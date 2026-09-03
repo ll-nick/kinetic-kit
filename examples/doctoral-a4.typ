@@ -6,11 +6,11 @@
 //
 // Compile: typst compile --root . --font-path fonts examples/doctoral-a4.typ examples/doctoral-a4.pdf
 
-#import "/lib.typ": dissertation, doctoral-title-page, flex-caption
+#import "/lib.typ": doctoral-title-page, flex-caption, thesis
 #import "content/abbreviations.typ": abbrevs-glossary
 
 // ── Third-party: glossarium ───────────────────────────────────────────────
-// IMPORTANT: #show: make-glossary must come before #show: dissertation.with(...)
+// IMPORTANT: #show: make-glossary must come before #show: thesis.with(...)
 // so the show rule wraps the entire rendered document.
 #import "@preview/glossarium:0.5.10": make-glossary, register-glossary
 
@@ -33,7 +33,7 @@
 
 // ── Dissertation ──────────────────────────────────────────────────────────
 
-#show: dissertation.with(
+#show: thesis.with(
     // ── Format ──────────────────────────────────────────────────────────────
     format: "a4",
     author-firstname: "Max",
@@ -52,11 +52,6 @@
     colored-links: true,
     heading-numbering-depth: 4,
     serif-headings: true,
-    // exam-date:         "12. Dezember 2025",
-    // main-advisor:      "Prof. Dr.-Ing. Hans Musterbetreuer",
-    // main-advisor-male: true,
-    // co-advisor:        "Prof. Dr. Maria Musterreferentin",
-    // co-advisor-male:   false,
 
     // ── Draft watermark ─────────────────────────────────────────────────────
     draft: is-draft,
@@ -121,8 +116,8 @@
         university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
 
         // ── Status: submitted ───────────────────────────────────────────────────
-        // Switch to status-approved: true and fill in the fields below once approved.
-        // See doctoral-approved.typ for the approved title page.
+        // See doctoral-approved.typ for the approved state, which adds the exam date
+        // and referees.
         status-approved: false,
     ),
 )

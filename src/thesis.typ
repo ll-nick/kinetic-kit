@@ -1,19 +1,38 @@
-// thesis.typ — KIT Master's / Bachelor's / Diploma thesis template
+// thesis.typ — KIT thesis template
 //
 // Public API (re-exported via lib.typ):
-//   thesis(...) — Master's / Bachelor's / Diploma thesis
+//   thesis(...)
 
-#import "document.typ": _document
-#import "title-page.typ": print-thesis-title
+#import "page-setup.typ": setup-appendix, setup-content, setup-front-matter, setup-page
+#import "front-matter.typ": (
+    print-abbreviations, print-abstract, print-acknowledgements, print-kurzfassung,
+    print-notation,
+)
+#import "back-matter.typ": (
+    print-bibliography, print-own-patents, print-own-publications,
+    print-supervised-theses,
+)
+#import "outlines.typ": list-of, table-of-contents
+#import "figure-kinds.typ": resolve-figure-kinds, resolve-localized
+#import "page-conf.typ": title-page-margins-by-format
+#import "title-page.typ": doctoral-title-page
 
 
-/// KIT Master's / Bachelor's / Diploma thesis template.
+/// KIT thesis template — doctoral, Master's, Bachelor's and Diploma theses.
+///
+/// The document type is decided by the title page. `title-page` defaults to the
+/// KSP-approved doctoral page; pass your own for anything else.
 ///
 /// - author-firstname (str): Author's first name.
 /// - author-surname (str): Author's surname.
 /// - title (content): Thesis title.
+/// - title-page (content | function | none): Title page. Defaults to the doctoral
+///   page; pass `doctoral-title-page.with(..)` to configure it, your own content, a function
+///   called as `(title, author-firstname:, author-surname:, format:, lang:)`, or `none`
+///   to omit it.
 /// - format ("a5" | "17x24" | "a4"): Paper format — `"a5"` (148×210 mm, default),
-///   `"17x24"` (170×240 mm), or `"a4"` (210×297 mm). Font sizes and margins are set automatically.
+///   `"17x24"` (170×240 mm), or `"a4"` (210×297 mm, discouraged by KSP). Font sizes and
+///   margins are set automatically.
 /// - lang ("de" | "en"): Document language.
 /// - margin-preset ("short" | "medium" | "long"): Margin profile keyed on page count.
 /// - binding-correction (length): BCOR added to inside margin. Default `0mm`.
@@ -36,20 +55,21 @@
 ///   `(de: [Algorithmus], en: [Algorithm])`. The built-in kinds are not declared here —
 ///   their list pages are governed by `show-list-of-figures` / `show-list-of-tables` / `show-list-of-listings`. Declared
 ///   kinds get a list page after the built-in ones, in declaration order.
-/// - bibliography (content | none): Bibliography content. Pass `bibliography("refs.bib", title: none, style: "ieee")`.
-///   The template adds a translated heading. `none` = omit.
 /// - appendix (content | none): Appendix chapters. Template applies `A`, `A.1`, … numbering
 ///   and places the appendix before the back-matter lists. `none` = omit.
-/// - title-page (content | function | none): Title page. Defaults to the built-in thesis
-///   page; pass `print-thesis-title.with(..)` to configure it, your own content, a function
-///   called as `(title, author-firstname:, author-surname:, format:, lang:)`, or `none`
-///   to omit it.
+/// - bibliography (content | none): Bibliography content. Pass `bibliography("refs.bib", title: none, style: "ieee")`.
+///   The template adds a translated heading. `none` = omit.
+/// - own-publications (content | none): Own publications content (heading added by template). `none` = omit.
+/// - own-patents (content | none): Own patents content (heading added by template). `none` = omit.
+/// - supervised-theses (content | none): Supervised theses content (heading added by template).
+///   `none` = omit.
 /// - doc (content): Main document body (chapters only).
 /// -> content
 #let thesis(
     author-firstname: "Max",
     author-surname: "Mustermann",
     title: [Your Thesis Title],
+    title-page: doctoral-title-page,
     format: "a5",
     lang: "de",
     margin-preset: "short",
@@ -68,34 +88,134 @@
     show-list-of-tables: true,
     show-list-of-listings: false,
     figure-kinds: (),
-    bibliography: none,
     appendix: none,
-    title-page: print-thesis-title,
+    bibliography: none,
+    own-publications: none,
+    own-patents: none,
+    supervised-theses: none,
     doc,
-) = _document(
-    title-page: title-page,
-    title: title,
-    author-firstname: author-firstname,
-    author-surname: author-surname,
-    format: format,
-    lang: lang,
-    margin-preset: margin-preset,
-    binding-correction: binding-correction,
-    colored-links: colored-links,
-    draft: draft,
-    draft-info: draft-info,
-    serif-headings: serif-headings,
-    heading-numbering-depth: heading-numbering-depth,
-    abstract-en: abstract-en,
-    abstract-de: abstract-de,
-    acknowledgements: acknowledgements,
-    notation: notation,
-    abbreviations: abbreviations,
-    show-list-of-figures: show-list-of-figures,
-    show-list-of-tables: show-list-of-tables,
-    show-list-of-listings: show-list-of-listings,
-    figure-kinds: figure-kinds,
-    bibliography: bibliography,
-    appendix: appendix,
-    doc,
-)
+) = {
+    assert(
+        format in ("a5", "17x24", "a4"),
+        message: "format must be \"a5\", \"17x24\" (170×240 mm), or \"a4\"",
+    )
+    let author-name = author-firstname + " " + author-surname
+    let resolved-figure-kinds = resolve-figure-kinds(
+        figure-kinds,
+        show-list-of-figures: show-list-of-figures,
+        show-list-of-tables: show-list-of-tables,
+        show-list-of-listings: show-list-of-listings,
+    )
+
+    set document(
+        title: title,
+        author: author-name,
+        date: datetime.today(),
+    )
+
+    // ── Global page/text/heading setup -─────────────────────────────────────
+    show: setup-page.with(
+        format: format,
+        margin-preset: margin-preset,
+        lang: lang,
+        binding-correction: binding-correction,
+        colored-links: colored-links,
+        draft: draft,
+        draft-info: draft-info,
+        serif-headings: serif-headings,
+        heading-numbering-depth: heading-numbering-depth,
+        figure-kinds: figure-kinds,
+    )
+
+    // ── Title page ──────────────────────────────────────────────────────────
+    // Scoped so the setup reverts before the front matter. Applied here rather than
+    // left to the caller so a custom title page gets the right geometry and no page
+    // number without reaching for internal constants.
+    {
+        set page(
+            margin: title-page-margins-by-format.at(format),
+            binding: left,
+            header: none,
+            footer: none,
+            numbering: none,
+        )
+        if type(title-page) == function {
+            title-page(
+                title,
+                author-firstname: author-firstname,
+                author-surname: author-surname,
+                format: format,
+                lang: lang,
+            )
+        } else if title-page != none {
+            title-page
+        }
+    }
+
+    // ── Front matter (Roman numerals) ───────────────────────────────────────
+    show: setup-front-matter
+    counter(page).update(0)
+
+    if acknowledgements != none {
+        print-acknowledgements(acknowledgements, lang)
+    }
+
+    if abstract-en != none {
+        print-abstract(abstract-en)
+    }
+    if abstract-de != none {
+        print-kurzfassung(abstract-de)
+    }
+
+    if notation != none {
+        print-notation(notation, lang)
+    }
+
+    if abbreviations != none {
+        print-abbreviations(abbreviations, lang)
+    }
+
+    table-of-contents(lang: lang)
+
+    // ── Main content (Arabic numerals) ──────────────────────────────────────
+    show: setup-content
+    counter(page).update(1)
+
+    doc
+
+    // ── Back matter ─────────────────────────────────────────────────────────
+    if appendix != none {
+        show: setup-appendix
+        appendix
+    }
+
+    // Titles resolve against the document language rather than `text.lang`: a list
+    // page is one back-matter section, unlike a supplement that follows its figure.
+    for entry in resolved-figure-kinds {
+        if entry.show-list {
+            list-of(
+                entry.kind,
+                title: resolve-localized(
+                    entry.list-title,
+                    lang,
+                    kind: entry.kind,
+                    field: "list-title",
+                ),
+            )
+        }
+    }
+
+    if bibliography != none {
+        print-bibliography(bibliography, lang)
+    }
+
+    if own-publications != none {
+        print-own-publications(own-publications, lang)
+    }
+    if own-patents != none {
+        print-own-patents(own-patents, lang)
+    }
+    if supervised-theses != none {
+        print-supervised-theses(supervised-theses, lang)
+    }
+}

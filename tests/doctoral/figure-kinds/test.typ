@@ -1,11 +1,11 @@
 // Compile-only: figure kinds beyond image/table/raw — kinds declared by the
 // document, per-chapter counter resets for all of them, and back-matter list pages
 // in canonical-then-declaration order.
-#import "/lib.typ": dissertation
+#import "/lib.typ": thesis
 
 #let box-body = rect(width: 3cm, height: 1cm)
 
-#show: dissertation.with(
+#show: thesis.with(
     author-firstname: "Max",
     author-surname: "Mustermann",
     title: [Eigene Abbildungsarten],

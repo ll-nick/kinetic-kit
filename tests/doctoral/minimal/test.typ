@@ -1,8 +1,8 @@
-// Compile-only: dissertation() with all defaults — every optional section absent.
+// Compile-only: thesis() with all defaults — every optional section absent.
 // Verifies the template doesn't crash when no optional content is provided.
-#import "/lib.typ": dissertation
+#import "/lib.typ": thesis
 
-#show: dissertation
+#show: thesis
 
 = Chapter One
 

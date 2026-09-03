@@ -1,7 +1,7 @@
-// Compile-only: dissertation() with format: "17x24" — verifies 170×240 mm format compiles.
-#import "/lib.typ": dissertation
+// Compile-only: thesis() with format: "17x24" — verifies 170×240 mm format compiles.
+#import "/lib.typ": thesis
 
-#show: dissertation.with(format: "17x24")
+#show: thesis.with(format: "17x24")
 
 = Chapter One
 

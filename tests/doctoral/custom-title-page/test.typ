@@ -2,7 +2,7 @@
 // template-supplied arguments. Pins two things:
 //   - `.with()` cannot override what the template passes (author-surname below),
 //   - overriding the page margins does not add a page or restore numbering.
-#import "/lib.typ": dissertation
+#import "/lib.typ": thesis
 
 #let custom-title-page(
     title,
@@ -19,7 +19,7 @@
     align(center)[#title \ #author-firstname #author-surname \ #label]
 }
 
-#show: dissertation.with(
+#show: thesis.with(
     author-firstname: "Max",
     author-surname: "Mustermann",
     title: [Custom Title Page],

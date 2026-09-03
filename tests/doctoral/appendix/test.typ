@@ -1,8 +1,8 @@
-// Compile-only: dissertation with appendix — verifies appendix numbering
+// Compile-only: doctoral thesis with appendix — verifies appendix numbering
 // (A, A.1, …) and the page-rules switch don't regress.
-#import "/lib.typ": dissertation, doctoral-title-page
+#import "/lib.typ": doctoral-title-page, thesis
 
-#show: dissertation.with(
+#show: thesis.with(
     author-firstname: "Max",
     author-surname: "Mustermann",
     title: [Dissertation with Appendix],

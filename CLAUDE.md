@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**kinetic-kit** is a KIT (Karlsruhe Institute of Technology) dissertation and thesis template for [Typst](https://typst.app/), targeting KIT Scientific Publishing (KSP) formatting requirements. The dissertation template is official / KSP-approved; the thesis template is included as a companion and is not separately KSP-approved. The authoritative requirements are documented in `guidelines.md`.
+**kinetic-kit** is a KIT (Karlsruhe Institute of Technology) thesis template for [Typst](https://typst.app/), targeting KIT Scientific Publishing (KSP) formatting requirements. A single `thesis()` entry point covers doctoral, Master's, Bachelor's and Diploma theses; the document type is decided by the title page passed to `title-page`. KSP's endorsement covers the doctoral thesis and its default title page (`doctoral-title-page`), not title pages supplied by the user. The authoritative requirements are documented in `guidelines.md`.
 
 ## Build Commands
 
@@ -53,23 +53,22 @@ Most are plain bash; the `package` tasks are stdlib-only Python (3.11+ for `toml
 ### Public API (`lib.typ`)
 
 The single entry point re-exports:
-- `dissertation()`, `thesis()` — main template functions (from `src/dissertation.typ` and `src/thesis.typ`)
-- `doctoral-title-page`, `print-thesis-title` — title pages, for passing to `title-page`; they own every parameter printed on the page (from `src/title-page.typ`)
+- `thesis()` — the template function (from `src/thesis.typ`)
+- `doctoral-title-page` — the KSP doctoral title page, for passing to `title-page`; it owns every parameter printed on the page (from `src/title-page.typ`)
 - `flex-caption` — figure/table caption utility (from `src/figures.typ`)
 
 ### Source Modules (`src/`)
 
 | File | Purpose |
 |------|---------|
-| `document.typ` | `_document()` — the shared orchestrator both templates delegate to |
-| `dissertation.typ` | `dissertation()` — doctoral parameters, mapped onto `_document()` |
-| `thesis.typ` | `thesis()` — student-thesis parameters, mapped onto `_document()` |
+| `thesis.typ` | `thesis()` — the entry point and the document structure it assembles |
+| `components.typ` | Re-exports the building blocks for custom composition (`components` namespace) |
 | `page-setup.typ` | Shared style engine — `kit-header`, `_page-base()`, draft indicator, section pagination wrappers |
 | `kit-colors.typ` | KIT color palette + syntax highlighting colors |
 | `typography.typ` | Font configuration (Libertinus family) and KSP-required sizes per format (`font-sizes-by-format`) |
 | `page-conf.typ` | Page layout constants per format: page dimensions, margin presets (`short`/`medium`/`long`) per format, paragraph spacing |
 | `translations.typ` | German/English label strings |
-| `title-page.typ` | `doctoral-title-page` and `print-thesis-title` (German legal format); either can be passed to `title-page` |
+| `title-page.typ` | `doctoral-title-page` (German legal format), the default for `title-page` |
 | `front-matter.typ` | Abstract, Kurzfassung, acknowledgements, notation, abbreviations |
 | `back-matter.typ` | Bibliography, own publications, own patents, supervised theses |
 | `outlines.typ` | TOC, back-matter list pages (`list-of` and the `list-of-figures`/`list-of-tables`/`list-of-listings` shorthands), and their `outline.entry` styling (`setup-outlines`) |
@@ -79,17 +78,17 @@ The single entry point re-exports:
 
 ### Template Flow
 
-Both `dissertation()` and `thesis()` map their parameters onto `_document()`, which owns the structure:
-0. **Title page** — from the `title-page` parameter, defaulting to `doctoral-title-page` / `print-thesis-title`. Rendered inside a scoped `set page` that supplies the title-page margins and suppresses header, footer and numbering
+`thesis()` assembles the document in this order:
+0. **Title page** — from the `title-page` parameter, defaulting to `doctoral-title-page`. Rendered inside a scoped `set page` that supplies the title-page margins and suppresses header, footer and numbering
 1. **Front matter** — Roman page numbering (i, ii, …), no running headers; includes abstracts, TOC
 2. **Content** — Arabic page numbering (1, 2, …), chapter/section running headers
-3. **Back matter** — appendix (A, A.1, … numbering), then LoF/LoT/LoL, bibliography, and (dissertation only) own-publications/patents/supervised-theses sections
+3. **Back matter** — appendix (A, A.1, … numbering), then LoF/LoT/LoL, bibliography, and the optional own-publications/patents/supervised-theses sections
 
 Headers are suppressed on chapter-opening pages and blank pages. The draft watermark is rendered as a background element on every page when enabled.
 
 ### API Documentation (`docs/`)
 
-`docs/main.typ` uses the [tidy](https://typst.universe/package/tidy) package to auto-generate `docs/api-reference.pdf` from doc-comments in `dissertation.typ`, `thesis.typ`, `outlines.typ`, `figures.typ`, `figure-kinds.typ`, and `headings.typ`.
+`docs/main.typ` uses the [tidy](https://typst.universe/package/tidy) package to auto-generate `docs/api-reference.pdf` from doc-comments in `thesis.typ`, `page-setup.typ`, `title-page.typ`, `outlines.typ`, `figures.typ`, `figure-kinds.typ`, and `headings.typ`.
 
 ### Examples (`examples/`)
 
@@ -97,14 +96,14 @@ Headers are suppressed on chapter-opening pages and blank pages. The draft water
 - `doctoral-full-en.typ` — English doctoral variant
 - `doctoral-approved.typ` — approved doctoral variant
 - `doctoral-17x24.typ`, `doctoral-a4.typ` — non-default paper formats (the A4 variant uses fixed margins, so `margin-preset` has no effect there)
-- `masters-full.typ`, `masters-full-en.typ` — student-thesis variants (`thesis()`)
+- `masters-full.typ`, `masters-full-en.typ` — student-thesis variants; the only examples passing a custom `title-page`, from `content/masters-title-page.typ`
 
 Shared content in `examples/content/` and bibliographies in `examples/bib/`.
 
 ## Key Constraints
 
 - **Typst version**: 0.15.0 — both the minimum supported compiler (`compiler` in `typst.toml`) and the dev/CI toolchain (`mise.toml`).
-- **Paper format**: A5 (148×210 mm, default), 17×24 (170×240 mm), or A4 (210×297 mm) — controlled via `format` parameter; KSP recommends A5 for dissertations
+- **Paper format**: A5 (148×210 mm, default), 17×24 (170×240 mm), or A4 (210×297 mm) — controlled via `format` parameter; KSP recommends A5 for doctoral theses
 - **Base font size**: 10 pt (A5/17×24) or 11 pt (A4) Libertinus Serif — set automatically per format
 - **Line spacing**: 1.15× (0.75em leading in Typst)
 - **Margins**: Three presets keyed on final page count — short (<200 pages), medium (200–399), long (≥400)
