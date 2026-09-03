@@ -52,11 +52,6 @@
     colored-links: true,
     heading-numbering-depth: 4,
     serif-headings: true,
-    // exam-date:         "12. Dezember 2025",
-    // main-advisor:      "Prof. Dr.-Ing. Hans Musterbetreuer",
-    // main-advisor-male: true,
-    // co-advisor:        "Prof. Dr. Maria Musterreferentin",
-    // co-advisor-male:   false,
 
     // ── Draft watermark ─────────────────────────────────────────────────────
     draft: is-draft,
@@ -121,8 +116,8 @@
         university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
 
         // ── Status: submitted ───────────────────────────────────────────────────
-        // Switch to status-approved: true and fill in the fields below once approved.
-        // See doctoral-approved.typ for the approved title page.
+        // See doctoral-approved.typ for the approved state, which adds the exam date
+        // and referees.
         status-approved: false,
     ),
 )
