@@ -1,15 +1,10 @@
 // Compile-only: full-ish German thesis with the most common optional sections.
-#import "/lib.typ": thesis
+#import "/lib.typ": print-thesis-title, thesis
 
 #show: thesis.with(
     author-firstname: "Max",
     author-surname: "Mustermann",
     title: [Test Masterarbeit],
-    thesis-type: "Masterarbeit",
-    department: "KIT-Fakultät für Maschinenbau",
-    examiner: "Prof. Dr.-Ing. Hans Musterbetreuer",
-    supervisor: "M.Sc. Maria Musterbetreuerin",
-    date-submitted: "01. März 2026",
     lang: "de",
     margin-preset: "short",
     abstract-en: [English abstract.],
@@ -21,6 +16,13 @@
         "/examples/bib/references.bib",
         title: none,
         style: "ieee",
+    ),
+    title-page: print-thesis-title.with(
+        thesis-type: "Masterarbeit",
+        department: "KIT-Fakultät für Maschinenbau",
+        examiner: "Prof. Dr.-Ing. Hans Musterbetreuer",
+        supervisor: "M.Sc. Maria Musterbetreuerin",
+        date-submitted: "01. März 2026",
     ),
 )
 
