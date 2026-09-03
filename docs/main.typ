@@ -131,7 +131,7 @@ through the `components` namespace:
 
 #show: components.setup-page.with(format: format, margin-preset: "short", lang: "de")
 #show: components.setup-front-matter
-#components.print-toc(lang: "de")
+#components.table-of-contents(lang: "de")
 ```
 
 You are responsible for applying the wrappers in the correct order: `setup-page` →
