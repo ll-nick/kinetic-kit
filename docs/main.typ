@@ -25,11 +25,13 @@
 
 This document lists all public symbols exported by `kinetic-kit`.
 
-= Templates
+= Template
 
-#let dissertation-src = read("../src/dissertation.typ")
-#let module = tidy.parse-module(dissertation-src, name: "dissertation")
-#tidy.show-module(module, show-outline: true, sort-functions: false)
+`thesis()` is the main entrypoint of the package.
+By default, it assembles a complete doctoral thesis in the KSP-approved style.
+The template is fully configurable and can also be used to produce a bachelor's or master's thesis.
+Note that the KSP endorsement only applies to doctoral theses in the default configuration;
+customized documents are not covered by it.
 
 #let thesis-src = read("../src/thesis.typ")
 #let thesis-module = tidy.parse-module(thesis-src, name: "thesis")
@@ -121,8 +123,8 @@ optional opacity suffix (`70`, `50`, `30`, `15` = 70 %, 50 %, 30 %, 15 % tint).
 = Components
 
 The `components` module exports the individual building blocks for assembling a document
-without the full `dissertation()` / `thesis()` orchestrator. All symbols are accessed
-through the `components` namespace:
+without the full `thesis()` orchestrator. All symbols are accessed through the
+`components` namespace:
 
 ```typst
 #import "@preview/kinetic-kit:0.1.1": components
@@ -143,7 +145,7 @@ You are responsible for applying the wrappers in the correct order: `setup-page`
 #let page-setup-module = tidy.parse-module(page-setup-src, name: "page-setup")
 #tidy.show-module(page-setup-module, show-outline: true, sort-functions: false)
 
-== Title Pages
+== Title Page <title-page>
 
 #let title-page-src = read("../src/title-page.typ")
 #let title-page-module = tidy.parse-module(title-page-src, name: "title-page")
@@ -167,15 +169,15 @@ Typst keeps a separate counter and supplement for every figure `kind`. The templ
 carries strings for Typst's own `image`, `table` and `raw`, because those names are
 template chrome; their list pages are governed by the `show-lo*` booleans. Any other kind
 — pseudocode, theorems, whatever a document needs — is declared through the `figure-kinds`
-parameter of `dissertation()` / `thesis()`, which supplies the caption supplement and,
-optionally, a back-matter list page.
+parameter of `thesis()`, which supplies the caption supplement and, optionally, a
+back-matter list page.
 
 Per-chapter counter resets are not part of this registry. `setup-headings` derives them
 from the figures present in the document, so every kind restarts each chapter whether or
 not it has been declared.
 
 ```typst
-#show: dissertation.with(
+#show: thesis.with(
   figure-kinds: (
     (
       kind: "algorithm",
