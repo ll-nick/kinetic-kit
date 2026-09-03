@@ -2,19 +2,17 @@
 //
 // Typst keeps a separate counter and supplement per figure `kind`, but only
 // styles the kinds it knows about. This module records what a document's own
-// kinds are called and whether each gets a list page in the back matter.
+// kinds are called so their figures get a proper caption supplement.
 //
-// Two things are deliberately *not* handled here:
-//   - Per-chapter counter resets. `setup-headings` derives those from the figures
-//     actually present, so every kind restarts each chapter, declared or not.
-//   - The built-in kinds' list pages. Those are governed by the `show-lo*`
-//     booleans, so a declaration and a boolean can never disagree about one.
+// Per-chapter counter resets are deliberately not handled here. `setup-headings`
+// derives those from the figures actually present, so every kind restarts each
+// chapter, declared or not.
 
 #import "translations.typ": t
 
 // Fields an entry may carry. Anything else is a typo and is rejected outright,
 // since a misspelled field would otherwise fail silently.
-#let _entry-fields = ("kind", "supplement", "list-title", "show-list")
+#let _entry-fields = ("kind", "supplement")
 
 // Lift one of the template's own strings into the per-language shape that entries
 // use, covering every language `t` defines rather than a fixed de/en pair.
@@ -28,23 +26,11 @@
 
 // Typst's built-in kinds. These are the only ones the template carries strings
 // for, because their names are template chrome rather than the document's own
-// vocabulary. No `show-list` field: the `show-lo*` booleans decide that.
+// vocabulary.
 #let _builtin-kinds = (
-    figure: (
-        kind: image,
-        supplement: _localized("figure"),
-        list-title: _localized("list-of-figures"),
-    ),
-    table: (
-        kind: table,
-        supplement: _localized("table"),
-        list-title: _localized("list-of-tables"),
-    ),
-    listing: (
-        kind: raw,
-        supplement: _localized("listing"),
-        list-title: _localized("list-of-listings"),
-    ),
+    figure: (kind: image, supplement: _localized("figure")),
+    table: (kind: table, supplement: _localized("table")),
+    listing: (kind: raw, supplement: _localized("listing")),
 )
 
 #let _builtin-kind-values = _builtin-kinds.values().map(builtin => builtin.kind)
@@ -110,8 +96,7 @@
     assert(
         entry.kind not in _builtin-kind-values,
         message: repr(entry.kind)
-            + " is a built-in figure kind and cannot be redeclared. Use show-list-of-figures, "
-            + "show-list-of-tables or show-list-of-listings to control its list page.",
+            + " is a built-in figure kind and cannot be redeclared.",
     )
     assert(
         entry.kind not in declared,
@@ -124,58 +109,28 @@
             + " needs a supplement, e.g. supplement: (de: [Satz], en: [Theorem]). "
             + "Without one its figures would be captioned like ordinary images.",
     )
-    if "show-list" in entry {
-        assert(
-            type(entry.show-list) == bool,
-            message: "figure kind "
-                + repr(entry.kind)
-                + ": show-list must be a boolean, found "
-                + repr(entry.show-list),
-        )
-        assert(
-            not entry.show-list or "list-title" in entry,
-            message: "figure kind "
-                + repr(entry.kind)
-                + " has show-list: true but no list-title, e.g. "
-                + "list-title: (de: [Satzverzeichnis], en: [List of Theorems]).",
-        )
-    }
 }
 
-/// Resolve the document's figure kinds into one ordered list.
-///
-/// The built-in kinds come first, in the canonical order of their list pages, with
-/// visibility taken from the three booleans. Kinds the document declares follow, in
-/// declaration order. Declaring a built-in kind is an error.
+/// Resolve the document's figure kinds into one ordered list: the built-in kinds
+/// first, then the document's own in declaration order. Declaring a built-in kind
+/// is an error.
 ///
 /// - figure-kinds (array): Entries declared by the document.
-/// - show-list-of-figures (bool): Whether the list of figures is printed.
-/// - show-list-of-tables (bool): Whether the list of tables is printed.
-/// - show-list-of-listings (bool): Whether the list of listings is printed.
 /// -> array
-#let resolve-figure-kinds(
-    figure-kinds,
-    show-list-of-figures: true,
-    show-list-of-tables: true,
-    show-list-of-listings: false,
-) = {
+#let resolve-figure-kinds(figure-kinds) = {
     assert(
         type(figure-kinds) == array,
         message: "figure-kinds must be an array of dictionaries, found "
             + repr(type(figure-kinds)),
     )
 
-    let resolved = (
-        (.._builtin-kinds.figure, show-list: show-list-of-figures),
-        (.._builtin-kinds.table, show-list: show-list-of-tables),
-        (.._builtin-kinds.listing, show-list: show-list-of-listings),
-    )
+    let resolved = _builtin-kinds.values()
 
     let declared = ()
     for entry in figure-kinds {
         _check-entry(entry, declared)
         declared.push(entry.kind)
-        resolved.push((list-title: none, show-list: false, ..entry))
+        resolved.push(entry)
     }
 
     resolved
