@@ -1,11 +1,10 @@
-// KIT Dissertation / Thesis Title Pages
+// Doctoral thesis title page
 
 #import "typography.typ": font-sizes-by-format, fonts
 #import "kit-colors.typ": kit-colors
 #import "page-conf.typ": title-page-margins-by-format
 #import "translations.typ": t
 
-// ── Dissertation Title Page ────────────────────────────────────────────────
 // All strings are always in German (legal document requirement).
 
 /// Render the KIT dissertation title page (German legal format).
@@ -145,95 +144,4 @@
     } else {
         v(10mm)
     }
-}
-
-// ── Master / Bachelor Thesis Title Page ───────────────────────────────────
-
-/// Render the KIT master's / bachelor's thesis title page (German legal format).
-/// All text on this page is always in German regardless of document language.
-///
-/// - title (content): Thesis title.
-/// - thesis-type (str): Thesis type (e.g. `"Masterarbeit"`, `"Bachelorarbeit"`).
-/// - author-firstname (str): Author's first name.
-/// - author-surname (str): Author's surname.
-/// - department (str): KIT department or faculty.
-/// - university-genitive (str): University name in genitive (e.g. `"des Karlsruher Instituts…"`).
-/// - examiner (content): First examiner (Erstprüfer).
-/// - supervisor (content): Supervisor (Betreuer).
-/// - date-submitted (content): Submission date string.
-/// - format (str): Paper format — `"a5"`, `"17x24"`, or `"a4"`. Determines font
-///   sizes and title-page margins.
-/// - lang (str): Accepted for the `title-page` contract and ignored — this page is
-///   always German.
-/// -> content
-#let print-thesis-title(
-    title,
-    thesis-type: "Masterarbeit",
-    author-firstname: "Max",
-    author-surname: "Mustermann",
-    department: "KIT-Fakultät für Maschinenbau",
-    university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
-    examiner: none,
-    supervisor: none,
-    date-submitted: none,
-    format: "a5",
-    lang: "de",
-) = {
-    let font-sizes = font-sizes-by-format.at(format)
-    let title-page-margins = title-page-margins-by-format.at(format)
-
-    set page(
-        margin: title-page-margins,
-        binding: left,
-        header: none,
-        footer: none,
-        numbering: none,
-    )
-
-    set text(font: fonts.sans, size: font-sizes.base)
-
-    let tr = t.at("de") // title page always in German
-    let author-name = author-firstname + " " + author-surname
-
-    v(18mm)
-    align(center)[
-        #set par(justify: false)
-        #text(
-            font: fonts.serif,
-            size: font-sizes.title,
-            weight: "bold",
-            hyphenate: false,
-        )[#title]
-    ]
-
-    v(1fr)
-
-    align(center)[
-        #text(size: font-sizes.title-info)[#thesis-type]
-        \
-        #v(3mm)
-        #text(size: font-sizes.base)[
-            #department \
-            #university-genitive
-        ]
-        \
-        #v(5mm)
-        #text(size: font-sizes.base)[#tr.by]
-        \
-        #v(2mm)
-        #text(size: font-sizes.author, weight: "bold")[#author-name]
-    ]
-
-    v(1fr)
-
-    v(4mm)
-    grid(
-        columns: (auto, 1fr),
-        column-gutter: 1em,
-        row-gutter: 3mm,
-        [Erstprüfer:], if examiner != none { examiner } else { "–" },
-        [Betreuer:], if supervisor != none { supervisor } else { "–" },
-        [Eingereicht am:], if date-submitted != none { date-submitted } else { "–" },
-    )
-    v(4mm)
 }

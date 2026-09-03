@@ -20,16 +20,3 @@
     co-advisor-male: false,
     format: "a5",
 )
-
-#components.print-thesis-title(
-    [Titel der Masterarbeit],
-    thesis-type: "Masterarbeit",
-    author-firstname: "Max",
-    author-surname: "Mustermann",
-    department: "KIT-Fakultät für Maschinenbau",
-    university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
-    examiner: "Prof. Dr.-Ing. Hans Musterbetreuer",
-    supervisor: "M.Sc. Maria Musterbetreuerin",
-    date-submitted: "01. März 2026",
-    format: "a5",
-)
