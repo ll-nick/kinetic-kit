@@ -4,7 +4,7 @@
 //
 // Compile: typst compile --root . --font-path fonts examples/thesis-full-en.typ examples/thesis-full-en.pdf
 
-#import "/lib.typ": flex-caption, thesis
+#import "/lib.typ": flex-caption, print-thesis-title, thesis
 #import "content/abbreviations.typ": abbrevs-glossary
 
 // ── Third-party: glossarium ───────────────────────────────────────────────
@@ -39,19 +39,6 @@
     title: [
         A Complete Master's Thesis Title --- Spanning Multiple Lines
     ],
-
-    thesis-type: "Masterarbeit",
-
-    // ── Institution ─────────────────────────────────────────────────────────
-    department: "KIT-Fakultät für Maschinenbau",
-    university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
-
-    // ── Supervisors ─────────────────────────────────────────────────────────
-    examiner: "Prof. Dr.-Ing. Hans Musterbetreuer",
-    supervisor: "M.Sc. Maria Musterbetreuerin",
-
-    // ── Submission date ─────────────────────────────────────────────────────
-    date-submitted: "01 March 2026",
 
     // ── Language: English ───────────────────────────────────────────────────
     lang: "en",
@@ -89,6 +76,20 @@
 
         #lorem(400)
     ],
+    title-page: print-thesis-title.with(
+        thesis-type: "Masterarbeit",
+
+        // ── Institution ─────────────────────────────────────────────────────────
+        department: "KIT-Fakultät für Maschinenbau",
+        university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
+
+        // ── Supervisors ─────────────────────────────────────────────────────────
+        examiner: "Prof. Dr.-Ing. Hans Musterbetreuer",
+        supervisor: "M.Sc. Maria Musterbetreuerin",
+
+        // ── Submission date ─────────────────────────────────────────────────────
+        date-submitted: "01 March 2026",
+    ),
 )
 
 // ── Chapters ──────────────────────────────────────────────────────────────

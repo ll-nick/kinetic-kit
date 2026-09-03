@@ -16,10 +16,12 @@
 )
 #import "outlines.typ": list-of, table-of-contents
 #import "figure-kinds.typ": resolve-figure-kinds, resolve-localized
+#import "page-conf.typ": title-page-margins-by-format
 
 
-// Assemble the document from an already-rendered title page. Parameters mirror the
-// public templates; see their doc-comments, which tidy renders into the API reference.
+// Assemble the document. `title-page` is content, or a function called as
+// `(title, author-firstname:, author-surname:, format:, lang:)`. Other parameters mirror
+// the public templates; see their doc-comments, which tidy renders into the API reference.
 #let _document(
     title-page: none,
     title: [Your Thesis Title],
@@ -83,7 +85,29 @@
     )
 
     // ── Title page ──────────────────────────────────────────────────────────
-    title-page
+    // Scoped so the setup reverts before the front matter. Applied here rather than
+    // left to the caller so a custom title page gets the right geometry and no page
+    // number without reaching for internal constants.
+    {
+        set page(
+            margin: title-page-margins-by-format.at(format),
+            binding: left,
+            header: none,
+            footer: none,
+            numbering: none,
+        )
+        if type(title-page) == function {
+            title-page(
+                title,
+                author-firstname: author-firstname,
+                author-surname: author-surname,
+                format: format,
+                lang: lang,
+            )
+        } else if title-page != none {
+            title-page
+        }
+    }
 
     // ── Front matter (Roman numerals) ───────────────────────────────────────
     show: setup-front-matter

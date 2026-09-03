@@ -21,13 +21,17 @@ content once you are ready.
 All document metadata lives in the `#show: dissertation.with(...)` call at the top of
 `main.typ`. Open that file and work through the parameters in order:
 
-+ *Author and degree:* Fill in `author-firstname`, `author-surname`, `author-title`, and
-    set `author-male` to match the grammatical gender used on the German title page.
++ *Author:* Fill in `author-firstname` and `author-surname`. These also become the PDF
+    metadata, so the title page takes them from here rather than repeating them.
 + *Title:* Replace the placeholder in `title:` with your dissertation title.
-+ *Department and degree name:* Adjust `department`, `university-genitive`, `doc-degree`,
-    and `doc-degree-f` to match your faculty's official wording.
++ *Title page:* Everything printed on the title page lives inside the
+    `title-page: doctoral-title-page.with(...)` argument. Fill in `author-title` and
+    `author-male` for the grammatical gender used on the German title page, and adjust
+    `department`, `university-genitive`, `doc-degree` and `doc-degree-f` to match your
+    faculty's official wording.
 + *Status:* Keep `status-approved: false` until your oral examination is scheduled.
-    Afterwards set it to `true` and fill in `exam-date`, `main-advisor`, and `co-advisor`.
+    Afterwards set it to `true` and fill in `exam-date`, `main-advisor`, and `co-advisor`
+    — all inside the same `title-page` argument.
 + *Language:* Set `lang: "de"` or `lang: "en"`. This controls all auto-generated section
     headings (Table of Contents, List of Figures, etc.). The title page is always in
     German regardless of this setting.
@@ -154,8 +158,8 @@ The template uses the IEEE citation style by default. To switch to another style
 Before you submit, work through the following items in `main.typ`:
 
 + If you enabled draft mode, set `draft: false` to remove the watermark.
-+ If approved: set `status-approved: true` and fill in `exam-date`, `main-advisor`, and
-    `co-advisor`.
++ If approved: inside `title-page`, set `status-approved: true` and fill in `exam-date`,
+    `main-advisor`, and `co-advisor`.
 + Update `margin-preset` to match your final page count (`"short"`, `"medium"`, or
     `"long"`).
 + Add `binding-correction: 8mm` (adjust to your print shop's specification) if you are

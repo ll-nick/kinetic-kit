@@ -1,12 +1,11 @@
 // Compile-only: thesis with an appendix — exercises the thesis() back-matter
 // appendix branch and setup-appendix (A, A.1 numbering + counter reset).
-#import "/lib.typ": thesis
+#import "/lib.typ": print-thesis-title, thesis
 
 #show: thesis.with(
     author-firstname: "Max",
     author-surname: "Mustermann",
     title: [Thesis With Appendix],
-    thesis-type: "Masterarbeit",
     lang: "en",
     appendix: [
         = First Appendix
@@ -21,6 +20,9 @@
 
         Numbered B.
     ],
+    title-page: print-thesis-title.with(
+        thesis-type: "Masterarbeit",
+    ),
 )
 
 = Introduction

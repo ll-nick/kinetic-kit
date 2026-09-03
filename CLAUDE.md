@@ -54,20 +54,22 @@ Most are plain bash; the `package` tasks are stdlib-only Python (3.11+ for `toml
 
 The single entry point re-exports:
 - `dissertation()`, `thesis()` — main template functions (from `src/dissertation.typ` and `src/thesis.typ`)
+- `doctoral-title-page`, `print-thesis-title` — title pages, for passing to `title-page`; they own every parameter printed on the page (from `src/title-page.typ`)
 - `flex-caption` — figure/table caption utility (from `src/figures.typ`)
 
 ### Source Modules (`src/`)
 
 | File | Purpose |
 |------|---------|
-| `dissertation.typ` | `dissertation()` orchestrator — front/back matter, glossarium wiring |
-| `thesis.typ` | `thesis()` orchestrator — front/back matter, glossarium wiring |
+| `document.typ` | `_document()` — the shared orchestrator both templates delegate to |
+| `dissertation.typ` | `dissertation()` — doctoral parameters, mapped onto `_document()` |
+| `thesis.typ` | `thesis()` — student-thesis parameters, mapped onto `_document()` |
 | `page-setup.typ` | Shared style engine — `kit-header`, `_page-base()`, draft indicator, section pagination wrappers |
 | `kit-colors.typ` | KIT color palette + syntax highlighting colors |
 | `typography.typ` | Font configuration (Libertinus family) and KSP-required sizes per format (`font-sizes-by-format`) |
 | `page-conf.typ` | Page layout constants per format: page dimensions, margin presets (`short`/`medium`/`long`) per format, paragraph spacing |
 | `translations.typ` | German/English label strings |
-| `title-page.typ` | Dissertation/thesis title page (German legal format) |
+| `title-page.typ` | `doctoral-title-page` and `print-thesis-title` (German legal format); either can be passed to `title-page` |
 | `front-matter.typ` | Abstract, Kurzfassung, acknowledgements, notation, abbreviations |
 | `back-matter.typ` | Bibliography, own publications, own patents, supervised theses |
 | `outlines.typ` | TOC, back-matter list pages (`list-of` and the `list-of-figures`/`list-of-tables`/`list-of-listings` shorthands), and their `outline.entry` styling (`setup-outlines`) |
@@ -77,8 +79,9 @@ The single entry point re-exports:
 
 ### Template Flow
 
-Both `dissertation()` and `thesis()` share the same structure:
-1. **Front matter** — Roman page numbering (i, ii, …), no running headers; includes title page, abstracts, TOC
+Both `dissertation()` and `thesis()` map their parameters onto `_document()`, which owns the structure:
+0. **Title page** — from the `title-page` parameter, defaulting to `doctoral-title-page` / `print-thesis-title`. Rendered inside a scoped `set page` that supplies the title-page margins and suppresses header, footer and numbering
+1. **Front matter** — Roman page numbering (i, ii, …), no running headers; includes abstracts, TOC
 2. **Content** — Arabic page numbering (1, 2, …), chapter/section running headers
 3. **Back matter** — appendix (A, A.1, … numbering), then LoF/LoT/LoL, bibliography, and (dissertation only) own-publications/patents/supervised-theses sections
 

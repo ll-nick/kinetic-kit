@@ -4,26 +4,14 @@
 //   dissertation(...) — doctoral dissertation
 
 #import "document.typ": _document
-#import "title-page.typ": print-dissertation-title
+#import "title-page.typ": doctoral-title-page
 
 
 /// KIT doctoral dissertation template.
 ///
-/// - author-title (str | none): Academic title preceding the author's name (e.g. `"M.Sc."`).
 /// - author-firstname (str): Author's first name.
 /// - author-surname (str): Author's surname.
-/// - author-male (bool): `true` for male, `false` for female grammatical forms.
 /// - title (content): Dissertation title.
-/// - doc-degree (str): Degree name in masculine form.
-/// - doc-degree-f (str): Degree name in feminine form.
-/// - department (str): Faculty / department name.
-/// - university-genitive (str): University name in genitive case.
-/// - status-approved (bool): `false` = submitted, `true` = approved.
-/// - exam-date (str | none): Date of oral examination (when approved).
-/// - main-advisor (str | none): Main referee (when approved).
-/// - main-advisor-male (bool): Grammatical gender for main advisor label.
-/// - co-advisor (str | none): Co-referee (when approved).
-/// - co-advisor-male (bool): Grammatical gender for co-advisor label.
 /// - format ("a5" | "17x24" | "a4"): Paper format — `"a5"` (148×210 mm, default),
 ///   `"17x24"` (170×240 mm), or `"a4"` (210×297 mm, discouraged by KSP). Font sizes and
 ///   margins are set automatically.
@@ -56,24 +44,16 @@
 ///   The template adds a translated heading. `none` = omit.
 /// - appendix (content | none): Appendix chapters. Template applies `A`, `A.1`, … numbering
 ///   and places the appendix before the back-matter lists. `none` = omit.
+/// - title-page (content | function | none): Title page. Defaults to the doctoral
+///   page; pass `doctoral-title-page.with(..)` to configure it, your own content, a function
+///   called as `(title, author-firstname:, author-surname:, format:, lang:)`, or `none`
+///   to omit it.
 /// - doc (content): Main document body (chapters only).
 /// -> content
 #let dissertation(
-    author-title: "M.Sc.",
     author-firstname: "Max",
     author-surname: "Mustermann",
-    author-male: true,
     title: [Your Thesis Title],
-    doc-degree: "Doktors der Ingenieurwissenschaften (Dr.-Ing.)",
-    doc-degree-f: "Doktorin der Ingenieurwissenschaften (Dr.-Ing.)",
-    department: "KIT-Fakultät für Maschinenbau",
-    university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
-    status-approved: false,
-    exam-date: none,
-    main-advisor: none,
-    main-advisor-male: true,
-    co-advisor: none,
-    co-advisor-male: true,
     format: "a5",
     lang: "de",
     margin-preset: "short",
@@ -97,26 +77,10 @@
     supervised-theses: none,
     bibliography: none,
     appendix: none,
+    title-page: doctoral-title-page,
     doc,
 ) = _document(
-    title-page: print-dissertation-title(
-        title,
-        author-title: author-title,
-        author-firstname: author-firstname,
-        author-surname: author-surname,
-        author-male: author-male,
-        doc-degree: doc-degree,
-        doc-degree-f: doc-degree-f,
-        department: department,
-        university-genitive: university-genitive,
-        status-approved: status-approved,
-        exam-date: exam-date,
-        main-advisor: main-advisor,
-        main-advisor-male: main-advisor-male,
-        co-advisor: co-advisor,
-        co-advisor-male: co-advisor-male,
-        format: format,
-    ),
+    title-page: title-page,
     title: title,
     author-firstname: author-firstname,
     author-surname: author-surname,

@@ -1,16 +1,13 @@
 // Compile-only: submitted dissertation with abstract, bibliography,
 // and the most commonly used optional sections.
-#import "/lib.typ": dissertation
+#import "/lib.typ": dissertation, doctoral-title-page
 
 #show: dissertation.with(
-    author-title: "M.Sc.",
     author-firstname: "Max",
     author-surname: "Mustermann",
-    author-male: true,
     title: [Test Dissertation],
     lang: "de",
     margin-preset: "short",
-    status-approved: false,
     abstract-en: [English abstract.],
     abstract-de: [Deutsche Kurzfassung.],
     acknowledgements: [Acknowledgements text.],
@@ -20,6 +17,11 @@
         "/examples/bib/references.bib",
         title: none,
         style: "ieee",
+    ),
+    title-page: doctoral-title-page.with(
+        author-title: "M.Sc.",
+        author-male: true,
+        status-approved: false,
     ),
 )
 

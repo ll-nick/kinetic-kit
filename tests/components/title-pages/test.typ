@@ -2,7 +2,7 @@
 // without any setup-page wrapper (each title page sets its own page geometry).
 #import "/lib.typ": components
 
-#components.print-dissertation-title(
+#components.doctoral-title-page(
     [Titel der Dissertation],
     author-title: "M.Sc.",
     author-firstname: "Max",

@@ -11,36 +11,41 @@
 //
 // Documentation: https://github.com/ll-nick/kinetic-kit
 
-#import "@preview/kinetic-kit:0.1.1": dissertation, flex-caption
+#import "@preview/kinetic-kit:0.1.1": dissertation, doctoral-title-page, flex-caption
 
 // ── Dissertation configuration ─────────────────────────────────────────────
 #show: dissertation.with(
     // ── Author ────────────────────────────────────────────────────────────────
-    author-title: "M.Sc.", // Academic title preceding your name
     author-firstname: "Vorname",
     author-surname: "Nachname",
-    author-male: true, // true → male grammatical forms on the title page
 
     // ── Title ─────────────────────────────────────────────────────────────────
     title: [Titel der Dissertation],
 
-    // ── Degree & department ───────────────────────────────────────────────────
-    // Adjust the degree name to match your faculty's convention.
-    doc-degree: "Doktors der Ingenieurwissenschaften (Dr.-Ing.)",
-    doc-degree-f: "Doktorin der Ingenieurwissenschaften (Dr.-Ing.)",
-    department: "KIT-Fakultät für Maschinenbau",
-    university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
+    // ── Title page ────────────────────────────────────────────────────────────
+    // Everything printed on the title page is configured here. Replace this whole
+    // argument with your own function or content if your institute prescribes a
+    // different page — see the documentation.
+    title-page: doctoral-title-page.with(
+        author-title: "M.Sc.", // Academic title preceding your name
+        author-male: true, // true → male grammatical forms on the title page
 
-    // ── Status ────────────────────────────────────────────────────────────────
-    // Use status-approved: false while writing. Switch to true once approved
-    // and fill in the exam details below.
-    status-approved: false,
-    // status-approved: true,
-    // exam-date:         "12. Dezember 2025",
-    // main-advisor:      "Prof. Dr.-Ing. Vorname Nachname",
-    // main-advisor-male: true,
-    // co-advisor:        "Prof. Dr. Vorname Nachname",
-    // co-advisor-male:   false,
+        // Adjust the degree name to match your faculty's convention.
+        doc-degree: "Doktors der Ingenieurwissenschaften (Dr.-Ing.)",
+        doc-degree-f: "Doktorin der Ingenieurwissenschaften (Dr.-Ing.)",
+        department: "KIT-Fakultät für Maschinenbau",
+        university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
+
+        // Use status-approved: false while writing. Switch to true once approved
+        // and fill in the exam details below.
+        status-approved: false,
+        // status-approved: true,
+        // exam-date:         "12. Dezember 2025",
+        // main-advisor:      "Prof. Dr.-Ing. Vorname Nachname",
+        // main-advisor-male: true,
+        // co-advisor:        "Prof. Dr. Vorname Nachname",
+        // co-advisor-male:   false,
+    ),
 
     // ── Language & layout ─────────────────────────────────────────────────────
     lang: "en", // "de" or "en" — affects all auto-generated headings

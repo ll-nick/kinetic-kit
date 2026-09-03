@@ -1,12 +1,10 @@
 // Compile-only: dissertation with appendix — verifies appendix numbering
 // (A, A.1, …) and the page-rules switch don't regress.
-#import "/lib.typ": dissertation
+#import "/lib.typ": dissertation, doctoral-title-page
 
 #show: dissertation.with(
-    author-title: "M.Sc.",
     author-firstname: "Max",
     author-surname: "Mustermann",
-    author-male: true,
     title: [Dissertation with Appendix],
     lang: "de",
     bibliography: bibliography(
@@ -23,6 +21,10 @@
 
         #lorem(40)
     ],
+    title-page: doctoral-title-page.with(
+        author-title: "M.Sc.",
+        author-male: true,
+    ),
 )
 
 = Chapter One

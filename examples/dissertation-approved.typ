@@ -5,39 +5,19 @@
 //
 // Compile: typst compile --root . --font-path fonts examples/dissertation-approved.typ examples/dissertation-approved.pdf
 
-#import "/lib.typ": dissertation
+#import "/lib.typ": dissertation, doctoral-title-page
 
 #show: dissertation.with(
-    // ── Author ──────────────────────────────────────────────────────────────
-    author-title: "M.Sc.",
     author-firstname: "Max",
     author-surname: "Mustermann",
-    author-male: true,
 
     // ── Title ───────────────────────────────────────────────────────────────
     title: [
         Ein vollständiger Titel der Dissertation --- Über mehrere Zeilen
     ],
 
-    // ── Degree ──────────────────────────────────────────────────────────────
-    doc-degree: "Doktors der Ingenieurwissenschaften (Dr.-Ing.)",
-    doc-degree-f: "Doktorin der Ingenieurwissenschaften (Dr.-Ing.)",
-
-    // ── Institution ─────────────────────────────────────────────────────────
-    department: "KIT-Fakultät für Maschinenbau",
-    university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
-
     lang: "de",
     margin-preset: "short",
-
-    // ── Status: approved ────────────────────────────────────────────────────
-    // These fields are required when status-approved: true.
-    status-approved: true,
-    exam-date: "12. Dezember 2025",
-    main-advisor: "Prof. Dr.-Ing. Hans Musterbetreuer",
-    main-advisor-male: true,
-    co-advisor: "Prof. Dr. Maria Musterreferentin",
-    co-advisor-male: false,
 
     // Black links for the print copy submitted to KSP
     colored-links: false,
@@ -55,6 +35,28 @@
         "bib/references.bib",
         title: none,
         style: "ieee",
+    ),
+    title-page: doctoral-title-page.with(
+        // ── Author ──────────────────────────────────────────────────────────────
+        author-title: "M.Sc.",
+        author-male: true,
+
+        // ── Degree ──────────────────────────────────────────────────────────────
+        doc-degree: "Doktors der Ingenieurwissenschaften (Dr.-Ing.)",
+        doc-degree-f: "Doktorin der Ingenieurwissenschaften (Dr.-Ing.)",
+
+        // ── Institution ─────────────────────────────────────────────────────────
+        department: "KIT-Fakultät für Maschinenbau",
+        university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
+
+        // ── Status: approved ────────────────────────────────────────────────────
+        // These fields are required when status-approved: true.
+        status-approved: true,
+        exam-date: "12. Dezember 2025",
+        main-advisor: "Prof. Dr.-Ing. Hans Musterbetreuer",
+        main-advisor-male: true,
+        co-advisor: "Prof. Dr. Maria Musterreferentin",
+        co-advisor-male: false,
     ),
 )
 

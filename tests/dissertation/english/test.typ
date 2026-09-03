@@ -1,12 +1,10 @@
 // Compile-only: dissertation in English — verifies all translated strings
 // resolve without error when lang: "en".
-#import "/lib.typ": dissertation
+#import "/lib.typ": dissertation, doctoral-title-page
 
 #show: dissertation.with(
-    author-title: "M.Sc.",
     author-firstname: "Max",
     author-surname: "Mustermann",
-    author-male: true,
     title: [Test Dissertation in English],
     lang: "en",
     abstract-en: [English abstract.],
@@ -16,6 +14,10 @@
         "/examples/bib/references.bib",
         title: none,
         style: "ieee",
+    ),
+    title-page: doctoral-title-page.with(
+        author-title: "M.Sc.",
+        author-male: true,
     ),
 )
 

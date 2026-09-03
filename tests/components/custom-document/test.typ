@@ -15,7 +15,7 @@
 
 #show: components.setup-front-matter
 
-#components.print-dissertation-title(
+#components.doctoral-title-page(
     [Titel der Dissertation],
     author-title: "M.Sc.",
     author-firstname: "Max",
