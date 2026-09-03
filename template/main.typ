@@ -1,31 +1,27 @@
-// ── kinetic-kit — KIT Dissertation / Thesis Template ───────────────────
+// ── kinetic-kit — KIT Thesis Template ──────────────────────────────────
 //
 // Quick start:
-//   1. Fill in your metadata in the dissertation.with(...) call below.
+//   1. Fill in your metadata in the thesis.with(...) call below.
 //   2. Replace the abstract placeholders with your own text.
 //   3. Add your chapters below the #show: line.
 //   4. Optionally set draft: true while writing to stamp a "DRAFT" watermark.
 //
-// For a thesis (Masterarbeit / Bachelorarbeit) instead of a dissertation,
-// see the commented-out thesis.with(...) block at the bottom of this file.
-//
 // Documentation: https://github.com/ll-nick/kinetic-kit
 
-#import "@preview/kinetic-kit:0.1.1": dissertation, doctoral-title-page, flex-caption
+#import "@preview/kinetic-kit:0.1.1": doctoral-title-page, flex-caption, thesis
 
-// ── Dissertation configuration ─────────────────────────────────────────────
-#show: dissertation.with(
+// ── Document configuration ─────────────────────────────────────────────────
+#show: thesis.with(
     // ── Author ────────────────────────────────────────────────────────────────
     author-firstname: "Vorname",
     author-surname: "Nachname",
 
     // ── Title ─────────────────────────────────────────────────────────────────
-    title: [Titel der Dissertation],
+    title: [Titel der Arbeit],
 
     // ── Title page ────────────────────────────────────────────────────────────
     // Everything printed on the title page is configured here. Replace this whole
-    // argument with your own function or content if your institute prescribes a
-    // different page — see the documentation.
+    // argument with your own function or content for a fully custom title page.
     title-page: doctoral-title-page.with(
         author-title: "M.Sc.", // Academic title preceding your name
         author-male: true, // true → male grammatical forms on the title page
@@ -85,15 +81,25 @@
     // abbreviations: [...],
 
     // ── Back matter ───────────────────────────────────────────────────────────
-    show-list-of-figures: true, // List of Figures
-    show-list-of-tables: true, // List of Tables
+    show-list-of-figures: true,
+    show-list-of-tables: true,
     show-list-of-listings: false, // List of Listings (set true if you include code listings)
+
+    // Supply additional figure kinds here if required.
+    // figure-kinds: (
+    //     (
+    //         kind: "algorithm",
+    //         supplement: (de: [Algorithmus], en: [Algorithm]),
+    //         list-title: (de: [Algorithmenverzeichnis], en: [List of Algorithms]),
+    //         show-list: true,
+    //     ),
+    // ),
 
     bibliography: bibliography("refs.bib", title: none, style: "ieee"),
 
-    // own-publications: [...],  // Uncomment for your publications list
-    // own-patents:      [...],  // Uncomment for your patents list
-    // supervised-theses:[...],  // Uncomment for supervised theses
+    // own-publications: [...],
+    // own-patents:      [...],
+    // supervised-theses:[...],
 
     // appendix: [
     //   // Uncomment to add appendices — numbered A, A.1, A.2, B, …
@@ -114,61 +120,3 @@
 
 #include "guide.typ"
 
-
-// ╔═══════════════════════════════════════════════════════════════════════════╗
-// ║  THESIS ALTERNATIVE — delete the dissertation block above and            ║
-// ║  uncomment the block below for a Masterarbeit / Bachelorarbeit.          ║
-// ╚═══════════════════════════════════════════════════════════════════════════╝
-//
-// #import "@preview/kinetic-kit:0.1.1": thesis, flex-caption
-//
-// #show: thesis.with(
-//
-//   // ── Author ──────────────────────────────────────────────────────────────
-//   author-firstname: "Vorname",
-//   author-surname:   "Nachname",
-//
-//   // ── Title ───────────────────────────────────────────────────────────────
-//   title: [Titel der Arbeit],
-//
-//   // ── Type & institution ──────────────────────────────────────────────────
-//   thesis-type:         "Masterarbeit", // or "Bachelorarbeit" / "Diplomarbeit"
-//   department:          "KIT-Fakultät für Maschinenbau",
-//   university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
-//
-//   // ── Supervisors ─────────────────────────────────────────────────────────
-//   examiner:       "Prof. Dr.-Ing. Vorname Nachname",
-//   supervisor:     "M.Sc. Vorname Nachname",
-//   date-submitted: "01. März 2026",
-//
-//   // ── Language & layout ───────────────────────────────────────────────────
-//   lang:                    "de",
-//   format:                  "a5",     // "a5" | "17x24" | "a4"
-//   margin-preset:           "short",  // "short" (<200 pp) | "medium" (200–399) | "long" (≥400)
-//   binding-correction:      0mm,      // Add 8–10 mm for physically bound print copies (BCOR)
-//   colored-links:           true,     // Set to false for the black-link print copy
-//   serif-headings:          false,    // true = Libertinus Serif headings; false = Libertinus Sans
-//   heading-numbering-depth: 3,        // Deepest numbered level: 3 = 1.1.1, 4 = 1.1.1.1
-//
-//   // ── Draft watermark ─────────────────────────────────────────────────────
-//   // Set to true while writing to stamp "DRAFT" / "ENTWURF" on every page.
-//   draft: false,
-//   // draft-info: "v0.1 — 2025-06-01",
-//
-//   // ── Front matter ────────────────────────────────────────────────────────
-//   abstract-en: [...],
-//   abstract-de: [...],
-//   // acknowledgements: [...],
-//   // abbreviations:    [...],
-//
-//   // ── Back matter ─────────────────────────────────────────────────────────
-//   show-list-of-figures: true,
-//   show-list-of-tables: true,
-//   show-list-of-listings: false,
-//
-//   bibliography: bibliography("refs.bib", title: none, style: "ieee"),
-//
-//   // appendix: [
-//   //   = Appendix Title
-//   // ],
-// )
