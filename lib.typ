@@ -1,6 +1,7 @@
 #import "src/dissertation.typ": dissertation
 #import "src/thesis.typ": thesis
 #import "src/figures.typ": flex-caption
+#import "src/title-page.typ": doctoral-title-page, print-thesis-title
 
 /// Style constants for custom figures and components that need to match the
 /// template's visual identity: font families, sizes, line spacing, and KIT colors.
