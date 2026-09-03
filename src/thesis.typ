@@ -26,6 +26,10 @@
 /// - author-firstname (str): Author's first name.
 /// - author-surname (str): Author's surname.
 /// - title (content): Thesis title.
+/// - title-page (content | function | none): Title page. Defaults to the doctoral
+///   page; pass `doctoral-title-page.with(..)` to configure it, your own content, a function
+///   called as `(title, author-firstname:, author-surname:, format:, lang:)`, or `none`
+///   to omit it.
 /// - format ("a5" | "17x24" | "a4"): Paper format — `"a5"` (148×210 mm, default),
 ///   `"17x24"` (170×240 mm), or `"a4"` (210×297 mm, discouraged by KSP). Font sizes and
 ///   margins are set automatically.
@@ -51,24 +55,21 @@
 ///   `(de: [Algorithmus], en: [Algorithm])`. The built-in kinds are not declared here —
 ///   their list pages are governed by `show-list-of-figures` / `show-list-of-tables` / `show-list-of-listings`. Declared
 ///   kinds get a list page after the built-in ones, in declaration order.
+/// - appendix (content | none): Appendix chapters. Template applies `A`, `A.1`, … numbering
+///   and places the appendix before the back-matter lists. `none` = omit.
+/// - bibliography (content | none): Bibliography content. Pass `bibliography("refs.bib", title: none, style: "ieee")`.
+///   The template adds a translated heading. `none` = omit.
 /// - own-publications (content | none): Own publications content (heading added by template). `none` = omit.
 /// - own-patents (content | none): Own patents content (heading added by template). `none` = omit.
 /// - supervised-theses (content | none): Supervised theses content (heading added by template).
 ///   `none` = omit.
-/// - bibliography (content | none): Bibliography content. Pass `bibliography("refs.bib", title: none, style: "ieee")`.
-///   The template adds a translated heading. `none` = omit.
-/// - appendix (content | none): Appendix chapters. Template applies `A`, `A.1`, … numbering
-///   and places the appendix before the back-matter lists. `none` = omit.
-/// - title-page (content | function | none): Title page. Defaults to the doctoral
-///   page; pass `doctoral-title-page.with(..)` to configure it, your own content, a function
-///   called as `(title, author-firstname:, author-surname:, format:, lang:)`, or `none`
-///   to omit it.
 /// - doc (content): Main document body (chapters only).
 /// -> content
 #let thesis(
     author-firstname: "Max",
     author-surname: "Mustermann",
     title: [Your Thesis Title],
+    title-page: doctoral-title-page,
     format: "a5",
     lang: "de",
     margin-preset: "short",
@@ -87,12 +88,11 @@
     show-list-of-tables: true,
     show-list-of-listings: false,
     figure-kinds: (),
+    appendix: none,
+    bibliography: none,
     own-publications: none,
     own-patents: none,
     supervised-theses: none,
-    bibliography: none,
-    appendix: none,
-    title-page: doctoral-title-page,
     doc,
 ) = {
     assert(
