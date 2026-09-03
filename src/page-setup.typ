@@ -5,6 +5,7 @@
 //   _draft-indicator()   — "ENTWURF"/"DRAFT" watermark
 //   setup-page()         — full document style setup (page, headings, figures, equations, code)
 //   setup-front-matter() — Roman numeral pagination wrapper
+//   setup-back-matter()  — heading numbering suppression wrapper
 //   setup-content()      — Arabic numeral pagination wrapper
 //   setup-appendix()     — A.1 numbering wrapper
 
@@ -239,6 +240,17 @@
 /// -> content
 #let setup-front-matter(doc) = {
     set page(numbering: "i")
+    set heading(numbering: none)
+    doc
+}
+
+/// Suppress heading numbering for back-matter sections, which sit outside the
+/// `1.1` numbering `setup-content` establishes.
+/// Apply before back matter: `#show: setup-back-matter`.
+///
+/// - doc (content): Document body (injected automatically by the show rule).
+/// -> content
+#let setup-back-matter(doc) = {
     set heading(numbering: none)
     doc
 }
