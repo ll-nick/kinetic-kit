@@ -1,4 +1,4 @@
-// Localised strings for German and English dissertation documents
+// Localised strings for German and English documents
 
 #let t = (
     de: (

@@ -7,7 +7,7 @@
 
 // All strings are always in German (legal document requirement).
 
-/// Render the KIT dissertation title page (German legal format).
+/// Render the KIT doctoral thesis title page (German legal format).
 /// All text on this page is always in German regardless of document language.
 ///
 /// - title (content): Dissertation title.

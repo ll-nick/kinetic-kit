@@ -1,4 +1,4 @@
-// Compile-only: approved dissertation — exercises the title page code path
+// Compile-only: approved doctoral thesis — exercises the title page code path
 // with exam-date, main-advisor, and co-advisor filled in.
 #import "/lib.typ": doctoral-title-page, thesis
 

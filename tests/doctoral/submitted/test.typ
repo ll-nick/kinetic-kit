@@ -1,4 +1,4 @@
-// Compile-only: submitted dissertation with abstract, bibliography,
+// Compile-only: submitted doctoral thesis with abstract, bibliography,
 // and the most commonly used optional sections.
 #import "/lib.typ": doctoral-title-page, thesis
 

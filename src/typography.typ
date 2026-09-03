@@ -1,4 +1,4 @@
-// Font configuration for KIT dissertation template
+// Font configuration for the KIT thesis template
 // As recommended by KIT Scientific Publishing (KSP), sizes vary by paper format.
 
 #let fonts = (

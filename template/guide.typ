@@ -18,12 +18,12 @@ content once you are ready.
 
 == Configuring the Metadata
 
-All document metadata lives in the `#show: dissertation.with(...)` call at the top of
+All document metadata lives in the `#show: thesis.with(...)` call at the top of
 `main.typ`. Open that file and work through the parameters in order:
 
 + *Author:* Fill in `author-firstname` and `author-surname`. These also become the PDF
     metadata, so the title page takes them from here rather than repeating them.
-+ *Title:* Replace the placeholder in `title:` with your dissertation title.
++ *Title:* Replace the placeholder in `title:` with your thesis title.
 + *Title page:* Everything printed on the title page lives inside the
     `title-page: doctoral-title-page.with(...)` argument. Fill in `author-title` and
     `author-male` for the grammatical gender used on the German title page, and adjust
@@ -50,7 +50,7 @@ Headings in Typst use `=` signs. The template maps them as follows:
 - `== Section Title` — numbered section (1.1, 1.2, …)
 - `=== Subsection Title` — numbered subsection (1.1.1, …)
 
-Write your chapters directly after the `#show: dissertation.with(...)` call in `main.typ`,
+Write your chapters directly after the `#show: thesis.with(...)` call in `main.typ`,
 or use `#include "chapter-name.typ"` to keep each chapter in its own file.
 
 == Figures <sec:figures>

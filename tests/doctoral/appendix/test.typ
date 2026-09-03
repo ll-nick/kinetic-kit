@@ -1,4 +1,4 @@
-// Compile-only: dissertation with appendix — verifies appendix numbering
+// Compile-only: doctoral thesis with appendix — verifies appendix numbering
 // (A, A.1, …) and the page-rules switch don't regress.
 #import "/lib.typ": doctoral-title-page, thesis
 

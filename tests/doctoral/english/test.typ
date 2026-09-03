@@ -1,4 +1,4 @@
-// Compile-only: dissertation in English — verifies all translated strings
+// Compile-only: doctoral thesis in English — verifies all translated strings
 // resolve without error when lang: "en".
 #import "/lib.typ": doctoral-title-page, thesis
 

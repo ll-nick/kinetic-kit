@@ -1,4 +1,4 @@
-// page-conf.typ — static page layout constants for KIT dissertation template
+// page-conf.typ — static page layout constants for the KIT thesis template
 
 // Page dimensions per format. All formats use explicit width/height (170×240 mm has no
 // Typst named paper type, so explicit dimensions keep the approach uniform).
