@@ -49,19 +49,18 @@
 
 /// Print the table of contents.
 ///
-/// - lang (str): Document language — `"de"` or `"en"`.
+/// - title (content | str | auto): Heading of the outline. `auto` uses Typst's
+///   localized default for the document language.
+/// - depth (int): Deepest heading level to list.
 /// -> content
-#let table-of-contents(lang: "de") = {
+#let table-of-contents(title: auto, depth: 3) = {
     set text(hyphenate: false)
 
     // Extra space above each top-level entry.
     show outline.entry.where(level: 1): set block(above: 1.6em)
 
-    outline(
-        title: t.at(lang).table-of-contents,
-        depth: 3,
-        indent: auto,
-    )
+    // `auto` resolves against `text.lang`, which `setup-page` has already set.
+    outline(title: title, depth: depth, indent: auto)
 }
 
 /// Print a back-matter list page for one figure kind.
@@ -73,7 +72,7 @@
 ///   `image`, or a string such as `"algorithm"`.
 /// - title (content | str): Heading of the list page.
 /// -> content
-#let list-of(kind, title: none) = {
+#let list-of(kind, title) = {
     set text(hyphenate: true)
     heading(level: 1, numbering: none, outlined: true, bookmarked: true)[#title]
     in-outline.update(true)
@@ -86,18 +85,30 @@
 
 /// Print the list of figures.
 ///
-/// - lang (str): Document language — `"de"` or `"en"`.
+/// - title (content | str | auto): Heading of the list page. `auto` uses the
+///   localized default for the document language.
 /// -> content
-#let list-of-figures(lang: "de") = list-of(image, title: t.at(lang).list-of-figures)
+#let list-of-figures(title: auto) = list-of(
+    image,
+    if title == auto { context t.at(text.lang).list-of-figures } else { title },
+)
 
 /// Print the list of tables.
 ///
-/// - lang (str): Document language — `"de"` or `"en"`.
+/// - title (content | str | auto): Heading of the list page. `auto` uses the
+///   localized default for the document language.
 /// -> content
-#let list-of-tables(lang: "de") = list-of(table, title: t.at(lang).list-of-tables)
+#let list-of-tables(title: auto) = list-of(
+    table,
+    if title == auto { context t.at(text.lang).list-of-tables } else { title },
+)
 
 /// Print the list of listings.
 ///
-/// - lang (str): Document language — `"de"` or `"en"`.
+/// - title (content | str | auto): Heading of the list page. `auto` uses the
+///   localized default for the document language.
 /// -> content
-#let list-of-listings(lang: "de") = list-of(raw, title: t.at(lang).list-of-listings)
+#let list-of-listings(title: auto) = list-of(
+    raw,
+    if title == auto { context t.at(text.lang).list-of-listings } else { title },
+)
