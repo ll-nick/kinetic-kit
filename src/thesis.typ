@@ -3,15 +3,8 @@
 // Public API (re-exported via lib.typ):
 //   thesis(...) — Master's / Bachelor's / Diploma thesis
 
-#import "page-setup.typ": setup-appendix, setup-content, setup-front-matter, setup-page
+#import "document.typ": _document
 #import "title-page.typ": print-thesis-title
-#import "typography.typ": font-sizes-by-format
-#import "front-matter.typ": (
-    print-abbreviations, print-abstract, print-acknowledgements, print-kurzfassung,
-)
-#import "back-matter.typ": print-bibliography
-#import "outlines.typ": print-list-of, print-toc
-#import "figure-kinds.typ": resolve-figure-kinds, resolve-localized
 
 
 /// KIT Master's / Bachelor's / Diploma thesis template.
@@ -84,42 +77,8 @@
     bibliography: none,
     appendix: none,
     doc,
-) = {
-    assert(
-        format in ("a5", "17x24", "a4"),
-        message: "format must be \"a5\", \"17x24\" (170×240 mm), or \"a4\"",
-    )
-    let author-name = author-firstname + " " + author-surname
-    let font-sizes = font-sizes-by-format.at(format)
-    let resolved-figure-kinds = resolve-figure-kinds(
-        figure-kinds,
-        show-lof: show-lof,
-        show-lot: show-lot,
-        show-lol: show-lol,
-    )
-
-    set document(
-        title: title,
-        author: author-name,
-        date: datetime.today(),
-    )
-
-    // ── Global page/text/heading setup -─────────────────────────────────────
-    show: setup-page.with(
-        format: format,
-        margin-preset: margin-preset,
-        lang: lang,
-        binding-correction: binding-correction,
-        colored-links: colored-links,
-        draft: draft,
-        draft-info: draft-info,
-        serif-headings: serif-headings,
-        heading-numbering-depth: heading-numbering-depth,
-        figure-kinds: figure-kinds,
-    )
-
-    // ── Title page ──────────────────────────────────────────────────────────
-    print-thesis-title(
+) = _document(
+    title-page: print-thesis-title(
         title,
         thesis-type: thesis-type,
         author-firstname: author-firstname,
@@ -130,56 +89,28 @@
         supervisor: supervisor,
         date-submitted: date-submitted,
         format: format,
-    )
-
-    // ── Front matter (Roman numerals) ───────────────────────────────────────
-    show: setup-front-matter
-    counter(page).update(0)
-
-    if acknowledgements != none {
-        print-acknowledgements(acknowledgements, lang)
-    }
-
-    if abstract-en != none {
-        print-abstract(abstract-en)
-    }
-    if abstract-de != none {
-        print-kurzfassung(abstract-de)
-    }
-
-    if abbreviations != none {
-        print-abbreviations(abbreviations, lang)
-    }
-
-    print-toc(lang: lang)
-
-    // ── Main content (Arabic numerals) ──────────────────────────────────────
-    show: setup-content
-    counter(page).update(1)
-
-    doc
-
-    // ── Back matter ─────────────────────────────────────────────────────────
-    if appendix != none {
-        show: setup-appendix
-        appendix
-    }
-
-    // Titles resolve against the document language rather than `text.lang`: a list
-    // page is one back-matter section, unlike a supplement that follows its figure.
-    for entry in resolved-figure-kinds {
-        if entry.show-list {
-            print-list-of(
-                entry.kind,
-                title: resolve-localized(
-                    entry.list-title,
-                    lang,
-                    kind: entry.kind,
-                    field: "list-title",
-                ),
-            )
-        }
-    }
-
-    if bibliography != none { print-bibliography(bibliography, lang) }
-}
+    ),
+    title: title,
+    author-firstname: author-firstname,
+    author-surname: author-surname,
+    format: format,
+    lang: lang,
+    margin-preset: margin-preset,
+    binding-correction: binding-correction,
+    colored-links: colored-links,
+    draft: draft,
+    draft-info: draft-info,
+    serif-headings: serif-headings,
+    heading-numbering-depth: heading-numbering-depth,
+    abstract-en: abstract-en,
+    abstract-de: abstract-de,
+    acknowledgements: acknowledgements,
+    abbreviations: abbreviations,
+    show-lof: show-lof,
+    show-lot: show-lot,
+    show-lol: show-lol,
+    figure-kinds: figure-kinds,
+    bibliography: bibliography,
+    appendix: appendix,
+    doc,
+)
