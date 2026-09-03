@@ -27,11 +27,11 @@ This document lists all public symbols exported by `kinetic-kit`.
 
 = Template
 
-`thesis()` is the main entrypoint of the package.
-By default, it assembles a complete doctoral thesis in the KSP-approved style.
-The template is fully configurable and can also be used to produce a bachelor's or master's thesis.
-Note that the KSP endorsement only applies to doctoral theses in the default configuration;
-customized documents are not covered by it.
+`thesis()` is the main entrypoint of the package. By default, it assembles a complete
+doctoral thesis in the KSP-approved style. The template is fully configurable and can also
+be used to produce a bachelor's or master's thesis. Note that the KSP endorsement only
+applies to doctoral theses in the default configuration; customized documents are not
+covered by it.
 
 #let thesis-src = read("../src/thesis.typ")
 #let thesis-module = tidy.parse-module(thesis-src, name: "thesis")

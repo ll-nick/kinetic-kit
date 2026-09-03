@@ -50,8 +50,8 @@ Headings in Typst use `=` signs. The template maps them as follows:
 - `== Section Title` — numbered section (1.1, 1.2, …)
 - `=== Subsection Title` — numbered subsection (1.1.1, …)
 
-Write your chapters directly after the `#show: thesis.with(...)` call in `main.typ`,
-or use `#include "chapter-name.typ"` to keep each chapter in its own file.
+Write your chapters directly after the `#show: thesis.with(...)` call in `main.typ`, or
+use `#include "chapter-name.typ"` to keep each chapter in its own file.
 
 == Figures <sec:figures>
 
