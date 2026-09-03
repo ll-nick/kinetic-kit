@@ -14,7 +14,7 @@
     print-bibliography, print-own-patents, print-own-publications,
     print-supervised-theses,
 )
-#import "outlines.typ": print-list-of, print-toc
+#import "outlines.typ": list-of, toc
 #import "figure-kinds.typ": resolve-figure-kinds, resolve-localized
 
 
@@ -108,7 +108,7 @@
         print-abbreviations(abbreviations, lang)
     }
 
-    print-toc(lang: lang)
+    toc(lang: lang)
 
     // ── Main content (Arabic numerals) ──────────────────────────────────────
     show: setup-content
@@ -126,7 +126,7 @@
     // page is one back-matter section, unlike a supplement that follows its figure.
     for entry in resolved-figure-kinds {
         if entry.show-list {
-            print-list-of(
+            list-of(
                 entry.kind,
                 title: resolve-localized(
                     entry.list-title,
