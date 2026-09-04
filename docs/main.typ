@@ -7,7 +7,7 @@
 #import "@preview/tidy:0.4.3"
 
 #import "../src/kit-colors.typ": kit-colors
-#import "../src/outlines.typ": setup-outlines, table-of-contents
+#import "../src/outlines.typ": setup-outlines
 #import "../src/typography.typ": font-sizes-by-format, fonts, leading
 
 #let version = toml("../typst.toml").package.version
@@ -121,7 +121,7 @@ source.
             lang: "typst",
             "#import \"@preview/kinetic-kit:"
                 + version
-                + "\": doctoral-title-page, kit-style, outlines, thesis",
+                + "\": doctoral-title-page, flex-caption, kit-style, thesis",
         )
     ],
 )
@@ -130,7 +130,7 @@ source.
 #[
     // Outline entries are links too; the cross-reference fill would tint the page.
     #show link: set text(fill: black)
-    #table-of-contents(title: none, depth: 2)
+    #outline(title: none, depth: 2)
 ]
 
 #api-module("../src/thesis.typ", "thesis")
@@ -141,52 +141,56 @@ source.
 
 = Outlines
 
-The `outlines` namespace holds the sections whose body the template generates: the table
-of contents and the back-matter list pages. Place them inside the #api-link(
+The template tweaks Typst's builtin `outline` function, so you can use that directly. Put
+it in the #api-link(
     "thesis.front-matter",
-) / #api-link("thesis.back-matter") content of #api-link("thesis()").
+) / #api-link("thesis.back-matter") content of #api-link("thesis()"). Here's what changes:
 
-It also carries #api-link("flex-caption()"). The list pages are what switch that caption
-to its short form, so it does nothing without one --- which is why it lives here.
++ Entries are styled to match the document, and the contents outline stops at level 3.
++ A list page gets an outlined, bookmarked heading, so it reaches the table of contents
+    and the PDF bookmarks.
++ That heading is named for the document language when `title` is omitted:
+    `Abbildungsverzeichnis`, `Tabellenverzeichnis`, `Quellcodeverzeichnis` and their
+    English counterparts. Any other kind names itself, and omitting `title` there is an
+    error (see @sec:figure-kinds). `title: none` drops the heading.
 
 ```typst
-#import "@preview/kinetic-kit:0.1.1": outlines, thesis
-
 #show: thesis.with(
   front-matter: [
-    = Kurzfassung
-    …
-    #outlines.table-of-contents()
+    #outline()
   ],
   back-matter: [
-    #outlines.list-of-figures()
-    #outlines.list-of("algorithm", [Algorithmenverzeichnis])
-    #bibliography("refs.bib", title: [Literaturverzeichnis], style: "ieee")
+    #outline(target: figure.where(kind: image))
+    #outline(
+      title: [Algorithmenverzeichnis],
+      target: figure.where(kind: "algorithm"),
+    )
+    #bibliography("refs.bib", style: "ieee")
   ],
 )
 ```
 
 #api-module(
     "../src/outlines.typ",
-    "outlines",
-    filter: definition => definition.name != "setup-outlines",
+    "flex-caption",
+    filter: definition => definition.name == "flex-caption",
     level: 2,
 )
 
 #pagebreak(weak: true)
 
-= Figure Kinds
+= Figure Kinds <sec:figure-kinds>
 
 Typst keeps a separate counter and supplement for every figure `kind`. The template
 carries strings for Typst's own `image`, `table` and `raw`. Any other kind --- pseudocode,
 theorems, whatever a document needs --- is declared through #api-link(
     "thesis.figure-kinds",
-), which supplies the caption supplement. Its list page, if you want one, is a #api-link(
-    "list-of()",
-) call in #api-link("thesis.back-matter").
+), which supplies the caption supplement.
 
 Each entry is a dictionary with `kind` and `supplement`. `supplement` takes either one
-value or one per language:
+value or one per language. A list page is an `outline` over the same kind, named
+explicitly --- the template has a word for `image`, `table` and `raw`, not for a kind of
+your own:
 
 ```typst
 #show: thesis.with(
@@ -194,6 +198,12 @@ value or one per language:
     (kind: "algorithm", supplement: (de: [Algorithmus], en: [Algorithm])),
     (kind: "theorem",   supplement: [Theorem]),
   ),
+  back-matter: [
+    #outline(
+      title: [Algorithmenverzeichnis],
+      target: figure.where(kind: "algorithm"),
+    )
+  ],
 )
 ```
 
