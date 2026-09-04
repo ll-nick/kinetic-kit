@@ -158,8 +158,8 @@ the top level) to build the default page yourself:
 <summary><strong>Outline helpers</strong></summary>
 
 The `outlines` namespace holds the table of contents and the back-matter list pages.
-Using the template's helpers instead of the built-in `#outline` makes sure formatting and localization is correct.
-For the backmatter listings, these helpers are also required to make `outlines.flex-caption` work.
+Entry styling applies to any outline in the document, a bare `#outline()` included;
+what these helpers add on top is the localized heading and, on the list pages, the state that `outlines.flex-caption` switches on.
 Place them inside the `front-matter` / `back-matter` content of `thesis()`.
 
 ```typst
@@ -186,7 +186,7 @@ The `kit-style` namespace exposes the template's visual constants so custom figu
 ```typst
 #import "@preview/kinetic-kit:0.1.1": kit-style
 
-// kit-style.fonts                — (serif, sans, mono) font family arrays
+// kit-style.fonts                 — (serif, sans, mono) font family arrays
 // kit-style.font-sizes-by-format  — dict keyed by format: font sizes per format
 // kit-style.leading               — paragraph line spacing (0.75em)
 // kit-style.colors                — KIT color palette (green, blue, red, …)
