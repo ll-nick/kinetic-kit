@@ -121,7 +121,7 @@ source.
             lang: "typst",
             "#import \"@preview/kinetic-kit:"
                 + version
-                + "\": doctoral-title-page, flex-caption, kit-style, outlines, thesis",
+                + "\": doctoral-title-page, kit-style, outlines, thesis",
         )
     ],
 )
@@ -146,6 +146,9 @@ of contents and the back-matter list pages. Place them inside the #api-link(
     "thesis.front-matter",
 ) / #api-link("thesis.back-matter") content of #api-link("thesis()").
 
+It also carries #api-link("flex-caption()"). The list pages are what switch that caption
+to its short form, so it does nothing without one --- which is why it lives here.
+
 ```typst
 #import "@preview/kinetic-kit:0.1.1": outlines, thesis
 
@@ -168,12 +171,6 @@ of contents and the back-matter list pages. Place them inside the #api-link(
     "outlines",
     filter: definition => definition.name != "setup-outlines",
     level: 2,
-)
-
-#api-module(
-    "../src/figures.typ",
-    "figures",
-    filter: definition => definition.name == "flex-caption",
 )
 
 #pagebreak(weak: true)
