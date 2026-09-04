@@ -24,16 +24,22 @@ Either way you get a ready-to-fill `main.typ`.
 To add the template to an existing document instead, import it and apply it with a show rule:
 
 ```typst
-#import "@preview/kinetic-kit:0.1.1": thesis
+#import "@preview/kinetic-kit:0.1.1": outlines, thesis
 
 #show: thesis.with(
+  lang: "de",
   author-firstname: "Max",
-  author-surname:   "Mustermann",
-  title:            [Title of the Dissertation],
-  lang:             "de",
-  abstract-de:      include "content/abstract-de.typ",
-  abstract-en:      include "content/abstract-en.typ",
-  bibliography:     bibliography("bib/references.bib", title: none, style: "ieee"),
+  author-surname: "Mustermann",
+  title: [Title of the Dissertation],
+  front-matter: [
+    #include "content/abstract-de.typ"
+
+    #outlines.table-of-contents()
+  ],
+  back-matter: [
+    #outlines.list-of-figures()
+    #bibliography("bib/references.bib", title: [Literaturverzeichnis], style: "ieee")
+  ],
 )
 
 #include "content/01-introduction.typ"
@@ -95,33 +101,23 @@ Upgrading from 0.1.x? See [MIGRATING.md](MIGRATING.md).
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
+| `format` | `"a5" \| "17x24" \| "a4"` | `"a5"` | Paper format — `"a5"` (148×210 mm, default), `"17x24"` (170×240 mm), or `"a4"` (210×297 mm) |
+| `lang` | `"de" \| "en"` | `"de"` | Document language |
 | `author-firstname` | `str` | `"Max"` | |
 | `author-surname` | `str` | `"Mustermann"` | |
 | `title` | `content` | | Dissertation title |
 | `title-page` | `content \| function \| none` | `doctoral-title-page` | Title page. Configure the default with `doctoral-title-page.with(…)` (see below), pass your own content or function, or `none` to omit it |
-| `format` | `"a5" \| "17x24" \| "a4"` | `"a5"` | Paper format — `"a5"` (148×210 mm, default), `"17x24"` (170×240 mm), or `"a4"` (210×297 mm) |
-| `lang` | `"de" \| "en"` | `"de"` | Document language |
+| `front-matter` | `content \| none` | `outlines.table-of-contents()` | Roman-numeral pages before the body — abstracts, acknowledgements, the TOC, any page of your own, in the order written. Heading numbering suppressed. `none` = no front matter |
+| `appendix` | `content \| none` | `none` | Appendix chapters; template applies A, A.1, … numbering, placed directly after the body, before the back matter |
+| `back-matter` | `content \| none` | `none` | Pages after the appendix — `outlines.list-of-*()` calls, `bibliography(…)`, own-publications, in the order written. Heading numbering suppressed |
+| `serif-headings` | `bool` | `false` | Use Libertinus Serif for headings when `true`, Libertinus Sans-Serif when `false` |
+| `heading-numbering-depth` | `int` | `3` | Deepest heading level that receives a number; deeper levels are styled but not numbered |
+| `figure-kinds` | `array` | `()` | Figure kinds beyond `image`/`table`/`raw`, as dicts with `kind` and `supplement` |
 | `margin-preset` | `"short" \| "medium" \| "long"` | `"short"` | KSP margin profile keyed on final page count — `short` < 200 pp, `medium` 200–399, `long` ≥ 400 |
 | `binding-correction` | `length` | `0mm` | BCOR added to inside margin (8–10 mm for physically bound copies) |
 | `colored-links` | `bool` | `true` | KIT Blue hyperlinks (screen); `false` = black (print) |
 | `draft` | `bool` | `false` | Show "ENTWURF"/"DRAFT" watermark |
 | `draft-info` | `str \| none` | `none` | Optional version string next to watermark (e.g. git SHA) |
-| `serif-headings` | `bool` | `false` | Use Libertinus Serif for headings when `true`, Libertinus Sans-Serif when `false` |
-| `heading-numbering-depth` | `int` | `3` | Deepest heading level that receives a number; deeper levels are styled but not numbered |
-| `abstract-en` | `content \| none` | `none` | |
-| `abstract-de` | `content \| none` | `none` | |
-| `acknowledgements` | `content \| none` | `none` | |
-| `notation` | `content \| none` | `none` | Symbol/notation list |
-| `abbreviations` | `content \| none` | `none` | Abbreviations / acronym list |
-| `show-list-of-figures` | `bool` | `true` | List of figures |
-| `show-list-of-tables` | `bool` | `true` | List of tables |
-| `show-list-of-listings` | `bool` | `false` | List of listings |
-| `figure-kinds` | `array` | `()` | Figure kinds beyond `image`/`table`/`raw`, as dicts with `kind`, `supplement`, and optionally `list-title`/`show-list` |
-| `appendix` | `content \| none` | `none` | Appendix chapters; template applies A, A.1, … numbering, placed before the back-matter lists |
-| `bibliography` | `content \| none` | `none` | Pass `bibliography("refs.bib", title: none, style: "ieee")`; template adds a translated heading |
-| `own-publications` | `content \| none` | `none` | Back-matter publications list |
-| `own-patents` | `content \| none` | `none` | Back-matter patents list |
-| `supervised-theses` | `content \| none` | `none` | Back-matter supervised theses list |
 
 </details>
 
@@ -205,53 +201,25 @@ the top level) to build the default page yourself:
 </details>
 
 <details>
-<summary><strong>Custom document composition</strong></summary>
+<summary><strong>Outline helpers</strong></summary>
 
-The `components` namespace exports the individual building blocks for assembling a document without the full `thesis()` orchestrator.
-Use this when the high-level template doesn't fit your layout needs. You are responsible for applying the setup wrappers in the correct order.
-
-Available components:
-`setup-page`, `setup-front-matter`, `setup-content`, `setup-appendix`, `doctoral-title-page`, `table-of-contents`, `list-of-figures`, `list-of-tables`, `list-of-listings`, `list-of`.
+The `outlines` namespace holds the table of contents and the back-matter list pages.
+Using the template's helpers instead of the built-in `#outline` makes sure formatting and localization is correct.
+For the backmatter listings, these helpers are also required to make the `flex-caption` work.
+Place them inside the `front-matter` / `back-matter` content of `thesis()`.
 
 ```typst
-#import "@preview/kinetic-kit:0.1.1": components
+#import "@preview/kinetic-kit:0.1.1": outlines, thesis
 
-#let format = "a5"
-
-// 1. Apply base KIT formatting (page geometry, fonts, heading styles, …)
-#show: components.setup-page.with(
-  format: format,
-  margin-preset: "short",
-  lang: "de",
-  colored-links: true,
+#show: thesis.with(
+  back-matter: [
+    #outlines.list-of-figures()
+    #outlines.list-of-tables()
+    // A declared figure kind — the title is required:
+    #outlines.list-of("algorithm", [Algorithmenverzeichnis])
+    #bibliography("refs.bib", title: [Literaturverzeichnis], style: "ieee")
+  ],
 )
-
-// 2. Front matter — Roman numerals, no heading numbers
-#show: components.setup-front-matter
-
-#components.doctoral-title-page(
-  [Titel der Dissertation],
-  author-title: "M.Sc.",
-  author-firstname: "Vorname",
-  author-surname: "Nachname",
-  department: "KIT-Fakultät für Maschinenbau",
-  university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
-  format: format,
-)
-
-= Abstract
-Your abstract here.
-
-#components.table-of-contents(lang: "de")
-
-// 3. Main content — Arabic numerals, numbered headings
-#show: components.setup-content
-
-= Introduction
-Your content here.
-
-= References
-#bibliography("refs.bib", title: none, style: "ieee")
 ```
 
 </details>
@@ -287,21 +255,18 @@ The `kit-style` namespace exposes the template's visual constants so custom figu
 <details>
 <summary><strong>Custom figure kinds (algorithms, theorems, …)</strong></summary>
 
-Typst gives every figure `kind` its own counter and supplement, but only styles the ones it knows: `image`, `table` and `raw`. The template carries strings for exactly those three, because their names are template chrome. Anything else is your document's vocabulary, so you declare it.
+Typst gives every figure `kind` its own counter and supplement,
+but only styles the ones it knows: `image`, `table` and `raw` (code listings).
+The template carries strings for exactly those three.
+Anything else is your document's vocabulary, so you declare it.
 
-**Declaring a kind.** Give it a `supplement`, and a `list-title` if it should get a back-matter list page. Both take either one value or one per language:
+**Declaring a kind.** Give it a `supplement`, either one value or one per language:
 
 ```typst
 #show: thesis.with(
   figure-kinds: (
-    (
-      kind:       "algorithm",
-      supplement: (de: [Algorithmus],            en: [Algorithm]),
-      list-title: (de: [Algorithmenverzeichnis], en: [List of Algorithms]),
-      show-list:  true,
-    ),
-    // Supplement only — no list page.
-    (kind: "theorem", supplement: (de: [Satz], en: [Theorem])),
+    (kind: "algorithm", supplement: (de: [Algorithmus], en: [Algorithm])),
+    (kind: "theorem",   supplement: [Theorem]),
   ),
 )
 ```
@@ -316,11 +281,18 @@ Then tag the figure:
 )
 ```
 
-`kind: "algorithm"` must be spelled out. A figure whose body is a raw block is inferred as `kind: raw` otherwise, and lands among the listings.
+**List pages.** Put an `outlines.list-of` call in `back-matter` for each kind you want listed,
+in whatever order you want them — the built-in `image`/`table`/`raw` included:
 
-**The built-in kinds stay out of it.** `image`, `table` and `raw` are configured by `show-list-of-figures` / `show-list-of-tables` / `show-list-of-listings` alone
+```typst
+back-matter: [
+  #outlines.list-of-figures()
+  #outlines.list-of-tables()
+  #outlines.list-of("algorithm", [List of Algorithms])
+],
+```
 
-**List order.** Figures, tables, listings, then your kinds in declaration order. For a different order, place them yourself with `components.list-of`, which also sets the state that switches `flex-caption` to its short form.
+`outlines.list-of` also sets the state that switches `flex-caption` to its short form.
 
 </details>
 
@@ -369,8 +341,12 @@ Use the [glossarium](https://typst.app/universe/package/glossarium) package for 
 
 #show: thesis.with(
   // ...
-  // The template adds the translated section heading automatically.
-  abbreviations: print-glossary(abbrevs),
+  front-matter: [
+    = List of Abbreviations
+    #print-glossary(abbrevs)
+
+    #outlines.table-of-contents()
+  ],
 )
 
 // @ml expands to "Machine Learning (ML)" on first use, "ML" thereafter.
