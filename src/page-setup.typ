@@ -278,20 +278,6 @@
     doc
 }
 
-/// Suppress heading numbering for back-matter sections, which sit outside the
-/// `1.1` numbering `setup-content` establishes.
-/// Apply before back matter: `#show: setup-back-matter`.
-///
-/// -> content
-#let setup-back-matter(
-    /// Document body, injected by the show rule.
-    /// -> content
-    doc,
-) = {
-    set heading(numbering: none)
-    doc
-}
-
 /// Restart page numbering at Arabic `1` and enable `1.1` heading numbering.
 /// Apply before the main content: `#show: setup-content`.
 ///
@@ -321,5 +307,19 @@
 ) = {
     set heading(numbering: "A.1")
     counter(heading).update(0)
+    doc
+}
+
+/// Suppress heading numbering for back-matter sections, which sit outside the
+/// `1.1` numbering `setup-content` establishes.
+/// Apply before back matter: `#show: setup-back-matter`.
+///
+/// -> content
+#let setup-back-matter(
+    /// Document body, injected by the show rule.
+    /// -> content
+    doc,
+) = {
+    set heading(numbering: none)
     doc
 }
