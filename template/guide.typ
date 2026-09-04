@@ -7,7 +7,7 @@
 // Delete this file (and the #include "guide.typ" line in main.typ) once you
 // no longer need it.
 
-#import "@preview/kinetic-kit:0.1.1": flex-caption
+#import "@preview/kinetic-kit:0.1.1": outlines
 
 = Getting Started with kinetic-kit
 
@@ -70,17 +70,17 @@ use `#include "chapter-name.typ"` to keep each chapter in its own file.
 
 == Figures <sec:figures>
 
-Use Typst's built-in `figure()` to insert figures. The template provides `flex-caption`
-for cases where you want a short caption in the List of Figures and a longer one in the
-body.
+Use Typst's built-in `figure()` to insert figures. The template provides
+`outlines.flex-caption` for cases where you want a short caption in the List of Figures
+and a longer one in the body.
 
 #figure(
     rect(width: 7cm, height: 3.5cm, fill: luma(235), stroke: 0.5pt),
-    caption: flex-caption(
+    caption: outlines.flex-caption(
         short: [A placeholder figure.],
-        long: [A placeholder figure demonstrating the use of `flex-caption`. The short
-            caption appears in the List of Figures; this longer version appears here in
-            the body.],
+        long: [A placeholder figure demonstrating the use of `outlines.flex-caption`. The
+            short caption appears in the List of Figures; this longer version appears here
+            in the body.],
     ),
 ) <fig:placeholder>
 
