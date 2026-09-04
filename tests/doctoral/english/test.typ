@@ -1,20 +1,27 @@
 // Compile-only: doctoral thesis in English — verifies all translated strings
 // resolve without error when lang: "en".
-#import "/lib.typ": doctoral-title-page, thesis
+#import "/lib.typ": doctoral-title-page, outlines, thesis
 
 #show: thesis.with(
     author-firstname: "Max",
     author-surname: "Mustermann",
     title: [Test Dissertation in English],
     lang: "en",
-    abstract-en: [English abstract.],
-    show-list-of-figures: true,
-    show-list-of-tables: true,
-    bibliography: bibliography(
-        "/examples/bib/references.bib",
-        title: none,
-        style: "ieee",
-    ),
+    front-matter: [
+        = Abstract
+        English abstract.
+
+        #outlines.table-of-contents()
+    ],
+    back-matter: [
+        #outlines.list-of-figures()
+        #outlines.list-of-tables()
+        #bibliography(
+            "/examples/bib/references.bib",
+            title: [Bibliography],
+            style: "ieee",
+        )
+    ],
     title-page: doctoral-title-page.with(
         author-title: "M.Sc.",
         author-male: true,

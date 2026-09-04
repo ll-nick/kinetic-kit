@@ -1,17 +1,19 @@
 // Compile-only: doctoral thesis with appendix — verifies appendix numbering
 // (A, A.1, …) and the page-rules switch don't regress.
-#import "/lib.typ": doctoral-title-page, thesis
+#import "/lib.typ": doctoral-title-page, outlines, thesis
 
 #show: thesis.with(
     author-firstname: "Max",
     author-surname: "Mustermann",
     title: [Dissertation with Appendix],
     lang: "de",
-    bibliography: bibliography(
-        "/examples/bib/references.bib",
-        title: none,
-        style: "ieee",
-    ),
+    back-matter: [
+        #bibliography(
+            "/examples/bib/references.bib",
+            title: [Literaturverzeichnis],
+            style: "ieee",
+        )
+    ],
     appendix: [
         = Supplementary Material
 

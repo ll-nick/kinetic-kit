@@ -1,6 +1,6 @@
 // Compile-only: submitted doctoral thesis with abstract, bibliography,
 // and the most commonly used optional sections.
-#import "/lib.typ": doctoral-title-page, thesis
+#import "/lib.typ": doctoral-title-page, outlines, thesis
 
 #show: thesis.with(
     author-firstname: "Max",
@@ -8,16 +8,27 @@
     title: [Test Dissertation],
     lang: "de",
     margin-preset: "short",
-    abstract-en: [English abstract.],
-    abstract-de: [Deutsche Kurzfassung.],
-    acknowledgements: [Acknowledgements text.],
-    show-list-of-figures: true,
-    show-list-of-tables: true,
-    bibliography: bibliography(
-        "/examples/bib/references.bib",
-        title: none,
-        style: "ieee",
-    ),
+    front-matter: [
+        = Danksagung
+        Acknowledgements text.
+
+        = Abstract
+        English abstract.
+
+        = Kurzfassung
+        Deutsche Kurzfassung.
+
+        #outlines.table-of-contents()
+    ],
+    back-matter: [
+        #outlines.list-of-figures()
+        #outlines.list-of-tables()
+        #bibliography(
+            "/examples/bib/references.bib",
+            title: [Literaturverzeichnis],
+            style: "ieee",
+        )
+    ],
     title-page: doctoral-title-page.with(
         author-title: "M.Sc.",
         author-male: true,
