@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # [MISE] description="Assemble the Typst Universe submission tree in dist/"
+# [MISE] depends=["build:thumbnail"]
 """Assemble the Typst Universe submission tree in dist/.
 
 Typst Universe submissions are static copies: the contents of dist/ are meant to
@@ -24,8 +25,8 @@ SHIPPED_PATHS = [
     "template",
     "README.md",
     "LICENSE",
+    "thumbnail.png",
     "docs/api-reference.pdf",
-    "thumbnail/thumbnail.png",
 ]
 
 STRIP_START_MARKER = "<!-- package:strip-start"
