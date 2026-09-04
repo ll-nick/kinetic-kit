@@ -2,6 +2,9 @@
 *.pdf
 out/
 
+# Written by tytanic when a reference comparison fails
+diff/
+
 # Rendered from the template at package time
 thumbnail.png
 
