@@ -100,15 +100,6 @@
     co-advisor-male: true,
 ) = {
     let font-sizes = font-sizes-by-format.at(format)
-    let title-page-margins = title-page-margins-by-format.at(format)
-
-    set page(
-        margin: title-page-margins,
-        binding: left,
-        header: none,
-        footer: none,
-        numbering: none,
-    )
 
     // The page is always in German, whatever the document language — set `lang`
     // so its phrases hyphenate correctly even inside an English thesis.
