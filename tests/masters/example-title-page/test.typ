@@ -1,4 +1,7 @@
-// Compile-only: full-ish German thesis with the most common optional sections.
+// Compile-only: the student-thesis path. `thesis()` itself is shared with the
+// doctoral tests — the only thing that makes a document a Master's thesis is the
+// title page — so this pins the one part that differs: the example title page in
+// `examples/content/`, driven through `thesis()` with every parameter it takes.
 #import "/lib.typ": outlines, thesis
 #import "/examples/content/masters-title-page.typ": masters-title-page
 
@@ -7,22 +10,26 @@
     author-surname: "Mustermann",
     title: [Test Masterarbeit],
     lang: "de",
-    margin-preset: "short",
     front-matter: [
         = Danksagung
         Acknowledgements.
-
-        = Abstract
-        English abstract.
 
         = Kurzfassung
         Deutsche Kurzfassung.
 
         #outlines.table-of-contents()
     ],
+    appendix: [
+        = Ergänzendes Material
+
+        Numbered A.
+
+        == Ein Detail
+
+        Numbered A.1.
+    ],
     back-matter: [
         #outlines.list-of-figures()
-        #outlines.list-of-tables()
         #bibliography(
             "/examples/bib/references.bib",
             title: [Literaturverzeichnis],
@@ -32,6 +39,7 @@
     title-page: masters-title-page.with(
         thesis-type: "Masterarbeit",
         department: "KIT-Fakultät für Maschinenbau",
+        university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
         examiner: "Prof. Dr.-Ing. Hans Musterbetreuer",
         supervisor: "M.Sc. Maria Musterbetreuerin",
         date-submitted: "01. März 2026",
@@ -42,6 +50,4 @@
 
 Inhalt. @example2024
 
-== Grundlagen
-
-Weiterer Inhalt. @example2023
+#figure(rect(width: 3cm, height: 2cm), caption: [Eine Abbildung])
