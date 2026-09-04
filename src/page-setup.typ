@@ -266,6 +266,9 @@
     set heading(numbering: "1.1")
     set heading(supplement: context t.at(text.lang).section)
     show heading.where(level: 1): set heading(supplement: context t.at(text.lang).chapter)
+    // The first chapter starts on an odd page, the heading rules enfore that.
+    // We move to the odd page here already to ensure the first chapter's page number is 1.
+    pagebreak(weak: true, to: "odd")
     counter(page).update(1)
     doc
 }
