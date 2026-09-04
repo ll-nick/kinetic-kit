@@ -1,3 +1,6 @@
+#set text(lang: "en")
+= Abstract
+
 This dissertation addresses the problem of #lorem(140)
 
 The proposed approach is based on #lorem(100)

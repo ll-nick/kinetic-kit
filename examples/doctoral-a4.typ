@@ -6,7 +6,7 @@
 //
 // Compile: typst compile --root . --font-path fonts examples/doctoral-a4.typ examples/doctoral-a4.pdf
 
-#import "/lib.typ": doctoral-title-page, flex-caption, thesis
+#import "/lib.typ": doctoral-title-page, flex-caption, outlines, thesis
 #import "content/abbreviations.typ": abbrevs-glossary
 
 // ── Third-party: glossarium ───────────────────────────────────────────────
@@ -34,73 +34,13 @@
 // ── Dissertation ──────────────────────────────────────────────────────────
 
 #show: thesis.with(
-    // ── Format ──────────────────────────────────────────────────────────────
+    // ── Metadata ───────────────────────────────────────────────────────────
     format: "a4",
+    lang: "de",
     author-firstname: "Max",
     author-surname: "Mustermann",
-
-    // ── Title ───────────────────────────────────────────────────────────────
     title: [
         Ein vollständiger Titel der Dissertation -- Über mehrere Zeilen
-    ],
-
-    // ── Language ────────────────────────────────────────────────────────────
-    lang: "de",
-
-    // ── Layout ──────────────────────────────────────────────────────────────
-    // margin-preset has no effect for A4 — all presets use the same fixed margins.
-    colored-links: true,
-    heading-numbering-depth: 4,
-    serif-headings: true,
-
-    // ── Draft watermark ─────────────────────────────────────────────────────
-    draft: is-draft,
-    draft-info: "v0.1 — " + datetime.today().display("[day].[month].[year]"),
-
-    // ── Front matter ────────────────────────────────────────────────────────
-    abstract-en: include "content/abstract-en.typ",
-    abstract-de: include "content/abstract-de.typ",
-    acknowledgements: include "content/acknowledgements.typ",
-    notation: include "content/notation.typ",
-
-    abbreviations: abbrevs-glossary(abbrevs),
-
-    // ── Back matter ─────────────────────────────────────────────────────────
-    show-list-of-figures: true,
-    show-list-of-tables: true,
-    show-list-of-listings: true,
-
-    // Separate publication lists via native multi-bibliography.
-    // full: true lists all entries regardless of in-text citations.
-    own-publications: bibliography(
-        "bib/own-publications.bib",
-        title: none,
-        style: "ieee",
-        full: true,
-    ),
-    supervised-theses: bibliography(
-        "bib/supervised-theses.bib",
-        title: none,
-        style: "ieee",
-        full: true,
-    ),
-    own-patents: [
-        Mustermann, M. (2024). *Verfahren zur Optimierung von Musterverfahren*. Deutsches
-        Patent- und Markenamt, DE 10 2024 000 001 A1.
-    ],
-
-    // ── Bibliography ────────────────────────────────────────────────────────
-    bibliography: bibliography(
-        "bib/references.bib",
-        title: none,
-        style: "ieee",
-    ),
-
-    // ── Appendix ─────────────────────────────────────────────────────────────
-    appendix: [
-        = Ergänzendes Material
-
-        #lorem(800)
     ],
     title-page: doctoral-title-page.with(
         // ── Author ──────────────────────────────────────────────────────────────
@@ -120,6 +60,57 @@
         // and referees.
         status-approved: false,
     ),
+
+    // ── Content ────────────────────────────────────────────────────────────
+    front-matter: [
+        = Danksagung
+        #include "content/acknowledgements.typ"
+
+        #include "content/abstract-en.typ"
+        #include "content/abstract-de.typ"
+
+        = Nomenklatur
+        #include "content/notation.typ"
+
+        = Abkürzungsverzeichnis
+        #abbrevs-glossary(abbrevs)
+
+        #outlines.table-of-contents()
+    ],
+
+    appendix: [
+        = Ergänzendes Material
+
+        #lorem(800)
+    ],
+
+    back-matter: [
+        #outlines.list-of-figures()
+        #outlines.list-of-tables()
+        #outlines.list-of-listings()
+
+        #bibliography("bib/references.bib", title: [Literaturverzeichnis], style: "ieee")
+
+        = Eigene Publikationen
+        #bibliography("bib/own-publications.bib", title: none, style: "ieee", full: true)
+
+        = Patente
+        Mustermann, M. (2024). *Verfahren zur Optimierung von Musterverfahren*. Deutsches
+        Patent- und Markenamt, DE 10 2024 000 001 A1.
+
+        = Betreute studentische Arbeiten
+        #bibliography("bib/supervised-theses.bib", title: none, style: "ieee", full: true)
+    ],
+
+    // ── Formatting ─────────────────────────────────────────────────────────
+    serif-headings: true,
+    heading-numbering-depth: 4,
+    // margin-preset has no effect for A4 — all presets use the same fixed margins.
+    colored-links: true,
+
+    // ── Draft watermark ────────────────────────────────────────────────────
+    draft: is-draft,
+    draft-info: "v0.1 — " + datetime.today().display("[day].[month].[year]"),
 )
 
 = Ein erstes Beispielkapitel
