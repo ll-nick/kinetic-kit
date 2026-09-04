@@ -101,57 +101,6 @@ the [nightly build](https://nightly.link/ll-nick/kinetic-kit/workflows/ci/main/a
 
 Upgrading from 0.1.x? See [MIGRATING.md](MIGRATING.md).
 
-<details>
-<summary><strong>Template: <code>thesis(...)</code></strong></summary>
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `format` | `"a5" \| "17x24" \| "a4"` | `"a5"` | Paper format — `"a5"` (148×210 mm, default), `"17x24"` (170×240 mm), or `"a4"` (210×297 mm) |
-| `lang` | `"de" \| "en"` | `"de"` | Document language |
-| `author-firstname` | `str` | `"Max"` | |
-| `author-surname` | `str` | `"Mustermann"` | |
-| `title` | `content` | | Dissertation title |
-| `title-page` | `content \| function \| none` | `doctoral-title-page` | Title page. Configure the default with `doctoral-title-page.with(…)` (see below), pass your own content or function, or `none` to omit it |
-| `front-matter` | `content \| none` | `outlines.table-of-contents()` | Roman-numeral pages before the body — abstracts, acknowledgements, the TOC, any page of your own, in the order written. Heading numbering suppressed. `none` = no front matter |
-| `appendix` | `content \| none` | `none` | Appendix chapters; template applies A, A.1, … numbering, placed directly after the body, before the back matter |
-| `back-matter` | `content \| none` | `none` | Pages after the appendix — `outlines.list-of-*()` calls, `bibliography(…)`, own-publications, in the order written. Heading numbering suppressed |
-| `serif-headings` | `bool` | `false` | Use Libertinus Serif for headings when `true`, Libertinus Sans-Serif when `false` |
-| `heading-numbering-depth` | `int` | `3` | Deepest heading level that receives a number; deeper levels are styled but not numbered |
-| `figure-kinds` | `array` | `()` | Figure kinds beyond `image`/`table`/`raw`, as dicts with `kind` and `supplement` |
-| `margin-preset` | `"short" \| "medium" \| "long"` | `"short"` | KSP margin profile keyed on final page count — `short` < 200 pp, `medium` 200–399, `long` ≥ 400 |
-| `binding-correction` | `length` | `0mm` | BCOR added to inside margin (8–10 mm for physically bound copies) |
-| `colored-links` | `bool` | `true` | KIT Blue hyperlinks (screen); `false` = black (print) |
-| `draft` | `bool` | `false` | Show "ENTWURF"/"DRAFT" watermark |
-| `draft-info` | `str \| none` | `none` | Optional version string next to watermark (e.g. git SHA) |
-
-</details>
-
-<details>
-<summary><strong>Doctoral title page: <code>doctoral-title-page(...)</code></strong></summary>
-
-Everything printed on the default doctoral title page.
-Pass it to `title-page`, configured with `.with(…)`.
-`title`, `author-firstname`, `author-surname`, `format` and `lang`
-are supplied by the template — setting them here has no effect.
-
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `author-title` | `str \| none` | `"M.Sc."` | Academic title preceding the name; `none` to omit |
-| `author-male` | `bool` | `true` | `true` = male grammatical forms, `false` = female |
-| `doc-degree` | `str` | `"Doktors der Ingenieurwissenschaften (Dr.-Ing.)"` | Degree name, masculine |
-| `doc-degree-f` | `str` | `"Doktorin der Ingenieurwissenschaften (Dr.-Ing.)"` | Degree name, feminine |
-| `department` | `str` | `"KIT-Fakultät für Maschinenbau"` | Faculty / department |
-| `university-genitive` | `str` | `"des Karlsruher Instituts für Technologie (KIT)"` | University name, genitive |
-| `status-approved` | `bool` | `false` | `false` = submitted, `true` = approved |
-| `exam-date` | `str \| none` | `none` | Date of the oral examination; shown when approved |
-| `main-advisor` | `str \| none` | `none` | Main referee; shown when approved |
-| `main-advisor-male` | `bool` | `true` | Grammatical gender of the main advisor label |
-| `co-advisor` | `str \| none` | `none` | Co-referee; shown when approved |
-| `co-advisor-male` | `bool` | `true` | Grammatical gender of the co-advisor label |
-
-</details>
-
-
 ## Cookbook
 
 <details>
@@ -209,8 +158,8 @@ the top level) to build the default page yourself:
 <summary><strong>Outline helpers</strong></summary>
 
 The `outlines` namespace holds the table of contents and the back-matter list pages.
-Using the template's helpers instead of the built-in `#outline` makes sure formatting and localization is correct.
-For the backmatter listings, these helpers are also required to make `outlines.flex-caption` work.
+Entry styling applies to any outline in the document, a bare `#outline()` included;
+what these helpers add on top is the localized heading and, on the list pages, the state that `outlines.flex-caption` switches on.
 Place them inside the `front-matter` / `back-matter` content of `thesis()`.
 
 ```typst
@@ -237,7 +186,7 @@ The `kit-style` namespace exposes the template's visual constants so custom figu
 ```typst
 #import "@preview/kinetic-kit:0.1.1": kit-style
 
-// kit-style.fonts                — (serif, sans, mono) font family arrays
+// kit-style.fonts                 — (serif, sans, mono) font family arrays
 // kit-style.font-sizes-by-format  — dict keyed by format: font sizes per format
 // kit-style.leading               — paragraph line spacing (0.75em)
 // kit-style.colors                — KIT color palette (green, blue, red, …)

@@ -11,7 +11,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This project uses [mise](https://mise.jdx.dev/) for task management, with Typst 0.15.0 pinned in both `mise.toml` (dev/CI toolchain) and `typst.toml` (`compiler`, the minimum supported version).
 
 ```sh
-# Compile all examples and API docs
+# Compile examples, API reference, template preview and thumbnail
 mise run build
 
 # Compile only example PDFs
@@ -19,6 +19,15 @@ mise run build:examples
 
 # Compile only the API reference PDF
 mise run build:docs
+
+# Compile only template/main.typ (resolves its @preview import against this checkout)
+mise run build:template
+
+# Re-render thumbnail.png from the template's title page
+mise run build:thumbnail
+
+# Run the tytanic test suite
+mise run test
 
 # Install package locally (copy to ~/.local/share/typst/packages/local/)
 mise run install
@@ -43,10 +52,13 @@ mise run package
 
 # Check that tree the way Typst Universe will
 mise run package:verify
+
+# Rewrite typst.toml and every pinned @preview/@local reference
+mise run bump-version <major|minor|patch>
 ```
 
 The mise tasks live in `mise/tasks/` and can be run directly without mise if needed.
-Most are plain bash; the `package` tasks are stdlib-only Python (3.11+ for `tomllib`, pinned in `mise.toml`).
+Most are plain bash; the `package` and `bump-version` tasks are stdlib-only Python (3.11+ for `tomllib`, pinned in `mise.toml`).
 
 ## Architecture
 
@@ -103,9 +115,10 @@ Prose introducing a definition belongs in its doc-comment, not in `main.typ`.
 
 `docs/api-reference.pdf` is generated, not tracked.
 It ships as a release asset rather than in the repository or the package,
-and the README links it as `/releases/latest/download/api-reference.pdf`;
-`mise run package` rewrites that to the tagged version for the published README,
-and `package:verify` fails if either half of that is missing.
+and the README links it as `/releases/latest/download/api-reference.pdf`.
+`mise run package` repoints every `/releases/latest…` link in the published README
+at the tagged release — the asset URL and the release page the example PDFs hang off —
+and `package:verify` fails if any `latest` link survived.
 
 The tables in the `kit-style` chapter are built by iterating the
 imported `fonts`, `font-sizes-by-format` and `kit-colors` dictionaries,
@@ -121,6 +134,21 @@ so neither can drift from the source.
 - `masters-full.typ`, `masters-full-en.typ` — student-thesis variants; the only examples passing a custom `title-page`, from `content/masters-title-page.typ`
 
 Shared content in `examples/content/` and bibliographies in `examples/bib/`.
+
+### Tests (`tests/`)
+
+[tytanic](https://typst-community.github.io/tytanic/) 0.4.0, run with `mise run test`.
+Each scenario is a directory holding one `test.typ`.
+`tests/components/` covers a single exported symbol, `tests/doctoral/` whole documents.
+`thesis()` is shared across document types — only the title page differs —
+so `tests/masters/` holds just the one test that pins `masters-title-page.typ`.
+There are no reference images.
+Most tests assert only that the document compiles;
+where a property can be read back from the layout, prefer a `context assert`
+(`doctoral/approved` and `doctoral/no-front-matter` pin the body starting at page 1).
+An output regression outside those asserts still has to be caught by reading the rendered PDFs.
+`@template` is tytanic's built-in test for `template/main.typ`;
+`package:verify` reruns it against the assembled bundle.
 
 ## Key Constraints
 

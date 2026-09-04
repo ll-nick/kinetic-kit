@@ -57,12 +57,16 @@ namespace.** `print-toc` → `outlines.table-of-contents`, `print-lof` / `print-
 and no longer take `lang:`. `list-of(kind, title)` now requires the title as a positional
 argument.
 
+The `components` namespace that used to carry them is gone,
+and with it the `setup-page` / `setup-front-matter` / `setup-content` / `setup-appendix`
+helpers: `thesis()` is the only way to assemble a document now.
+
 **5. Front and back matter are plain content now, not split across several parameters.** These twelve are
 gone: `abstract-en`, `abstract-de`, `acknowledgements`, `notation`, `abbreviations`,
-`show-list-of-figures`, `show-list-of-tables`, `show-list-of-listings`, `bibliography`,
-`own-publications`, `own-patents`, `supervised-theses`. Write the same sections as ordinary
-markup in the new `front-matter` and `back-matter` parameters, each with its own heading,
-in the order you want them. Heading numbering is suppressed there, so a bare `= Danksagung`
+`show-lof`, `show-lot`, `show-lol`, `bibliography`, `own-publications`, `own-patents`,
+`supervised-theses`.
+Write the same sections as ordinary markup in the new `front-matter` and `back-matter`
+parameters, each with its own heading, in the order you want them. Heading numbering is suppressed there, so a bare `= Danksagung`
 matches what the old `acknowledgements:` parameter produced.
 
 ```typst
@@ -71,7 +75,7 @@ matches what the old `acknowledgements:` parameter produced.
   abstract-de: include "abstract-de.typ",
   abstract-en: include "abstract-en.typ",
   acknowledgements: [Ich danke …],
-  show-list-of-figures: true,
+  show-lof: true,
   bibliography: bibliography("refs.bib", title: none, style: "ieee"),
 )
 
@@ -103,7 +107,8 @@ Typst's own `auto` default gives "Bibliografie" in German, not "Literaturverzeic
 **6. `figure-kinds` entries are `(kind:, supplement:)` only.** The `list-title` and
 `show-list` fields are gone. To list a declared kind, put
 `#outlines.list-of("algorithm", [List of Algorithms])` in `back-matter` — same as for the
-built-in `image` / `table` / `raw`, whose `show-list-of-*` booleans are also gone.
+built-in `image` / `table` / `raw`, whose `show-lof` / `show-lot` / `show-lol` booleans
+are also gone.
 
 **7. `flex-caption` moved into the `outlines` namespace.** It only does anything on a
 list page — `outlines.list-of` is what switches it to its short form — so it now lives
@@ -112,7 +117,7 @@ the package import; `outlines` already carries it.
 
 ```typst
 // 0.1.x
-#import "@preview/kinetic-kit:0.1.1": flex-caption, outlines, thesis
+#import "@preview/kinetic-kit:0.1.x": dissertation, flex-caption
 #figure(image("plot.svg"), caption: flex-caption(short: [Short], long: [Long.]))
 
 // 0.2.0

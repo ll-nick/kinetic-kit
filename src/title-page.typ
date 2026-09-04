@@ -1,8 +1,23 @@
 // Doctoral thesis title page
 
 #import "typography.typ": font-sizes-by-format, fonts
-#import "page-conf.typ": title-page-margins-by-format
-#import "translations.typ": t
+
+#let _labels = (
+    degree-preamble: "Zur Erlangung des akademischen Grades",
+    degree-one: "eines", // masculine
+    degree-one-f: "einer", // feminine
+    submitted-at: "bei der",
+    accepted-at: "von der",
+    submitted: "eingereichte",
+    accepted: "angenommene",
+    dissertation: "Dissertation",
+    by: "von",
+    exam-date: "Tag der mündlichen Prüfung:",
+    advisor: "Hauptreferent:",
+    advisor-f: "Hauptreferentin:",
+    co-advisor: "Korreferent:",
+    co-advisor-f: "Korreferentin:",
+)
 
 /// Render the doctoral thesis title page.
 ///
@@ -85,21 +100,10 @@
     co-advisor-male: true,
 ) = {
     let font-sizes = font-sizes-by-format.at(format)
-    let title-page-margins = title-page-margins-by-format.at(format)
-
-    set page(
-        margin: title-page-margins,
-        binding: left,
-        header: none,
-        footer: none,
-        numbering: none,
-    )
 
     // The page is always in German, whatever the document language — set `lang`
     // so its phrases hyphenate correctly even inside an English thesis.
     set text(font: fonts.sans, size: font-sizes.base, lang: "de")
-
-    let tr = t.at("de")
 
     let author-name = author-firstname + " " + author-surname
     let author-full = if author-title != none {
@@ -125,8 +129,8 @@
 
     align(center)[
         #text(size: font-sizes.base)[
-            #tr.degree-preamble
-            #if author-male { tr.degree-one } else { tr.degree-one-f }
+            #_labels.degree-preamble
+            #if author-male { _labels.degree-one } else { _labels.degree-one-f }
         ]
         \
         #v(3mm)
@@ -136,21 +140,21 @@
         \
         #v(5mm)
         #text(size: font-sizes.base)[
-            #if status-approved { tr.accepted-at } else { tr.submitted-at }
+            #if status-approved { _labels.accepted-at } else { _labels.submitted-at }
             #department \
             #university-genitive
         ]
         \
         #v(3mm)
         #text(size: font-sizes.base, weight: "bold")[
-            #if status-approved { tr.accepted } else { tr.submitted }
+            #if status-approved { _labels.accepted } else { _labels.submitted }
         ]
         \
         #v(0.5mm)
-        #text(size: font-sizes.title-info)[#tr.dissertation]
+        #text(size: font-sizes.title-info)[#_labels.dissertation]
         \
         #v(0.5mm)
-        #text(size: font-sizes.base)[#tr.by]
+        #text(size: font-sizes.base)[#_labels.by]
         \
         #v(0.5mm)
         #text(size: font-sizes.author, weight: "bold")[#author-full]
@@ -165,11 +169,11 @@
             columns: (auto, 1fr),
             column-gutter: 1em,
             row-gutter: 3mm,
-            [#tr.exam-date], if exam-date != none { exam-date } else { "–" },
-            if main-advisor-male { [#tr.advisor] } else { [#tr.advisor-f] },
+            [#_labels.exam-date], if exam-date != none { exam-date } else { "–" },
+            if main-advisor-male { [#_labels.advisor] } else { [#_labels.advisor-f] },
             if main-advisor != none { main-advisor } else { "–" },
 
-            if co-advisor-male { [#tr.co-advisor] } else { [#tr.co-advisor-f] },
+            if co-advisor-male { [#_labels.co-advisor] } else { [#_labels.co-advisor-f] },
             if co-advisor != none { co-advisor } else { "–" },
         )
         v(4mm)
