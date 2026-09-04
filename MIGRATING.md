@@ -105,3 +105,17 @@ Typst's own `auto` default gives "Bibliografie" in German, not "Literaturverzeic
 `#outlines.list-of("algorithm", [List of Algorithms])` in `back-matter` — same as for the
 built-in `image` / `table` / `raw`, whose `show-list-of-*` booleans are also gone.
 
+**7. `flex-caption` moved into the `outlines` namespace.** It only does anything on a
+list page — `outlines.list-of` is what switches it to its short form — so it now lives
+beside them: `flex-caption(...)` → `outlines.flex-caption(...)`. Drop `flex-caption` from
+the package import; `outlines` already carries it.
+
+```typst
+// 0.1.x
+#import "@preview/kinetic-kit:0.1.1": flex-caption, outlines, thesis
+#figure(image("plot.svg"), caption: flex-caption(short: [Short], long: [Long.]))
+
+// 0.2.0
+#import "@preview/kinetic-kit:0.1.1": outlines, thesis
+#figure(image("plot.svg"), caption: outlines.flex-caption(short: [Short], long: [Long.]))
+```

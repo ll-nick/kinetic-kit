@@ -55,9 +55,8 @@ Most are plain bash; the `package` tasks are stdlib-only Python (3.11+ for `toml
 The single entry point re-exports:
 - `thesis()` — the template function (from `src/thesis.typ`)
 - `doctoral-title-page` — the KSP doctoral title page, for passing to `title-page`; it owns every parameter printed on the page (from `src/title-page.typ`)
-- `flex-caption` — figure/table caption utility (from `src/figures.typ`)
 - `kit-style` — visual constants (fonts, sizes, leading, colors) for matching custom content
-- `outlines` — namespace re-exporting `src/outlines.typ`: `table-of-contents`, `list-of`, and the `list-of-figures`/`list-of-tables`/`list-of-listings` shorthands, for placing in `front-matter`/`back-matter`
+- `outlines` — namespace re-exporting `src/outlines.typ`: `table-of-contents`, `list-of`, and the `list-of-figures`/`list-of-tables`/`list-of-listings` shorthands, for placing in `front-matter`/`back-matter`, plus `flex-caption`
 
 ### Source Modules (`src/`)
 
@@ -70,10 +69,8 @@ The single entry point re-exports:
 | `page-conf.typ` | Page layout constants per format: page dimensions, margin presets (`short`/`medium`/`long`) per format, paragraph spacing |
 | `translations.typ` | German/English label strings |
 | `title-page.typ` | `doctoral-title-page` (German legal format), the default for `title-page` |
-| `front-matter.typ` | Abstract, Kurzfassung, acknowledgements, notation, abbreviations |
-| `back-matter.typ` | Bibliography, own publications, own patents, supervised theses |
-| `outlines.typ` | TOC, back-matter list pages (`list-of` and the `list-of-figures`/`list-of-tables`/`list-of-listings` shorthands), and their `outline.entry` styling (`setup-outlines`) |
-| `figures.typ` | Figure/caption/table styling (`setup-figures`) and `flex-caption` |
+| `outlines.typ` | TOC, back-matter list pages (`list-of` and the `list-of-figures`/`list-of-tables`/`list-of-listings` shorthands), their `outline.entry` styling (`setup-outlines`), and `flex-caption` with the `in-outline` state that drives it |
+| `figures.typ` | Figure/caption/table styling (`setup-figures`) |
 | `figure-kinds.typ` | Registry of figure kinds — `resolve-figure-kinds` appends a document's own kinds after Typst's built-in `image`/`table`/`raw` |
 | `headings.typ` | Heading styling — per-level sizes/spacing, chapter page breaks, number–body alignment (`setup-headings`) |
 
@@ -91,8 +88,7 @@ Headers are suppressed on chapter-opening pages and blank pages. The draft water
 
 `docs/main.typ` uses [tidy](https://typst.app/universe/package/tidy) 0.4.3 to generate
 `docs/api-reference.pdf` from the doc-comments of the public API:
-`thesis.typ`, `title-page.typ`, `outlines.typ`, `flex-caption` from `figures.typ`,
-and `kit-style` from `lib.typ`.
+`thesis.typ`, `title-page.typ`, `outlines.typ`, and `kit-style` from `lib.typ`.
 Doc-comments follow tidy's 0.4 syntax:
 the description sits in front of each parameter inside the signature,
 types are annotated with a trailing `/// -> a | b`,

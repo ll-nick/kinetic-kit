@@ -4,7 +4,7 @@
 //
 // Compile: typst compile --root . --font-path fonts examples/masters-full-en.typ examples/masters-full-en.pdf
 
-#import "/lib.typ": flex-caption, outlines, thesis
+#import "/lib.typ": outlines, thesis
 #import "content/masters-title-page.typ": masters-title-page
 #import "content/abbreviations.typ": abbrevs-glossary
 

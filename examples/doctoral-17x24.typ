@@ -5,7 +5,7 @@
 //
 // Compile: typst compile --root . --font-path fonts examples/doctoral-17x24.typ examples/doctoral-17x24.pdf
 
-#import "/lib.typ": doctoral-title-page, flex-caption, outlines, thesis
+#import "/lib.typ": doctoral-title-page, outlines, thesis
 #import "content/abbreviations.typ": abbrevs-glossary
 
 // ── Third-party: glossarium ───────────────────────────────────────────────
