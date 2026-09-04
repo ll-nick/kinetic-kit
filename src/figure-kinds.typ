@@ -41,13 +41,28 @@
 /// value is used for every language; a dictionary is looked up by `lang`, then
 /// by `fallback`, and fails loudly if neither is present.
 ///
-/// - value (content or str or dict): Plain value, or one variant per language code.
-/// - lang (str): Language to look up first — usually `text.lang` at the use site.
-/// - fallback (str or none): Language to fall back to, usually the document language.
-/// - kind (function or str or none): Figure kind, used in the error message only.
-/// - field (str): Field name, used in the error message only.
 /// -> content | str
-#let resolve-localized(value, lang, fallback: none, kind: none, field: "value") = {
+#let resolve-localized(
+    /// Plain value, or one variant per language code.
+    /// -> content | str | dictionary
+    value,
+
+    /// Language to look up first — usually `text.lang` at the use site.
+    /// -> str
+    lang,
+
+    /// Language to fall back to, usually the document language.
+    /// -> str | none
+    fallback: none,
+
+    /// Figure kind, used in the error message only.
+    /// -> function | str | none
+    kind: none,
+
+    /// Field name, used in the error message only.
+    /// -> str
+    field: "value",
+) = {
     if type(value) != dictionary { return value }
     if lang in value { return value.at(lang) }
     if fallback != none and fallback in value { return value.at(fallback) }
@@ -115,9 +130,12 @@
 /// first, then the document's own in declaration order. Declaring a built-in kind
 /// is an error.
 ///
-/// - figure-kinds (array): Entries declared by the document.
 /// -> array
-#let resolve-figure-kinds(figure-kinds) = {
+#let resolve-figure-kinds(
+    /// Entries declared by the document.
+    /// -> array
+    figure-kinds,
+) = {
     assert(
         type(figure-kinds) == array,
         message: "figure-kinds must be an array of dictionaries, found "

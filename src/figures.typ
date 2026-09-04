@@ -6,14 +6,23 @@
 // Whether we're rendering inside an outline; lets captions switch to short form.
 #let in-outline = state("in-outline", false)
 
-/// Two-part caption: short version for LoF/LoT, long version under the figure.
+/// Two-part caption: a short version for the list pages, a long one under the
+/// figure.
 ///
-/// Usage: `#figure(…, caption: flex-caption(short: [Short], long: [Long.]))`
+/// ```typc
+/// figure(image("plot.svg"), caption: flex-caption(short: [Short], long: [Long.]))
+/// ```
 ///
-/// - short (content): Short caption shown in List of Figures / Tables.
-/// - long (content): Full caption shown below the figure in the document body.
 /// -> content
-#let flex-caption(short: none, long: none) = context if in-outline.get() {
+#let flex-caption(
+    /// Caption shown on the list page.
+    /// -> content
+    short: none,
+
+    /// Caption shown below the figure in the document body.
+    /// -> content
+    long: none,
+) = context if in-outline.get() {
     short
 } else {
     long
@@ -46,14 +55,25 @@
 
 /// Shared figure, caption, and table styling. Apply as a show rule.
 ///
-/// - font-sizes (dict): Format-specific font sizes resolved by the template.
-/// - lang (str): Document language — `"de"` or `"en"`.
-/// - figure-kinds (array): Figure kind declarations, merged onto the built-in
-///   ones. Only the supplements are read here; list pages are placed by the
-///   author with `outlines.list-of`.
-/// - body (content): Document body (injected automatically by the show rule).
 /// -> content
-#let setup-figures(font-sizes, lang: "de", figure-kinds: (), body) = {
+#let setup-figures(
+    /// Format-specific font sizes resolved by the template.
+    /// -> dictionary
+    font-sizes,
+
+    /// Document language — `"de"` or `"en"`.
+    /// -> str
+    lang: "de",
+
+    /// Figure kind declarations, merged onto the built-in ones. Only the
+    /// supplements are read here; the list pages are the author's to place.
+    /// -> array
+    figure-kinds: (),
+
+    /// Document body, injected by the show rule.
+    /// -> content
+    body,
+) = {
     // Fallback for kinds the document never declared — they still get a caption,
     // just a generic one.
     set figure(supplement: it => if it.func() == table {
