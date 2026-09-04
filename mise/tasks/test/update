@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# [MISE] description="Regenerate the reference images of the persistent tests"
+#
+# Only run this for a change that is meant to alter the output, and read the
+# regenerated PNGs before committing them: they are the record of what the
+# template renders, so an unreviewed update silently blesses a regression.
+set -euo pipefail
+
+tt update --font-path fonts --ppi 144 "$@"

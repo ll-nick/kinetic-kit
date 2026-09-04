@@ -29,6 +29,9 @@ mise run build:thumbnail
 # Run the tytanic test suite
 mise run test
 
+# Regenerate reference images (only for a deliberate output change)
+mise run test:update
+
 # Install package locally (copy to ~/.local/share/typst/packages/local/)
 mise run install
 
@@ -144,11 +147,18 @@ Each scenario is a directory holding one `test.typ`.
 `tests/components/` covers a single exported symbol, `tests/doctoral/` whole documents.
 `thesis()` is shared across document types — only the title page differs —
 so `tests/masters/` holds just the one test that pins `masters-title-page.typ`.
-There are no reference images.
-Most tests assert only that the document compiles;
+Eleven are reference tests: a `ref/` directory of PNGs beside the `test.typ`,
+compared pixel for pixel at 144 ppi (`[tool.tytanic.default]` in `typst.toml`).
+They cover the layout surface — a full doctoral document, captions and figure kinds,
+equations and footnotes, the appendix, the running header, the outline titles,
+each paper format, the long margin preset, and both title pages —
+and are what catches an unintended change to the rendered output.
+Regenerate with `mise run test:update` only for a change meant to alter the output,
+and read the new images before committing.
+The rest assert only that the document compiles;
 where a property can be read back from the layout, prefer a `context assert`
 (`doctoral/approved` and `doctoral/no-front-matter` pin the body starting at page 1).
-An output regression outside those asserts still has to be caught by reading the rendered PDFs.
+tytanic loads no system fonts, so the images are reproducible across machines.
 `@template` is tytanic's built-in test for `template/main.typ`;
 `package:verify` reruns it against the assembled bundle.
 

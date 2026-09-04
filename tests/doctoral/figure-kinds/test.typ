@@ -30,6 +30,14 @@
 = Erstes Kapitel
 
 #figure(box-body, caption: [Ein Bild])
+
+// Captions of two lines or more switch from centred to left-aligned; a one-line
+// caption alone would never exercise that branch.
+#figure(
+    box-body,
+    caption: [Eine absichtlich lange Beschriftung, die über zwei Zeilen läuft, damit die
+        bedingte Ausrichtung von zentriert auf linksbündig umschaltet],
+)
 #figure(
     table(
         columns: 2,
