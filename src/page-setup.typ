@@ -212,7 +212,7 @@
     )
 
     // ── Outlines ──────────────────────────────────────────────────────────
-    show: setup-outlines
+    show: setup-outlines.with(figure-kinds: figure-kinds)
 
     // ── Figures ──────────────────────────────────────────────────────────
     show: setup-figures.with(font-sizes, lang: lang, figure-kinds: figure-kinds)

@@ -5,30 +5,31 @@
 // so a document places its table of contents and its list pages with the built-in call.
 
 #import "translations.typ": t
+#import "figure-kinds.typ": resolve-figure-kinds
 
 // Whether we're rendering inside an outline; lets captions switch to short form.
 #let in-outline = state("in-outline", false)
 
 // Typst's `auto` outline title is the *contents* title whatever the outline
-// targets, so a list page has to be named. Selector equality identifies the three
-// kinds the template carries strings for; any other kind belongs to the document's
-// own vocabulary and names itself.
-#let _list-page-titles = (
-    (selector(figure.where(kind: image)), "list-of-figures"),
-    (selector(figure.where(kind: table)), "list-of-tables"),
-    (selector(figure.where(kind: raw)), "list-of-listings"),
+// targets, so a list page has to be named. These are the kinds the template has a
+// word for; any other kind belongs to the document's own vocabulary and titles its
+// own list page.
+#let _builtin-list-titles = (
+    (image, "list-of-figures"),
+    (table, "list-of-tables"),
+    (raw, "list-of-listings"),
 )
 
 // The heading a list page gets in place of the title Typst would print itself.
-#let _list-page-heading(target, title) = context {
+#let _list-page-heading(kind, title) = context {
     let resolved = if title != auto { title } else {
-        let named = _list-page-titles.find(entry => entry.at(0) == target)
+        let named = _builtin-list-titles.find(entry => entry.at(0) == kind)
         if named == none {
             panic(
-                "an outline of "
-                    + repr(target)
-                    + " needs a title of its own --- the template only names outlines "
-                    + "of image, table and raw",
+                "the list page for figure kind "
+                    + repr(kind)
+                    + " needs a title of its own --- the template only names the "
+                    + "built-in image, table and raw",
             )
         }
         t.at(text.lang).at(named.at(1))
@@ -41,20 +42,31 @@
 ///
 /// -> content
 #let setup-outlines(
+    /// Figure kind declarations, merged onto the built-in ones. A list page is an
+    /// outline over one of these; everything else is a table of contents.
+    /// -> array
+    figure-kinds: (),
+
     /// Document body, injected by the show rule.
     /// -> content
     body,
 ) = {
+    // The template only claims authority over outlines whose target it can build
+    // itself. Comparing against those selectors is what tells a list page from a
+    // table of contents --- including one written as `outline(target: heading.where(..))`.
+    let list-page-kinds = resolve-figure-kinds(figure-kinds).map(entry => entry.kind)
+
     set outline(depth: 3)
     set outline.entry(fill: repeat(".", gap: 0.4em, justify: false))
     show outline: set par(justify: false)
 
     // Give non-toc listings a custom, localized heading.
     show outline: it => {
-        if it.title == none or it.target == selector(heading) {
+        let kind = list-page-kinds.find(k => it.target == selector(figure.where(kind: k)))
+        if it.title == none or kind == none {
             it
         } else {
-            _list-page-heading(it.target, it.title)
+            _list-page-heading(kind, it.title)
             outline(..it.fields(), title: none)
         }
     }
