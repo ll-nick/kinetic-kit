@@ -5,7 +5,7 @@
 //
 // Compile: typst compile --root . --font-path fonts examples/doctoral-full.typ examples/doctoral-full.pdf
 
-#import "/lib.typ": doctoral-title-page, outlines, thesis
+#import "/lib.typ": doctoral-title-page, thesis
 #import "content/abbreviations.typ": abbrevs-glossary
 
 // ── Third-party: glossarium ───────────────────────────────────────────────
@@ -76,7 +76,7 @@
         = Abkürzungsverzeichnis
         #abbrevs-glossary(abbrevs)
 
-        #outlines.table-of-contents()
+        #outline()
     ],
 
     appendix: [
@@ -88,12 +88,12 @@
     // List pages, then the bibliographies. `full: true` on a separate .bib lists
     // every entry regardless of in-text citations (native multi-bibliography).
     back-matter: [
-        #outlines.list-of-figures()
-        #outlines.list-of-tables()
-        #outlines.list-of-listings()
-        #outlines.list-of("algorithm", [Algorithmenverzeichnis])
+        #outline(target: figure.where(kind: image))
+        #outline(target: figure.where(kind: table))
+        #outline(target: figure.where(kind: raw))
+        #outline(title: [Algorithmenverzeichnis], target: figure.where(kind: "algorithm"))
 
-        #bibliography("bib/references.bib", title: [Literaturverzeichnis], style: "ieee")
+        #bibliography("bib/references.bib", style: "ieee")
 
         = Eigene Publikationen
         #bibliography("bib/own-publications.bib", title: none, style: "ieee", full: true)

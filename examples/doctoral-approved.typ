@@ -5,7 +5,7 @@
 //
 // Compile: typst compile --root . --font-path fonts examples/doctoral-approved.typ examples/doctoral-approved.pdf
 
-#import "/lib.typ": doctoral-title-page, outlines, thesis
+#import "/lib.typ": doctoral-title-page, thesis
 
 #show: thesis.with(
     // ── Metadata ───────────────────────────────────────────────────────────
@@ -43,14 +43,14 @@
         #include "content/abstract-en.typ"
         #include "content/abstract-de.typ"
 
-        #outlines.table-of-contents()
+        #outline()
     ],
 
     back-matter: [
-        #outlines.list-of-figures()
-        #outlines.list-of-tables()
+        #outline(target: figure.where(kind: image))
+        #outline(target: figure.where(kind: table))
 
-        #bibliography("bib/references.bib", title: [Literaturverzeichnis], style: "ieee")
+        #bibliography("bib/references.bib", style: "ieee")
     ],
 
     // ── Formatting ─────────────────────────────────────────────────────────

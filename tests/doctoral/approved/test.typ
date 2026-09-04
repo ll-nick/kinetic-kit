@@ -2,7 +2,7 @@
 // main-advisor, and co-advisor filled in. Its front matter happens to end on an
 // odd page, so `setup-content` has to skip a filler sheet to reach the recto the
 // first chapter opens on: the case where the body used to start at page 2.
-#import "/lib.typ": doctoral-title-page, outlines, thesis
+#import "/lib.typ": doctoral-title-page, thesis
 
 #show: thesis.with(
     author-firstname: "Max",
@@ -16,12 +16,11 @@
         = Kurzfassung
         Deutsche Kurzfassung.
 
-        #outlines.table-of-contents()
+        #outline()
     ],
     back-matter: [
         #bibliography(
             "/examples/bib/references.bib",
-            title: [Literaturverzeichnis],
             style: "ieee",
         )
     ],

@@ -1,6 +1,6 @@
 // Compile-only: submitted doctoral thesis with abstract, bibliography,
 // and the most commonly used optional sections.
-#import "/lib.typ": doctoral-title-page, outlines, thesis
+#import "/lib.typ": doctoral-title-page, thesis
 
 #show: thesis.with(
     author-firstname: "Max",
@@ -18,14 +18,13 @@
         = Kurzfassung
         Deutsche Kurzfassung.
 
-        #outlines.table-of-contents()
+        #outline()
     ],
     back-matter: [
-        #outlines.list-of-figures()
-        #outlines.list-of-tables()
+        #outline(target: figure.where(kind: image))
+        #outline(target: figure.where(kind: table))
         #bibliography(
             "/examples/bib/references.bib",
-            title: [Literaturverzeichnis],
             style: "ieee",
         )
     ],

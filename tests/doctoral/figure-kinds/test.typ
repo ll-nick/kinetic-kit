@@ -1,7 +1,7 @@
 // Compile-only: figure kinds beyond image/table/raw — kinds declared by the
 // document with per-language and single-value supplements, per-chapter counter
 // resets for all of them, and hand-placed back-matter list pages.
-#import "/lib.typ": outlines, thesis
+#import "/lib.typ": thesis
 
 #let box-body = rect(width: 3cm, height: 1cm)
 
@@ -19,11 +19,11 @@
         (kind: "vignette", supplement: [Vignette]),
     ),
     back-matter: [
-        #outlines.list-of-figures()
-        #outlines.list-of-tables()
-        #outlines.list-of-listings()
-        #outlines.list-of("algorithm", [Algorithmenverzeichnis])
-        #outlines.list-of("theorem", [Satzverzeichnis])
+        #outline(target: figure.where(kind: image))
+        #outline(target: figure.where(kind: table))
+        #outline(target: figure.where(kind: raw))
+        #outline(title: [Algorithmenverzeichnis], target: figure.where(kind: "algorithm"))
+        #outline(title: [Satzverzeichnis], target: figure.where(kind: "theorem"))
     ],
 )
 

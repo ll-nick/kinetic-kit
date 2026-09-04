@@ -68,7 +68,9 @@ The single entry point re-exports:
 - `thesis()` — the template function (from `src/thesis.typ`)
 - `doctoral-title-page` — the KSP doctoral title page, for passing to `title-page`; it owns every parameter printed on the page (from `src/title-page.typ`)
 - `kit-style` — visual constants (fonts, sizes, leading, colors) for matching custom content
-- `outlines` — namespace re-exporting `src/outlines.typ`: `table-of-contents`, `list-of`, and the `list-of-figures`/`list-of-tables`/`list-of-listings` shorthands, for placing in `front-matter`/`back-matter`, plus `flex-caption`
+- `flex-caption` — two-part caption, short form on list pages, long form under the figure (from `src/outlines.typ`)
+
+The template exports no outline functions. `setup-outlines` styles, names and bookmarks every outline in the document, so a thesis places its contents and list pages with Typst's own `outline(..)`.
 
 ### Source Modules (`src/`)
 
@@ -81,7 +83,7 @@ The single entry point re-exports:
 | `page-conf.typ` | Page layout constants per format: page dimensions, margin presets (`short`/`medium`/`long`) per format, paragraph spacing |
 | `translations.typ` | German/English label strings |
 | `title-page.typ` | `doctoral-title-page` (German legal format), the default for `title-page` |
-| `outlines.typ` | TOC, back-matter list pages (`list-of` and the `list-of-figures`/`list-of-tables`/`list-of-listings` shorthands), their `outline.entry` styling (`setup-outlines`), and `flex-caption` with the `in-outline` state that drives it |
+| `outlines.typ` | `setup-outlines` — `outline.entry` styling, `set outline(depth: 3)`, and the show rule that gives a list page an outlined, bookmarked, localized heading; plus `flex-caption` and the `in-outline` state that drives it |
 | `figures.typ` | Figure/caption/table styling (`setup-figures`) |
 | `figure-kinds.typ` | Registry of figure kinds — `resolve-figure-kinds` appends a document's own kinds after Typst's built-in `image`/`table`/`raw` |
 | `headings.typ` | Heading styling — per-level sizes/spacing, chapter page breaks, number–body alignment (`setup-headings`) |
@@ -158,5 +160,5 @@ An output regression outside those asserts still has to be caught by reading the
 - **Line spacing**: 1.15× (0.75em leading in Typst)
 - **Margins**: Three presets keyed on final page count — short (<200 pages), medium (200–399), long (≥400)
 - **Heading font**: Libertinus Sans by default; `serif-headings: true` switches to Libertinus Serif
-- **Heading numbering**: Numbered up to level 3 by default; configurable via `heading-numbering-depth`
+- **Heading numbering**: Numbered up to level 3 by default; configurable via `heading-numbering-depth`, which also bounds the table of contents (`setup-outlines` turns it into `set outline(depth: ..)`)
 - All formatting decisions should be validated against `guidelines.md`

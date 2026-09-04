@@ -1,29 +1,38 @@
-// The title and depth overrides on the outline helpers. Their `auto` defaults are
-// covered everywhere else; the explicit forms are covered nowhere, and `depth` has
-// no other caller at all.
-#import "/lib.typ": outlines, thesis
+// The title handling `setup-outlines` adds to Typst's own `outline`:
+//   - omitted on a built-in kind → the localized name for the document language,
+//   - given → used verbatim,
+//   - `none` → no heading at all,
+// and on the contents outline, Typst's own title, which must not list itself.
+// The list-page headings are outlined, so the contents outline below names them.
+#import "/lib.typ": flex-caption, thesis
 
 #show: thesis.with(
-    title: [Outline Options],
-    lang: "en",
+    title: [Outline Titles],
+    lang: "de",
     front-matter: [
-        // Chapters only: the sections below must not reach this outline.
-        #outlines.table-of-contents(title: [Table of Contents], depth: 1)
+        // Chapters only: the section below must not reach this outline.
+        #outline(depth: 1)
     ],
     back-matter: [
-        #outlines.list-of-figures(title: [Figures])
-        #outlines.list-of-tables(title: [Tables])
-        #outlines.list-of-listings(title: [Listings])
+        // Named by the template: Abbildungsverzeichnis.
+        #outline(target: figure.where(kind: image))
+        // Overridden.
+        #outline(title: [Eigene Tabellenliste], target: figure.where(kind: table))
+        // No heading of its own.
+        = Quellcode
+        #outline(title: none, target: figure.where(kind: raw))
     ],
 )
 
-= First Chapter
+= Erstes Kapitel
 
-== A Section That Must Not Appear In The Outline
+// Long enough to wrap in the contents: heading entries must not hyphenate at any
+// level, while caption entries on the list pages must.
+== Ein Abschnitt, der bei depth 1 fehlen muss und dessen Donaudampfschifffahrtsgesellschaft die Zeile umbricht
 
 #figure(
     rect(width: 3cm, height: 1cm),
-    caption: outlines.flex-caption(short: [Short], long: [The long caption.]),
+    caption: flex-caption(short: [Kurz], long: [Die lange Fassung der Beschriftung.]),
 )
 
 #figure(
@@ -31,12 +40,12 @@
         columns: 2,
         [a], [b],
     ),
-    caption: [A table],
+    caption: [Eine Tabelle],
 )
 
 #figure(
     ```py
     print("hello")
     ```,
-    caption: [A listing],
+    caption: [Ein Quellcode],
 )

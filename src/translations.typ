@@ -2,6 +2,7 @@
 
 #let t = (
     de: (
+        bibliography: "Literaturverzeichnis",
         list-of-figures: "Abbildungsverzeichnis",
         list-of-tables: "Tabellenverzeichnis",
         list-of-listings: "Quellcodeverzeichnis",
@@ -13,6 +14,7 @@
         draft: "ENTWURF",
     ),
     en: (
+        bibliography: "Bibliography",
         list-of-figures: "List of Figures",
         list-of-tables: "List of Tables",
         list-of-listings: "List of Listings",

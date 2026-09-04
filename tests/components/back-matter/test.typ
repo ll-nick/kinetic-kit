@@ -1,16 +1,16 @@
-// Compile-only: the outlines list pages placed in `back-matter` — verifies the
-// `outlines.flex-caption` state management (short form inside a list page) compiles when
+// Compile-only: list pages placed in `back-matter` — verifies the
+// `flex-caption` state management (short form inside a list page) compiles when
 // the list functions run through `thesis()`.
-#import "/lib.typ": outlines, thesis
+#import "/lib.typ": flex-caption, thesis
 
 #show: thesis.with(
     title: [List Pages],
     lang: "en",
-    front-matter: [#outlines.table-of-contents()],
+    front-matter: [#outline()],
     back-matter: [
-        #outlines.list-of-figures()
-        #outlines.list-of-tables()
-        #outlines.list-of-listings()
+        #outline(target: figure.where(kind: image))
+        #outline(target: figure.where(kind: table))
+        #outline(target: figure.where(kind: raw))
     ],
 )
 
@@ -18,8 +18,8 @@
 
 #figure(
     rect(width: 3cm, height: 2cm),
-    caption: outlines.flex-caption(short: [Short caption], long: [Long caption for the
-        figure body.]),
+    caption: flex-caption(short: [Short caption], long: [Long caption for the figure
+        body.]),
 )
 
 #figure(

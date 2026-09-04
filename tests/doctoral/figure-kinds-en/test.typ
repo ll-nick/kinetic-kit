@@ -2,7 +2,7 @@
 // must resolve to `en`, a single-value supplement stands in for every language,
 // and a passage in another language keeps its own supplement while the
 // hand-placed list page stays English.
-#import "/lib.typ": outlines, thesis
+#import "/lib.typ": thesis
 
 #let box-body = rect(width: 3cm, height: 1cm)
 
@@ -17,8 +17,8 @@
         (kind: "vignette", supplement: [Vignette]),
     ),
     back-matter: [
-        #outlines.list-of-listings()
-        #outlines.list-of("algorithm", [List of Algorithms])
+        #outline(target: figure.where(kind: raw))
+        #outline(title: [List of Algorithms], target: figure.where(kind: "algorithm"))
     ],
 )
 

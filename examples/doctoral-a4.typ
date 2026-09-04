@@ -6,7 +6,7 @@
 //
 // Compile: typst compile --root . --font-path fonts examples/doctoral-a4.typ examples/doctoral-a4.pdf
 
-#import "/lib.typ": doctoral-title-page, outlines, thesis
+#import "/lib.typ": doctoral-title-page, thesis
 #import "content/abbreviations.typ": abbrevs-glossary
 
 // ── Third-party: glossarium ───────────────────────────────────────────────
@@ -75,7 +75,7 @@
         = Abkürzungsverzeichnis
         #abbrevs-glossary(abbrevs)
 
-        #outlines.table-of-contents()
+        #outline()
     ],
 
     appendix: [
@@ -85,11 +85,11 @@
     ],
 
     back-matter: [
-        #outlines.list-of-figures()
-        #outlines.list-of-tables()
-        #outlines.list-of-listings()
+        #outline(target: figure.where(kind: image))
+        #outline(target: figure.where(kind: table))
+        #outline(target: figure.where(kind: raw))
 
-        #bibliography("bib/references.bib", title: [Literaturverzeichnis], style: "ieee")
+        #bibliography("bib/references.bib", style: "ieee")
 
         = Eigene Publikationen
         #bibliography("bib/own-publications.bib", title: none, style: "ieee", full: true)
