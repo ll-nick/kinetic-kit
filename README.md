@@ -91,8 +91,13 @@ mise run install:fonts # or bash mise/tasks/install/fonts
 
 ## API Reference
 
-Refer to [`docs/api-reference.pdf`](docs/api-reference.pdf),
-for the API documentation auto-generated from the source code.
+Refer to the [API reference](https://github.com/ll-nick/kinetic-kit/releases/latest/download/api-reference.pdf),
+auto-generated from the source code and attached to every release.
+
+<!-- package:strip-start — the nightly build tracks main, not the released version -->
+Between releases,
+the [nightly build](https://nightly.link/ll-nick/kinetic-kit/workflows/ci/main/api-reference.zip) follows `main`.
+<!-- package:strip-end -->
 
 Upgrading from 0.1.x? See [MIGRATING.md](MIGRATING.md).
 

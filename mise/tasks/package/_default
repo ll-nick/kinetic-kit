@@ -26,7 +26,6 @@ SHIPPED_PATHS = [
     "README.md",
     "LICENSE",
     "thumbnail.png",
-    "docs/api-reference.pdf",
 ]
 
 STRIP_START_MARKER = "<!-- package:strip-start"
@@ -92,6 +91,8 @@ def repoint_links_at_release_tag(
 
     Relative links resolve against the package directory on Typst Universe, and
     links to the default branch drift away from the released version over time.
+    The same goes for the API reference: `latest` would hand a reader of an old
+    package the docs for a newer one.
     """
     tag_url = f"{repository}/blob/v{version}"
     repointed = []
@@ -105,6 +106,13 @@ def repoint_links_at_release_tag(
 
     readme = RELATIVE_LINK_PATTERN.sub(repoint, readme)
     readme = readme.replace(f"{repository}/blob/main/", f"{tag_url}/")
+
+    latest_asset_url = f"{repository}/releases/latest/download/"
+    versioned_asset_url = f"{repository}/releases/download/v{version}/"
+    if latest_asset_url in readme:
+        readme = readme.replace(latest_asset_url, versioned_asset_url)
+        repointed.append(f"{latest_asset_url} → {versioned_asset_url}")
+
     return readme, repointed
 
 
