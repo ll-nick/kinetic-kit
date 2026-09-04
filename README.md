@@ -24,7 +24,7 @@ Either way you get a ready-to-fill `main.typ`.
 To add the template to an existing document instead, import it and apply it with a show rule:
 
 ```typst
-#import "@preview/kinetic-kit:0.1.1": outlines, thesis
+#import "@preview/kinetic-kit:0.1.1": thesis
 
 #show: thesis.with(
   lang: "de",
@@ -34,11 +34,11 @@ To add the template to an existing document instead, import it and apply it with
   front-matter: [
     #include "content/abstract-de.typ"
 
-    #outlines.table-of-contents()
+    #outline()
   ],
   back-matter: [
-    #outlines.list-of-figures()
-    #bibliography("bib/references.bib", title: [Literaturverzeichnis], style: "ieee")
+    #outline(target: figure.where(kind: image))
+    #bibliography("bib/references.bib", style: "ieee")
   ],
 )
 
@@ -155,26 +155,38 @@ the top level) to build the default page yourself:
 </details>
 
 <details>
-<summary><strong>Outline helpers</strong></summary>
+<summary><strong>Contents, list pages and the bibliography</strong></summary>
 
-The `outlines` namespace holds the table of contents and the back-matter list pages.
-Entry styling applies to any outline in the document, a bare `#outline()` included;
-what these helpers add on top is the localized heading and, on the list pages, the state that `outlines.flex-caption` switches on.
-Place them inside the `front-matter` / `back-matter` content of `thesis()`.
+Typst's built-in `outline` is styled, named and bookmarked for you,
+so the table of contents and the back-matter list pages are ordinary `outline(..)` calls
+placed in the `front-matter` / `back-matter` content of `thesis()`.
 
 ```typst
-#import "@preview/kinetic-kit:0.1.1": outlines, thesis
-
 #show: thesis.with(
+  front-matter: [
+    #outline()
+  ],
   back-matter: [
-    #outlines.list-of-figures()
-    #outlines.list-of-tables()
-    // A declared figure kind — the title is required:
-    #outlines.list-of("algorithm", [Algorithmenverzeichnis])
-    #bibliography("refs.bib", title: [Literaturverzeichnis], style: "ieee")
+    #outline(target: figure.where(kind: image))
+    #outline(target: figure.where(kind: table))
+    // A kind the template has no word for names itself:
+    #outline(title: [Algorithmenverzeichnis], target: figure.where(kind: "algorithm"))
+    #bibliography("refs.bib", style: "ieee")
   ],
 )
 ```
+
+Omit `title` on a list page and the template supplies the localized name —
+*Abbildungsverzeichnis* / *List of Figures* and so on for `image`, `table` and `raw`.
+Pass one to override it, or `title: none` for no heading at all.
+Omitting it for a kind the template cannot name is a compile error rather than a page headed *Inhaltsverzeichnis*.
+
+The bibliography is titled the same way:
+*Literaturverzeichnis* in German, where Typst's own default is *Bibliografie*.
+
+Unlike Typst's built-in behaviour, a list page (except the table of contents)
+gets a heading that is outlined and bookmarked,
+so it appears in the table of contents and in the PDF bookmarks.
 
 </details>
 
@@ -235,18 +247,18 @@ Then tag the figure:
 )
 ```
 
-**List pages.** Put an `outlines.list-of` call in `back-matter` for each kind you want listed,
+**List pages.** Put an `outline` call in `back-matter` for each kind you want listed,
 in whatever order you want them — the built-in `image`/`table`/`raw` included:
 
 ```typst
 back-matter: [
-  #outlines.list-of-figures()
-  #outlines.list-of-tables()
-  #outlines.list-of("algorithm", [List of Algorithms])
+  #outline(target: figure.where(kind: image))
+  #outline(target: figure.where(kind: table))
+  #outline(title: [List of Algorithms], target: figure.where(kind: "algorithm"))
 ],
 ```
 
-`outlines.list-of` also sets the state that switches `outlines.flex-caption` to its short form.
+A declared kind needs a `title` of its own; the template only names `image`, `table` and `raw`.
 
 </details>
 
@@ -299,7 +311,7 @@ Use the [glossarium](https://typst.app/universe/package/glossarium) package for 
     = List of Abbreviations
     #print-glossary(abbrevs)
 
-    #outlines.table-of-contents()
+    #outline()
   ],
 )
 
