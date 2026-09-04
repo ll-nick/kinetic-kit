@@ -16,11 +16,11 @@
     appendix: [
         = Supplementary Material
 
-        #lorem(80)
+        Numbered A.
 
         == Detail A.1
 
-        #lorem(40)
+        Numbered A.1.
     ],
     title-page: doctoral-title-page.with(
         author-title: "M.Sc.",
