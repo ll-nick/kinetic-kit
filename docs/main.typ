@@ -213,7 +213,7 @@ document, so every kind restarts each chapter whether or not it has been declare
 #api-module("../lib.typ", "lib", filter: definition => definition.name == "kit-style")
 
 ```typst
-#import "@preview/kinetic-kit:0.1.1": kit-style
+#import "@preview/kinetic-kit:0.2.0": kit-style
 
 #let font-sizes = kit-style.font-sizes-by-format.at("a5")
 #set text(font: kit-style.fonts.sans, size: font-sizes.small)

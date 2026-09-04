@@ -15,7 +15,7 @@ The official [Typst](https://typst.app) template[^1] for doctoral theses publish
 Start a new project from the template with:
 
 ```bash
-typst init @preview/kinetic-kit:0.1.1
+typst init @preview/kinetic-kit:0.2.0
 ```
 
 Or pick **kinetic-kit** from the template gallery in the [Typst web app](https://typst.app).
@@ -24,7 +24,7 @@ Either way you get a ready-to-fill `main.typ`.
 To add the template to an existing document instead, import it and apply it with a show rule:
 
 ```typst
-#import "@preview/kinetic-kit:0.1.1": thesis
+#import "@preview/kinetic-kit:0.2.0": thesis
 
 #show: thesis.with(
   lang: "de",
@@ -78,7 +78,7 @@ mise run install # or bash mise/tasks/install/_default
 mise run install:editable # or bash mise/tasks/install/editable
 ```
 
-When installed this way, imports use `@local/kinetic-kit:0.1.1` in place of `@preview/kinetic-kit:0.1.1`.
+When installed this way, imports use `@local/kinetic-kit:0.2.0` in place of `@preview/kinetic-kit:0.2.0`.
 
 The repository also bundles the Libertinus fonts.
 Install them into your user font directory with
@@ -110,7 +110,7 @@ You can fully customize the title page if you need something other than the defa
 The `title-page` parameter accepts content, or a function the template calls with the details it already knows:
 
 ```typst
-#import "@preview/kinetic-kit:0.1.1": thesis
+#import "@preview/kinetic-kit:0.2.0": thesis
 
 #let your-custom-title-page(
   title,
@@ -144,7 +144,7 @@ Pass `title-page: none` to omit the page entirely, or `doctoral-title-page` (exp
 the top level) to build the default page yourself:
 
 ```typst
-#import "@preview/kinetic-kit:0.1.1": doctoral-title-page, thesis
+#import "@preview/kinetic-kit:0.2.0": doctoral-title-page, thesis
 
 #show: thesis.with(
   title: [Titel der Dissertation],
@@ -196,7 +196,7 @@ so it appears in the table of contents and in the PDF bookmarks.
 The `kit-style` namespace exposes the template's visual constants so custom figures and diagrams can match the document's typography and color palette exactly.
 
 ```typst
-#import "@preview/kinetic-kit:0.1.1": kit-style
+#import "@preview/kinetic-kit:0.2.0": kit-style
 
 // kit-style.fonts                 — (serif, sans, mono) font family arrays
 // kit-style.font-sizes-by-format  — dict keyed by format: font sizes per format
@@ -293,7 +293,7 @@ Use the [glossarium](https://typst.app/universe/package/glossarium) package for 
 **Important:** `#show: make-glossary` must appear *before* `#show: thesis.with(...)`. Forgetting this causes silent failure — abbreviations will not expand.
 
 ```typst
-#import "@preview/kinetic-kit:0.1.1": thesis
+#import "@preview/kinetic-kit:0.2.0": thesis
 #import "@preview/glossarium:0.5.10": make-glossary, register-glossary, print-glossary
 
 #let abbrevs = (
@@ -328,7 +328,7 @@ For a nicer two-column grid layout (bold abbreviation on the left, long form on 
 Use the [drafting](https://typst.app/universe/package/drafting) package to add margin notes during writing. Tie `is-draft` to both the watermark and note visibility so they are toggled in one place:
 
 ```typst
-#import "@preview/kinetic-kit:0.1.1": thesis
+#import "@preview/kinetic-kit:0.2.0": thesis
 #import "@preview/drafting:0.2.2": set-margin-note-defaults, margin-note
 
 #let is-draft = true
