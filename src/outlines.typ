@@ -1,9 +1,40 @@
-// Table of contents and list pages
+// Outline styling and the short-caption helper.
+//
+// `setup-outlines` teaches Typst's own `outline` what it is missing
+// --- an outlined, bookmarked, localized heading on a list page ---
+// so a document places its table of contents and its list pages with the built-in call.
 
 #import "translations.typ": t
 
 // Whether we're rendering inside an outline; lets captions switch to short form.
 #let in-outline = state("in-outline", false)
+
+// Typst's `auto` outline title is the *contents* title whatever the outline
+// targets, so a list page has to be named. Selector equality identifies the three
+// kinds the template carries strings for; any other kind belongs to the document's
+// own vocabulary and names itself.
+#let _list-page-titles = (
+    (selector(figure.where(kind: image)), "list-of-figures"),
+    (selector(figure.where(kind: table)), "list-of-tables"),
+    (selector(figure.where(kind: raw)), "list-of-listings"),
+)
+
+// The heading a list page gets in place of the title Typst would print itself.
+#let _list-page-heading(target, title) = context {
+    let resolved = if title != auto { title } else {
+        let named = _list-page-titles.find(entry => entry.at(0) == target)
+        if named == none {
+            panic(
+                "an outline of "
+                    + repr(target)
+                    + " needs a title of its own --- the template only names outlines "
+                    + "of image, table and raw",
+            )
+        }
+        t.at(text.lang).at(named.at(1))
+    }
+    heading(level: 1, numbering: none, outlined: true, bookmarked: true)[#resolved]
+}
 
 /// Shared outline styling, applied as a show rule so every outline in the
 /// document --- including a user's own --- matches.
@@ -16,6 +47,17 @@
 ) = {
     set outline.entry(fill: repeat(".", gap: 0.4em, justify: false))
     show outline: set par(justify: false)
+
+    // Give non-toc listings a custom, localized heading.
+    show outline: it => {
+        if it.title == none or it.target == selector(heading) {
+            it
+        } else {
+            _list-page-heading(it.target, it.title)
+            outline(..it.fields(), title: none)
+        }
+    }
+
     show outline.entry: it => context {
         let is-heading-entry = it.element.func() == heading
         let is-chapter = is-heading-entry and it.level == 1
