@@ -25,8 +25,8 @@ SHIPPED_PATHS = [
     "template",
     "README.md",
     "LICENSE",
+    "thumbnail.png",
     "docs/api-reference.pdf",
-    "thumbnail/thumbnail.png",
 ]
 
 STRIP_START_MARKER = "<!-- package:strip-start"

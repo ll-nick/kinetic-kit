@@ -20,7 +20,7 @@ typst compile \
     --pages 1 \
     --ppi 300 \
     template/main.typ \
-    thumbnail/thumbnail.png
+    thumbnail.png
 
 rm -rf "$PKG_DIR"
-echo "  → thumbnail/thumbnail.png"
+echo "  → thumbnail.png"

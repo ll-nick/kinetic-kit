@@ -27,4 +27,4 @@ exclude = ["/docs/"]
 [template]
 path = "template"
 entrypoint = "main.typ"
-thumbnail = "thumbnail/thumbnail.png"
+thumbnail = "thumbnail.png"

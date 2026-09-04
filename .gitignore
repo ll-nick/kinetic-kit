@@ -4,7 +4,7 @@
 out/
 
 # Rendered from the template at package time
-thumbnail/thumbnail.png
+thumbnail.png
 
 # macOS
 .DS_Store
