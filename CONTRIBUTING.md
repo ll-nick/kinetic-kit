@@ -41,12 +41,13 @@ Before opening a PR, make sure the CI checks pass:
 
 ## Tests
 
-Tests live in `tests/`, organized by template type and scenario
-(e.g. `tests/doctoral/approved/`, `tests/masters/minimal/`).
-They are compilation tests run with [tytanic](https://typst-community.github.io/tytanic/).
+Tests live in `tests/`, one scenario per directory
+(e.g. `tests/doctoral/approved/`, `tests/components/outlines/`).
+They are run with [tytanic](https://typst-community.github.io/tytanic/) and mostly check
+that a document compiles; add a `context assert` where the case can check itself.
 Add a `test.typ` under a new scenario directory to cover a case:
 
 ```bash
 mise run test                                          # all tests
-tt run --font-path fonts tests/doctoral/appendix       # a single test
+tt run --font-path fonts doctoral/appendix             # a single test, by id
 ```
