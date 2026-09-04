@@ -103,104 +103,11 @@
     body
 }
 
-/// Print the table of contents.
-///
-/// -> content
-#let table-of-contents(
-    /// Heading of the outline. `auto` uses Typst's localized default for the
-    /// document language.
-    /// -> content | str | auto
-    title: auto,
-
-    /// Deepest heading level to list.
-    /// -> int
-    depth: 3,
-) = {
-    set text(hyphenate: false)
-
-    // Extra space above each top-level entry.
-    show outline.entry.where(level: 1): set block(above: 1.6em)
-
-    // `auto` resolves against `text.lang`, which `setup-page` has already set.
-    outline(title: title, depth: depth, indent: auto)
-}
-
-/// Print a back-matter list page for one figure kind.
-///
-/// Handles the state that switches @flex-caption to its short form, which a
-/// hand-rolled `outline(target: …)` would miss.
-///
-/// -> content
-#let list-of(
-    /// Figure kind to list --- an element function such as `image`, or a string such
-    /// as `"algorithm"`.
-    /// -> function | str
-    kind,
-
-    /// Heading of the list page.
-    /// -> content | str
-    title,
-) = {
-    set text(hyphenate: true)
-    heading(level: 1, numbering: none, outlined: true, bookmarked: true)[#title]
-    in-outline.update(true)
-    outline(
-        title: none,
-        target: figure.where(kind: kind),
-    )
-    in-outline.update(false)
-}
-
-// The `auto` title is resolved inside a `context` that wraps the whole call, so
-// it lands in the heading as a plain string. Resolving it lazily (a bare
-// `context` expression passed as the title) would re-resolve against `text.lang`
-// wherever the outlined heading is rendered — the list page and, differently, its
-// entry in a table of contents that a stray `set text(lang: …)` had switched.
-
-/// Print the list of figures.
-///
-/// -> content
-#let list-of-figures(
-    /// Heading of the list page. `auto` uses the localized default for the document
-    /// language.
-    /// -> content | str | auto
-    title: auto,
-) = context list-of(
-    image,
-    if title == auto { t.at(text.lang).list-of-figures } else { title },
-)
-
-/// Print the list of tables.
-///
-/// -> content
-#let list-of-tables(
-    /// Heading of the list page. `auto` uses the localized default for the document
-    /// language.
-    /// -> content | str | auto
-    title: auto,
-) = context list-of(
-    table,
-    if title == auto { t.at(text.lang).list-of-tables } else { title },
-)
-
-/// Print the list of listings.
-///
-/// -> content
-#let list-of-listings(
-    /// Heading of the list page. `auto` uses the localized default for the document
-    /// language.
-    /// -> content | str | auto
-    title: auto,
-) = context list-of(
-    raw,
-    if title == auto { t.at(text.lang).list-of-listings } else { title },
-)
-
 /// Two-part caption: a short version for the list pages, a long one under the
 /// figure.
 ///
 /// ```typc
-/// figure(image("plot.svg"), caption: outlines.flex-caption(short: [Short], long: [Long.]))
+/// figure(image("plot.svg"), caption: flex-caption(short: [Short], long: [Long.]))
 /// ```
 ///
 /// -> content
