@@ -1,6 +1,6 @@
 // Compile-only: doctoral thesis in English — verifies all translated strings
 // resolve without error when lang: "en".
-#import "/lib.typ": doctoral-title-page, outlines, thesis
+#import "/lib.typ": doctoral-title-page, thesis
 
 #show: thesis.with(
     author-firstname: "Max",
@@ -11,14 +11,13 @@
         = Abstract
         English abstract.
 
-        #outlines.table-of-contents()
+        #outline()
     ],
     back-matter: [
-        #outlines.list-of-figures()
-        #outlines.list-of-tables()
+        #outline(target: figure.where(kind: image))
+        #outline(target: figure.where(kind: table))
         #bibliography(
             "/examples/bib/references.bib",
-            title: [Bibliography],
             style: "ieee",
         )
     ],

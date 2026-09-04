@@ -3,7 +3,7 @@
 // before the first chapter, where the counter is 0 and the numbers fall back to
 // a flat `(1)` / `1`, while a chapter numbers them `(1.1)` / `1.1` and every
 // counter restarts at the next one.
-#import "/lib.typ": outlines, thesis
+#import "/lib.typ": thesis
 
 #show: thesis.with(
     title: [Numbered Elements],
@@ -16,9 +16,9 @@
 
         #figure(rect(width: 3cm, height: 1cm), caption: [A figure in front matter])
 
-        #outlines.table-of-contents()
+        #outline()
     ],
-    back-matter: [#outlines.list-of-figures()],
+    back-matter: [#outline(target: figure.where(kind: image))],
 )
 
 = First Chapter
