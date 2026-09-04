@@ -63,9 +63,10 @@
         numbering: none,
     )
 
-    set text(font: fonts.sans, size: font-sizes.base)
+    // The page is always in German, whatever the document language — set `lang`
+    // so its phrases hyphenate correctly even inside an English thesis.
+    set text(font: fonts.sans, size: font-sizes.base, lang: "de")
 
-    // Title page always uses German strings
     let tr = t.at("de")
 
     let author-name = author-firstname + " " + author-surname
