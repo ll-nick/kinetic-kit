@@ -41,15 +41,20 @@
     )
     if chapters-before.len() == 0 { return }
 
+    let single-line = it => {
+        show linebreak: none
+        it
+    }
+
     let current-chapter = chapters-before.last()
     let chapter-count = counter(heading).at(current-chapter.location()).first()
 
-    let chapter-label = if current-chapter.numbering != none {
+    let chapter-label = single-line(if current-chapter.numbering != none {
         let lvl1-fmt = current-chapter.numbering.split(".").at(0)
         [#numbering(lvl1-fmt, chapter-count) #current-chapter.body]
     } else {
         current-chapter.body
-    }
+    })
 
     if calc.even(this-page) {
         chapter-label
@@ -60,7 +65,7 @@
                 .after(current-chapter.location())
                 .before(here()),
         )
-        let sec-label = if sections-in-chapter.len() > 0 {
+        let sec-label = single-line(if sections-in-chapter.len() > 0 {
             let s = sections-in-chapter.last()
             if s.numbering != none {
                 let sn = counter(heading).at(s.location())
@@ -69,7 +74,7 @@
             } else {
                 s.body
             }
-        } else { chapter-label }
+        } else { chapter-label })
         align(right, sec-label)
     }
     line(length: 100%, stroke: 0.3pt + kit-colors.black)
