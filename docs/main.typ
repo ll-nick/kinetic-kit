@@ -95,7 +95,9 @@
     #text(font: "Libertinus Sans", size: 15pt)[API Reference]
     #v(0.3em)
     #text(size: 10pt, fill: luma(110))[
-        v#version · #link("https://github.com/ll-nick/kinetic-kit")[github.com/ll-nick/kinetic-kit]
+        v#version · #link(
+            "https://github.com/ll-nick/kinetic-kit",
+        )[github.com/ll-nick/kinetic-kit]
     ]
 ]
 
@@ -140,7 +142,9 @@ source.
 = Outlines
 
 The `outlines` namespace holds the sections whose body the template generates: the table
-of contents and the back-matter list pages. Place them inside the #api-link("thesis.front-matter") / #api-link("thesis.back-matter") content of #api-link("thesis()").
+of contents and the back-matter list pages. Place them inside the #api-link(
+    "thesis.front-matter",
+) / #api-link("thesis.back-matter") content of #api-link("thesis()").
 
 ```typst
 #import "@preview/kinetic-kit:0.1.1": outlines, thesis
@@ -178,9 +182,11 @@ of contents and the back-matter list pages. Place them inside the #api-link("the
 
 Typst keeps a separate counter and supplement for every figure `kind`. The template
 carries strings for Typst's own `image`, `table` and `raw`. Any other kind --- pseudocode,
-theorems, whatever a document needs --- is declared through #api-link("thesis.figure-kinds"),
-which supplies the caption supplement.
-Its list page, if you want one, is a #api-link("list-of()") call in #api-link("thesis.back-matter").
+theorems, whatever a document needs --- is declared through #api-link(
+    "thesis.figure-kinds",
+), which supplies the caption supplement. Its list page, if you want one, is a #api-link(
+    "list-of()",
+) call in #api-link("thesis.back-matter").
 
 Each entry is a dictionary with `kind` and `supplement`. `supplement` takes either one
 value or one per language:
