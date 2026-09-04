@@ -3,96 +3,65 @@
 // Public API (re-exported via lib.typ):
 //   thesis(...)
 
-#import "page-setup.typ": setup-appendix, setup-content, setup-front-matter, setup-page
-#import "front-matter.typ": (
-    print-abbreviations, print-abstract, print-acknowledgements, print-kurzfassung,
-    print-notation,
+#import "page-setup.typ": (
+    setup-appendix, setup-back-matter, setup-content, setup-front-matter, setup-page,
 )
-#import "back-matter.typ": (
-    print-bibliography, print-own-patents, print-own-publications,
-    print-supervised-theses,
-)
-#import "outlines.typ": list-of, table-of-contents
-#import "figure-kinds.typ": resolve-figure-kinds, resolve-localized
+#import "outlines.typ": table-of-contents
 #import "page-conf.typ": title-page-margins-by-format
 #import "title-page.typ": doctoral-title-page
 
 
-/// KIT thesis template — doctoral, Master's, Bachelor's and Diploma theses.
+/// The official Typst template[1] for doctoral theses published through KIT Scientific Publishing (KSP).
 ///
-/// The document type is decided by the title page. `title-page` defaults to the
-/// KSP-approved doctoral page; pass your own for anything else.
-///
-/// - author-firstname (str): Author's first name.
-/// - author-surname (str): Author's surname.
-/// - title (content): Thesis title.
-/// - title-page (content | function | none): Title page. Defaults to the doctoral
-///   page; pass `doctoral-title-page.with(..)` to configure it, your own content, a function
-///   called as `(title, author-firstname:, author-surname:, format:, lang:)`, or `none`
-///   to omit it.
 /// - format ("a5" | "17x24" | "a4"): Paper format — `"a5"` (148×210 mm, default),
 ///   `"17x24"` (170×240 mm), or `"a4"` (210×297 mm, discouraged by KSP). Font sizes and
 ///   margins are set automatically.
 /// - lang ("de" | "en"): Document language.
+/// - author-firstname (str): Author's first name.
+/// - author-surname (str): Author's surname.
+/// - title (content): Thesis title.
+/// - title-page (content | function | none): Title page. Defaults to the built-in doctoral
+///   page; pass `doctoral-title-page.with(..)` to configure it, your own content, a function
+///   called as `(title, author-firstname:, author-surname:, format:, lang:)`, or `none`
+///   to omit it.
+/// - front-matter (content | none): Roman-numeral pages before the body — abstracts,
+///   acknowledgements, the table of contents, any page of your own. Defaults to just
+///   `outlines.table-of-contents()`. Pass `none` for no front matter.
+/// - appendix (content | none): Appendix chapters. Template applies `A`, `A.1`, … numbering
+///   and places the appendix directly after the body, before the back matter. `none` = omit.
+/// - back-matter (content | none): Pages after the appendix — list pages, bibliography,
+///   own publications, whatever the document needs, in the order written. `none` = omit.
+///   Refer to `outlines` for list-page helpers.
+/// - serif-headings (bool): Use serif font for headings when `true`. Default `false` (sans-serif).
+/// - heading-numbering-depth (int): Deepest heading level to number. Default `3`.
+/// - figure-kinds (array): Figure kinds beyond `image`, `table` and `raw`, as dictionaries
+///   with `kind` and `supplement`. `supplement` takes either one value or one per language,
+///   e.g. `(de: [Algorithmus], en: [Algorithm])`. Declaring a built-in kind is an error.
 /// - margin-preset ("short" | "medium" | "long"): Margin profile keyed on page count.
 /// - binding-correction (length): BCOR added to inside margin. Default `0mm`.
 /// - colored-links (bool): KIT Blue links when `true`, black when `false`.
 /// - draft (bool): Show "ENTWURF" watermark when `true`.
 /// - draft-info (str | none): Optional version string below watermark. Default `none`.
-/// - serif-headings (bool): Use serif font for headings when `true`. Default `false` (sans-serif).
-/// - heading-numbering-depth (int): Deepest heading level to number. Default `3`.
-/// - abstract-en (content | none): English abstract. `none` = omit.
-/// - abstract-de (content | none): German abstract. `none` = omit.
-/// - acknowledgements (content | none): Acknowledgements. `none` = omit.
-/// - notation (content | none): Notation list. `none` = omit.
-/// - abbreviations (content | none): Abbreviations list. `none` = omit.
-/// - show-list-of-figures (bool): Include List of Figures.
-/// - show-list-of-tables (bool): Include List of Tables.
-/// - show-list-of-listings (bool): Include List of Listings.
-/// - figure-kinds (array): Figure kinds beyond `image`, `table` and `raw`, as dictionaries
-///   with `kind`, `supplement`, and optionally `list-title` and `show-list`. `supplement`
-///   and `list-title` take either one value or one per language, e.g.
-///   `(de: [Algorithmus], en: [Algorithm])`. The built-in kinds are not declared here —
-///   their list pages are governed by `show-list-of-figures` / `show-list-of-tables` / `show-list-of-listings`. Declared
-///   kinds get a list page after the built-in ones, in declaration order.
-/// - appendix (content | none): Appendix chapters. Template applies `A`, `A.1`, … numbering
-///   and places the appendix before the back-matter lists. `none` = omit.
-/// - bibliography (content | none): Bibliography content. Pass `bibliography("refs.bib", title: none, style: "ieee")`.
-///   The template adds a translated heading. `none` = omit.
-/// - own-publications (content | none): Own publications content (heading added by template). `none` = omit.
-/// - own-patents (content | none): Own patents content (heading added by template). `none` = omit.
-/// - supervised-theses (content | none): Supervised theses content (heading added by template).
-///   `none` = omit.
 /// - doc (content): Main document body (chapters only).
 /// -> content
 #let thesis(
+    format: "a5",
+    lang: "de",
     author-firstname: "Max",
     author-surname: "Mustermann",
     title: [Your Thesis Title],
     title-page: doctoral-title-page,
-    format: "a5",
-    lang: "de",
+    front-matter: table-of-contents(),
+    appendix: none,
+    back-matter: none,
+    serif-headings: false,
+    heading-numbering-depth: 3,
+    figure-kinds: (),
     margin-preset: "short",
     binding-correction: 0mm,
     colored-links: true,
     draft: false,
     draft-info: none,
-    serif-headings: false,
-    heading-numbering-depth: 3,
-    abstract-en: none,
-    abstract-de: none,
-    acknowledgements: none,
-    notation: none,
-    abbreviations: none,
-    show-list-of-figures: true,
-    show-list-of-tables: true,
-    show-list-of-listings: false,
-    figure-kinds: (),
-    appendix: none,
-    bibliography: none,
-    own-publications: none,
-    own-patents: none,
-    supervised-theses: none,
     doc,
 ) = {
     assert(
@@ -100,12 +69,6 @@
         message: "format must be \"a5\", \"17x24\" (170×240 mm), or \"a4\"",
     )
     let author-name = author-firstname + " " + author-surname
-    let resolved-figure-kinds = resolve-figure-kinds(
-        figure-kinds,
-        show-list-of-figures: show-list-of-figures,
-        show-list-of-tables: show-list-of-tables,
-        show-list-of-listings: show-list-of-listings,
-    )
 
     set document(
         title: title,
@@ -152,70 +115,23 @@
         }
     }
 
+    // Each section is `show: setup-*` then the content. The content defaults to
+    // empty and is a no-op when absent; every `setup-*` is either overridden by
+    // the next one or invisible with no content to style, so none need guarding.
+
     // ── Front matter (Roman numerals) ───────────────────────────────────────
     show: setup-front-matter
-    counter(page).update(0)
+    front-matter
 
-    if acknowledgements != none {
-        print-acknowledgements(acknowledgements, lang)
-    }
-
-    if abstract-en != none {
-        print-abstract(abstract-en)
-    }
-    if abstract-de != none {
-        print-kurzfassung(abstract-de)
-    }
-
-    if notation != none {
-        print-notation(notation, lang)
-    }
-
-    if abbreviations != none {
-        print-abbreviations(abbreviations, lang)
-    }
-
-    table-of-contents()
-
-    // ── Main content (Arabic numerals) ──────────────────────────────────────
+    // ── Main content (Arabic numerals) ─────────────────────────────────────
     show: setup-content
-    counter(page).update(1)
-
     doc
 
-    // ── Back matter ─────────────────────────────────────────────────────────
-    if appendix != none {
-        show: setup-appendix
-        appendix
-    }
+    // ── Appendix (A, A.1, … numbering) ────────────────────────────────────
+    show: setup-appendix
+    appendix
 
-    // Titles resolve against the document language rather than `text.lang`: a list
-    // page is one back-matter section, unlike a supplement that follows its figure.
-    for entry in resolved-figure-kinds {
-        if entry.show-list {
-            list-of(
-                entry.kind,
-                resolve-localized(
-                    entry.list-title,
-                    lang,
-                    kind: entry.kind,
-                    field: "list-title",
-                ),
-            )
-        }
-    }
-
-    if bibliography != none {
-        print-bibliography(bibliography, lang)
-    }
-
-    if own-publications != none {
-        print-own-publications(own-publications, lang)
-    }
-    if own-patents != none {
-        print-own-patents(own-patents, lang)
-    }
-    if supervised-theses != none {
-        print-supervised-theses(supervised-theses, lang)
-    }
+    // ── Back matter (unnumbered headings) ────────────────────────────────
+    show: setup-back-matter
+    back-matter
 }
