@@ -1,5 +1,4 @@
 #import "src/thesis.typ": thesis
-#import "src/figures.typ": flex-caption
 #import "src/title-page.typ": doctoral-title-page
 
 /// Style constants for custom figures and components that need to match the
@@ -16,7 +15,8 @@
 }
 
 /// Table of contents and back-matter list pages, for placing inside the
-/// `front-matter` / `back-matter` content of `thesis`.
+/// `front-matter` / `back-matter` content of `thesis`, plus the `flex-caption`
+/// helper whose short form those list pages switch on.
 ///
 /// Example:
 /// ```typst
