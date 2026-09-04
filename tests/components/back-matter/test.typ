@@ -1,9 +1,18 @@
-// Compile-only: list-of-figures, list-of-tables, list-of-listings — verifies the flex-caption
-// state management compiles correctly when list functions are called directly.
-#import "/lib.typ": components, flex-caption
+// Compile-only: the outlines list pages placed in `back-matter` — verifies the
+// `flex-caption` state management (short form inside a list page) compiles when
+// the list functions run through `thesis()`.
+#import "/lib.typ": flex-caption, outlines, thesis
 
-#show: components.setup-page.with(lang: "en", margin-preset: "short")
-#show: components.setup-content
+#show: thesis.with(
+    title: [List Pages],
+    lang: "en",
+    front-matter: [#outlines.table-of-contents()],
+    back-matter: [
+        #outlines.list-of-figures()
+        #outlines.list-of-tables()
+        #outlines.list-of-listings()
+    ],
+)
 
 = Chapter One
 
@@ -21,7 +30,3 @@
     caption: [A table.],
     kind: table,
 )
-
-#components.list-of-figures(lang: "en")
-#components.list-of-tables(lang: "en")
-#components.list-of-listings(lang: "en")

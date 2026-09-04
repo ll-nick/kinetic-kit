@@ -48,9 +48,60 @@ Refer to [`examples/content/masters-title-page.typ`](examples/content/masters-ti
 Copy it into your project, edit it, and pass it as `title-page`. See
 [Your own title page](README.md#cookbook) in the README.
 
-**4. Components lost their `print-` prefix and use the long form.** `print-toc` → `table-of-contents`,
-`print-lof` / `print-lot` / `print-lol` → `list-of-figures` / `list-of-tables` /
-`list-of-listings`, `print-list-of` → `list-of`, `print-dissertation-title` →
-`doctoral-title-page`. The matching parameters renamed too: `show-lof` / `show-lot` /
-`show-lol` → `show-list-of-figures` / `show-list-of-tables` / `show-list-of-listings`.
+**4. The outline helpers lost their `print-` prefix and moved under the `outlines`
+namespace.** `print-toc` → `outlines.table-of-contents`, `print-lof` / `print-lot` /
+`print-lol` → `outlines.list-of-figures` / `list-of-tables` / `list-of-listings`,
+`print-list-of` → `outlines.list-of`, `print-dissertation-title` → `doctoral-title-page`
+(top-level). Add `outlines` to the package import alongside `thesis`.
+`table-of-contents` and the `list-of-*` shorthands take `title: auto` (localized default)
+and no longer take `lang:`. `list-of(kind, title)` now requires the title as a positional
+argument.
+
+**5. Front and back matter are plain content now, not split across several parameters.** These twelve are
+gone: `abstract-en`, `abstract-de`, `acknowledgements`, `notation`, `abbreviations`,
+`show-list-of-figures`, `show-list-of-tables`, `show-list-of-listings`, `bibliography`,
+`own-publications`, `own-patents`, `supervised-theses`. Write the same sections as ordinary
+markup in the new `front-matter` and `back-matter` parameters, each with its own heading,
+in the order you want them. Heading numbering is suppressed there, so a bare `= Danksagung`
+matches what the old `acknowledgements:` parameter produced.
+
+```typst
+// 0.1.x
+#show: thesis.with(
+  abstract-de: include "abstract-de.typ",
+  abstract-en: include "abstract-en.typ",
+  acknowledgements: [Ich danke …],
+  show-list-of-figures: true,
+  bibliography: bibliography("refs.bib", title: none, style: "ieee"),
+)
+
+// 0.2.0
+#show: thesis.with(
+  front-matter: [
+    = Danksagung
+    Ich danke …
+
+    = Abstract
+    #include "abstract-en.typ"
+
+    = Kurzfassung
+    #include "abstract-de.typ"
+
+    #outlines.table-of-contents()
+  ],
+  back-matter: [
+    #outlines.list-of-figures()
+    #bibliography("refs.bib", title: [Literaturverzeichnis], style: "ieee")
+  ],
+)
+```
+
+`bibliography(title: none)` used to let the template supply the heading;
+now pass the heading you want as `title:`.
+Typst's own `auto` default gives "Bibliografie" in German, not "Literaturverzeichnis".
+
+**6. `figure-kinds` entries are `(kind:, supplement:)` only.** The `list-title` and
+`show-list` fields are gone. To list a declared kind, put
+`#outlines.list-of("algorithm", [List of Algorithms])` in `back-matter` — same as for the
+built-in `image` / `table` / `raw`, whose `show-list-of-*` booleans are also gone.
 

@@ -1,7 +1,8 @@
 // Compile-only: figure kinds in an English document — per-language dictionaries
-// must resolve to `en`, the `show-lo*` booleans alone govern the built-in list
-// pages, and a document kind's list page follows them.
-#import "/lib.typ": thesis
+// must resolve to `en`, a single-value supplement stands in for every language,
+// and a passage in another language keeps its own supplement while the
+// hand-placed list page stays English.
+#import "/lib.typ": outlines, thesis
 
 #let box-body = rect(width: 3cm, height: 1cm)
 
@@ -10,17 +11,15 @@
     author-surname: "Mustermann",
     title: [Custom Figure Kinds],
     lang: "en",
-    show-list-of-listings: true,
     figure-kinds: (
-        (
-            kind: "algorithm",
-            supplement: (de: [Algorithmus], en: [Algorithm]),
-            list-title: (de: [Algorithmenverzeichnis], en: [List of Algorithms]),
-            show-list: true,
-        ),
+        (kind: "algorithm", supplement: (de: [Algorithmus], en: [Algorithm])),
         // A single value stands in for every language.
         (kind: "vignette", supplement: [Vignette]),
     ),
+    back-matter: [
+        #outlines.list-of-listings()
+        #outlines.list-of("algorithm", [List of Algorithms])
+    ],
 )
 
 = First Chapter

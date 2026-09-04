@@ -4,7 +4,7 @@
 //
 // Compile: typst compile --root . --font-path fonts examples/doctoral-full-en.typ examples/doctoral-full-en.pdf
 
-#import "/lib.typ": doctoral-title-page, flex-caption, thesis
+#import "/lib.typ": doctoral-title-page, flex-caption, outlines, thesis
 #import "content/abbreviations.typ": abbrevs-glossary
 
 // ── Third-party: glossarium ───────────────────────────────────────────────
@@ -30,69 +30,14 @@
 // ── Dissertation ──────────────────────────────────────────────────────────
 
 #show: thesis.with(
+    // ── Metadata ───────────────────────────────────────────────────────────
+    // Body text labels (TOC, LoF, bibliography heading, …) follow `lang`.
+    // The title page always uses German strings regardless of it.
+    lang: "en",
     author-firstname: "Jane",
     author-surname: "Doe",
-
-    // ── Title ───────────────────────────────────────────────────────────────
     title: [
         A Complete Dissertation Title --- Spanning Multiple Lines
-    ],
-
-    // ── Language: English ───────────────────────────────────────────────────
-    // Body text labels (TOC, LoF, bibliography heading, …) are in English.
-    // The title page always uses German strings regardless of lang.
-    lang: "en",
-
-    // ── Layout ──────────────────────────────────────────────────────────────
-    margin-preset: "medium",
-    binding-correction: 5mm, // Add BCOR for physically bound print copies
-    colored-links: true,
-
-    // ── Draft watermark ─────────────────────────────────────────────────────
-    draft: is-draft,
-    draft-info: "v0.1 — " + datetime.today().display("[day].[month].[year]"),
-
-    // ── Front matter ────────────────────────────────────────────────────────
-    abstract-en: include "content/abstract-en.typ",
-    abstract-de: include "content/abstract-de.typ",
-    acknowledgements: include "content/acknowledgements.typ",
-    notation: include "content/notation.typ",
-    abbreviations: abbrevs-glossary(abbrevs),
-
-    // ── Back matter ─────────────────────────────────────────────────────────
-    show-list-of-figures: true,
-    show-list-of-tables: true,
-    show-list-of-listings: true,
-
-    own-publications: bibliography(
-        "bib/own-publications.bib",
-        title: none,
-        style: "ieee",
-        full: true,
-    ),
-    supervised-theses: bibliography(
-        "bib/supervised-theses.bib",
-        title: none,
-        style: "ieee",
-        full: true,
-    ),
-    own-patents: [
-        Doe, J. (2024). *A Method for Optimising Sample Processes*. Deutsches Patent- und
-        Markenamt, DE 10 2024 000 002 A1.
-    ],
-
-    // ── Bibliography ────────────────────────────────────────────────────────
-    bibliography: bibliography(
-        "bib/references.bib",
-        title: none,
-        style: "ieee",
-    ),
-
-    // ── Appendix ─────────────────────────────────────────────────────────────
-    appendix: [
-        = Supplementary Material
-
-        #lorem(800)
     ],
     title-page: doctoral-title-page.with(
         // ── Author ──────────────────────────────────────────────────────────────
@@ -111,6 +56,59 @@
         // ── Status: submitted ───────────────────────────────────────────────────
         status-approved: false,
     ),
+
+    // ── Content ────────────────────────────────────────────────────────────
+    // The German Kurzfassung required for an English thesis (Promotionsordnung
+    // §10) lives in abstract-de.typ, which sets `lang: "de"` for correct
+    // hyphenation.
+    front-matter: [
+        = Acknowledgements
+        #include "content/acknowledgements.typ"
+
+        #include "content/abstract-en.typ"
+        #include "content/abstract-de.typ"
+
+        = Notation
+        #include "content/notation.typ"
+
+        = List of Abbreviations
+        #abbrevs-glossary(abbrevs)
+
+        #outlines.table-of-contents()
+    ],
+
+    appendix: [
+        = Supplementary Material
+
+        #lorem(800)
+    ],
+
+    back-matter: [
+        #outlines.list-of-figures()
+        #outlines.list-of-tables()
+        #outlines.list-of-listings()
+
+        #bibliography("bib/references.bib", title: [Bibliography], style: "ieee")
+
+        = Own Publications
+        #bibliography("bib/own-publications.bib", title: none, style: "ieee", full: true)
+
+        = Patents
+        Doe, J. (2024). *A Method for Optimising Sample Processes*. Deutsches Patent- und
+        Markenamt, DE 10 2024 000 002 A1.
+
+        = Supervised Student Theses
+        #bibliography("bib/supervised-theses.bib", title: none, style: "ieee", full: true)
+    ],
+
+    // ── Formatting ─────────────────────────────────────────────────────────
+    margin-preset: "medium",
+    binding-correction: 5mm, // Add BCOR for physically bound print copies
+    colored-links: true,
+
+    // ── Draft watermark ────────────────────────────────────────────────────
+    draft: is-draft,
+    draft-info: "v0.1 — " + datetime.today().display("[day].[month].[year]"),
 )
 
 = A First Example Chapter

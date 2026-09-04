@@ -5,6 +5,7 @@
 //   _draft-indicator()   — "ENTWURF"/"DRAFT" watermark
 //   setup-page()         — full document style setup (page, headings, figures, equations, code)
 //   setup-front-matter() — Roman numeral pagination wrapper
+//   setup-back-matter()  — heading numbering suppression wrapper
 //   setup-content()      — Arabic numeral pagination wrapper
 //   setup-appendix()     — A.1 numbering wrapper
 
@@ -232,7 +233,7 @@
 
 // ── Section-specific page setup (thin wrappers) ───────────────────────────
 
-/// Switch to Roman numeral page numbering and remove heading numbering.
+/// Restart page numbering at Roman `i` and remove heading numbering.
 /// Apply before front-matter content: `#show: setup-front-matter`.
 ///
 /// - doc (content): Document body (injected automatically by the show rule).
@@ -240,10 +241,22 @@
 #let setup-front-matter(doc) = {
     set page(numbering: "i")
     set heading(numbering: none)
+    counter(page).update(0)
     doc
 }
 
-/// Switch to Arabic page numbering and enable `1.1` heading numbering.
+/// Suppress heading numbering for back-matter sections, which sit outside the
+/// `1.1` numbering `setup-content` establishes.
+/// Apply before back matter: `#show: setup-back-matter`.
+///
+/// - doc (content): Document body (injected automatically by the show rule).
+/// -> content
+#let setup-back-matter(doc) = {
+    set heading(numbering: none)
+    doc
+}
+
+/// Restart page numbering at Arabic `1` and enable `1.1` heading numbering.
 /// Apply before the main content: `#show: setup-content`.
 ///
 /// - doc (content): Document body (injected automatically by the show rule).
@@ -253,6 +266,10 @@
     set heading(numbering: "1.1")
     set heading(supplement: context t.at(text.lang).section)
     show heading.where(level: 1): set heading(supplement: context t.at(text.lang).chapter)
+    // The first chapter starts on an odd page, the heading rules enfore that.
+    // We move to the odd page here already to ensure the first chapter's page number is 1.
+    pagebreak(weak: true, to: "odd")
+    counter(page).update(1)
     doc
 }
 

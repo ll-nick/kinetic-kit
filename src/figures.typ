@@ -49,8 +49,8 @@
 /// - font-sizes (dict): Format-specific font sizes resolved by the template.
 /// - lang (str): Document language — `"de"` or `"en"`.
 /// - figure-kinds (array): Figure kind declarations, merged onto the built-in
-///   ones. Only the supplements are read here; list pages are printed by the
-///   template's back matter.
+///   ones. Only the supplements are read here; list pages are placed by the
+///   author with `outlines.list-of`.
 /// - body (content): Document body (injected automatically by the show rule).
 /// -> content
 #let setup-figures(font-sizes, lang: "de", figure-kinds: (), body) = {

@@ -9,7 +9,129 @@
 #set document(title: "kinetic-kit API Reference")
 #set page(paper: "a4", margin: 2.5cm, numbering: "1")
 #set text(font: "Libertinus Serif", size: 11pt)
-#set heading(numbering: "1.1")
+
+// Number the manual section headings only; leave tidy's function headings
+// unnumbered so they don't read as `1.1.1.1.1`.
+#set heading(numbering: (..n) => if n.pos().len() <= 2 { numbering("1.1", ..n.pos()) })
+
+// ── Custom tidy style, closer to the Typst reference docs ──────────────────
+// Reuses the default style for everything except the signature block and the
+// parameter blocks, which get a lighter, airier treatment: the signature in a
+// tinted code box, each parameter separated by a hairline rule with the name in
+// bold (not a heading, so parameters stay out of the document outline).
+
+#let _default = tidy.styles.default
+
+#let _show-signature(fn, style-args: (:)) = block(
+    fill: luma(250),
+    stroke: 0.5pt + luma(224),
+    radius: 4pt,
+    inset: (x: 1em, y: 0.85em),
+    width: 100%,
+    above: 0.6em,
+    below: 1.4em,
+    {
+        set text(font: "DejaVu Sans Mono", size: 0.92em)
+        text(fn.name, fill: rgb("#4b69c6"))
+        "("
+        let args = ()
+        for (arg-name, info) in fn.args {
+            if style-args.omit-private-parameters and arg-name.starts-with("_") {
+                continue
+            }
+            let types = if "types" in info {
+                (
+                    ": "
+                        + info
+                            .types
+                            .map(t => (style-args.style.show-type)(
+                                t,
+                                style-args: style-args,
+                            ))
+                            .join(" ")
+                )
+            }
+            args.push(arg-name + types)
+        }
+        if args.len() <= 2 {
+            args.join(", ")
+        } else {
+            "\n  " + args.join(",\n  ") + "\n"
+        }
+        ")"
+        if fn.return-types != none {
+            [ -> ]
+            fn
+                .return-types
+                .map(t => (style-args.style.show-type)(
+                    t,
+                    style-args: style-args,
+                ))
+                .join(" ")
+        }
+    },
+)
+
+#let _show-param(
+    name,
+    types,
+    content,
+    style-args,
+    show-default: false,
+    default: none,
+) = block(
+    width: 100%,
+    above: 1.4em,
+    below: 1.4em,
+    breakable: style-args.break-param-descriptions,
+    {
+        line(length: 100%, stroke: 0.5pt + luma(218))
+        v(0.7em, weak: true)
+        strong(raw(name, lang: none))
+        h(0.7em)
+        types
+            .map(t => (style-args.style.show-type)(t, style-args: style-args))
+            .join(
+                text(size: 0.7em)[ or ],
+            )
+        parbreak()
+        content
+        if show-default {
+            parbreak()
+            text(size: 0.9em, fill: luma(110))[
+                #style-args.local-names.default: #raw(lang: "typc", default)
+            ]
+        }
+    },
+)
+
+#let api-style = (
+    show-outline: _default.show-outline,
+    show-type: _default.show-type,
+    show-function: _default.show-function,
+    show-variable: _default.show-variable,
+    show-reference: _default.show-reference,
+    show-example: _default.show-example,
+    show-parameter-list: _show-signature,
+    show-parameter-block: _show-param,
+)
+
+// Render one source module's doc-comments. `filter` optionally restricts which
+// functions are shown. `show-module-name: false` drops the redundant wrapper
+// heading; `show-outline: false` drops the per-module bullet list (the page has
+// its own outline below).
+#let api-module(path, name, filter: f => true) = {
+    let module = tidy.parse-module(read(path), name: name)
+    module.functions = module.functions.filter(filter)
+    tidy.show-module(
+        module,
+        style: api-style,
+        show-outline: false,
+        show-module-name: false,
+        sort-functions: false,
+        break-param-descriptions: true,
+    )
+}
 
 #align(center)[
     #text(size: 22pt, weight: "bold")[kinetic-kit]
@@ -25,6 +147,8 @@
 
 This document lists all public symbols exported by `kinetic-kit`.
 
+#outline(title: none, indent: auto, depth: 2)
+
 = Template
 
 `thesis()` is the main entrypoint of the package. By default, it assembles a complete
@@ -33,9 +157,7 @@ be used to produce a bachelor's or master's thesis. Note that the KSP endorsemen
 applies to doctoral theses in the default configuration; customized documents are not
 covered by it.
 
-#let thesis-src = read("../src/thesis.typ")
-#let thesis-module = tidy.parse-module(thesis-src, name: "thesis")
-#tidy.show-module(thesis-module, show-outline: true, sort-functions: false)
+#api-module("../src/thesis.typ", "thesis")
 
 = Style Constants
 
@@ -120,84 +242,63 @@ optional opacity suffix (`70`, `50`, `30`, `15` = 70 %, 50 %, 30 %, 15 % tint).
     [`colors.string`], [`#700055`], [Syntax highlighting — string literal],
 )
 
-= Components
+= Title Page <title-page>
 
-The `components` module exports the individual building blocks for assembling a document
-without the full `thesis()` orchestrator. All symbols are accessed through the
-`components` namespace:
+`doctoral-title-page` is the default `title-page`. It owns every parameter printed on the
+page. Pass `doctoral-title-page.with(..)` to configure it, or your own content / function
+for anything else.
+
+#api-module("../src/title-page.typ", "title-page")
+
+= Outlines
+
+The `outlines` namespace holds the sections whose body the template generates: the table
+of contents and the back-matter list pages. Place them inside the `front-matter` /
+`back-matter` content of `thesis()`.
 
 ```typst
-#import "@preview/kinetic-kit:0.1.1": components
+#import "@preview/kinetic-kit:0.1.1": outlines, thesis
 
-#let format = "a5"
-
-#show: components.setup-page.with(format: format, margin-preset: "short", lang: "de")
-#show: components.setup-front-matter
-#components.table-of-contents(lang: "de")
+#show: thesis.with(
+  front-matter: [
+    = Kurzfassung
+    …
+    #outlines.table-of-contents()
+  ],
+  back-matter: [
+    #outlines.list-of-figures()
+    #outlines.list-of("algorithm", [Algorithmenverzeichnis])
+    #bibliography("refs.bib", title: [Literaturverzeichnis], style: "ieee")
+  ],
+)
 ```
 
-You are responsible for applying the wrappers in the correct order: `setup-page` →
-`setup-front-matter` → content → `setup-content` → (optionally) `setup-appendix`.
+#api-module("../src/outlines.typ", "outlines", filter: f => f.name != "setup-outlines")
 
-== Page Setup
+= Figure Captions
 
-#let page-setup-src = read("../src/page-setup.typ")
-#let page-setup-module = tidy.parse-module(page-setup-src, name: "page-setup")
-#tidy.show-module(page-setup-module, show-outline: true, sort-functions: false)
+#api-module("../src/figures.typ", "figures", filter: f => f.name == "flex-caption")
 
-== Title Page <title-page>
-
-#let title-page-src = read("../src/title-page.typ")
-#let title-page-module = tidy.parse-module(title-page-src, name: "title-page")
-#tidy.show-module(title-page-module, show-outline: true, sort-functions: false)
-
-== Outlines
-
-#let outlines-src = read("../src/outlines.typ")
-#let outlines-module = tidy.parse-module(outlines-src, name: "outlines")
-#tidy.show-module(outlines-module, show-outline: true, sort-functions: false)
-
-== Figures
-
-#let figures-src = read("../src/figures.typ")
-#let figures-module = tidy.parse-module(figures-src, name: "figures")
-#tidy.show-module(figures-module, show-outline: true, sort-functions: false)
-
-== Figure Kinds
+= Figure Kinds
 
 Typst keeps a separate counter and supplement for every figure `kind`. The template
-carries strings for Typst's own `image`, `table` and `raw`, because those names are
-template chrome; their list pages are governed by the `show-lo*` booleans. Any other kind
-— pseudocode, theorems, whatever a document needs — is declared through the `figure-kinds`
-parameter of `thesis()`, which supplies the caption supplement and, optionally, a
-back-matter list page.
+carries strings for Typst's own `image`, `table` and `raw`. Any other kind — pseudocode,
+theorems, whatever a document needs — is declared through the `figure-kinds` parameter of
+`thesis()`, which supplies the caption supplement. Its list page, if you want one, is a
+`#outlines.list-of("algorithm", [List of Algorithms])` call in `back-matter`.
 
-Per-chapter counter resets are not part of this registry. `setup-headings` derives them
-from the figures present in the document, so every kind restarts each chapter whether or
-not it has been declared.
+Each entry is a dictionary with `kind` and `supplement`. `supplement` takes either one
+value or one per language:
 
 ```typst
 #show: thesis.with(
   figure-kinds: (
-    (
-      kind: "algorithm",
-      supplement: (de: [Algorithmus],           en: [Algorithm]),
-      list-title: (de: [Algorithmenverzeichnis], en: [List of Algorithms]),
-      show-list: true,
-    ),
-    // Supplement only — no list page.
-    (kind: "theorem", supplement: (de: [Satz], en: [Theorem])),
+    (kind: "algorithm", supplement: (de: [Algorithmus], en: [Algorithm])),
+    (kind: "theorem",   supplement: [Theorem]),
   ),
 )
 ```
 
-#let figure-kinds-src = read("../src/figure-kinds.typ")
-#let figure-kinds-module = tidy.parse-module(figure-kinds-src, name: "figure-kinds")
-#tidy.show-module(figure-kinds-module, show-outline: true, sort-functions: false)
-
-== Headings
-
-#let headings-src = read("../src/headings.typ")
-#let headings-module = tidy.parse-module(headings-src, name: "headings")
-#tidy.show-module(headings-module, show-outline: true, sort-functions: false)
+Per-chapter counter resets are automatic: they are derived from the figures present in the
+document, so every kind restarts each chapter whether or not it has been declared.
 

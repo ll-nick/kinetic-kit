@@ -4,7 +4,7 @@
 //
 // Compile: typst compile --root . --font-path fonts examples/masters-full.typ examples/masters-full.pdf
 
-#import "/lib.typ": flex-caption, thesis
+#import "/lib.typ": flex-caption, outlines, thesis
 #import "content/masters-title-page.typ": masters-title-page
 #import "content/abbreviations.typ": abbrevs-glossary
 
@@ -32,51 +32,12 @@
 // ── Thesis ────────────────────────────────────────────────────────────────
 
 #show: thesis.with(
-    // ── Author ──────────────────────────────────────────────────────────────
+    // ── Metadata ───────────────────────────────────────────────────────────
+    lang: "de",
     author-firstname: "Max",
     author-surname: "Mustermann",
-
-    // ── Title ───────────────────────────────────────────────────────────────
     title: [
         Ein vollständiger Titel der Masterarbeit --- Über mehrere Zeilen
-    ],
-
-    // ── Language ────────────────────────────────────────────────────────────
-    lang: "de",
-
-    // ── Layout ──────────────────────────────────────────────────────────────
-    margin-preset: "short",
-    colored-links: true,
-
-    // ── Draft watermark ─────────────────────────────────────────────────────
-    draft: is-draft,
-    draft-info: "v0.1 — " + datetime.today().display("[day].[month].[year]"),
-
-    // ── Front matter ────────────────────────────────────────────────────────
-    abstract-en: include "content/abstract-en.typ",
-    abstract-de: include "content/abstract-de.typ",
-    acknowledgements: include "content/acknowledgements.typ",
-    notation: include "content/notation.typ",
-
-    abbreviations: abbrevs-glossary(abbrevs),
-
-    // ── Back matter ─────────────────────────────────────────────────────────
-    show-list-of-figures: true,
-    show-list-of-tables: true,
-    show-list-of-listings: true,
-
-    // ── Bibliography ────────────────────────────────────────────────────────
-    bibliography: bibliography(
-        "bib/references.bib",
-        title: none,
-        style: "ieee",
-    ),
-
-    // ── Appendix ─────────────────────────────────────────────────────────────
-    appendix: [
-        = Ergänzendes Material
-
-        #lorem(400)
     ],
     title-page: masters-title-page.with(
         // thesis-type options: "Masterarbeit" | "Bachelorarbeit" | "Diplomarbeit"
@@ -93,6 +54,45 @@
         // ── Submission date ─────────────────────────────────────────────────────
         date-submitted: "01. März 2026",
     ),
+
+    // ── Content ────────────────────────────────────────────────────────────
+    front-matter: [
+        = Danksagung
+        #include "content/acknowledgements.typ"
+
+        #include "content/abstract-en.typ"
+        #include "content/abstract-de.typ"
+
+        = Nomenklatur
+        #include "content/notation.typ"
+
+        = Abkürzungsverzeichnis
+        #abbrevs-glossary(abbrevs)
+
+        #outlines.table-of-contents()
+    ],
+
+    appendix: [
+        = Ergänzendes Material
+
+        #lorem(400)
+    ],
+
+    back-matter: [
+        #outlines.list-of-figures()
+        #outlines.list-of-tables()
+        #outlines.list-of-listings()
+
+        #bibliography("bib/references.bib", title: [Literaturverzeichnis], style: "ieee")
+    ],
+
+    // ── Formatting ─────────────────────────────────────────────────────────
+    margin-preset: "short",
+    colored-links: true,
+
+    // ── Draft watermark ────────────────────────────────────────────────────
+    draft: is-draft,
+    draft-info: "v0.1 — " + datetime.today().display("[day].[month].[year]"),
 )
 
 // ── Chapters ──────────────────────────────────────────────────────────────

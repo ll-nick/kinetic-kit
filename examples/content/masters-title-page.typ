@@ -25,7 +25,9 @@
     let fonts = kit-style.fonts
     let font-sizes = kit-style.font-sizes-by-format.at(format)
 
-    set text(font: fonts.sans, size: font-sizes.base)
+    // This example page is in German; set `lang` so its phrases hyphenate
+    // correctly even when the thesis language is English.
+    set text(font: fonts.sans, size: font-sizes.base, lang: "de")
 
     v(18mm)
     align(center)[

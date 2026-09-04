@@ -56,14 +56,15 @@ The single entry point re-exports:
 - `thesis()` — the template function (from `src/thesis.typ`)
 - `doctoral-title-page` — the KSP doctoral title page, for passing to `title-page`; it owns every parameter printed on the page (from `src/title-page.typ`)
 - `flex-caption` — figure/table caption utility (from `src/figures.typ`)
+- `kit-style` — visual constants (fonts, sizes, leading, colors) for matching custom content
+- `outlines` — namespace re-exporting `src/outlines.typ`: `table-of-contents`, `list-of`, and the `list-of-figures`/`list-of-tables`/`list-of-listings` shorthands, for placing in `front-matter`/`back-matter`
 
 ### Source Modules (`src/`)
 
 | File | Purpose |
 |------|---------|
 | `thesis.typ` | `thesis()` — the entry point and the document structure it assembles |
-| `components.typ` | Re-exports the building blocks for custom composition (`components` namespace) |
-| `page-setup.typ` | Shared style engine — `kit-header`, `_page-base()`, draft indicator, section pagination wrappers |
+| `page-setup.typ` | Shared style engine — `kit-header`, `_page-base()`, draft indicator, section pagination wrappers (`setup-front-matter`/`setup-back-matter`/`setup-content`/`setup-appendix`) |
 | `kit-colors.typ` | KIT color palette + syntax highlighting colors |
 | `typography.typ` | Font configuration (Libertinus family) and KSP-required sizes per format (`font-sizes-by-format`) |
 | `page-conf.typ` | Page layout constants per format: page dimensions, margin presets (`short`/`medium`/`long`) per format, paragraph spacing |

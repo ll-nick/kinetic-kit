@@ -1,19 +1,28 @@
 // Compile-only: approved doctoral thesis — exercises the title page code path
 // with exam-date, main-advisor, and co-advisor filled in.
-#import "/lib.typ": doctoral-title-page, thesis
+#import "/lib.typ": doctoral-title-page, outlines, thesis
 
 #show: thesis.with(
     author-firstname: "Max",
     author-surname: "Mustermann",
     title: [Test Dissertation],
     lang: "de",
-    abstract-en: [English abstract.],
-    abstract-de: [Deutsche Kurzfassung.],
-    bibliography: bibliography(
-        "/examples/bib/references.bib",
-        title: none,
-        style: "ieee",
-    ),
+    front-matter: [
+        = Abstract
+        English abstract.
+
+        = Kurzfassung
+        Deutsche Kurzfassung.
+
+        #outlines.table-of-contents()
+    ],
+    back-matter: [
+        #bibliography(
+            "/examples/bib/references.bib",
+            title: [Literaturverzeichnis],
+            style: "ieee",
+        )
+    ],
     title-page: doctoral-title-page.with(
         author-title: "M.Sc.",
         author-male: true,

@@ -1,5 +1,5 @@
 // Compile-only: full-ish German thesis with the most common optional sections.
-#import "/lib.typ": thesis
+#import "/lib.typ": outlines, thesis
 #import "/examples/content/masters-title-page.typ": masters-title-page
 
 #show: thesis.with(
@@ -8,16 +8,27 @@
     title: [Test Masterarbeit],
     lang: "de",
     margin-preset: "short",
-    abstract-en: [English abstract.],
-    abstract-de: [Deutsche Kurzfassung.],
-    acknowledgements: [Acknowledgements.],
-    show-list-of-figures: true,
-    show-list-of-tables: true,
-    bibliography: bibliography(
-        "/examples/bib/references.bib",
-        title: none,
-        style: "ieee",
-    ),
+    front-matter: [
+        = Danksagung
+        Acknowledgements.
+
+        = Abstract
+        English abstract.
+
+        = Kurzfassung
+        Deutsche Kurzfassung.
+
+        #outlines.table-of-contents()
+    ],
+    back-matter: [
+        #outlines.list-of-figures()
+        #outlines.list-of-tables()
+        #bibliography(
+            "/examples/bib/references.bib",
+            title: [Literaturverzeichnis],
+            style: "ieee",
+        )
+    ],
     title-page: masters-title-page.with(
         thesis-type: "Masterarbeit",
         department: "KIT-Fakultät für Maschinenbau",

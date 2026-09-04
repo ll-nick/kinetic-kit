@@ -1,7 +1,7 @@
 // Compile-only: figure kinds beyond image/table/raw — kinds declared by the
-// document, per-chapter counter resets for all of them, and back-matter list pages
-// in canonical-then-declaration order.
-#import "/lib.typ": thesis
+// document with per-language and single-value supplements, per-chapter counter
+// resets for all of them, and hand-placed back-matter list pages.
+#import "/lib.typ": outlines, thesis
 
 #let box-body = rect(width: 3cm, height: 1cm)
 
@@ -10,27 +10,21 @@
     author-surname: "Mustermann",
     title: [Eigene Abbildungsarten],
     lang: "de",
-    // Expected list order: Abbildungen, Tabellen, Quellcode, Algorithmen, Sätze.
-    show-list-of-listings: true,
     figure-kinds: (
         // Declared by this document, with one string per language.
-        (
-            kind: "algorithm",
-            supplement: (de: [Algorithmus], en: [Algorithm]),
-            list-title: (de: [Algorithmenverzeichnis], en: [List of Algorithms]),
-            show-list: true,
-        ),
-        (
-            kind: "theorem",
-            supplement: (de: [Satz], en: [Theorem]),
-            list-title: (de: [Satzverzeichnis], en: [List of Theorems]),
-            show-list: true,
-        ),
-        // A localized supplement without a list page.
+        (kind: "algorithm", supplement: (de: [Algorithmus], en: [Algorithm])),
+        (kind: "theorem", supplement: (de: [Satz], en: [Theorem])),
         (kind: "recipe", supplement: (de: [Rezept], en: [Recipe])),
         // A single value stands in for every language.
         (kind: "vignette", supplement: [Vignette]),
     ),
+    back-matter: [
+        #outlines.list-of-figures()
+        #outlines.list-of-tables()
+        #outlines.list-of-listings()
+        #outlines.list-of("algorithm", [Algorithmenverzeichnis])
+        #outlines.list-of("theorem", [Satzverzeichnis])
+    ],
 )
 
 = Erstes Kapitel
