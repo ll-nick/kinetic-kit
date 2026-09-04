@@ -101,6 +101,12 @@ so a module holding a single definition becomes a chapter of its own
 rather than nesting one heading under another.
 Prose introducing a definition belongs in its doc-comment, not in `main.typ`.
 
+`docs/api-reference.pdf` is generated, not tracked.
+It ships as a release asset rather than in the repository or the package,
+and the README links it as `/releases/latest/download/api-reference.pdf`;
+`mise run package` rewrites that to the tagged version for the published README,
+and `package:verify` fails if either half of that is missing.
+
 The tables in the `kit-style` chapter are built by iterating the
 imported `fonts`, `font-sizes-by-format` and `kit-colors` dictionaries,
 and the cover version is read from `typst.toml`,
