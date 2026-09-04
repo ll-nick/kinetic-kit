@@ -49,7 +49,7 @@
 
 /// Print the table of contents.
 ///
-/// - title (content | str | auto): Heading of the outline. `auto` uses Typst's
+/// - title (content or str or auto): Heading of the outline. `auto` uses Typst's
 ///   localized default for the document language.
 /// - depth (int): Deepest heading level to list.
 /// -> content
@@ -68,9 +68,9 @@
 /// Handles the `in-outline` state that switches `flex-caption` to its short form,
 /// which a hand-rolled `outline(target: …)` would miss.
 ///
-/// - kind (function | str): Figure kind to list — an element function such as
+/// - kind (function or str): Figure kind to list — an element function such as
 ///   `image`, or a string such as `"algorithm"`.
-/// - title (content | str): Heading of the list page.
+/// - title (content or str): Heading of the list page.
 /// -> content
 #let list-of(kind, title) = {
     set text(hyphenate: true)
@@ -91,7 +91,7 @@
 
 /// Print the list of figures.
 ///
-/// - title (content | str | auto): Heading of the list page. `auto` uses the
+/// - title (content or str or auto): Heading of the list page. `auto` uses the
 ///   localized default for the document language.
 /// -> content
 #let list-of-figures(title: auto) = context list-of(
@@ -101,7 +101,7 @@
 
 /// Print the list of tables.
 ///
-/// - title (content | str | auto): Heading of the list page. `auto` uses the
+/// - title (content or str or auto): Heading of the list page. `auto` uses the
 ///   localized default for the document language.
 /// -> content
 #let list-of-tables(title: auto) = context list-of(
@@ -111,7 +111,7 @@
 
 /// Print the list of listings.
 ///
-/// - title (content | str | auto): Heading of the list page. `auto` uses the
+/// - title (content or str or auto): Heading of the list page. `auto` uses the
 ///   localized default for the document language.
 /// -> content
 #let list-of-listings(title: auto) = context list-of(

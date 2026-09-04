@@ -11,25 +11,26 @@
 #import "title-page.typ": doctoral-title-page
 
 
-/// The official Typst template[1] for doctoral theses published through KIT Scientific Publishing (KSP).
+/// The official Typst template for doctoral theses published through KIT Scientific Publishing (KSP).
 ///
-/// - format ("a5" | "17x24" | "a4"): Paper format — `"a5"` (148×210 mm, default),
-///   `"17x24"` (170×240 mm), or `"a4"` (210×297 mm, discouraged by KSP). Font sizes and
-///   margins are set automatically.
-/// - lang ("de" | "en"): Document language.
+/// - format (str): Paper format — one of `"a5"` (148×210 mm, default), `"17x24"`
+///   (170×240 mm), or `"a4"` (210×297 mm, discouraged by KSP). Font sizes and margins are
+///   set automatically.
+/// - lang (str): Document language — `"de"` or `"en"`.
 /// - author-firstname (str): Author's first name.
 /// - author-surname (str): Author's surname.
 /// - title (content): Thesis title.
-/// - title-page (content | function | none): Title page. Defaults to the built-in doctoral
-///   page; pass `doctoral-title-page.with(..)` to configure it, your own content, a function
-///   called as `(title, author-firstname:, author-surname:, format:, lang:)`, or `none`
-///   to omit it.
-/// - front-matter (content | none): Roman-numeral pages before the body — abstracts,
+/// - title-page (content or function or none): Title page. Defaults to the built-in
+///   doctoral page; pass `doctoral-title-page.with(..)` to configure it, your own content,
+///   a function called as `(title, author-firstname:, author-surname:, format:, lang:)`,
+///   or `none` to omit it.
+/// - front-matter (content or none): Roman-numeral pages before the body — abstracts,
 ///   acknowledgements, the table of contents, any page of your own. Defaults to just
 ///   `outlines.table-of-contents()`. Pass `none` for no front matter.
-/// - appendix (content | none): Appendix chapters. Template applies `A`, `A.1`, … numbering
-///   and places the appendix directly after the body, before the back matter. `none` = omit.
-/// - back-matter (content | none): Pages after the appendix — list pages, bibliography,
+/// - appendix (content or none): Appendix chapters. Template applies `A`, `A.1`, …
+///   numbering and places the appendix directly after the body, before the back matter.
+///   `none` = omit.
+/// - back-matter (content or none): Pages after the appendix — list pages, bibliography,
 ///   own publications, whatever the document needs, in the order written. `none` = omit.
 ///   Refer to `outlines` for list-page helpers.
 /// - serif-headings (bool): Use serif font for headings when `true`. Default `false` (sans-serif).
@@ -37,11 +38,12 @@
 /// - figure-kinds (array): Figure kinds beyond `image`, `table` and `raw`, as dictionaries
 ///   with `kind` and `supplement`. `supplement` takes either one value or one per language,
 ///   e.g. `(de: [Algorithmus], en: [Algorithm])`. Declaring a built-in kind is an error.
-/// - margin-preset ("short" | "medium" | "long"): Margin profile keyed on page count.
+/// - margin-preset (str): Margin profile keyed on page count — `"short"`, `"medium"`, or
+///   `"long"`.
 /// - binding-correction (length): BCOR added to inside margin. Default `0mm`.
 /// - colored-links (bool): KIT Blue links when `true`, black when `false`.
 /// - draft (bool): Show "ENTWURF" watermark when `true`.
-/// - draft-info (str | none): Optional version string below watermark. Default `none`.
+/// - draft-info (str or none): Optional version string below watermark. Default `none`.
 /// - doc (content): Main document body (chapters only).
 /// -> content
 #let thesis(

@@ -41,10 +41,10 @@
 /// value is used for every language; a dictionary is looked up by `lang`, then
 /// by `fallback`, and fails loudly if neither is present.
 ///
-/// - value (content | str | dict): Plain value, or one variant per language code.
+/// - value (content or str or dict): Plain value, or one variant per language code.
 /// - lang (str): Language to look up first — usually `text.lang` at the use site.
-/// - fallback (str | none): Language to fall back to, usually the document language.
-/// - kind (function | str | none): Figure kind, used in the error message only.
+/// - fallback (str or none): Language to fall back to, usually the document language.
+/// - kind (function or str or none): Figure kind, used in the error message only.
 /// - field (str): Field name, used in the error message only.
 /// -> content | str
 #let resolve-localized(value, lang, fallback: none, kind: none, field: "value") = {
