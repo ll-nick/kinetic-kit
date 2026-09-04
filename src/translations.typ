@@ -2,7 +2,6 @@
 
 #let t = (
     de: (
-        table-of-contents: "Inhaltsverzeichnis",
         list-of-figures: "Abbildungsverzeichnis",
         list-of-tables: "Tabellenverzeichnis",
         list-of-listings: "Quellcodeverzeichnis",
@@ -11,15 +10,7 @@
         figure: "Abbildung",
         table: "Tabelle",
         listing: "Quellcode",
-        acknowledgements: "Danksagung",
-        notation: "Nomenklatur",
-        abbreviations: "Abkürzungsverzeichnis",
-        appendix: "Anhang",
-        bibliography: "Literaturverzeichnis",
         draft: "ENTWURF",
-        own-publications: "Eigene Publikationen",
-        patents: "Patente",
-        supervised: "Betreute studentische Arbeiten",
         // Title page
         degree-preamble: "Zur Erlangung des akademischen Grades",
         degree-one: "eines", // masculine
@@ -38,7 +29,6 @@
         co-advisor-f: "Korreferentin:",
     ),
     en: (
-        table-of-contents: "Contents",
         list-of-figures: "List of Figures",
         list-of-tables: "List of Tables",
         list-of-listings: "List of Listings",
@@ -47,15 +37,7 @@
         figure: "Figure",
         table: "Table",
         listing: "Listing",
-        acknowledgements: "Acknowledgements",
-        notation: "Notation",
-        abbreviations: "List of Abbreviations",
-        appendix: "Appendix",
-        bibliography: "Bibliography",
         draft: "DRAFT",
-        own-publications: "Own Publications",
-        patents: "Patents",
-        supervised: "Supervised Student Theses",
         // Title page
         degree-preamble: "In partial fulfilment of the requirements for the degree of",
         degree-one: "a",
