@@ -83,7 +83,7 @@ The template exports no outline functions. `setup-outlines` styles, names and bo
 | `page-conf.typ` | Page layout constants per format: page dimensions, margin presets (`short`/`medium`/`long`) per format, paragraph spacing |
 | `translations.typ` | German/English label strings |
 | `title-page.typ` | `doctoral-title-page` (German legal format), the default for `title-page` |
-| `outlines.typ` | `setup-outlines` — `outline.entry` styling, `set outline(depth: 3)`, and the show rule that gives a list page an outlined, bookmarked, localized heading; plus `flex-caption` and the `in-outline` state that drives it |
+| `outlines.typ` | `setup-outlines` — `outline.entry` styling, the dot leader (set on `repeat`, so a hand-built list page picks it up too), `set outline(depth: 3)`, and the show rule that gives a list page an outlined, bookmarked, localized heading; plus `flex-caption` and the `in-outline` state that drives it |
 | `figures.typ` | Figure/caption/table styling (`setup-figures`) |
 | `figure-kinds.typ` | Registry of figure kinds — `resolve-figure-kinds` appends a document's own kinds after Typst's built-in `image`/`table`/`raw` |
 | `headings.typ` | Heading styling — per-level sizes/spacing, chapter page breaks, number–body alignment (`setup-headings`) |
@@ -96,7 +96,7 @@ The template exports no outline functions. `setup-outlines` styles, names and bo
 2. **Content** — Arabic page numbering (1, 2, …), chapter/section running headers
 3. **Back matter** — appendix (A, A.1, … numbering), then LoF/LoT/LoL, bibliography, and the optional own-publications/patents/supervised-theses sections
 
-Headers are suppressed on chapter-opening pages and blank pages. The draft watermark is rendered as a background element on every page when enabled.
+Headers are suppressed on chapter-opening pages and blank pages, and a title's own line breaks collapse in the header, which is always a single line. The draft watermark is rendered as a background element on every page when enabled.
 
 ### API Documentation (`docs/`)
 
