@@ -10,7 +10,7 @@
 //
 // Documentation: https://github.com/ll-nick/kinetic-kit
 
-#import "@preview/kinetic-kit:0.1.1": doctoral-title-page, outlines, thesis
+#import "@preview/kinetic-kit:0.1.1": doctoral-title-page, thesis
 
 // ── Document configuration ─────────────────────────────────────────────────
 #show: thesis.with(
@@ -48,8 +48,9 @@
     // ── Content ───────────────────────────────────────────────────────────────
     // front-matter and back-matter are free-form: write each section inline, as
     // below, or pull it in with `#include "abstract.typ"`. Each gets its own `=`
-    // heading; numbering is suppressed. `outlines.table-of-contents()` and the
-    // `outlines.list-of-*()` helpers render the pages the template generates.
+    // heading; numbering is suppressed. Typst's own `outline()` renders the
+    // contents, and `outline(target: figure.where(kind: …))` the list pages ---
+    // the template styles and names them.
     // What follows is a starting point --- the usual sections in a conventional
     // order. Reorder or delete to suit your thesis.
     front-matter: [
@@ -75,7 +76,7 @@
         // = List of Abbreviations
         // See the documentation for glossarium-based first-use expansion.
 
-        #outlines.table-of-contents()
+        #outline()
     ],
 
     // ── Appendix ──────────────────────────────────────────────────────────────
@@ -87,14 +88,14 @@
 
     // The list pages and bibliography go here.
     back-matter: [
-        #outlines.list-of-figures()
-        #outlines.list-of-tables()
-        // #outlines.list-of-listings()   // uncomment if you include code listings
+        #outline(target: figure.where(kind: image))
+        #outline(target: figure.where(kind: table))
+        // #outline(target: figure.where(kind: raw))   // uncomment if you include code listings
 
         // A list page for any additional figure kinds declared in figure-kinds below.
-        // #outlines.list-of("algorithm", [List of Algorithms])
+        // #outline(title: [List of Algorithms], target: figure.where(kind: "algorithm"))
 
-        #bibliography("refs.bib", title: [Bibliography], style: "ieee")
+        #bibliography("refs.bib", style: "ieee")
 
         // Optional further sections --- uncomment what applies. A separate .bib with
         // `full: true` lists every entry whether or not it is cited.
@@ -112,7 +113,7 @@
     // Register figure kinds beyond image / table / raw. A declared kind gets its
     // own caption label ("Algorithm 1.2: …") and counter.
     // `supplement` is that label --- one value or one per language.
-    // For a list page, add `#outlines.list-of("algorithm", …)` to back-matter.
+    // For a list page, add an `#outline(title: …, target: …)` to back-matter.
     // figure-kinds: (
     //     (kind: "algorithm", supplement: (de: [Algorithmus], en: [Algorithm])),
     // ),

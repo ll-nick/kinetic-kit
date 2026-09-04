@@ -7,7 +7,7 @@
 // Delete this file (and the #include "guide.typ" line in main.typ) once you
 // no longer need it.
 
-#import "@preview/kinetic-kit:0.1.1": outlines
+#import "@preview/kinetic-kit:0.1.1": flex-caption
 
 = Getting Started with kinetic-kit
 
@@ -42,10 +42,11 @@ All configuration lives in the `#show: thesis.with(...)` call at the top of `mai
 + *Front and back matter:* `front-matter` and `back-matter` are ordinary content. Write
     each section --- Kurzfassung, Abstract, acknowledgements, a page of your own --- with
     its own `=` heading, in the order you want. Numbering is suppressed there, so a bare
-    `= Danksagung` renders as an unnumbered section. Put `outlines.table-of-contents()` in
-    `front-matter` where the contents should appear, and the `outlines.list-of-*()` calls
-    plus your `bibliography(...)` in `back-matter`. An `appendix` argument sits between
-    the two, numbered `A`, `A.1`, …
+    `= Danksagung` renders as an unnumbered section. Put Typst's own `outline()` in
+    `front-matter` where the table of contents should appear, and the list pages ---
+    `outline(target: figure.where(kind: image))` and friends --- plus your
+    `bibliography(...)` in `back-matter`; the template styles and names them. An
+    `appendix` argument sits between the two, numbered `A`, `A.1`, …
 + *Headings and figure kinds:* `serif-headings: true` sets headings in Libertinus Serif
     instead of Sans; `heading-numbering-depth` is the deepest numbered level (`3` =
     1.1.1). `figure-kinds` registers caption labels for kinds beyond figures, tables and
@@ -70,17 +71,17 @@ use `#include "chapter-name.typ"` to keep each chapter in its own file.
 
 == Figures <sec:figures>
 
-Use Typst's built-in `figure()` to insert figures. The template provides
-`outlines.flex-caption` for cases where you want a short caption in the List of Figures
-and a longer one in the body.
+Use Typst's built-in `figure()` to insert figures. The template provides `flex-caption`
+for cases where you want a short caption in the List of Figures and a longer one in the
+body.
 
 #figure(
     rect(width: 7cm, height: 3.5cm, fill: luma(235), stroke: 0.5pt),
-    caption: outlines.flex-caption(
+    caption: flex-caption(
         short: [A placeholder figure.],
-        long: [A placeholder figure demonstrating the use of `outlines.flex-caption`. The
-            short caption appears in the List of Figures; this longer version appears here
-            in the body.],
+        long: [A placeholder figure demonstrating the use of `flex-caption`. The short
+            caption appears in the List of Figures; this longer version appears here in
+            the body.],
     ),
 ) <fig:placeholder>
 
@@ -120,7 +121,7 @@ state vector $bold(x) in RR^n$.
 == Code Listings
 
 Code blocks inside `figure()` appear in the List of Listings, if you add
-`#outlines.list-of-listings()` to `back-matter` in `main.typ`.
+`#outline(target: figure.where(kind: raw))` to `back-matter` in `main.typ`.
 
 #figure(
     ```python
@@ -145,7 +146,7 @@ front-matter: [
   / KIT: Karlsruher Institut für Technologie
   / KSP: KIT Scientific Publishing
 
-  #outlines.table-of-contents()
+  #outline()
 ],
 ```
 
