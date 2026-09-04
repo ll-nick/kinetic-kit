@@ -138,11 +138,15 @@ Shared content in `examples/content/` and bibliographies in `examples/bib/`.
 ### Tests (`tests/`)
 
 [tytanic](https://typst-community.github.io/tytanic/) 0.4.0, run with `mise run test`.
-Each scenario is a directory holding one `test.typ`, grouped under `tests/components/`
-(a single exported symbol), `tests/doctoral/` and `tests/masters/`
-(whole documents, split by which title page they pass).
-There are no reference images: every test asserts only that its document compiles,
-so an output regression has to be caught by reading the rendered PDFs.
+Each scenario is a directory holding one `test.typ`.
+`tests/components/` covers a single exported symbol, `tests/doctoral/` whole documents.
+`thesis()` is shared across document types — only the title page differs —
+so `tests/masters/` holds just the one test that pins `masters-title-page.typ`.
+There are no reference images.
+Most tests assert only that the document compiles;
+where a property can be read back from the layout, prefer a `context assert`
+(`doctoral/approved` and `doctoral/no-front-matter` pin the body starting at page 1).
+An output regression outside those asserts still has to be caught by reading the rendered PDFs.
 `@template` is tytanic's built-in test for `template/main.typ`;
 `package:verify` reruns it against the assembled bundle.
 
