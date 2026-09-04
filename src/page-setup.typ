@@ -217,6 +217,10 @@
     // ── Figures ──────────────────────────────────────────────────────────
     show: setup-figures.with(font-sizes, lang: lang, figure-kinds: figure-kinds)
 
+    // ── Bibliography ─────────────────────────────────────────────────────
+    // Set custom title to get "Literaturverzeichnis" instead of "Bibliografie"
+    set bibliography(title: t.at(lang).bibliography)
+
     // ── Footnotes ────────────────────────────────────────────────────────
     show footnote.entry: it => {
         set text(size: font-sizes.footnote)
