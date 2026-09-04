@@ -205,7 +205,7 @@ the top level) to build the default page yourself:
 
 The `outlines` namespace holds the table of contents and the back-matter list pages.
 Using the template's helpers instead of the built-in `#outline` makes sure formatting and localization is correct.
-For the backmatter listings, these helpers are also required to make the `flex-caption` work.
+For the backmatter listings, these helpers are also required to make `outlines.flex-caption` work.
 Place them inside the `front-matter` / `back-matter` content of `thesis()`.
 
 ```typst
@@ -292,7 +292,7 @@ back-matter: [
 ],
 ```
 
-`outlines.list-of` also sets the state that switches `flex-caption` to its short form.
+`outlines.list-of` also sets the state that switches `outlines.flex-caption` to its short form.
 
 </details>
 
