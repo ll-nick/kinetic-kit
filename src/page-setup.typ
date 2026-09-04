@@ -274,7 +274,7 @@
 ) = {
     set page(numbering: "i")
     set heading(numbering: none)
-    counter(page).update(0)
+    counter(page).update(1)
     doc
 }
 

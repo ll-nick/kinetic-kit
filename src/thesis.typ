@@ -153,6 +153,7 @@
         } else if title-page != none {
             title-page
         }
+        pagebreak(weak: true, to: "odd")
     }
 
     // Each section is `show: setup-*` then the content. The content defaults to
