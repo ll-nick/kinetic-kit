@@ -23,6 +23,9 @@ UNSUPPORTED_MARKUP = {
 
 RELATIVE_LINK_PATTERN = re.compile(r"\]\((?![a-z][a-z0-9+.-]*:|#)([^)]+)\)")
 
+# Release assets the README links to, e.g. .../releases/download/v0.2.0/api-reference.pdf
+RELEASE_ASSET_PATTERN = re.compile(r"/releases/download/v(\d+\.\d+\.\d+)/")
+
 failures: list[str] = []
 
 
@@ -43,6 +46,9 @@ def check_readme(destination: Path) -> None:
 
     if "package:strip" in readme:
         fail("strip markers survived packaging")
+
+    if "/releases/latest/download/" in readme:
+        fail("a release-asset link still points at `latest` instead of this version")
 
     for target in sorted(set(RELATIVE_LINK_PATTERN.findall(readme))):
         if not (destination / target).exists():
@@ -65,9 +71,15 @@ def check_version_references(root: Path, name: str, version: str) -> None:
             continue
         if {".git", "dist"} & set(relative_path.parts):
             continue
-        for referenced in sorted(set(import_pattern.findall(path.read_text()))):
+        text = path.read_text()
+        for referenced in sorted(set(import_pattern.findall(text))):
             if referenced != version:
                 fail(f"{relative_path} imports version {referenced}, not {version}")
+        for referenced in sorted(set(RELEASE_ASSET_PATTERN.findall(text))):
+            if referenced != version:
+                fail(
+                    f"{relative_path} links release assets of v{referenced}, not v{version}"
+                )
 
 
 def assemble_downloaded_bundle(destination: Path, manifest: dict, bundle: Path) -> None:
