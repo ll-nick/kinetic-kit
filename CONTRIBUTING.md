@@ -42,12 +42,31 @@ Before opening a PR, make sure the CI checks pass:
 ## Tests
 
 Tests live in `tests/`, one scenario per directory
-(e.g. `tests/doctoral/approved/`, `tests/components/outlines/`).
-They are run with [tytanic](https://typst-community.github.io/tytanic/) and mostly check
-that a document compiles; add a `context assert` where the case can check itself.
-Add a `test.typ` under a new scenario directory to cover a case:
+(e.g. `tests/doctoral/approved/`, `tests/components/outlines/`),
+and are run with [tytanic](https://typst-community.github.io/tytanic/).
+Add a `test.typ` under a new scenario directory to cover a case.
 
 ```bash
 mise run test                                          # all tests
 tt run --font-path fonts doctoral/appendix             # a single test, by id
 ```
+
+Most tests only check that a document compiles;
+add a `context assert` where the case can check itself.
+
+A directory with a `ref/` beside its `test.typ` is a **reference test**:
+its rendered pages are compared pixel for pixel against the committed PNGs,
+which is what keeps the template's output from drifting.
+
+Because of the KSP approval, a diff in those images is the signal that matters:
+it means the rendered document changed.
+If your change is *meant* to alter the output, regenerate them and read the result
+before committing:
+
+```bash
+mise run test:update                                   # all reference images
+mise run test:update doctoral/submitted                # one test
+```
+
+Never regenerate them to make a red test go green —
+an unreviewed update blesses a regression permanently.
