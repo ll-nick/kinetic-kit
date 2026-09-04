@@ -4,53 +4,85 @@
 #import "page-conf.typ": title-page-margins-by-format
 #import "translations.typ": t
 
-// All strings are always in German (legal document requirement).
-
-/// Render the KIT doctoral thesis title page (German legal format).
-/// All text on this page is always in German regardless of document language.
+/// Render the doctoral thesis title page.
 ///
-/// - title (content): Dissertation title.
-/// - author-title (content): Academic title preceding the author's name (`none` = omit).
-/// - author-firstname (str): Author's first name.
-/// - author-surname (str): Author's surname.
-/// - author-male (bool): Selects grammatical gender for the degree article.
-/// - doc-degree (str): Degree name in masculine form (e.g. `"Doktor-Ingenieur"`).
-/// - doc-degree-f (str): Degree name in feminine form (e.g. `"Doktor-Ingenieurin"`).
-/// - department (str): KIT department or faculty.
-/// - university-genitive (str): University name in genitive (e.g. `"des Karlsruher Instituts…"`).
-/// - status-approved (bool): `false` = submitted version, `true` = approved version.
-/// - exam-date (content): Date of oral examination — shown only when `status-approved` is `true`.
-/// - main-advisor (content): Main referee — shown only when `status-approved` is `true`.
-/// - main-advisor-male (bool): Selects gendered label for the main advisor.
-/// - co-advisor (content): Co-referee — shown only when `status-approved` is `true`.
-/// - co-advisor-male (bool): Selects gendered label for the co-advisor.
-/// - format (str): Paper format — `"a5"`, `"17x24"`, or `"a4"`. Determines font
-///   sizes and title-page margins.
-/// - lang (str): Accepted for the `title-page` contract and ignored — this page is
-///   always German.
+/// The default @thesis.title-page, owning every parameter printed on the page; pass
+/// `doctoral-title-page.with(..)` to configure it.
+/// All text is always German, whatever the document language.
+/// `format`, `lang`, `title`, `author-firstname` and `author-surname` are supplied
+/// by the template when this is passed to @thesis.title-page;
+/// setting them via `.with()` has no effect there.
+///
 /// -> content
-///
-/// `title`, `author-firstname`, `author-surname`, `format` and `lang` are supplied by
-/// the template when this is passed to `title-page`; setting them via `.with()` has no
-/// effect there.
 #let doctoral-title-page(
+    /// Thesis title.
+    /// -> content
     title,
-    author-title: "M.Sc.",
-    author-firstname: "Max",
-    author-surname: "Mustermann",
-    author-male: true,
-    doc-degree: "Doktors der Ingenieurwissenschaften (Dr.-Ing.)",
-    doc-degree-f: "Doktorin der Ingenieurwissenschaften (Dr.-Ing.)",
-    department: "KIT-Fakultät für Maschinenbau",
-    university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
-    status-approved: false,
-    exam-date: none,
-    main-advisor: none,
-    main-advisor-male: true,
-    co-advisor: none,
-    co-advisor-male: true,
+
+    /// Paper format --- `"a5"`, `"17x24"` or `"a4"`. Determines font sizes and
+    /// title-page margins.
+    /// -> str
     format: "a5",
+
+    /// Accepted for the title-page contract and ignored — this page is always German.
+    /// -> str
     lang: "de",
+
+    /// Academic title preceding the author's name.
+    /// -> str | none
+    author-title: "M.Sc.",
+
+    /// Author's first name.
+    /// -> str
+    author-firstname: "Max",
+
+    /// Author's surname.
+    /// -> str
+    author-surname: "Mustermann",
+
+    /// Selects the grammatical gender of the degree article.
+    /// -> bool
+    author-male: true,
+
+    /// Degree name in masculine form.
+    /// -> str
+    doc-degree: "Doktors der Ingenieurwissenschaften (Dr.-Ing.)",
+
+    /// Degree name in feminine form.
+    /// -> str
+    doc-degree-f: "Doktorin der Ingenieurwissenschaften (Dr.-Ing.)",
+
+    /// KIT department or faculty.
+    /// -> str
+    department: "KIT-Fakultät für Maschinenbau",
+
+    /// University name in genitive.
+    /// -> str
+    university-genitive: "des Karlsruher Instituts für Technologie (KIT)",
+
+    /// Approved version when `true`, submitted version when `false`.
+    /// -> bool
+    status-approved: false,
+
+    /// Date of the oral examination. Shown only when approved.
+    /// -> content | str | none
+    exam-date: none,
+
+    /// Main advisor. Shown only when approved.
+    /// -> content | str | none
+    main-advisor: none,
+
+    /// Selects the gendered label for the main advisor.
+    /// -> bool
+    main-advisor-male: true,
+
+    /// Co-advisor. Shown only when approved.
+    /// -> content | str | none
+    co-advisor: none,
+
+    /// Selects the gendered label for the co-advisor.
+    /// -> bool
+    co-advisor-male: true,
 ) = {
     let font-sizes = font-sizes-by-format.at(format)
     let title-page-margins = title-page-margins-by-format.at(format)

@@ -5,15 +5,22 @@
 /// Shared heading styling: per-level sizes and spacing, chapter page breaks and
 /// counter resets, and number–body alignment. Apply as a show rule.
 ///
-/// - font-sizes (dict): Format-specific font sizes resolved by the template.
-/// - serif-headings (bool): Use Libertinus Serif for headings when `true`.
-/// - heading-numbering-depth (int): Deepest heading level that receives a number.
-/// - body (content): Document body (injected automatically by the show rule).
 /// -> content
 #let setup-headings(
+    /// Format-specific font sizes resolved by the template.
+    /// -> dictionary
     font-sizes,
+
+    /// Use serif headings instead of sans-serif.
+    /// -> bool
     serif-headings: false,
+
+    /// Deepest heading level that receives a number.
+    /// -> int
     heading-numbering-depth: 3,
+
+    /// Document body, injected by the show rule.
+    /// -> content
     body,
 ) = {
     let hfont = if serif-headings { fonts.serif } else { fonts.sans }

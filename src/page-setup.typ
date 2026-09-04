@@ -95,34 +95,55 @@
 /// typography, heading styles, figure captions, equations, and code blocks.
 /// Use as a show rule: `#show: setup-page.with(...)`.
 ///
-/// - format (str): Paper format — `"a5"` (148×210 mm, default), `"17x24"` (170×240 mm),
-///   or `"a4"` (210×297 mm). Font sizes and margins are set automatically per KSP specifications.
-/// - margin-preset (str): Margin profile keyed on expected page count —
-///   `"short"` (under 200 pp), `"medium"` (200–399 pp), `"long"` (400+ pp).
-/// - lang (str): Document language — `"de"` or `"en"`.
-/// - binding-correction (length): Extra inside margin added for binding (e.g. `3mm`).
-/// - colored-links (bool): Render external hyperlinks in KIT blue when `true`.
-/// - draft (bool): Show the draft watermark on every page when `true`.
-/// - draft-info (content): Optional extra text appended to the watermark (e.g. a git SHA).
-/// - serif-headings (bool): Use Libertinus Serif for headings when `true`. Default `false`
-/// - heading-numbering-depth (int): Deepest heading level that receives a number. Default `3`.
-///   Headings deeper than this are styled normally but rendered without a number or indent grid.
-/// - figure-kinds (array): Figure kind declarations, merged onto the built-in
-///   `image`, `table` and `raw` entries. Supplies the caption supplements;
-///   printing the matching list pages is the caller's job.
-/// - doc (content): Document body (injected automatically by the show rule).
 /// -> content
 #let setup-page(
+    /// Paper format — `"a5"` (148×210 mm), `"17x24"` (170×240 mm) or `"a4"`
+    /// (210×297 mm). Font sizes and margins follow from it.
+    /// -> str
     format: "a5",
+
+    /// Margin profile keyed on expected page count — `"short"` (under 200 pp),
+    /// `"medium"` (200–399 pp) or `"long"` (400+ pp).
+    /// -> str
     margin-preset: "short",
+
+    /// Document language — `"de"` or `"en"`.
+    /// -> str
     lang: "de",
+
+    /// Extra inside margin added for binding.
+    /// -> length
     binding-correction: 0mm,
+
+    /// Render external hyperlinks in KIT Blue.
+    /// -> bool
     colored-links: true,
+
+    /// Show the draft watermark on every page.
+    /// -> bool
     draft: false,
+
+    /// Extra text appended to the watermark, e.g. a git SHA.
+    /// -> content | str | none
     draft-info: none,
+
+    /// Use serif headings instead of sans-serif.
+    /// -> bool
     serif-headings: false,
+
+    /// Deepest heading level that receives a number. Deeper headings are styled
+    /// normally but rendered without a number or indent grid.
+    /// -> int
     heading-numbering-depth: 3,
+
+    /// Figure kind declarations, merged onto the built-in `image`, `table` and
+    /// `raw` entries. Supplies the caption supplements; printing the matching list
+    /// pages is the caller's job.
+    /// -> array
     figure-kinds: (),
+
+    /// Document body, injected by the show rule.
+    /// -> content
     doc,
 ) = {
     assert(
@@ -236,9 +257,12 @@
 /// Restart page numbering at Roman `i` and remove heading numbering.
 /// Apply before front-matter content: `#show: setup-front-matter`.
 ///
-/// - doc (content): Document body (injected automatically by the show rule).
 /// -> content
-#let setup-front-matter(doc) = {
+#let setup-front-matter(
+    /// Document body, injected by the show rule.
+    /// -> content
+    doc,
+) = {
     set page(numbering: "i")
     set heading(numbering: none)
     counter(page).update(0)
@@ -249,9 +273,12 @@
 /// `1.1` numbering `setup-content` establishes.
 /// Apply before back matter: `#show: setup-back-matter`.
 ///
-/// - doc (content): Document body (injected automatically by the show rule).
 /// -> content
-#let setup-back-matter(doc) = {
+#let setup-back-matter(
+    /// Document body, injected by the show rule.
+    /// -> content
+    doc,
+) = {
     set heading(numbering: none)
     doc
 }
@@ -259,9 +286,12 @@
 /// Restart page numbering at Arabic `1` and enable `1.1` heading numbering.
 /// Apply before the main content: `#show: setup-content`.
 ///
-/// - doc (content): Document body (injected automatically by the show rule).
 /// -> content
-#let setup-content(doc) = {
+#let setup-content(
+    /// Document body, injected by the show rule.
+    /// -> content
+    doc,
+) = {
     set page(numbering: "1")
     set heading(numbering: "1.1")
     set heading(supplement: context t.at(text.lang).section)
@@ -276,9 +306,12 @@
 /// Switch to `A.1` heading numbering and reset the heading counter.
 /// Apply before appendix chapters: `#show: setup-appendix`.
 ///
-/// - doc (content): Document body (injected automatically by the show rule).
 /// -> content
-#let setup-appendix(doc) = {
+#let setup-appendix(
+    /// Document body, injected by the show rule.
+    /// -> content
+    doc,
+) = {
     set heading(numbering: "A.1")
     counter(heading).update(0)
     doc

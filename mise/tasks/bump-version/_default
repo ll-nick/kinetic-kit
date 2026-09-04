@@ -61,12 +61,6 @@ def rewrite_file(path: Path, old_version: str, new_version: str) -> int:
                 rf"\g<1>{new_version}\g<2>",
             )
         )
-    if path == PROJECT_ROOT / "docs" / "main.typ":
-        # Version shown on the API reference cover page.
-        substitutions.append(
-            (re.compile(rf"\bv{re.escape(old_version)}\b"), f"v{new_version}")
-        )
-
     replacements = 0
     for pattern, replacement in substitutions:
         text, count = pattern.subn(replacement, text)
