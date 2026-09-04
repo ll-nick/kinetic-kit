@@ -233,7 +233,7 @@
 
 // ── Section-specific page setup (thin wrappers) ───────────────────────────
 
-/// Switch to Roman numeral page numbering and remove heading numbering.
+/// Restart page numbering at Roman `i` and remove heading numbering.
 /// Apply before front-matter content: `#show: setup-front-matter`.
 ///
 /// - doc (content): Document body (injected automatically by the show rule).
@@ -241,6 +241,7 @@
 #let setup-front-matter(doc) = {
     set page(numbering: "i")
     set heading(numbering: none)
+    counter(page).update(0)
     doc
 }
 
@@ -255,7 +256,7 @@
     doc
 }
 
-/// Switch to Arabic page numbering and enable `1.1` heading numbering.
+/// Restart page numbering at Arabic `1` and enable `1.1` heading numbering.
 /// Apply before the main content: `#show: setup-content`.
 ///
 /// - doc (content): Document body (injected automatically by the show rule).
@@ -265,6 +266,7 @@
     set heading(numbering: "1.1")
     set heading(supplement: context t.at(text.lang).section)
     show heading.where(level: 1): set heading(supplement: context t.at(text.lang).chapter)
+    counter(page).update(1)
     doc
 }
 
