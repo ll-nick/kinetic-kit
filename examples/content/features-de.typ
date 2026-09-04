@@ -1,4 +1,4 @@
-#import "/lib.typ": flex-caption
+#import "/lib.typ": outlines
 
 = Einleitung <ch:einleitung>
 
@@ -36,10 +36,10 @@ Diese Arbeit befasst sich mit den folgenden Fragen:
 
 == Abbildungsbeispiel
 
-// flex-caption: Kurztext im Abbildungsverzeichnis, Langtext im Fließtext
+// outlines.flex-caption: Kurztext im Abbildungsverzeichnis, Langtext im Fließtext
 #figure(
     rect(width: 6cm, height: 3cm, fill: luma(230), stroke: none),
-    caption: flex-caption(
+    caption: outlines.flex-caption(
         short: [Eine Platzhaltergrafik.],
         long: [Eine Beispielabbildung mit einer Platzhaltergrafik und einer längeren
             Beschriftung im Fließtext.],
