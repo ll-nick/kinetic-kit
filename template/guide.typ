@@ -16,39 +16,54 @@ configure the template and demonstrates the most common features: headings, figu
 tables, equations, code listings, and citations. Delete this chapter and add your own
 content once you are ready.
 
-== Configuring the Metadata
+== Configuring the Template
 
-All document metadata lives in the `#show: thesis.with(...)` call at the top of
-`main.typ`. Open that file and work through the parameters in order:
+All configuration lives in the `#show: thesis.with(...)` call at the top of `main.typ`.
 
-+ *Author:* Fill in `author-firstname` and `author-surname`. These also become the PDF
-    metadata, so the title page takes them from here rather than repeating them.
-+ *Title:* Replace the placeholder in `title:` with your thesis title.
++ *Format:* `format` is the paper size --- `"a5"` (default, KSP's recommendation for
+    doctoral theses), `"17x24"`, or `"a4"`. Font sizes and margins follow from it.
++ *Language:* Set `lang: "de"` or `lang: "en"`. This sets the text language --- driving
+    hyphenation and quotation marks --- and the language of everything the template
+    generates: the table of contents and list-page titles, chapter and section labels in
+    cross-references, figure and table caption prefixes, and the draft watermark. The
+    default title page is always in German regardless of this setting. For a section in
+    the other language (e.g. a German Kurzfassung in an English thesis), wrap it in a
+    block with its own `#set text(lang: …)`.
++ *Author and title:* Fill in `author-firstname`, `author-surname` and `title`. These also
+    become the PDF metadata, so the title page takes them from here rather than repeating
+    them.
 + *Title page:* Everything printed on the title page lives inside the
     `title-page: doctoral-title-page.with(...)` argument. Fill in `author-title` and
     `author-male` for the grammatical gender used on the German title page, and adjust
     `department`, `university-genitive`, `doc-degree` and `doc-degree-f` to match your
-    faculty's official wording.
-+ *Status:* Keep `status-approved: false` until your oral examination is scheduled.
-    Afterwards set it to `true` and fill in `exam-date`, `main-advisor`, and `co-advisor`
-    — all inside the same `title-page` argument.
-+ *Language:* Set `lang: "de"` or `lang: "en"`. This controls all auto-generated section
-    headings (Table of Contents, List of Figures, etc.). The title page is always in
-    German regardless of this setting.
-+ *Layout:* Choose `margin-preset` based on your estimated page count: `"short"` for fewer
-    than 200 pages, `"medium"` for 200–399, `"long"` for 400 or more. Add
-    `binding-correction: 8mm` (or as specified by your print shop) for the physical bound
-    copy.
+    faculty's official wording. Keep `status-approved: false` until your oral examination
+    is scheduled; afterwards set it to `true` and fill in `exam-date`, `main-advisor` and
+    `co-advisor`.
++ *Front and back matter:* `front-matter` and `back-matter` are ordinary content. Write
+    each section --- Kurzfassung, Abstract, acknowledgements, a page of your own --- with
+    its own `=` heading, in the order you want. Numbering is suppressed there, so a bare
+    `= Danksagung` renders as an unnumbered section. Put `outlines.table-of-contents()` in
+    `front-matter` where the contents should appear, and the `outlines.list-of-*()` calls
+    plus your `bibliography(...)` in `back-matter`. An `appendix` argument sits between
+    the two, numbered `A`, `A.1`, …
++ *Headings and figure kinds:* `serif-headings: true` sets headings in Libertinus Serif
+    instead of Sans; `heading-numbering-depth` is the deepest numbered level (`3` =
+    1.1.1). `figure-kinds` registers caption labels for kinds beyond figures, tables and
+    listings --- see the comment on it in `main.typ`.
++ *Layout:* Choose `margin-preset` by page count: `"short"` (< 200 pages), `"medium"`
+    (200--399), `"long"` (≥ 400). You may wanto add a `binding-correction` for the bound
+    copy. Set `colored-links: false` before printing.
 + *Draft watermark:* the template ships with `draft: false`. Set `draft: true` while
-    writing to stamp "ENTWURF" on every page, and back to `false` before submitting.
+    writing to stamp "ENTWURF" / "DRAFT" on every page, and back to `false` before
+    submitting; `draft-info` adds an optional version string beside it.
 
 == Writing Chapters
 
 Headings in Typst use `=` signs. The template maps them as follows:
 
-- `= Chapter Title` — numbered chapter (1, 2, 3, …)
-- `== Section Title` — numbered section (1.1, 1.2, …)
-- `=== Subsection Title` — numbered subsection (1.1.1, …)
+- `= Chapter Title` --- numbered chapter (1, 2, 3, …)
+- `== Section Title` --- numbered section (1.1, 1.2, …)
+- `=== Subsection Title` --- numbered subsection (1.1.1, …)
 
 Write your chapters directly after the `#show: thesis.with(...)` call in `main.typ`, or
 use `#include "chapter-name.typ"` to keep each chapter in its own file.
@@ -57,7 +72,7 @@ use `#include "chapter-name.typ"` to keep each chapter in its own file.
 
 Use Typst's built-in `figure()` to insert figures. The template provides `flex-caption`
 for cases where you want a short caption in the List of Figures and a longer one in the
-body — a KSP recommendation for captions that would exceed one line in the LoF.
+body.
 
 #figure(
     rect(width: 7cm, height: 3.5cm, fill: luma(235), stroke: 0.5pt),
@@ -69,9 +84,7 @@ body — a KSP recommendation for captions that would exceed one line in the LoF
     ),
 ) <fig:placeholder>
 
-Cross-reference the figure with `@fig:placeholder`, which renders as @fig:placeholder. If
-your caption is short enough to fit on one line in the LoF, use a plain string in
-`caption:` instead of `flex-caption`.
+Cross-reference the figure with `@fig:placeholder`, which renders as @fig:placeholder.
 
 == Tables
 
@@ -97,15 +110,17 @@ As shown in @tab:comparison, the proposed method reduces the RMSE by 50 %.
 Displayed equations are written between `$` signs on their own line. Add a label with
 `<eq:name>` to enable cross-referencing.
 
-$ dot(bold(x)) = A bold(x) + B bold(u) $ <eq:system>
+$
+    dot(bold(x)) = A bold(x) + B bold(u)
+$ <eq:system>
 
 @eq:system describes the continuous-time dynamics. Inline math uses single `$` signs: the
 state vector $bold(x) in RR^n$.
 
 == Code Listings
 
-Code blocks inside `figure()` appear in the List of Listings (if
-`show-list-of-listings: true` is set in `main.typ`).
+Code blocks inside `figure()` appear in the List of Listings, if you add
+`#outlines.list-of-listings()` to `back-matter` in `main.typ`.
 
 #figure(
     ```python
@@ -116,19 +131,21 @@ Code blocks inside `figure()` appear in the List of Listings (if
         k4 = f(x + dt * k3, u)
         return x + (dt / 6) * (k1 + 2*k2 + 2*k3 + k4)
     ```,
-    caption: [Runge–Kutta integration step in Python.],
+    caption: [Runge--Kutta integration step in Python.],
 )
 
 == Abbreviations
 
-Pass any content to the `abbreviations:` parameter in `main.typ` and the template will
-render it under a translated section heading. The simplest approach is a manually
-formatted list:
+Abbreviations are just another front-matter section: add a heading and a list to the
+`front-matter` block in `main.typ`. The simplest approach is a manually formatted list:
 
 ```typst
-abbreviations: [
+front-matter: [
+  = List of Abbreviations
   / KIT: Karlsruher Institut für Technologie
   / KSP: KIT Scientific Publishing
+
+  #outlines.table-of-contents()
 ],
 ```
 
@@ -144,9 +161,10 @@ in the repository.
 == Citations and the Bibliography
 
 Add your BibTeX entries to `refs.bib`. Cite with `@citekey`, for example
-@mustermann2023control or @musterfrau2022deep. The bibliography is printed automatically
-at the end of the document using the style and path configured in the `bibliography:`
-parameter of `main.typ`.
+@mustermann2023control or @musterfrau2022deep. The bibliography is printed by the
+`#bibliography("refs.bib", title: [Bibliography], style: "ieee")` line in the
+`back-matter` block of `main.typ`; move it or add more `bibliography(...)` calls (e.g. a
+separate list of your own publications) as needed.
 
 The template uses the IEEE citation style by default. To switch to another style, change
 `style: "ieee"` to another #link(
@@ -157,14 +175,12 @@ The template uses the IEEE citation style by default. To switch to another style
 
 Before you submit, work through the following items in `main.typ`:
 
++ Replace the placeholder Kurzfassung and abstract in `front-matter` with your own.
++ Delete this `guide.typ` chapter and replace it with your actual content.
 + If you enabled draft mode, set `draft: false` to remove the watermark.
 + If approved: inside `title-page`, set `status-approved: true` and fill in `exam-date`,
     `main-advisor`, and `co-advisor`.
 + Update `margin-preset` to match your final page count (`"short"`, `"medium"`, or
     `"long"`).
-+ Add `binding-correction: 8mm` (adjust to your print shop's specification) if you are
-    submitting a physical copy.
-+ Set `colored-links: false` for the black-link print copy required by KSP (keep
-    `colored-links: true` for the digital version).
-+ Replace the placeholder abstract texts with your own.
-+ Delete this `guide.typ` chapter and replace it with your actual content.
++ A physical copy may require a `binding-correction`.
++ Set `colored-links: false` for the black-link print copy
