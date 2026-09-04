@@ -1,5 +1,6 @@
 #import "src/thesis.typ": thesis
 #import "src/title-page.typ": doctoral-title-page
+#import "src/outlines.typ": flex-caption
 
 /// Style constants for custom figures and components that need to match the
 /// template's visual identity: font families, sizes, line spacing, and KIT colors.
@@ -13,17 +14,3 @@
         colors: kit-colors,
     )
 }
-
-/// Table of contents and back-matter list pages, for placing inside the
-/// `front-matter` / `back-matter` content of `thesis`, plus the `flex-caption`
-/// helper whose short form those list pages switch on.
-///
-/// Example:
-/// ```typst
-/// #import "@preview/kinetic-kit:0.1.1": outlines, thesis
-/// #show: thesis.with(back-matter: [
-///     #outlines.list-of-figures()
-///     #bibliography("refs.bib", title: [Literaturverzeichnis], style: "ieee")
-/// ])
-/// ```
-#import "src/outlines.typ"
