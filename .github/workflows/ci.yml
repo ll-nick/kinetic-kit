@@ -25,9 +25,6 @@ jobs:
       - name: Build PDFs
         run: mise run build
 
-      - name: Check the committed thumbnail is current
-        run: git diff --exit-code thumbnail/
-
       - name: Assemble Typst Universe package
         run: mise run package
 

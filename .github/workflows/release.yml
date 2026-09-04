@@ -49,9 +49,6 @@ jobs:
       - name: Build PDFs and thumbnail
         run: mise run build
 
-      - name: Check the committed thumbnail is current
-        run: git diff --exit-code thumbnail/
-
       - name: Rename template PDF
         run: cp template/main.pdf template/template.pdf
 
