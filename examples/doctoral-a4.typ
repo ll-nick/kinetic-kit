@@ -6,7 +6,7 @@
 //
 // Compile: typst compile --root . --font-path fonts examples/doctoral-a4.typ examples/doctoral-a4.pdf
 
-#import "/lib.typ": doctoral-title-page, flex-caption, outlines, thesis
+#import "/lib.typ": doctoral-title-page, outlines, thesis
 #import "content/abbreviations.typ": abbrevs-glossary
 
 // ── Third-party: glossarium ───────────────────────────────────────────────
