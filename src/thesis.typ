@@ -8,7 +8,6 @@
 #import "page-setup.typ": (
     setup-appendix, setup-back-matter, setup-content, setup-front-matter, setup-page,
 )
-#import "outlines.typ": table-of-contents
 #import "page-conf.typ": title-page-margins-by-format
 #import "title-page.typ": doctoral-title-page
 
@@ -53,14 +52,15 @@
     /// Roman-numeral pages before the body --- abstracts, acknowledgements, the table
     /// of contents, any page of your own, in the order written.
     /// -> content | none
-    front-matter: table-of-contents(),
+    front-matter: outline(),
 
     /// Appendix chapters, numbered `A`, `A.1`, … and placed directly after the body.
     /// -> content | none
     appendix: none,
 
-    /// Pages after the appendix --- list pages, bibliography, own publications,
-    /// whatever the document needs, in the order written.
+    /// Pages after the appendix --- list pages such as
+    /// `outline(target: figure.where(kind: image))`, the bibliography, own
+    /// publications, whatever the document needs, in the order written.
     /// -> content | none
     back-matter: none,
 
