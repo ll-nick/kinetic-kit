@@ -3,31 +3,6 @@
 #import "translations.typ": t
 #import "figure-kinds.typ": resolve-figure-kinds, resolve-localized
 
-// Whether we're rendering inside an outline; lets captions switch to short form.
-#let in-outline = state("in-outline", false)
-
-/// Two-part caption: a short version for the list pages, a long one under the
-/// figure.
-///
-/// ```typc
-/// figure(image("plot.svg"), caption: flex-caption(short: [Short], long: [Long.]))
-/// ```
-///
-/// -> content
-#let flex-caption(
-    /// Caption shown on the list page.
-    /// -> content
-    short: none,
-
-    /// Caption shown below the figure in the document body.
-    /// -> content
-    long: none,
-) = context if in-outline.get() {
-    short
-} else {
-    long
-}
-
 // One show-set rule per registered kind. A `show` rule governs only the rest of its
 // enclosing block, so rules emitted straight into the loop body would never reach the
 // document. Re-wrapping the accumulated content each pass puts every rule ahead of

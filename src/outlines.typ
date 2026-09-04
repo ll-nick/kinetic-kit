@@ -1,7 +1,9 @@
 // Table of contents and list pages
 
 #import "translations.typ": t
-#import "figures.typ": in-outline
+
+// Whether we're rendering inside an outline; lets captions switch to short form.
+#let in-outline = state("in-outline", false)
 
 /// Shared outline styling, applied as a show rule so every outline in the
 /// document --- including a user's own --- matches.
@@ -142,3 +144,25 @@
     raw,
     if title == auto { t.at(text.lang).list-of-listings } else { title },
 )
+
+/// Two-part caption: a short version for the list pages, a long one under the
+/// figure.
+///
+/// ```typc
+/// figure(image("plot.svg"), caption: outlines.flex-caption(short: [Short], long: [Long.]))
+/// ```
+///
+/// -> content
+#let flex-caption(
+    /// Caption shown on the list page.
+    /// -> content
+    short: none,
+
+    /// Caption shown below the figure in the document body.
+    /// -> content
+    long: none,
+) = context if in-outline.get() {
+    short
+} else {
+    long
+}
