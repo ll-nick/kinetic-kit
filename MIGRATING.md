@@ -48,18 +48,33 @@ Refer to [`examples/content/masters-title-page.typ`](examples/content/masters-ti
 Copy it into your project, edit it, and pass it as `title-page`. See
 [Your own title page](README.md#cookbook) in the README.
 
-**4. The outline helpers lost their `print-` prefix and moved under the `outlines`
-namespace.** `print-toc` → `outlines.table-of-contents`, `print-lof` / `print-lot` /
-`print-lol` → `outlines.list-of-figures` / `list-of-tables` / `list-of-listings`,
-`print-list-of` → `outlines.list-of`, `print-dissertation-title` → `doctoral-title-page`
-(top-level). Add `outlines` to the package import alongside `thesis`.
-`table-of-contents` and the `list-of-*` shorthands take `title: auto` (localized default)
-and no longer take `lang:`. `list-of(kind, title)` now requires the title as a positional
-argument.
+**4. The outline helpers are gone; use Typst's own `outline`.** `print-toc`,
+`print-lof` / `print-lot` / `print-lol` and `print-list-of` have no replacement in the
+package, because the template now styles and names every outline in the document:
 
-The `components` namespace that used to carry them is gone,
-and with it the `setup-page` / `setup-front-matter` / `setup-content` / `setup-appendix`
-helpers: `thesis()` is the only way to assemble a document now.
+```typst
+// 0.1.x
+#components.print-toc(lang: "de")
+#components.print-lof(lang: "de")
+#components.print-list-of("algorithm", title: [Algorithmenverzeichnis])
+
+// 0.2.0
+#outline()
+#outline(target: figure.where(kind: image))
+#outline(title: [Algorithmenverzeichnis], target: figure.where(kind: "algorithm"))
+```
+
+Omit `title` on a list page and the template supplies the localized name for `image`,
+`table` and `raw`; a kind it has no word for still names itself, and omitting the title
+there is a compile error. `title: none` suppresses the heading entirely. As before, a list
+page is outlined and bookmarked, so it reaches the table of contents and the PDF bookmarks
+— which a bare Typst `outline` does not manage on its own.
+
+`print-dissertation-title` → `doctoral-title-page` (top-level).
+
+The `components` namespace is gone, and with it the `setup-page` /
+`setup-front-matter` / `setup-content` / `setup-appendix` helpers: `thesis()` is the only
+way to assemble a document now.
 
 **5. Front and back matter are plain content now, not split across several parameters.** These twelve are
 gone: `abstract-en`, `abstract-de`, `acknowledgements`, `notation`, `abbreviations`,
@@ -91,36 +106,30 @@ matches what the old `acknowledgements:` parameter produced.
     = Kurzfassung
     #include "abstract-de.typ"
 
-    #outlines.table-of-contents()
+    #outline()
   ],
   back-matter: [
-    #outlines.list-of-figures()
-    #bibliography("refs.bib", title: [Literaturverzeichnis], style: "ieee")
+    #outline(target: figure.where(kind: image))
+    #bibliography("refs.bib", style: "ieee")
   ],
 )
 ```
 
-`bibliography(title: none)` used to let the template supply the heading;
-now pass the heading you want as `title:`.
-Typst's own `auto` default gives "Bibliografie" in German, not "Literaturverzeichnis".
+The old `bibliography:` parameter took `bibliography(title: none)` and supplied the
+heading itself. Now the `bibliography(..)` call goes in `back-matter` and keeps its own
+heading, which the template titles for you — see point 7.
 
 **6. `figure-kinds` entries are `(kind:, supplement:)` only.** The `list-title` and
 `show-list` fields are gone. To list a declared kind, put
-`#outlines.list-of("algorithm", [List of Algorithms])` in `back-matter` — same as for the
-built-in `image` / `table` / `raw`, whose `show-lof` / `show-lot` / `show-lol` booleans
-are also gone.
+`#outline(title: [List of Algorithms], target: figure.where(kind: "algorithm"))` in
+`back-matter` — same as for the built-in `image` / `table` / `raw`, whose `show-lof` /
+`show-lot` / `show-lol` booleans are also gone.
 
-**7. `flex-caption` moved into the `outlines` namespace.** It only does anything on a
-list page — `outlines.list-of` is what switches it to its short form — so it now lives
-beside them: `flex-caption(...)` → `outlines.flex-caption(...)`. Drop `flex-caption` from
-the package import; `outlines` already carries it.
+**7. The bibliography names itself.** `bibliography(..)` no longer needs a `title:`: the
+template titles it *Literaturverzeichnis* in German and *Bibliography* in English, where
+Typst's own default would give *Bibliografie*. Passing a `title:` still overrides it, and
+`title: none` still suppresses the heading.
 
-```typst
-// 0.1.x
-#import "@preview/kinetic-kit:0.1.x": dissertation, flex-caption
-#figure(image("plot.svg"), caption: flex-caption(short: [Short], long: [Long.]))
-
-// 0.2.0
-#import "@preview/kinetic-kit:0.1.1": outlines, thesis
-#figure(image("plot.svg"), caption: outlines.flex-caption(short: [Short], long: [Long.]))
-```
+**8. `flex-caption` is unchanged and still imported from the package root.** It now works
+inside any outline, including one you write by hand, rather than only inside the
+template's list-page helpers.
