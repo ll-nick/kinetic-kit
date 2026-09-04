@@ -1,6 +1,5 @@
 # Compiled output
 *.pdf
-!docs/api-reference.pdf
 out/
 
 # Rendered from the template at package time
