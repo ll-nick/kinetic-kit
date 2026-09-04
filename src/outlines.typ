@@ -57,7 +57,10 @@
     let list-page-kinds = resolve-figure-kinds(figure-kinds).map(entry => entry.kind)
 
     set outline(depth: 3)
-    set outline.entry(fill: repeat(".", gap: 0.4em, justify: false))
+    // Set on `repeat` rather than only on the entry so a list page assembled by
+    // hand gets the same leader.
+    set repeat(gap: 0.4em, justify: false)
+    set outline.entry(fill: repeat("."))
     show outline: set par(justify: false)
 
     // Give non-toc listings a custom, localized heading.

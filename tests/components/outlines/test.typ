@@ -26,6 +26,14 @@
 
 = Erstes Kapitel
 
+// The dot leader is configured on `repeat` itself, not just on `outline.entry`,
+// so a list page assembled by hand --- a third-party note outline, say --- gets
+// the same one.
+#context {
+    assert.eq(repeat.gap, 0.4em, message: "the dot leader must keep its gap")
+    assert.eq(repeat.justify, false, message: "the dot leader must not justify")
+}
+
 // Long enough to wrap in the contents: heading entries must not hyphenate at any
 // level, while caption entries on the list pages must.
 == Ein Abschnitt, der bei depth 1 fehlen muss und dessen Donaudampfschifffahrtsgesellschaft die Zeile umbricht
