@@ -7,7 +7,7 @@
 // Delete this file (and the #include "guide.typ" line in main.typ) once you
 // no longer need it.
 
-#import "@preview/kinetic-kit:0.1.1": flex-caption
+#import "@preview/kinetic-kit:0.2.0": flex-caption
 
 = Getting Started with kinetic-kit
 

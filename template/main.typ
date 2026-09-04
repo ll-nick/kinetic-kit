@@ -10,7 +10,7 @@
 //
 // Documentation: https://github.com/ll-nick/kinetic-kit
 
-#import "@preview/kinetic-kit:0.1.1": doctoral-title-page, thesis
+#import "@preview/kinetic-kit:0.2.0": doctoral-title-page, thesis
 
 // ── Document configuration ─────────────────────────────────────────────────
 #show: thesis.with(
