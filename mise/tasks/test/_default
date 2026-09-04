@@ -2,4 +2,7 @@
 # [MISE] description="Run all tytanic tests"
 set -euo pipefail
 
-tt run --font-path fonts
+# --ppi is what the committed reference images were rendered at. It matches
+# tytanic's own default, so a bare `tt run` compares the same way.
+# --no-fail-fast so one broken reference doesn't hide the rest of the suite.
+tt run --font-path fonts --ppi 144 --no-fail-fast "$@"
