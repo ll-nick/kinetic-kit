@@ -89,7 +89,26 @@ Headers are suppressed on chapter-opening pages and blank pages. The draft water
 
 ### API Documentation (`docs/`)
 
-`docs/main.typ` uses the [tidy](https://typst.universe/package/tidy) package to auto-generate `docs/api-reference.pdf` from doc-comments in `thesis.typ`, `page-setup.typ`, `title-page.typ`, `outlines.typ`, `figures.typ`, `figure-kinds.typ`, and `headings.typ`.
+`docs/main.typ` uses [tidy](https://typst.app/universe/package/tidy) 0.4.3 to generate
+`docs/api-reference.pdf` from the doc-comments of the public API:
+`thesis.typ`, `title-page.typ`, `outlines.typ`, `flex-caption` from `figures.typ`,
+and `kit-style` from `lib.typ`.
+Doc-comments follow tidy's 0.4 syntax:
+the description sits in front of each parameter inside the signature,
+types are annotated with a trailing `/// -> a | b`,
+and `@name` / `@function.parameter` cross-reference other definitions.
+Types are never inferred — an unannotated parameter renders without a type badge —
+while defaults are read from the signature.
+
+`api-module` takes the heading `level` its definitions occupy,
+so a module holding a single definition becomes a chapter of its own
+rather than nesting one heading under another.
+Prose introducing a definition belongs in its doc-comment, not in `main.typ`.
+
+The tables in the `kit-style` chapter are built by iterating the
+imported `fonts`, `font-sizes-by-format` and `kit-colors` dictionaries,
+and the cover version is read from `typst.toml`,
+so neither can drift from the source.
 
 ### Examples (`examples/`)
 
