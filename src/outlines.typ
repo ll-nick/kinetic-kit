@@ -32,6 +32,8 @@
         } else {
             it => it
         }
+        // Bracket the entry so @flex-caption renders its short form here.
+        in-outline.update(true)
         // Two columns keep the body from wrapping under the page number;
         // right-aligning the leader makes it end at the same x on every row.
         link(
@@ -48,6 +50,7 @@
                 bold(it.page()),
             ),
         )
+        in-outline.update(false)
     }
     body
 }
