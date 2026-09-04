@@ -104,7 +104,8 @@
 }
 
 /// Two-part caption: a short version for the list pages, a long one under the
-/// figure.
+/// figure. Every outline switches it to the short form, including one you write
+/// yourself.
 ///
 /// ```typc
 /// figure(image("plot.svg"), caption: flex-caption(short: [Short], long: [Long.]))
