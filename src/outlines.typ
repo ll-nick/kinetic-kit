@@ -17,6 +17,11 @@
     set outline.entry(fill: repeat(".", gap: 0.4em, justify: false))
     show outline: set par(justify: false)
     show outline.entry: it => context {
+        let is-heading-entry = it.element.func() == heading
+        let is-chapter = is-heading-entry and it.level == 1
+        set block(above: 1.6em) if is-chapter
+        set text(hyphenate: true) if not is-heading-entry
+
         // Measured rather than fixed because Roman front-matter page numbers can
         // exceed a 3-digit Arabic one.
         let page-width = query(outline.entry).fold(0pt, (w, e) => calc.max(
@@ -27,7 +32,7 @@
         // so bolding the whole entry would also thicken the dots. Passing `none`
         // through unwrapped keeps unnumbered chapters from getting an indent:
         // `strong(none)` is an empty prefix, not an absent one.
-        let bold = if it.level == 1 and it.element.func() == heading {
+        let bold = if is-chapter {
             it => if it == none { none } else { strong(it) }
         } else {
             it => it
