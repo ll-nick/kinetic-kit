@@ -45,6 +45,7 @@
     /// -> content
     body,
 ) = {
+    set outline(depth: 3)
     set outline.entry(fill: repeat(".", gap: 0.4em, justify: false))
     show outline: set par(justify: false)
 
