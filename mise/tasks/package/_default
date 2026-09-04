@@ -91,8 +91,8 @@ def repoint_links_at_release_tag(
 
     Relative links resolve against the package directory on Typst Universe, and
     links to the default branch drift away from the released version over time.
-    The same goes for the API reference: `latest` would hand a reader of an old
-    package the docs for a newer one.
+    The same goes for the release itself: `latest` would hand a reader of an old
+    package the assets — API reference, example PDFs — of a newer one.
     """
     tag_url = f"{repository}/blob/v{version}"
     repointed = []
@@ -107,11 +107,18 @@ def repoint_links_at_release_tag(
     readme = RELATIVE_LINK_PATTERN.sub(repoint, readme)
     readme = readme.replace(f"{repository}/blob/main/", f"{tag_url}/")
 
-    latest_asset_url = f"{repository}/releases/latest/download/"
-    versioned_asset_url = f"{repository}/releases/download/v{version}/"
-    if latest_asset_url in readme:
-        readme = readme.replace(latest_asset_url, versioned_asset_url)
-        repointed.append(f"{latest_asset_url} → {versioned_asset_url}")
+    # Assets first: rewriting the release page would otherwise turn an asset URL
+    # into `releases/tag/v…/download/`.
+    for latest_url, versioned_url in (
+        (
+            f"{repository}/releases/latest/download/",
+            f"{repository}/releases/download/v{version}/",
+        ),
+        (f"{repository}/releases/latest", f"{repository}/releases/tag/v{version}"),
+    ):
+        if latest_url in readme:
+            readme = readme.replace(latest_url, versioned_url)
+            repointed.append(f"{latest_url} → {versioned_url}")
 
     return readme, repointed
 
