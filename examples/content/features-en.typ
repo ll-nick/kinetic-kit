@@ -1,4 +1,4 @@
-#import "/lib.typ": outlines
+#import "/lib.typ": flex-caption
 
 = Introduction <ch:introduction>
 
@@ -34,10 +34,10 @@ The following questions are addressed in this dissertation:
 
 == A Figure Example
 
-// outlines.flex-caption: short text in the List of Figures, long text in the body
+// flex-caption: short text in the List of Figures, long text in the body
 #figure(
     rect(width: 6cm, height: 3cm, fill: luma(230), stroke: none),
-    caption: outlines.flex-caption(
+    caption: flex-caption(
         short: [A placeholder graphic.],
         long: [An example figure showing a placeholder graphic with a longer caption in
             the body.],

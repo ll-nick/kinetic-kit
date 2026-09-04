@@ -4,7 +4,7 @@
 //
 // Compile: typst compile --root . --font-path fonts examples/masters-full.typ examples/masters-full.pdf
 
-#import "/lib.typ": outlines, thesis
+#import "/lib.typ": thesis
 #import "content/masters-title-page.typ": masters-title-page
 #import "content/abbreviations.typ": abbrevs-glossary
 
@@ -69,7 +69,7 @@
         = Abkürzungsverzeichnis
         #abbrevs-glossary(abbrevs)
 
-        #outlines.table-of-contents()
+        #outline()
     ],
 
     appendix: [
@@ -79,11 +79,11 @@
     ],
 
     back-matter: [
-        #outlines.list-of-figures()
-        #outlines.list-of-tables()
-        #outlines.list-of-listings()
+        #outline(target: figure.where(kind: image))
+        #outline(target: figure.where(kind: table))
+        #outline(target: figure.where(kind: raw))
 
-        #bibliography("bib/references.bib", title: [Literaturverzeichnis], style: "ieee")
+        #bibliography("bib/references.bib", style: "ieee")
     ],
 
     // ── Formatting ─────────────────────────────────────────────────────────
