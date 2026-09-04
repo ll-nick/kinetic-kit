@@ -34,14 +34,19 @@ jobs:
       - name: Rename template PDF
         run: cp template/main.pdf template/template.pdf
 
-      - name: Upload PDFs
+      - name: Upload example PDFs
         uses: actions/upload-artifact@v7
         with:
           name: pdfs
           path: |
-            docs/api-reference.pdf
             examples/*.pdf
             template/template.pdf
+
+      - name: Upload API reference
+        uses: actions/upload-artifact@v7
+        with:
+          name: api-reference
+          path: docs/api-reference.pdf
 
       - name: Upload Typst Universe package
         uses: actions/upload-artifact@v7

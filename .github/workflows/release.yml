@@ -53,7 +53,7 @@ jobs:
         run: cp template/main.pdf template/template.pdf
 
       - name: Bundle the PDFs for the release
-        run: zip -qj "kinetic-kit-$VERSION-pdfs.zip" docs/api-reference.pdf examples/*.pdf template/template.pdf
+        run: zip -qj "kinetic-kit-$VERSION-pdfs.zip" examples/*.pdf template/template.pdf
 
       - name: Assemble and verify the Typst Universe package
         run: |
@@ -65,6 +65,8 @@ jobs:
       - name: Bundle the package for the release
         run: cd dist && zip -qr "../kinetic-kit-$VERSION-universe-package.zip" .
 
+      # Uploaded under its own name, not just inside the zip: the README links it
+      # as /releases/latest/download/api-reference.pdf.
       - name: Create GitHub release
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -72,4 +74,5 @@ jobs:
           gh release create "$GITHUB_REF_NAME"
           "kinetic-kit-$VERSION-universe-package.zip"
           "kinetic-kit-$VERSION-pdfs.zip"
+          docs/api-reference.pdf
           --generate-notes
