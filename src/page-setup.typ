@@ -290,7 +290,10 @@
     set heading(numbering: "1.1")
     set heading(supplement: context t.at(text.lang).section)
     show heading.where(level: 1): set heading(supplement: context t.at(text.lang).chapter)
-    pagebreak(weak: true, to: "odd")
+    {
+        set page(header: none, footer: none)
+        pagebreak(weak: true, to: "odd")
+    }
     set page(numbering: "1")
     counter(page).update(1)
     doc
