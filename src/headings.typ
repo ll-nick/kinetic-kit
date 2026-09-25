@@ -1,6 +1,7 @@
 // Heading styling
 
 #import "typography.typ": fonts, leading
+#import "pagination.typ": break-to-odd-page
 
 /// Shared heading styling: per-level sizes and spacing, chapter page breaks and
 /// counter resets, and number–body alignment. Apply as a show rule.
@@ -111,10 +112,7 @@
                     counter(figure.where(kind: kind)).update(0)
                 }
             }
-            {
-                set page(header: none, footer: none)
-                pagebreak(weak: true, to: "odd")
-            }
+            break-to-odd-page()
             v(h1-above)
         }
         block(above: above.at(idx), below: below.at(idx))[

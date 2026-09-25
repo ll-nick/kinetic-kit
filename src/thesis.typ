@@ -9,6 +9,7 @@
     setup-appendix, setup-back-matter, setup-content, setup-front-matter, setup-page,
 )
 #import "page-conf.typ": title-page-margins-by-format
+#import "pagination.typ": break-to-odd-page
 #import "title-page.typ": doctoral-title-page
 
 
@@ -153,7 +154,7 @@
         } else if title-page != none {
             title-page
         }
-        pagebreak(weak: true, to: "odd")
+        break-to-odd-page()
     }
 
     // Each section is `show: setup-*` then the content. The content defaults to
