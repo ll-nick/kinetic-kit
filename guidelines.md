@@ -84,11 +84,11 @@ All measurements are from the paper edge, including above headers and below pagi
 
 | # | Level | Rule | Source | Status | Code ref |
 |---|-------|------|--------|--------|----------|
-| N1 | REQ | Page numbers on every page except blank pages | KSP p.4 | ✅ | the `footer` in `setup-page()`, `src/page-setup.typ` (footer); blank pages: `setup-headings()` in `src/headings.typ`; title page: `doctoral-title-page()` in `src/title-page.typ` |
+| N1 | REQ | Page numbers on every page except blank pages | KSP p.4 | ✅ | the `footer` in `setup-page()`, `src/page-setup.typ` (footer); blank pages: `break-to-odd-page()` in `src/pagination.typ`; title page: `doctoral-title-page()` in `src/title-page.typ` |
 | N2 | REQ | Page numbers not placed in the header | KSP p.4 | ✅ | the `footer` in `setup-page()`, `src/page-setup.typ` (footer, not header) |
 | N3 | REQ | Same font characteristics as body text (10 pt) | KSP p.4 | ✅ | the `footer` in `setup-page()`, `src/page-setup.typ` (`font: fonts.serif, size: font-sizes.base`) |
 | N4 | REC | Place page numbers outside (right on odd, left on even pages) | KSP p.4 | ✅ | the `footer` in `setup-page()`, `src/page-setup.typ` |
-| N5 | REC | First page with quotable content begins with Roman numeral "i" | KSP p.4 | ✅ | `setup-front-matter` + `counter(page).update(0)` in `thesis()`, `src/thesis.typ` (`setup-front-matter` + `counter(page).update(0)`) |
+| N5 | REC | First page with quotable content begins with Roman numeral "i" | KSP p.4 | ✅ | `setup-front-matter()` in `src/page-setup.typ` (`set page(numbering: "i")` + `counter(page).update(1)`) |
 
 ---
 
@@ -105,7 +105,7 @@ All measurements are from the paper edge, including above headers and below pagi
 | H7 | REC | Separated from body text by a horizontal line of 0.3 pt | KSP p.2 | ✅ | the rule at the end of `_header()`, `src/page-setup.typ` (`line(length: 100%, stroke: 0.3pt + kit-colors.black)`) |
 | H8 | REC | Include chapter numbers | KSP p.2 | ✅ | `_header()` in `src/page-setup.typ` |
 | H9 | REC | No bold, no italics, no uppercase letters | KSP p.2 | ✅ | `_header()` in `src/page-setup.typ` (regular weight sans-serif; no uppercase transform applied) |
-| H10 | REQ | Blank pages have no header | KSP p.2 | ✅ | `setup-headings()` in `src/headings.typ` (`set page(header: none, footer: none)` scoped to the chapter pagebreak, covering inserted blank pages) |
+| H10 | REQ | Blank pages have no header | KSP p.2 | ✅ | `break-to-odd-page()` in `src/pagination.typ` (`set page(header: none, footer: none)` scoped to the break, so the filler page it inserts stays blank); used by `setup-headings()`, `setup-content()` and the title page |
 
 ---
 
@@ -127,9 +127,9 @@ All measurements are from the paper edge, including above headers and below pagi
 
 | # | Level | Rule | Source | Status | Code ref |
 |---|-------|------|--------|--------|----------|
-| C1 | REQ | New chapters always begin on a right-hand (odd) page; insert blank page if necessary | KSP p.1 | ✅ | `setup-headings()` in `src/headings.typ` (`pagebreak(weak: true, to: "odd")`) |
-| C2 | REQ | Blank pages contain no page numbers and no headers | KSP p.1 | ✅ | `setup-headings()` in `src/headings.typ` (`set page(header: none, footer: none)` scoped to the chapter pagebreak, covering inserted blank pages) |
-| C3 | REQ | Page breaks used for new chapters only, not for subsections | KSP p.1 | ✅ | Template only inserts pagebreaks in the level-1 branch of the unified heading show rule; `setup-headings()` in `src/headings.typ` |
+| C1 | REQ | New chapters always begin on a right-hand (odd) page; insert blank page if necessary | KSP p.1 | ✅ | `break-to-odd-page()` in `src/pagination.typ`, called from the level-1 branch of the heading show rule in `setup-headings()`, `src/headings.typ` |
+| C2 | REQ | Blank pages contain no page numbers and no headers | KSP p.1 | ✅ | `break-to-odd-page()` in `src/pagination.typ` (`set page(header: none, footer: none)` scoped to the break, so the filler page it inserts stays blank); used by `setup-headings()`, `setup-content()` and the title page |
+| C3 | REQ | Page breaks used for new chapters only, not for subsections | KSP p.1 | ✅ | The only break tied to a heading sits in the level-1 branch of the unified heading show rule, so no subsection ever breaks; `setup-headings()` in `src/headings.typ` |
 
 ---
 
@@ -201,17 +201,17 @@ All measurements are from the paper edge, including above headers and below pagi
 
 | # | Level | Rule | Source | Status | Code ref |
 |---|-------|------|--------|--------|----------|
-| T1 | REQ | All headings up to 3rd level included | KSP p.5 | ✅ | `table-of-contents()` in `src/outlines.typ` (`depth: 3`) |
+| T1 | REQ | All headings up to 3rd level included | KSP p.5 | ✅ | `setup-outlines()` in `src/outlines.typ` (`set outline(depth: 3)`, independent of `heading-numbering-depth`) |
 | T2 | REQ | The TOC heading itself is **not** listed in the TOC | KSP p.5 | ✅ | Typst automatically excludes the outline's own title from the outline |
 | T3 | REQ | Page numbers right-aligned at the right margin of the type area | KSP p.5 | ✅ | Typst default outline layout |
-| T4 | REQ | All entries begin at the same vertical height | KSP p.5 | ✅ | `table-of-contents()` in `src/outlines.typ` (`indent: auto`) plus the two-column entry grid at `setup-outlines()` in `src/outlines.typ` |
+| T4 | REQ | All entries begin at the same vertical height | KSP p.5 | ✅ | `setup-outlines()` in `src/outlines.typ` (`it.indented(..)` plus the two-column entry grid) |
 | T5 | REQ | Entries wrap before running into page numbers | KSP p.5 | ✅ | Typst outline handles entry wrapping automatically |
-| T6 | REC | Maximum three heading levels listed | KSP p.5 | ✅ | `table-of-contents()` in `src/outlines.typ` (`depth: 3`) |
+| T6 | REC | Maximum three heading levels listed | KSP p.5 | ✅ | `setup-outlines()` in `src/outlines.typ` (`set outline(depth: 3)`, independent of `heading-numbering-depth`) |
 | T7 | REC | Main chapters (level 1) in bold | KSP p.5 | ✅ | `setup-outlines()` in `src/outlines.typ` (`strong` applied to prefix, body and page number of level-1 heading entries, never to the leader) |
-| T8 | REC | Dotted lines from entry to page number (including chapter entries) | KSP p.5 | ✅ | `setup-outlines()` in `src/outlines.typ` (`set outline.entry(fill: repeat(".", gap: 0.4em, justify: false))`) |
+| T8 | REC | Dotted lines from entry to page number (including chapter entries) | KSP p.5 | ✅ | `setup-outlines()` in `src/outlines.typ` (`set repeat(gap: 0.4em, justify: false)` + `set outline.entry(fill: repeat("."))`) |
 | T9 | REC | Set in ragged text (flutter text) | KSP p.5 | ✅ | `setup-outlines()` in `src/outlines.typ` (`show outline: set par(justify: false)`) |
-| T10 | REC | No hyphenation in TOC entries | KSP p.5 | ✅ | `table-of-contents()` in `src/outlines.typ` (`set text(hyphenate: false)`) |
-| T11 | NTH | Slightly increase space between number and text for multi-digit numbers | KSP p.5 | ✅ | `table-of-contents()` in `src/outlines.typ` (`indent: auto`) sizes the indent from the widest prefix, so double-digit chapter numbers widen it automatically; verified with a 12-chapter document |
+| T10 | REC | No hyphenation in TOC entries | KSP p.5 | ✅ | `setup-outlines()` in `src/outlines.typ` (`show outline: set par(justify: false)`, which leaves `hyphenate: auto` inactive; only non-heading entries opt back in) |
+| T11 | NTH | Slightly increase space between number and text for multi-digit numbers | KSP p.5 | ✅ | `setup-outlines()` in `src/outlines.typ` (`it.indented(..)`) sizes the indent from the widest prefix, so double-digit chapter numbers widen it automatically; verified with a 12-chapter document |
 
 ---
 

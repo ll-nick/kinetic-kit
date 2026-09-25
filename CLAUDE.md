@@ -80,7 +80,8 @@ The template exports no outline functions. `setup-outlines` styles, names and bo
 | File | Purpose |
 |------|---------|
 | `thesis.typ` | `thesis()` — the entry point and the document structure it assembles |
-| `page-setup.typ` | Shared style engine — `kit-header`, `_page-base()`, draft indicator, section pagination wrappers (`setup-front-matter`/`setup-back-matter`/`setup-content`/`setup-appendix`) |
+| `page-setup.typ` | Shared style engine — `setup-page()`, the `_header` running header, draft indicator, section pagination wrappers (`setup-front-matter`/`setup-back-matter`/`setup-content`/`setup-appendix`) |
+| `pagination.typ` | `break-to-odd-page()` — the one page break that starts a recto and leaves the filler page blank; every site that moves to an odd page goes through it |
 | `kit-colors.typ` | KIT color palette + syntax highlighting colors |
 | `typography.typ` | Font configuration (Libertinus family) and KSP-required sizes per format (`font-sizes-by-format`) |
 | `page-conf.typ` | Page layout constants per format: page dimensions, margin presets (`short`/`medium`/`long`) per format, paragraph spacing |
@@ -170,5 +171,5 @@ tytanic loads no system fonts, so the images are reproducible across machines.
 - **Line spacing**: 1.15× (0.75em leading in Typst)
 - **Margins**: Three presets keyed on final page count — short (<200 pages), medium (200–399), long (≥400)
 - **Heading font**: Libertinus Sans by default; `serif-headings: true` switches to Libertinus Serif
-- **Heading numbering**: Numbered up to level 3 by default; configurable via `heading-numbering-depth`, which also bounds the table of contents (`setup-outlines` turns it into `set outline(depth: ..)`)
+- **Heading numbering**: Numbered up to level 3 by default; configurable via `heading-numbering-depth`. It bounds numbering only — the table of contents stays at three levels (`set outline(depth: 3)` in `setup-outlines`), which KSP requires (guidelines T1/T6), so a document numbering deeper than 3 still lists three levels
 - All formatting decisions should be validated against `guidelines.md`

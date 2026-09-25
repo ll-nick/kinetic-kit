@@ -12,6 +12,7 @@
 #import "kit-colors.typ": kit-colors
 #import "typography.typ": font-sizes-by-format, fonts, leading
 #import "page-conf.typ": margins-by-format, page-dimensions-by-format, par-spacing
+#import "pagination.typ": break-to-odd-page
 #import "translations.typ": t
 #import "outlines.typ": setup-outlines
 #import "figures.typ": setup-figures
@@ -290,7 +291,7 @@
     set heading(numbering: "1.1")
     set heading(supplement: context t.at(text.lang).section)
     show heading.where(level: 1): set heading(supplement: context t.at(text.lang).chapter)
-    pagebreak(weak: true, to: "odd")
+    break-to-odd-page()
     set page(numbering: "1")
     counter(page).update(1)
     doc
