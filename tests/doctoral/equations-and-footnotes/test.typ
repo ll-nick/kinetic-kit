@@ -1,8 +1,8 @@
 // Equation, figure and footnote numbering, none of which the other tests touch.
-// Both branches of the chapter-relative numbering matter: front matter sits
-// before the first chapter, where the counter is 0 and the numbers fall back to
-// a flat `(1)` / `1`, while a chapter numbers them `(1.1)` / `1.1` and every
-// counter restarts at the next one.
+// A chapter numbers equations and figures `(1.1)` / `1.1`, and every counter
+// restarts at the next one. Front and back matter sit outside the chapters, so
+// their equations and figures carry no number, in the caption and the list of
+// figures alike.
 #import "/lib.typ": thesis
 
 #show: thesis.with(
@@ -11,14 +11,20 @@
     front-matter: [
         = Abstract
 
-        Before the first chapter, so this equation is numbered flat:
+        Before the first chapter, so this equation is unnumbered:
         $ a = b $
 
         #figure(rect(width: 3cm, height: 1cm), caption: [A figure in front matter])
 
         #outline()
     ],
-    back-matter: [#outline(target: figure.where(kind: image))],
+    back-matter: [
+        #outline(target: figure.where(kind: image))
+
+        = Notes
+
+        #figure(rect(width: 3cm, height: 1cm), caption: [A figure in back matter])
+    ],
 )
 
 = First Chapter
