@@ -3,7 +3,7 @@
 // Provides the dynamic page and style configuration used by the thesis template:
 //   _header               — context-aware running header
 //   _draft-indicator()   — "ENTWURF"/"DRAFT" watermark
-//   setup-page()         — full document style setup (page, headings, figures, equations, code)
+//   setup-page()         — full document style setup (page, headings, figures, code)
 //   setup-front-matter() — Roman numeral pagination wrapper
 //   setup-back-matter()  — heading numbering suppression wrapper
 //   setup-content()      — Arabic numeral pagination wrapper
@@ -98,7 +98,7 @@
 // ── Base page setup ───────────────────────────────────────────────────────
 
 /// Apply the full KIT document style: page geometry, running headers, KSP
-/// typography, heading styles, figure captions, equations, and code blocks.
+/// typography, heading styles, figure captions, and code blocks.
 /// Use as a show rule: `#show: setup-page.with(...)`.
 ///
 /// -> content
@@ -258,7 +258,8 @@
 
 // ── Section-specific page setup (thin wrappers) ───────────────────────────
 
-/// Restart page numbering at Roman `i` and remove heading numbering.
+/// Restart page numbering at Roman `i` and remove heading, figure and equation
+/// numbering.
 /// Apply before front-matter content: `#show: setup-front-matter`.
 ///
 /// -> content
@@ -275,7 +276,8 @@
     doc
 }
 
-/// Restart page numbering at Arabic `1` and enable `1.1` heading numbering.
+/// Restart page numbering at Arabic `1` and switch headings, figures and equations
+/// to `1.1` numbering.
 /// Apply before the main content: `#show: setup-content`.
 ///
 /// -> content
@@ -297,7 +299,8 @@
     doc
 }
 
-/// Switch to `A.1` heading numbering and reset the heading counter.
+/// Switch headings, figures and equations to `A.1` numbering and reset the
+/// heading counter.
 /// Apply before appendix chapters: `#show: setup-appendix`.
 ///
 /// -> content
@@ -322,8 +325,8 @@
     doc
 }
 
-/// Suppress heading numbering for back-matter sections, which sit outside the
-/// `1.1` numbering `setup-content` establishes.
+/// Suppress heading, figure and equation numbering for back-matter sections, which
+/// sit outside the chapter numbering of the main matter and appendix.
 /// Apply before back matter: `#show: setup-back-matter`.
 ///
 /// -> content
