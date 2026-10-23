@@ -63,9 +63,9 @@
     show figure.caption: it => layout(container => context {
         let body = [
             #set text(size: font-sizes.small)
-            #text(
-                weight: "bold",
-            )[#it.supplement #it.counter.display(it.numbering):]
+            #if it.numbering != none {
+                text(weight: "bold")[#it.supplement #it.counter.display(it.numbering):]
+            }
             #it.body
         ]
         // Left-align captions ≥ 2 lines
