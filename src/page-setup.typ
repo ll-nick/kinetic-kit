@@ -243,7 +243,7 @@
 
     // ── Equations ────────────────────────────────────────────────────────
     set math.equation(numbering: it => {
-        let ch = counter(heading.where(level: 1)).at(here()).first()
+        let ch = counter(heading).at(here()).first()
         if ch > 0 { numbering("(1.1)", ch, it) } else { numbering("(1)", it) }
     })
 
