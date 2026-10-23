@@ -63,9 +63,9 @@
     show figure.caption: it => layout(container => context {
         let body = [
             #set text(size: font-sizes.small)
-            #text(
-                weight: "bold",
-            )[#it.supplement #it.counter.display(it.numbering):]
+            #if it.numbering != none {
+                text(weight: "bold")[#it.supplement #it.counter.display(it.numbering):]
+            }
             #it.body
         ]
         // Left-align captions ≥ 2 lines
@@ -77,10 +77,6 @@
         }
     })
 
-    set figure(numbering: it => {
-        let ch = counter(heading.where(level: 1)).at(here()).first()
-        if ch > 0 { numbering("1.1", ch, it) } else { numbering("1", it) }
-    })
     set figure(gap: 0.8em)
     show figure: set block(above: 1.5em, below: 1.5em)
 

@@ -168,7 +168,7 @@ All measurements are from the paper edge, including above headers and below pagi
 | FT1 | REQ | Long captions (≥ 2 lines): left-justified | KSP p.3 | ✅ | `setup-figures()` in `src/figures.typ` (height threshold: `font-sizes.small * 1.5`; printed spec says ≥ 3 lines, but ≥ 2 is correect) |
 | FT2 | REQ | Use full type-area width for layout | KSP p.3 | ✅ | Typst figures default to full container width |
 | FT3 | REQ | Position table headings consistently: always above or always below | KSP p.3 | N/A | User responsibility; template does not constrain caption position |
-| FT4 | REQ | Caption numbering includes chapter number (e.g. Figure 2.3) | KSP p.3 | ✅ | `setup-figures()` in `src/figures.typ` (`numbering("1.1", ch, it)`) |
+| FT4 | REQ | Caption numbering includes chapter number (e.g. Figure 2.3) | KSP p.3 | ✅ | `setup-content()` and `setup-appendix()` in `src/page-setup.typ` (`numbering("1.1", ch, it)`, `"A.1"` in the appendix); front and back matter are unnumbered |
 | FT5 | REC | 1-line captions: centred (exception: if line spans nearly full width, left-align) | KSP p.3 | ✅ | `setup-figures()` in `src/figures.typ` (center for 1-line captions, left for ≥ 2 lines) |
 | FT6 | REC | Sources for captions in parentheses | KSP p.3 | N/A | User responsibility |
 | FT7 | REC | Minimum image resolution: 200 dpi | KSP p.3 | N/A | Cannot be enforced at template level; user responsibility |
@@ -183,7 +183,7 @@ All measurements are from the paper edge, including above headers and below pagi
 | # | Level | Rule | Source | Status | Code ref |
 |---|-------|------|--------|--------|----------|
 | FM1 | REQ | All formulas consistently centred, or all at left margin — not mixed | KSP p.2 | ✅ | Typst centers all block equations by default; template does not override alignment |
-| FM2 | REC | Formula numbers right-justified at the type-area margin | KSP p.2 | ✅ | the `set math.equation` in `setup-page()`, `src/page-setup.typ` (Typst places numbers right-aligned) |
+| FM2 | REC | Formula numbers right-justified at the type-area margin | KSP p.2 | ✅ | the `set math.equation` in `setup-content()`, `src/page-setup.typ` (Typst places numbers right-aligned) |
 
 ---
 

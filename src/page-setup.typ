@@ -3,7 +3,7 @@
 // Provides the dynamic page and style configuration used by the thesis template:
 //   _header               — context-aware running header
 //   _draft-indicator()   — "ENTWURF"/"DRAFT" watermark
-//   setup-page()         — full document style setup (page, headings, figures, equations, code)
+//   setup-page()         — full document style setup (page, headings, figures, code)
 //   setup-front-matter() — Roman numeral pagination wrapper
 //   setup-back-matter()  — heading numbering suppression wrapper
 //   setup-content()      — Arabic numeral pagination wrapper
@@ -98,7 +98,7 @@
 // ── Base page setup ───────────────────────────────────────────────────────
 
 /// Apply the full KIT document style: page geometry, running headers, KSP
-/// typography, heading styles, figure captions, equations, and code blocks.
+/// typography, heading styles, figure captions, and code blocks.
 /// Use as a show rule: `#show: setup-page.with(...)`.
 ///
 /// -> content
@@ -241,12 +241,6 @@
         }
     }
 
-    // ── Equations ────────────────────────────────────────────────────────
-    set math.equation(numbering: it => {
-        let ch = counter(heading.where(level: 1)).at(here()).first()
-        if ch > 0 { numbering("(1.1)", ch, it) } else { numbering("(1)", it) }
-    })
-
     // ── Code listings ─────────────────────────────────────────────────────
     show raw.where(block: true): it => {
         set text(font: fonts.mono, size: font-sizes.small)
@@ -264,7 +258,8 @@
 
 // ── Section-specific page setup (thin wrappers) ───────────────────────────
 
-/// Restart page numbering at Roman `i` and remove heading numbering.
+/// Restart page numbering at Roman `i` and remove heading, figure and equation
+/// numbering.
 /// Apply before front-matter content: `#show: setup-front-matter`.
 ///
 /// -> content
@@ -275,11 +270,14 @@
 ) = {
     set page(numbering: "i")
     set heading(numbering: none)
+    set figure(numbering: none)
+    set math.equation(numbering: none)
     counter(page).update(1)
     doc
 }
 
-/// Restart page numbering at Arabic `1` and enable `1.1` heading numbering.
+/// Restart page numbering at Arabic `1` and switch headings, figures and equations
+/// to `1.1` numbering.
 /// Apply before the main content: `#show: setup-content`.
 ///
 /// -> content
@@ -291,13 +289,18 @@
     set heading(numbering: "1.1")
     set heading(supplement: context t.at(text.lang).section)
     show heading.where(level: 1): set heading(supplement: context t.at(text.lang).chapter)
+    set figure(numbering: it => numbering("1.1", counter(heading).at(here()).first(), it))
+    set math.equation(numbering: it => {
+        numbering("(1.1)", counter(heading).at(here()).first(), it)
+    })
     break-to-odd-page()
     set page(numbering: "1")
     counter(page).update(1)
     doc
 }
 
-/// Switch to `A.1` heading numbering and reset the heading counter.
+/// Switch headings, figures and equations to `A.1` numbering and reset the
+/// heading counter.
 /// Apply before appendix chapters: `#show: setup-appendix`.
 ///
 /// -> content
@@ -308,11 +311,22 @@
 ) = {
     set heading(numbering: "A.1")
     counter(heading).update(0)
+    // Letters cannot show chapter 0, which every figure reads on the first layout
+    // pass, so it falls back to digits: the `0.1` the main matter gives a figure
+    // before its first chapter.
+    set figure(numbering: it => {
+        let ch = counter(heading).at(here()).first()
+        numbering(if ch > 0 { "A.1" } else { "1.1" }, ch, it)
+    })
+    set math.equation(numbering: it => {
+        let ch = counter(heading).at(here()).first()
+        numbering(if ch > 0 { "(A.1)" } else { "(1.1)" }, ch, it)
+    })
     doc
 }
 
-/// Suppress heading numbering for back-matter sections, which sit outside the
-/// `1.1` numbering `setup-content` establishes.
+/// Suppress heading, figure and equation numbering for back-matter sections, which
+/// sit outside the chapter numbering of the main matter and appendix.
 /// Apply before back matter: `#show: setup-back-matter`.
 ///
 /// -> content
@@ -322,5 +336,7 @@
     doc,
 ) = {
     set heading(numbering: none)
+    set figure(numbering: none)
+    set math.equation(numbering: none)
     doc
 }
