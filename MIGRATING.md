@@ -1,3 +1,13 @@
+# Migrating from 0.2.1
+
+**Figures and equations in the front and back matter are unnumbered.**
+They used to be numbered flat (`Abbildung 1`, `(1)`),
+or in the back matter continue the last chapter's count.
+Like the headings there,
+they now carry no number,
+so a reference to one (`@fig-abstract`) no longer compiles.
+Move the figure into a chapter if it has to be cited.
+
 # Migrating from 0.1.x
 
 `dissertation()` and `thesis()` were one document engine with two title pages, so 0.2.0
