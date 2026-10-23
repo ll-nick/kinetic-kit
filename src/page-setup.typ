@@ -275,6 +275,7 @@
 ) = {
     set page(numbering: "i")
     set heading(numbering: none)
+    set figure(numbering: none)
     counter(page).update(1)
     doc
 }
@@ -291,6 +292,7 @@
     set heading(numbering: "1.1")
     set heading(supplement: context t.at(text.lang).section)
     show heading.where(level: 1): set heading(supplement: context t.at(text.lang).chapter)
+    set figure(numbering: it => numbering("1.1", counter(heading).at(here()).first(), it))
     break-to-odd-page()
     set page(numbering: "1")
     counter(page).update(1)
@@ -308,6 +310,13 @@
 ) = {
     set heading(numbering: "A.1")
     counter(heading).update(0)
+    // Letters cannot show chapter 0, which every figure reads on the first layout
+    // pass, so it falls back to digits: the `0.1` the main matter gives a figure
+    // before its first chapter.
+    set figure(numbering: it => {
+        let ch = counter(heading).at(here()).first()
+        numbering(if ch > 0 { "A.1" } else { "1.1" }, ch, it)
+    })
     doc
 }
 
@@ -322,5 +331,6 @@
     doc,
 ) = {
     set heading(numbering: none)
+    set figure(numbering: none)
     doc
 }

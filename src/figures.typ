@@ -77,10 +77,6 @@
         }
     })
 
-    set figure(numbering: it => {
-        let ch = counter(heading).at(here()).first()
-        if ch > 0 { numbering("1.1", ch, it) } else { numbering("1", it) }
-    })
     set figure(gap: 0.8em)
     show figure: set block(above: 1.5em, below: 1.5em)
 
