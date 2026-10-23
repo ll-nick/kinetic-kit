@@ -241,12 +241,6 @@
         }
     }
 
-    // ── Equations ────────────────────────────────────────────────────────
-    set math.equation(numbering: it => {
-        let ch = counter(heading).at(here()).first()
-        if ch > 0 { numbering("(1.1)", ch, it) } else { numbering("(1)", it) }
-    })
-
     // ── Code listings ─────────────────────────────────────────────────────
     show raw.where(block: true): it => {
         set text(font: fonts.mono, size: font-sizes.small)
@@ -276,6 +270,7 @@
     set page(numbering: "i")
     set heading(numbering: none)
     set figure(numbering: none)
+    set math.equation(numbering: none)
     counter(page).update(1)
     doc
 }
@@ -293,6 +288,9 @@
     set heading(supplement: context t.at(text.lang).section)
     show heading.where(level: 1): set heading(supplement: context t.at(text.lang).chapter)
     set figure(numbering: it => numbering("1.1", counter(heading).at(here()).first(), it))
+    set math.equation(numbering: it => {
+        numbering("(1.1)", counter(heading).at(here()).first(), it)
+    })
     break-to-odd-page()
     set page(numbering: "1")
     counter(page).update(1)
@@ -317,6 +315,10 @@
         let ch = counter(heading).at(here()).first()
         numbering(if ch > 0 { "A.1" } else { "1.1" }, ch, it)
     })
+    set math.equation(numbering: it => {
+        let ch = counter(heading).at(here()).first()
+        numbering(if ch > 0 { "(A.1)" } else { "(1.1)" }, ch, it)
+    })
     doc
 }
 
@@ -332,5 +334,6 @@
 ) = {
     set heading(numbering: none)
     set figure(numbering: none)
+    set math.equation(numbering: none)
     doc
 }
