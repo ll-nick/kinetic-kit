@@ -1,5 +1,5 @@
-// Compile-only: doctoral thesis with appendix — verifies appendix numbering
-// (A, A.1, …) and the page-rules switch don't regress.
+// Doctoral thesis with appendix — pins the A, A.1, … numbering of headings,
+// figures and equations, and the page-rules switch.
 #import "/lib.typ": doctoral-title-page, thesis
 
 #show: thesis.with(
@@ -21,6 +21,10 @@
         == Detail A.1
 
         Numbered A.1.
+
+        #figure(rect(), caption: [Numbered A.1.])
+
+        $ x = 1 $
     ],
     title-page: doctoral-title-page.with(
         author-title: "M.Sc.",
