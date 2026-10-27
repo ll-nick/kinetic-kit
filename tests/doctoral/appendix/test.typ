@@ -6,7 +6,7 @@
     author-firstname: "Max",
     author-surname: "Mustermann",
     title: [Dissertation with Appendix],
-    lang: "de",
+    lang: "en",
     back-matter: [
         #bibliography(
             "/examples/bib/references.bib",
