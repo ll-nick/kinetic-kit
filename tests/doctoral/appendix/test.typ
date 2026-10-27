@@ -1,12 +1,12 @@
 // Doctoral thesis with appendix — pins the A, A.1, … numbering of headings,
-// figures and equations, and the page-rules switch.
+// figures and equations, the Appendix supplement in references, and the page-rules switch.
 #import "/lib.typ": doctoral-title-page, thesis
 
 #show: thesis.with(
     author-firstname: "Max",
     author-surname: "Mustermann",
     title: [Dissertation with Appendix],
-    lang: "de",
+    lang: "en",
     back-matter: [
         #bibliography(
             "/examples/bib/references.bib",
@@ -14,7 +14,7 @@
         )
     ],
     appendix: [
-        = Supplementary Material
+        = Supplementary Material <app:supplementary>
 
         Numbered A.
 
@@ -34,4 +34,4 @@
 
 = Chapter One
 
-Content. @example2024
+Content. @example2024 See @app:supplementary.
