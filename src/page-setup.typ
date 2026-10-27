@@ -310,6 +310,9 @@
     doc,
 ) = {
     set heading(numbering: "A.1")
+    show heading.where(level: 1): set heading(
+        supplement: context t.at(text.lang).appendix,
+    )
     counter(heading).update(0)
     // Letters cannot show chapter 0, which every figure reads on the first layout
     // pass, so it falls back to digits: the `0.1` the main matter gives a figure
