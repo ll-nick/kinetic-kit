@@ -14,12 +14,12 @@
         #outline()
     ],
     back-matter: [
-        #outline(target: figure.where(kind: image))
-        #outline(target: figure.where(kind: table))
         #bibliography(
             "/examples/bib/references.bib",
             style: "ieee",
         )
+        #outline(target: figure.where(kind: image))
+        #outline(target: figure.where(kind: table))
     ],
     title-page: doctoral-title-page.with(
         author-title: "M.Sc.",

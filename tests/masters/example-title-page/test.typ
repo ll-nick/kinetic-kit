@@ -20,11 +20,11 @@
         #outline()
     ],
     back-matter: [
-        #outline(target: figure.where(kind: image))
         #bibliography(
             "/examples/bib/references.bib",
             style: "ieee",
         )
+        #outline(target: figure.where(kind: image))
     ],
     appendix: [
         = Ergänzendes Material
