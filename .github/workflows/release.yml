@@ -1,19 +1,8 @@
 # Releasing kinetic-kit to Typst Universe.
 #
 # Publishing is not automated: Typst Universe takes submissions as pull requests
-# against typst/packages. This workflow is the gate in front of that, and the
-# manual steps around it are:
-#
-#   1. `mise run bump-version <major|minor|patch>` — rewrites typst.toml and every
-#      pinned reference in README.md, template/, lib.typ and docs/. Then
-#      `mise run build`. `mise run package && mise run package:verify` catches
-#      problems locally, before a tag exists.
-#   2. Commit, tag the release commit v{version}, and push the tag — everything
-#      below then runs, and no release is created if any of it fails.
-#   3. Unzip the release's package archive into packages/preview/ in a fork of
-#      typst/packages, commit the plain files, and open the pull request. Never
-#      copy a .git directory along with them, or the submission becomes a
-#      submodule reference instead of a package.
+# against typst/packages. This workflow is the gate in front of that; the manual
+# steps around it are in the "Releasing" section of CONTRIBUTING.md.
 
 name: Release
 

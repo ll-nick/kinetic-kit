@@ -70,3 +70,96 @@ mise run test:update doctoral/submitted                # one test
 
 Never regenerate them to make a red test go green —
 an unreviewed update blesses a regression permanently.
+
+## Releasing
+
+Publishing is not automated:
+Typst Universe takes packages as pull requests against
+[typst/packages](https://github.com/typst/packages).
+The `Release` workflow is the gate in front of that.
+It runs on a pushed `v*` tag, rebuilds and verifies everything,
+and attaches the package archive to a GitHub release.
+
+### 1. Bump the version
+
+On a branch, through a regular pull request:
+
+```bash
+mise run bump-version patch       # or minor / major
+mise run build && mise run test
+mise run package && mise run package:verify
+git diff                          # only version strings should change
+```
+
+`bump-version` rewrites `typst.toml` and every pinned `@preview/kinetic-kit:…` reference.
+`package:verify` checks the `dist/` tree the way Typst Universe will,
+so problems surface before a tag exists.
+
+### 2. Tag the release
+
+Tag the merge commit on `main` and push the tag:
+
+```bash
+git switch main && git pull
+git tag v<version> && git push origin v<version>
+gh run watch
+```
+
+The workflow fails if the tag does not match the version in `typst.toml`,
+and creates no release if any step fails.
+The release carries the Universe package archive, the example PDFs and `api-reference.pdf`.
+Its notes list the merged pull requests only,
+so add a line for every change users will see in their documents.
+
+### 3. Set up a sparse checkout of typst/packages
+
+The packages repository holds every version of every package,
+so clone your fork sparsely
+([tips.md](https://github.com/typst/packages/blob/main/docs/tips.md#sparse-checkout-of-the-repository)).
+The first two commands create the fork if you have none yet,
+and bring an existing one up to date:
+
+```bash
+gh repo fork typst/packages --clone=false
+gh repo sync <your-username>/packages
+git clone --depth 1 --no-checkout --filter="tree:0" git@github.com:<your-username>/packages
+cd packages
+git sparse-checkout init
+git sparse-checkout set packages/preview/kinetic-kit
+git remote add upstream git@github.com:typst/packages
+git config remote.upstream.partialclonefilter tree:0
+git checkout main
+git switch -c kinetic-kit-<version>
+```
+
+### 4. Add the package
+
+The archive mirrors `packages/preview/`, so it unzips straight into place:
+
+```bash
+gh release download v<version> --repo ll-nick/kinetic-kit \
+  --pattern 'kinetic-kit-<version>-universe-package.zip' --dir /tmp
+unzip /tmp/kinetic-kit-<version>-universe-package.zip -d packages/preview/
+git status                        # only packages/preview/kinetic-kit/<version>/
+```
+
+Copy plain files only:
+a `.git` directory turns the commit into a submodule reference instead of a package.
+Never touch the files at the repository root.
+
+### 5. Open the pull request
+
+```bash
+git add packages/preview/kinetic-kit/<version>
+git commit -m "kinetic-kit:<version>"
+git push -u origin kinetic-kit-<version>
+gh pr create --repo typst/packages --head <your-username>:kinetic-kit-<version> \
+  --title "kinetic-kit:<version>" --web
+```
+
+`--web` opens the pull request form in the browser with the typst/packages template filled in.
+Keep the title `kinetic-kit:<version>`.
+In the template, tick "an update for a package", summarize what changed,
+and drop the checklist meant for new submissions.
+Updates must come from the account that submitted the previous version.
+After the merge, the version can take up to 30 minutes to appear on Typst Universe.
