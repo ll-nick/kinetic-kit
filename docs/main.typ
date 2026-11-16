@@ -160,12 +160,12 @@ it in the #api-link(
     #outline()
   ],
   back-matter: [
+    #bibliography("refs.bib", style: "ieee")
     #outline(target: figure.where(kind: image))
     #outline(
       title: [Algorithmenverzeichnis],
       target: figure.where(kind: "algorithm"),
     )
-    #bibliography("refs.bib", style: "ieee")
   ],
 )
 ```
@@ -213,7 +213,7 @@ document, so every kind restarts each chapter whether or not it has been declare
 #api-module("../lib.typ", "lib", filter: definition => definition.name == "kit-style")
 
 ```typst
-#import "@preview/kinetic-kit:0.2.1": kit-style
+#import "@preview/kinetic-kit:0.2.2": kit-style
 
 #let font-sizes = kit-style.font-sizes-by-format.at("a5")
 #set text(font: kit-style.fonts.sans, size: font-sizes.small)

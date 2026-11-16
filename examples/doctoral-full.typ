@@ -79,20 +79,9 @@
         #outline()
     ],
 
-    appendix: [
-        = Ergänzendes Material
-
-        #lorem(800)
-    ],
-
-    // List pages, then the bibliographies. `full: true` on a separate .bib lists
+    // The bibliographies, then the list pages. `full: true` on a separate .bib lists
     // every entry regardless of in-text citations (native multi-bibliography).
     back-matter: [
-        #outline(target: figure.where(kind: image))
-        #outline(target: figure.where(kind: table))
-        #outline(target: figure.where(kind: raw))
-        #outline(title: [Algorithmenverzeichnis], target: figure.where(kind: "algorithm"))
-
         #bibliography("bib/references.bib", style: "ieee")
 
         = Eigene Publikationen
@@ -104,6 +93,17 @@
 
         = Betreute studentische Arbeiten
         #bibliography("bib/supervised-theses.bib", title: none, style: "ieee", full: true)
+
+        #outline(target: figure.where(kind: image))
+        #outline(target: figure.where(kind: table))
+        #outline(target: figure.where(kind: raw))
+        #outline(title: [Algorithmenverzeichnis], target: figure.where(kind: "algorithm"))
+    ],
+
+    appendix: [
+        = Ergänzendes Material
+
+        #lorem(800)
     ],
 
     // ── Formatting ──────────────────────────────────────────────────────────

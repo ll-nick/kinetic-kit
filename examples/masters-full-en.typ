@@ -71,18 +71,18 @@
         #outline()
     ],
 
+    back-matter: [
+        #bibliography("bib/references.bib", style: "ieee")
+
+        #outline(target: figure.where(kind: image))
+        #outline(target: figure.where(kind: table))
+        #outline(target: figure.where(kind: raw))
+    ],
+
     appendix: [
         = Supplementary Material
 
         #lorem(400)
-    ],
-
-    back-matter: [
-        #outline(target: figure.where(kind: image))
-        #outline(target: figure.where(kind: table))
-        #outline(target: figure.where(kind: raw))
-
-        #bibliography("bib/references.bib", style: "ieee")
     ],
 
     // ── Formatting ─────────────────────────────────────────────────────────
