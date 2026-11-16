@@ -1,5 +1,6 @@
 // Doctoral thesis with appendix — pins the A, A.1, … numbering of headings,
-// figures and equations, the Appendix supplement in references, and the page-rules switch.
+// figures and equations, the Appendix supplement in references, the page-rules switch,
+// and the appendix following the back matter.
 #import "/lib.typ": doctoral-title-page, thesis
 
 #show: thesis.with(
@@ -35,3 +36,8 @@
 = Chapter One
 
 Content. @example2024 See @app:supplementary.
+
+#context assert(
+    query(bibliography).first().location().page() < locate(<app:supplementary>).page(),
+    message: "the appendix must follow the back matter",
+)
