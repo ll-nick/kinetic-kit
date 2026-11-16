@@ -79,15 +79,8 @@
         #outline()
     ],
 
-    // The list pages and bibliography go here.
+    // The bibliography and list pages go here.
     back-matter: [
-        #outline(target: figure.where(kind: image))
-        #outline(target: figure.where(kind: table))
-        // #outline(target: figure.where(kind: raw))   // uncomment if you include code listings
-
-        // A list page for any additional figure kinds declared in figure-kinds below.
-        // #outline(title: [List of Algorithms], target: figure.where(kind: "algorithm"))
-
         #bibliography("refs.bib", style: "ieee")
 
         // Optional further sections --- uncomment what applies. A separate .bib with
@@ -97,6 +90,13 @@
 
         // = Patents
         // Nachname, V. (2024). *Title of the patent*. DPMA, DE 10 2024 000 000 A1.
+
+        #outline(target: figure.where(kind: image))
+        #outline(target: figure.where(kind: table))
+        // #outline(target: figure.where(kind: raw))   // uncomment if you include code listings
+
+        // A list page for any additional figure kinds declared in figure-kinds below.
+        // #outline(title: [List of Algorithms], target: figure.where(kind: "algorithm"))
     ],
 
     // ── Appendix ──────────────────────────────────────────────────────────────

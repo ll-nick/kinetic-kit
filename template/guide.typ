@@ -43,10 +43,10 @@ All configuration lives in the `#show: thesis.with(...)` call at the top of `mai
     each section --- Kurzfassung, Abstract, acknowledgements, a page of your own --- with
     its own `=` heading, in the order you want. Numbering is suppressed there, so a bare
     `= Danksagung` renders as an unnumbered section. Put Typst's own `outline()` in
-    `front-matter` where the table of contents should appear, and the list pages ---
-    `outline(target: figure.where(kind: image))` and friends --- plus your
-    `bibliography(...)` in `back-matter`; the template styles and names them. The
-    `appendix` argument comes last, after the back matter, numbered `A`, `A.1`, …
+    `front-matter` where the table of contents should appear, and your `bibliography(...)`
+    followed by the list pages --- `outline(target: figure.where(kind: image))` and
+    friends --- in `back-matter`; the template styles and names them. The `appendix`
+    argument comes last, after the back matter, numbered `A`, `A.1`, …
 + *Headings and figure kinds:* `serif-headings: true` sets headings in Libertinus Serif
     instead of Sans; `heading-numbering-depth` is the deepest numbered level (`3` =
     1.1.1). `figure-kinds` registers caption labels for kinds beyond figures, tables and

@@ -47,10 +47,10 @@
     ],
 
     back-matter: [
+        #bibliography("bib/references.bib", style: "ieee")
+
         #outline(target: figure.where(kind: image))
         #outline(target: figure.where(kind: table))
-
-        #bibliography("bib/references.bib", style: "ieee")
     ],
 
     // ── Formatting ─────────────────────────────────────────────────────────

@@ -37,8 +37,8 @@ To add the template to an existing document instead, import it and apply it with
     #outline()
   ],
   back-matter: [
-    #outline(target: figure.where(kind: image))
     #bibliography("bib/references.bib", style: "ieee")
+    #outline(target: figure.where(kind: image))
   ],
 )
 
@@ -167,11 +167,11 @@ placed in the `front-matter` / `back-matter` content of `thesis()`.
     #outline()
   ],
   back-matter: [
+    #bibliography("refs.bib", style: "ieee")
     #outline(target: figure.where(kind: image))
     #outline(target: figure.where(kind: table))
     // A kind the template has no word for names itself:
     #outline(title: [Algorithmenverzeichnis], target: figure.where(kind: "algorithm"))
-    #bibliography("refs.bib", style: "ieee")
   ],
 )
 ```

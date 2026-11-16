@@ -119,8 +119,8 @@ matches what the old `acknowledgements:` parameter produced.
     #outline()
   ],
   back-matter: [
-    #outline(target: figure.where(kind: image))
     #bibliography("refs.bib", style: "ieee")
+    #outline(target: figure.where(kind: image))
   ],
 )
 ```

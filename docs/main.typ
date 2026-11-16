@@ -160,12 +160,12 @@ it in the #api-link(
     #outline()
   ],
   back-matter: [
+    #bibliography("refs.bib", style: "ieee")
     #outline(target: figure.where(kind: image))
     #outline(
       title: [Algorithmenverzeichnis],
       target: figure.where(kind: "algorithm"),
     )
-    #bibliography("refs.bib", style: "ieee")
   ],
 )
 ```

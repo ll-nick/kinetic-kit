@@ -79,10 +79,6 @@
     ],
 
     back-matter: [
-        #outline(target: figure.where(kind: image))
-        #outline(target: figure.where(kind: table))
-        #outline(target: figure.where(kind: raw))
-
         #bibliography("bib/references.bib", style: "ieee")
 
         = Eigene Publikationen
@@ -94,6 +90,10 @@
 
         = Betreute studentische Arbeiten
         #bibliography("bib/supervised-theses.bib", title: none, style: "ieee", full: true)
+
+        #outline(target: figure.where(kind: image))
+        #outline(target: figure.where(kind: table))
+        #outline(target: figure.where(kind: raw))
     ],
 
     appendix: [
