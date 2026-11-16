@@ -19,6 +19,13 @@
 
         #outline()
     ],
+    back-matter: [
+        #outline(target: figure.where(kind: image))
+        #bibliography(
+            "/examples/bib/references.bib",
+            style: "ieee",
+        )
+    ],
     appendix: [
         = Ergänzendes Material
 
@@ -27,13 +34,6 @@
         == Ein Detail
 
         Numbered A.1.
-    ],
-    back-matter: [
-        #outline(target: figure.where(kind: image))
-        #bibliography(
-            "/examples/bib/references.bib",
-            style: "ieee",
-        )
     ],
     title-page: masters-title-page.with(
         thesis-type: "Masterarbeit",

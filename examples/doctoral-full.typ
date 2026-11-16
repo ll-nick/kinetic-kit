@@ -79,12 +79,6 @@
         #outline()
     ],
 
-    appendix: [
-        = Ergänzendes Material
-
-        #lorem(800)
-    ],
-
     // List pages, then the bibliographies. `full: true` on a separate .bib lists
     // every entry regardless of in-text citations (native multi-bibliography).
     back-matter: [
@@ -104,6 +98,12 @@
 
         = Betreute studentische Arbeiten
         #bibliography("bib/supervised-theses.bib", title: none, style: "ieee", full: true)
+    ],
+
+    appendix: [
+        = Ergänzendes Material
+
+        #lorem(800)
     ],
 
     // ── Formatting ──────────────────────────────────────────────────────────

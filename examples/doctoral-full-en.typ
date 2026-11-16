@@ -77,12 +77,6 @@
         #outline()
     ],
 
-    appendix: [
-        = Supplementary Material
-
-        #lorem(800)
-    ],
-
     back-matter: [
         #outline(target: figure.where(kind: image))
         #outline(target: figure.where(kind: table))
@@ -99,6 +93,12 @@
 
         = Supervised Student Theses
         #bibliography("bib/supervised-theses.bib", title: none, style: "ieee", full: true)
+    ],
+
+    appendix: [
+        = Supplementary Material
+
+        #lorem(800)
     ],
 
     // ── Formatting ─────────────────────────────────────────────────────────
