@@ -98,7 +98,8 @@ The template exports no outline functions. `setup-outlines` styles, names and bo
 0. **Title page** — from the `title-page` parameter, defaulting to `doctoral-title-page`. Rendered inside a scoped `set page` that supplies the title-page margins and suppresses header, footer and numbering
 1. **Front matter** — Roman page numbering (i, ii, …), no running headers; includes abstracts, TOC
 2. **Content** — Arabic page numbering (1, 2, …), chapter/section running headers
-3. **Back matter** — appendix (A, A.1, … numbering), then LoF/LoT/LoL, bibliography, and the optional own-publications/patents/supervised-theses sections
+3. **Back matter** — bibliography, the optional own-publications/patents/supervised-theses sections, then LoF/LoT/LoL
+4. **Appendix** — A, A.1, … numbering; always the last part of the document
 
 Headers are suppressed on chapter-opening pages and blank pages, and a title's own line breaks collapse in the header, which is always a single line. The draft watermark is rendered as a background element on every page when enabled.
 
