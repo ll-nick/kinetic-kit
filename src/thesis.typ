@@ -55,15 +55,16 @@
     /// -> content | none
     front-matter: outline(),
 
-    /// Appendix chapters, numbered `A`, `A.1`, … and placed directly after the body.
-    /// -> content | none
-    appendix: none,
-
-    /// Pages after the appendix --- list pages such as
+    /// Pages after the body --- list pages such as
     /// `outline(target: figure.where(kind: image))`, the bibliography, own
     /// publications, whatever the document needs, in the order written.
     /// -> content | none
     back-matter: none,
+
+    /// Appendix chapters, numbered `A`, `A.1`, … and placed last, after the back
+    /// matter.
+    /// -> content | none
+    appendix: none,
 
     /// Use serif headings instead of sans-serif.
     /// -> bool
@@ -169,11 +170,11 @@
     show: setup-content
     doc
 
-    // ── Appendix (A, A.1, … numbering) ────────────────────────────────────
-    show: setup-appendix
-    appendix
-
     // ── Back matter (unnumbered headings) ────────────────────────────────
     show: setup-back-matter
     back-matter
+
+    // ── Appendix (A, A.1, … numbering) ────────────────────────────────────
+    show: setup-appendix
+    appendix
 }
