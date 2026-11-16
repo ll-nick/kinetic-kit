@@ -79,13 +79,6 @@
         #outline()
     ],
 
-    // ── Appendix ──────────────────────────────────────────────────────────────
-    // Numbered A, A.1, A.2, B, …
-    // appendix: [
-    //   = Appendix A
-    //   …
-    // ],
-
     // The list pages and bibliography go here.
     back-matter: [
         #outline(target: figure.where(kind: image))
@@ -105,6 +98,13 @@
         // = Patents
         // Nachname, V. (2024). *Title of the patent*. DPMA, DE 10 2024 000 000 A1.
     ],
+
+    // ── Appendix ──────────────────────────────────────────────────────────────
+    // Numbered A, A.1, A.2, B, … and placed last, after the back matter.
+    // appendix: [
+    //   = Appendix A
+    //   …
+    // ],
 
     // ── Formatting ────────────────────────────────────────────────────────────
     serif-headings: false, // true = Libertinus Serif headings; false = Libertinus Sans
